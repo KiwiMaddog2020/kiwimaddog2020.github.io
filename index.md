@@ -4,9 +4,9 @@ title: Research notes
 
 # Research notes
 
-<p class="meta">by <a href="https://github.com/KiwiMaddog2020">Kevin Madson</a> · agentic systems on Claude Code</p>
+<p class="meta">by <a href="https://github.com/KiwiMaddog2020">Kevin Madson</a> · agentic systems across multiple coding LLMs</p>
 
-Field notes from building and operating agentic systems on Claude Code:
+Field notes from building and operating agentic systems across multiple coding LLMs:
 multi-model evaluation loops, trust-weighted review, and the operational
 guardrails that make autonomous coding defensible. Each note is published
 from the repository it describes, so the write-up and the runnable code

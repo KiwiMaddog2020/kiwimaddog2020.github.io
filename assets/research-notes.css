@@ -286,6 +286,9 @@ body:not(.hub) main h2:first-of-type + p::first-letter {
 }
 .meta a { color: var(--text-2); }
 
+/* Closing credit line, centered. */
+.byline { text-align: center; }
+
 a {
   color: var(--accent);
   text-decoration: none;
