@@ -1,4 +1,4 @@
-# Kevin Madson, research notes
+# Research notes
 
 Field notes from building and operating agentic systems on Claude Code:
 multi-model evaluation loops, trust-weighted review, and the operational

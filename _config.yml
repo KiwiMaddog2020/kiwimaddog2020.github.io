@@ -1,4 +1,7 @@
-theme: jekyll-theme-primer
 title: Kevin Madson, research notes
 description: Agentic systems, multi-model evaluation, and operational guard rails
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
 exclude: ["bin/", "tests/", "README.md"]
