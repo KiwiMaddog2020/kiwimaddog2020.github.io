@@ -190,6 +190,10 @@ h1 {
   letter-spacing: -0.015em;
   line-height: 1.08;
   margin: 8px 0 20px;
+  /* Centered so a title that wraps to two or three lines stays symmetric at
+     any viewport width; the dek and meta below center with it. */
+  text-align: center;
+  text-wrap: balance;
 }
 /* The hub is an index, not an article; its title defers to note titles. */
 body.hub h1 { font-size: 42px; }
@@ -255,7 +259,7 @@ body:not(.hub) main h2:first-of-type + p::first-letter {
   font-style: italic;
   color: var(--text-2);
   margin: 0 0 10px;
-  text-align: left;
+  text-align: center;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
@@ -266,7 +270,7 @@ body:not(.hub) main h2:first-of-type + p::first-letter {
   letter-spacing: 0.06em;
   color: var(--text-muted);
   margin: 0 0 var(--space-block);
-  text-align: left;
+  text-align: center;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
