@@ -207,6 +207,7 @@ h2 {
   padding-top: 20px;
   color: var(--text);
   position: relative;
+  text-align: center;
 }
 /* A short blue tick above each section header marks the seam in the
    blue-on-ink register without a heavy rule. */
@@ -214,7 +215,8 @@ h2::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 38px;
   height: 2px;
   background: var(--accent);
@@ -228,6 +230,7 @@ h3 {
   text-transform: uppercase;
   color: var(--text-2);
   margin: 40px 0 12px;
+  text-align: center;
 }
 
 /* Body paragraphs are justified with automatic hyphenation (the lang="en"
