@@ -175,8 +175,8 @@ nav.top .links a {
   font-weight: 500;
   transition: color 0.18s ease;
   /* Negative-margin padding grows the touch target without moving layout. */
-  padding: 10px 6px;
-  margin: -10px -6px;
+  padding: 13px 6px;
+  margin: -13px -6px;
 }
 nav.top .links a:hover { color: var(--copper); }
 
@@ -389,7 +389,9 @@ th {
 .notes-list .note-code:hover {
   color: var(--copper);
   border-color: var(--border-warm);
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: var(--copper);
+  text-underline-offset: 3px;
 }
 
 footer {
@@ -401,8 +403,8 @@ footer {
 }
 footer a {
   color: var(--text-2);
-  padding: 10px 6px;
-  margin: -10px -6px;
+  padding: 13px 6px;
+  margin: -13px -6px;
 }
 footer a:hover { color: var(--copper); }
 
@@ -415,6 +417,16 @@ footer a:hover { color: var(--copper); }
   nav.top { flex-wrap: wrap; row-gap: 10px; }
   blockquote { padding: 16px 18px; }
   table { display: block; overflow-x: auto; }
+}
+
+/* Below ~360px the justified column is too narrow to set without tight
+   word-spacing; fall back to ragged-right on the smallest phones. */
+@media (max-width: 360px) {
+  p {
+    text-align: left;
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
