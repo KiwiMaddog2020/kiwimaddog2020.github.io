@@ -18,7 +18,7 @@ live at the same address.
 <!-- notes:start -->
 <ul role="list">
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/trust-weighted-evals/">An evaluation framework you can trust: the doer never rates its own work</a><a class="note-code" href="https://github.com/KiwiMaddog2020/trust-weighted-evals" aria-label="Code repository: An evaluation framework you can trust: the doer never rates its own work">code</a></li>
-<li><a class="note-title" href="https://kiwimaddog2020.github.io/audioscan/">audioscan: one decode pass instead of three ffmpeg shellouts</a><a class="note-code" href="https://github.com/KiwiMaddog2020/audioscan" aria-label="Code repository: audioscan: one decode pass instead of three ffmpeg shellouts">code</a></li>
+<li><a class="note-title" href="https://kiwimaddog2020.github.io/audioscan/">Audioscan: one decode pass instead of three ffmpeg shellouts</a><a class="note-code" href="https://github.com/KiwiMaddog2020/audioscan" aria-label="Code repository: Audioscan: one decode pass instead of three ffmpeg shellouts">code</a></li>
 </ul>
 <!-- notes:end -->
 </div>
