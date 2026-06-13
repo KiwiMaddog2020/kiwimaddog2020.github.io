@@ -115,21 +115,60 @@ def test_malicious_homepage_destinations_fall_back():
         "https://x.example/<!-- notes:end -->",
         'https://x.example/" onmouseover="bad()',
         "https://x.example/' onmouseover='bad()",
+        "https://x.example/\tinjected",
+        "https://x.example/\ninjected",
         "ftp://x.example/",
         "https://",
     ]
     for homepage in cases:
         out = bi.render_entries([{**REPO_OK, "homepage": homepage}])
+        # The fallback href proves the crafted URL was rejected: had it
+        # survived, the title link would point at x.example, not the
+        # conventional Pages URL.
         assert 'href="https://kiwimaddog2020.github.io/note-repo/"' in out, homepage
+        assert "x.example" not in out
         assert "javascript:" not in out
         assert "<script>" not in out
         assert "notes:end" not in out
         assert "onmouseover" not in out
 
 
+def test_legitimate_query_ampersand_is_escaped_in_href():
+    # A valid homepage carrying a query string must render &amp; in the
+    # attribute, never a raw & (which would be HTML-invalid).
+    out = bi.render_entries([{**REPO_OK, "homepage": "https://x.example/?a=1&b=2"}])
+    assert "href=\"https://x.example/?a=1&amp;b=2\"" in out
+    assert "?a=1&b=2" not in out
+
+
 def test_legitimate_homepage_survives_validation():
     out = bi.render_entries([REPO_OK])
     assert 'href="https://kiwimaddog2020.github.io/note-repo/"' in out
+
+
+def test_note_repos_paginates_across_pages(monkeypatch):
+    # A full first page (100) forces a second request; the loop must
+    # concatenate both and stop on the short page.
+    page1 = [
+        {"name": f"r{i}", "private": False, "fork": False, "topics": ["research-note"]}
+        for i in range(100)
+    ]
+    page2 = [{"name": "last", "private": False, "fork": False, "topics": ["research-note"]}]
+    seen = {}
+
+    def fake_api(path):
+        if "page=1" in path:
+            seen["p1"] = True
+            return page1
+        if "page=2" in path:
+            seen["p2"] = True
+            return page2
+        return []
+
+    monkeypatch.setattr(bi, "_api", fake_api)
+    names = [r["name"] for r in bi.note_repos()]
+    assert seen == {"p1": True, "p2": True}
+    assert len(names) == 101 and names[-1] == "last"
 
 
 def test_note_repos_filters_private_fork_untagged_and_hub(monkeypatch):

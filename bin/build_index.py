@@ -87,6 +87,10 @@ def _safe_page_url(homepage: str, name: str) -> str:
         return fallback
     if any(ch in candidate for ch in "()<>'\"\\ "):
         return fallback
+    # Reject ASCII control chars and DEL (tab/newline survive urlsplit and
+    # would land raw in the published attribute).
+    if any(ord(ch) < 0x21 or ord(ch) == 0x7F for ch in candidate):
+        return fallback
     return candidate
 
 
@@ -117,7 +121,7 @@ def render_entries(repos: list[dict]) -> str:
         title = _esc((r.get("description") or r["name"]).strip())
         page = _safe_page_url(r.get("homepage") or "", r["name"])
         items.append(
-            f'<li><a class="note-title" href="{page}">{title}</a>'
+            f'<li><a class="note-title" href="{_esc(page)}">{title}</a>'
             f'<a class="note-code" href="{_esc(r["html_url"])}"'
             f' aria-label="Code repository: {title}">code</a></li>'
         )
@@ -141,8 +145,8 @@ def render_feed(repos: list[dict]) -> str:
         entries.append(
             "  <entry>\n"
             f"    <title>{title}</title>\n"
-            f'    <link href="{page}"/>\n'
-            f"    <id>{page}</id>\n"
+            f'    <link href="{_esc(page)}"/>\n'
+            f"    <id>{_esc(page)}</id>\n"
             f"    <updated>{_esc(stamp)}</updated>\n"
             f"    <summary>{title}</summary>\n"
             "  </entry>"
