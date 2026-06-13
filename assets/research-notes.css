@@ -201,6 +201,8 @@ nav.top .back:hover { color: var(--accent); }
   color: var(--accent);
   border-color: var(--accent);
   background: var(--bg-card);
+  /* Override the global a:hover underline; the ring is the hover affordance. */
+  text-decoration: none;
 }
 nav.top .links {
   margin-left: auto;
