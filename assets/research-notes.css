@@ -515,6 +515,7 @@ footer {
   padding: 28px 0 48px;
   color: var(--text-muted);
   font-size: 14px;
+  text-align: center;
 }
 footer a {
   color: var(--text-2);
