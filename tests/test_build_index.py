@@ -191,6 +191,7 @@ def test_render_feed_structure_escaping_and_updated():
     ]
     feed = bi.render_feed(repos)
     assert feed.startswith('<?xml version="1.0" encoding="utf-8"?>')
+    assert '<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>' in feed
     assert feed.count("<entry>") == 2
     assert "Note &amp; &lt;tag&gt;" in feed and "<tag>" not in feed
     # Feed-level updated is the newest entry stamp.

@@ -153,6 +153,7 @@ def render_feed(repos: list[dict]) -> str:
         )
     return (
         '<?xml version="1.0" encoding="utf-8"?>\n'
+        '<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>\n'
         '<feed xmlns="http://www.w3.org/2005/Atom">\n'
         f"  <title>{_esc(SITE_TITLE)}</title>\n"
         f'  <link href="{SITE_URL}feed.xml" rel="self"/>\n'
