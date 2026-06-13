@@ -5,8 +5,15 @@
   <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
   <link href="https://kiwimaddog2020.github.io/"/>
   <id>https://kiwimaddog2020.github.io/</id>
-  <updated>2026-06-13T06:19:19Z</updated>
+  <updated>2026-06-13T06:48:28Z</updated>
   <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>Ten rounds of an agent improving one game</title>
+    <link href="https://kiwimaddog2020.github.io/oneshot-bench/"/>
+    <id>https://kiwimaddog2020.github.io/oneshot-bench/</id>
+    <updated>2026-06-13T06:48:28Z</updated>
+    <summary>Ten rounds of an agent improving one game</summary>
+  </entry>
   <entry>
     <title>Rating your own work without lying to yourself</title>
     <link href="https://kiwimaddog2020.github.io/craft-fit-rating/"/>
