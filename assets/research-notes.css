@@ -2,7 +2,65 @@
    One canonical copy, served by the hub at /assets/research-notes.css; every
    note site on this host links it absolutely, so a restyle here updates the
    whole aggregator. Design system carried over from the VeraNota web pages:
-   ink ground, copper accent, Cormorant Garamond display over Inter body. */
+   ink ground, copper accent, Cormorant Garamond display over Inter body.
+
+   Fonts are self-hosted variable woff2 (latin + latin-ext subsets) under
+   /assets/fonts/, so the render chain has no third-party origin. */
+
+@font-face {
+  /* Cormorant Garamond normal (latin-ext) */
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(/assets/fonts/cormorant-garamond-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  /* Cormorant Garamond normal (latin) */
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(/assets/fonts/cormorant-garamond-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  /* Inter italic (latin-ext) */
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/assets/fonts/inter-italic-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  /* Inter italic (latin) */
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/assets/fonts/inter-italic-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  /* Inter normal (latin-ext) */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/assets/fonts/inter-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  /* Inter normal (latin) */
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(/assets/fonts/inter-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :root {
   --bg: #0f0f12;
@@ -10,10 +68,9 @@
   --bg-card: #1c1c22;
   --copper: #cf7830;
   --copper-bright: #e08740;
-  --copper-glow: rgba(207, 120, 48, 0.18);
-  --copper-dim: rgba(207, 120, 48, 0.08);
-  --steel: #7a8a9e;
+  --copper-soft: #dfa371;
   --text: #e8e6e1;
+  --text-strong: #f2f0eb;
   --text-2: #9a9690;
   --text-muted: #8a857f;
   --border: rgba(255, 255, 255, 0.06);
@@ -21,6 +78,9 @@
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --space-flow: 20px;   /* paragraph and list rhythm */
+  --space-block: 28px;  /* card-level blocks: blockquote, pre, table */
+  --space-section: 56px; /* section seams: h2 top, hr */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -42,10 +102,12 @@ body {
   background-attachment: fixed;
 }
 
-.page { max-width: 800px; margin: 0 auto; padding: 0 32px; }
+/* 720px frame puts the 17px Inter column at ~75 characters per line. */
+.page { max-width: 720px; margin: 0 auto; padding: 0 32px; }
 
-/* Focus visibility (WCAG 2.1 AA) */
-:focus { outline: none; }
+/* Focus visibility (WCAG 2.1 AA). :not(:focus-visible) keeps the UA ring
+   in engines without :focus-visible support instead of removing it. */
+:focus:not(:focus-visible) { outline: none; }
 :focus-visible {
   outline: 2px solid var(--copper);
   outline-offset: 3px;
@@ -112,6 +174,9 @@ nav.top .links a {
   font-size: 15px;
   font-weight: 500;
   transition: color 0.18s ease;
+  /* Negative-margin padding grows the touch target without moving layout. */
+  padding: 10px 6px;
+  margin: -10px -6px;
 }
 nav.top .links a:hover { color: var(--copper); }
 
@@ -126,29 +191,59 @@ h1 {
   line-height: 1.08;
   margin: 8px 0 20px;
 }
+/* The hub is an index, not an article; its title defers to note titles. */
+body.hub h1 { font-size: 42px; }
 
 h2 {
   font-family: var(--serif);
   font-size: 34px;
   font-weight: 600;
   letter-spacing: -0.005em;
-  margin: 56px 0 16px;
+  margin: var(--space-section) 0 16px;
   color: var(--text);
 }
 
 h3 {
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-2);
   margin: 40px 0 12px;
 }
 
-p { margin: 0 0 20px; }
-
-h1 + p > em:only-child,
-h1 + p em {
-  color: var(--text-2);
-  font-size: 19px;
+/* Body paragraphs are justified with automatic hyphenation (the lang="en"
+   on <html> drives the dictionary), so the even right edge never opens
+   rivers of whitespace. Single-line and card text opt back out below. */
+p {
+  margin: 0 0 var(--space-flow);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
+
+/* Standfirst under an article h1, and the small meta row beneath it. */
+.dek {
+  font-size: 19px;
+  font-style: italic;
+  color: var(--text-2);
+  margin: 0 0 10px;
+  text-align: left;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+}
+.meta {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 var(--space-block);
+  text-align: left;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+}
+.meta a { color: var(--text-2); }
 
 a {
   color: var(--copper);
@@ -161,9 +256,22 @@ a:hover {
   text-underline-offset: 3px;
 }
 
-strong { font-weight: 600; color: #f2f0eb; }
+/* Content links carry a quiet warm underline so they are distinguishable
+   from body text by more than color (WCAG 1.4.1). Nav, note cards, and
+   headings opt out below. */
+main p a, main li a, main blockquote a, footer a {
+  text-decoration: underline;
+  text-decoration-color: var(--border-warm);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+main p a:hover, main li a:hover, main blockquote a:hover, footer a:hover {
+  text-decoration-color: var(--copper-bright);
+}
 
-ul, ol { margin: 0 0 20px; padding-left: 26px; }
+strong { font-weight: 600; color: var(--text-strong); }
+
+ul, ol { margin: 0 0 var(--space-flow); padding-left: 26px; }
 li { margin-bottom: 10px; }
 li::marker { color: var(--copper); }
 
@@ -173,8 +281,13 @@ blockquote {
   border-left: 3px solid var(--copper);
   border-radius: 14px;
   padding: 22px 26px;
-  margin: 0 0 28px;
+  margin: 0 0 var(--space-block);
   color: var(--text-2);
+  /* Cards run at a narrow measure where justification opens gaps; keep
+     them ragged-right. */
+  text-align: left;
+  -webkit-hyphens: manual;
+  hyphens: manual;
 }
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
@@ -186,7 +299,7 @@ code {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 2px 7px;
-  color: #dfa371;
+  color: var(--copper-soft);
 }
 
 pre {
@@ -194,7 +307,7 @@ pre {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 20px 24px;
-  margin: 0 0 28px;
+  margin: 0 0 var(--space-block);
   overflow-x: auto;
   line-height: 1.55;
 }
@@ -205,16 +318,21 @@ pre code {
   color: var(--text);
 }
 
+/* Rouge highlight roles, kept to the same restrained palette. */
+.highlight .c, .highlight .c1, .highlight .cm { color: var(--text-muted); font-style: italic; }
+.highlight .s, .highlight .s1, .highlight .s2 { color: var(--copper-soft); }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--copper-bright); }
+
 hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 48px 0;
+  margin: var(--space-section) 0;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0 0 28px;
+  margin: 0 0 var(--space-block);
   font-size: 15px;
 }
 th, td {
@@ -230,12 +348,15 @@ th {
   font-size: 12px;
 }
 
-/* The hub's Notes list: each generated entry becomes a quiet card row. */
-.notes-list ul, main > ul {
+/* The hub Notes list: the generator emits <ul role="list"> inside
+   .notes-list, and each entry becomes a quiet card row. role="list"
+   survives list-style: none in VoiceOver. */
+.notes-list ul {
   list-style: none;
   padding-left: 0;
+  margin: 0 0 var(--space-flow);
 }
-main > ul > li {
+.notes-list li {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -243,18 +364,31 @@ main > ul > li {
   margin-bottom: 14px;
   transition: border-color 0.2s ease;
 }
-main > ul > li:hover { border-color: var(--border-warm); }
-main > ul > li > a:first-child {
+.notes-list li:hover { border-color: var(--border-warm); }
+.notes-list a { text-decoration: none; }
+.notes-list .note-title {
   font-family: var(--serif);
   font-size: 23px;
   font-weight: 600;
   line-height: 1.3;
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   color: var(--text);
 }
-main > ul > li > a:first-child:hover {
-  color: var(--copper-bright);
+.notes-list .note-title:hover { color: var(--copper-bright); }
+.notes-list .note-code {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.notes-list .note-code:hover {
+  color: var(--copper);
+  border-color: var(--border-warm);
   text-decoration: none;
 }
 
@@ -265,15 +399,22 @@ footer {
   color: var(--text-muted);
   font-size: 14px;
 }
-footer a { color: var(--text-2); }
+footer a {
+  color: var(--text-2);
+  padding: 10px 6px;
+  margin: -10px -6px;
+}
 footer a:hover { color: var(--copper); }
 
 @media (max-width: 720px) {
   body { font-size: 16px; }
   .page { padding: 0 20px; }
   h1 { font-size: 36px; }
+  body.hub h1 { font-size: 32px; }
   h2 { font-size: 27px; }
-  nav.top { flex-wrap: wrap; }
+  nav.top { flex-wrap: wrap; row-gap: 10px; }
+  blockquote { padding: 16px 18px; }
+  table { display: block; overflow-x: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
