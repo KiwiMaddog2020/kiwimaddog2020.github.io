@@ -6,11 +6,12 @@ title: Research notes
 
 <p class="meta">by <a href="https://github.com/KiwiMaddog2020">Kevin Madson</a> · agentic systems across multiple coding LLMs</p>
 
-Field notes from building and operating agentic systems across multiple coding LLMs:
-multi-model evaluation loops, trust-weighted review, and the operational
-guardrails that make autonomous coding defensible. Each note is published
-from the repository it describes, so the write-up and the runnable code
-live at the same address.
+I build software with AI agents, programs that write and change code largely on
+their own, using several different AI models. These are my working notes on how
+to do that without flying blind: how to tell whether the AI's work is any good,
+how to check it without spending a fortune, and how to keep a system honest when
+it can change its own rules. Each note is published from the project it describes,
+so the write-up and the code you can run sit at the same address.
 
 ## Notes
 
