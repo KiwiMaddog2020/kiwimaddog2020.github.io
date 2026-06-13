@@ -146,7 +146,7 @@ nav.top {
   gap: 16px;
   padding: 28px 0;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 48px;
+  margin-bottom: 30px;
 }
 nav.top .wordmark {
   font-family: var(--serif);
@@ -184,15 +184,15 @@ nav.top .back:hover { color: var(--accent); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid var(--border-accent);
   color: var(--text-2);
   font-size: 19px;
   line-height: 1;
   text-decoration: none;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 .back-icon:hover {
