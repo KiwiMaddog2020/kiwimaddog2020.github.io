@@ -5,8 +5,15 @@
   <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
   <link href="https://kiwimaddog2020.github.io/"/>
   <id>https://kiwimaddog2020.github.io/</id>
-  <updated>2026-06-12T22:30:01Z</updated>
+  <updated>2026-06-13T06:19:19Z</updated>
   <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>Rating your own work without lying to yourself</title>
+    <link href="https://kiwimaddog2020.github.io/craft-fit-rating/"/>
+    <id>https://kiwimaddog2020.github.io/craft-fit-rating/</id>
+    <updated>2026-06-13T06:19:19Z</updated>
+    <summary>Rating your own work without lying to yourself</summary>
+  </entry>
   <entry>
     <title>An evaluation framework you can trust: the doer never rates its own work</title>
     <link href="https://kiwimaddog2020.github.io/trust-weighted-evals/"/>
