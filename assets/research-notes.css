@@ -200,7 +200,21 @@ h2 {
   font-weight: 600;
   letter-spacing: -0.005em;
   margin: var(--space-section) 0 16px;
+  padding-top: 20px;
   color: var(--text);
+  position: relative;
+}
+/* A short copper tick above each section header marks the seam in the
+   bronze-on-ink register without a heavy rule. */
+h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 2px;
+  background: var(--copper);
+  border-radius: 2px;
 }
 
 h3 {
@@ -220,6 +234,19 @@ p {
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+/* Article opening: a Cormorant drop cap on the first body paragraph gives
+   the long read editorial presence. Scoped to article pages (the hub, which
+   opens on an index, keeps a clean lede). */
+body:not(.hub) main h2:first-of-type + p::first-letter {
+  float: left;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 64px;
+  line-height: 0.82;
+  margin: 6px 12px 0 0;
+  color: var(--copper);
 }
 
 /* Standfirst under an article h1, and the small meta row beneath it. */
