@@ -323,6 +323,29 @@ blockquote {
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
 
+/* A compact, horizontally centered card carrying the repo + contact links,
+   sitting just below the forwarded-reader note. */
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 14px;
+  padding: 14px 26px;
+  margin: 0 auto var(--space-block);
+  max-width: 470px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.95;
+}
+.contact-card a {
+  color: var(--copper);
+  text-decoration: underline;
+  text-decoration-color: var(--border-warm);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.contact-card a:hover { text-decoration-color: var(--copper-bright); }
+.contact-card .sep { color: var(--text-muted); margin: 0 8px; }
+
 code {
   font-family: var(--mono);
   font-size: 0.88em;
