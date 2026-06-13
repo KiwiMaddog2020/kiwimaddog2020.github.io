@@ -234,19 +234,13 @@ h3 {
    on <html> drives the dictionary), so the even right edge never opens
    rivers of whitespace. Single-line and card text opt back out below. */
 p {
-  /* Justified edges, hyphenation off, with both a first-line indent and
-     space between paragraphs. */
+  /* Justified edges, hyphenation off; block paragraphs separated by space. */
   margin: 0 0 var(--space-flow);
   text-align: justify;
-  text-indent: 1.5em;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
 
-/* The opening paragraph of a section is set flush; only continuation
-   paragraphs indent. Cards and centered rows never indent. */
-h1 + p, h2 + p, h3 + p, hr + p, ul + p, ol + p, pre + p, table + p, blockquote + p,
-blockquote p, .dek, .meta, .contact-card { text-indent: 0; }
 
 
 /* The hub is a short centered index: its prose centers and keeps block-style
