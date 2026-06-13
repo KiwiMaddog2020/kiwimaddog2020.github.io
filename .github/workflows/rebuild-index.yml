@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Tests
-        run: python3 -m pip install -q "pytest<9" && python3 -m pytest tests/ -q
+        run: python3 -m pip install -q "pytest==8.3.4" && python3 -m pytest tests/ -q
       - name: Rebuild index
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
