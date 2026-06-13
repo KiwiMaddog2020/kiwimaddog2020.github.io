@@ -356,7 +356,8 @@ blockquote strong { color: var(--text); }
   text-decoration: underline;
   text-decoration-color: var(--border-accent);
   text-underline-offset: 3px;
-  white-space: nowrap;
+  /* let long repo URLs wrap instead of overflowing the card on mobile */
+  overflow-wrap: anywhere;
 }
 .contact-card a:hover { text-decoration-color: var(--accent-bright); }
 .contact-card .sep { color: var(--text-muted); margin: 0 8px; }
