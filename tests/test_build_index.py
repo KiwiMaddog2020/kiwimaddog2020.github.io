@@ -70,3 +70,38 @@ def test_empty_repo_set_leaves_index_untouched(tmp_path, monkeypatch):
     monkeypatch.setattr(bi, "note_repos", lambda: [])
     assert bi.main() == 0
     assert idx.read_text() == DOC
+
+
+def test_malicious_homepage_destinations_fall_back():
+    # Destinations are validated, not escaped: a crafted homepage on any
+    # tagged repo must never reach the public index verbatim.
+    cases = [
+        "javascript:alert(1)",
+        "https://x.example) <script>bad()</script> (",
+        "https://x.example/<!-- notes:end -->",
+        "ftp://x.example/",
+        "https://",
+    ]
+    for homepage in cases:
+        out = bi.render_entries([
+            {
+                "name": "note-repo",
+                "description": "a note",
+                "homepage": homepage,
+                "html_url": "https://github.com/KiwiMaddog2020/note-repo",
+            }
+        ])
+        assert "](https://kiwimaddog2020.github.io/note-repo/)" in out, homepage
+        assert "javascript:" not in out and "<script>" not in out and "notes:end" not in out
+
+
+def test_legitimate_homepage_survives_validation():
+    out = bi.render_entries([
+        {
+            "name": "note-repo",
+            "description": "a note",
+            "homepage": "https://kiwimaddog2020.github.io/note-repo/",
+            "html_url": "https://github.com/KiwiMaddog2020/note-repo",
+        }
+    ])
+    assert "](https://kiwimaddog2020.github.io/note-repo/)" in out

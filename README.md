@@ -12,3 +12,10 @@ entries can also be edited by hand between rebuilds.
 
 Run locally: `python3 bin/build_index.py` (uses `GITHUB_TOKEN` when set,
 anonymous otherwise). Tests: `python3 -m pytest tests/`.
+
+Two operational notes. GitHub disables scheduled workflows after sixty
+days without repository activity, so when publishing a new note, also
+trigger the rebuild by hand (`gh workflow run rebuild-index.yml`); that
+both updates the index immediately and keeps the schedule alive. And
+removing the `research-note` topic from a repo is the intended way to
+de-list it; the next rebuild drops the entry.

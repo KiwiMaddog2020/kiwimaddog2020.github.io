@@ -57,6 +57,32 @@ def _escape_md(text: str) -> str:
     return out
 
 
+def _safe_page_url(homepage: str, name: str) -> str:
+    """Validate a link DESTINATION; fall back to the conventional Pages URL.
+
+    Titles are escaped, but a destination needs validation, not escaping: a
+    crafted homepage on any repo tagged research-note (javascript: scheme, a
+    paren breakout injecting raw HTML, or a forged notes:end marker) would
+    otherwise land verbatim in the public index, and kramdown on Pages does
+    not sanitize link schemes the way github.com rendering does.
+    """
+    from urllib.parse import urlsplit
+
+    fallback = f"https://{OWNER.lower()}.github.io/{name}/"
+    candidate = (homepage or "").strip()
+    if not candidate:
+        return fallback
+    try:
+        parts = urlsplit(candidate)
+    except ValueError:
+        return fallback
+    if parts.scheme not in ("http", "https") or not parts.netloc:
+        return fallback
+    if any(ch in candidate for ch in '()<>"\\ '):
+        return fallback
+    return candidate
+
+
 def note_repos() -> list[dict]:
     repos = []
     page = 1
@@ -82,7 +108,7 @@ def render_entries(repos: list[dict]) -> str:
     lines = []
     for r in repos:
         title = _escape_md((r.get("description") or r["name"]).strip())
-        page = (r.get("homepage") or "").strip() or f"https://{OWNER.lower()}.github.io/{r['name']}/"
+        page = _safe_page_url(r.get("homepage") or "", r["name"])
         lines.append(f"- [{title}]({page}) ([code]({r['html_url']}))")
     return "\n".join(lines)
 
@@ -103,6 +129,8 @@ def main() -> int:
         # FAIL SAFE: an empty result is more likely a visibility or API
         # hiccup than a real "no notes exist" state, and a hand-seeded entry
         # must survive a cron run that fires before a repo flips public.
+        # (A nonempty-but-smaller list DOES overwrite: removing the topic
+        # from a repo is the intended de-listing mechanism.)
         print("no public research-note repos found; leaving index unchanged")
         return 0
     new = rebuild(src, render_entries(repos))
