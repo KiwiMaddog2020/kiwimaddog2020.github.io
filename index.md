@@ -15,4 +15,4 @@ live at the same address.
 This list rebuilds automatically from public repositories tagged
 `research-note`.
 
-Contact: kevinmadson3@gmail.com · [GitHub](https://github.com/KiwiMaddog2020) <!-- pragma: allowlist -->
+Contact: [kevinmadson@protonmail.com](mailto:kevinmadson@protonmail.com) · [GitHub](https://github.com/KiwiMaddog2020) <!-- pragma: allowlist -->
