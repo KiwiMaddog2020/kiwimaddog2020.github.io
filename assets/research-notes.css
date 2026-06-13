@@ -235,22 +235,17 @@ h3 {
    rivers of whitespace. Single-line and card text opt back out below. */
 p {
   margin: 0 0 var(--space-flow);
-  text-align: justify;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-
-/* The hub is a short centered index, so its prose centers with the masthead
-   and the note cards rather than running justified like a long-form article. */
-body.hub main p {
-  text-align: center;
+  text-align: left;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
 
-/* Article opening: a Cormorant drop cap on the first body paragraph gives
-   the long read editorial presence. Scoped to article pages (the hub, which
-   opens on an index, keeps a clean lede). */
+/* The hub is a short centered index, so its prose centers with the masthead
+   and the note cards rather than running left like a long-form article. */
+body.hub main p { text-align: center; }
+
+/* Article opening: a Cormorant drop cap on the first body paragraph gives the
+   long read editorial presence. Scoped to article pages. */
 body:not(.hub) main h2:first-of-type + p::first-letter {
   float: left;
   font-family: var(--serif);
@@ -328,6 +323,8 @@ blockquote {
   -webkit-hyphens: manual;
   hyphens: manual;
 }
+/* Cards keep their text left-aligned even while body paragraphs center. */
+blockquote p { text-align: left; }
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
 
@@ -483,16 +480,6 @@ footer a:hover { color: var(--copper); }
   nav.top { flex-wrap: wrap; row-gap: 10px; }
   blockquote { padding: 16px 18px; }
   table { display: block; overflow-x: auto; }
-}
-
-/* Below ~360px the justified column is too narrow to set without tight
-   word-spacing; fall back to ragged-right on the smallest phones. */
-@media (max-width: 360px) {
-  p {
-    text-align: left;
-    -webkit-hyphens: manual;
-    hyphens: manual;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
