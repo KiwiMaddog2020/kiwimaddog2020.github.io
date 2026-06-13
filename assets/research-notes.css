@@ -146,7 +146,7 @@ nav.top {
   gap: 16px;
   padding: 28px 0;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 30px;
+  margin-bottom: 18px;
 }
 nav.top .wordmark {
   font-family: var(--serif);
@@ -178,27 +178,22 @@ nav.top .back {
 }
 nav.top .back:hover { color: var(--accent); }
 
-/* Slim, icon-only back control: lives at the top-left of an article body,
-   below the nav line, instead of inside the nav row. */
+/* Bare arrow back control: a quiet glyph at the top-left of an article,
+   no circle. Equal margins above and below center it in the band between
+   the nav line and the title (the nav's margin-bottom sets the gap above,
+   this rule's margin-bottom matches it below). */
 .back-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border-accent);
+  display: inline-block;
   color: var(--text-2);
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1;
   text-decoration: none;
-  margin-bottom: 8px;
-  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  margin: 0 0 18px;
+  padding: 4px 10px 4px 0;
+  transition: color 0.18s ease;
 }
 .back-icon:hover {
   color: var(--accent);
-  border-color: var(--accent);
-  background: var(--bg-card);
 }
 nav.top .links {
   margin-left: auto;
