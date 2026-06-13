@@ -5,8 +5,15 @@
   <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
   <link href="https://kiwimaddog2020.github.io/"/>
   <id>https://kiwimaddog2020.github.io/</id>
-  <updated>2026-06-13T06:48:28Z</updated>
+  <updated>2026-06-13T06:59:36Z</updated>
   <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>The gate that edits a gate is rejected by the gate it edits</title>
+    <link href="https://kiwimaddog2020.github.io/self-improvement-gate/"/>
+    <id>https://kiwimaddog2020.github.io/self-improvement-gate/</id>
+    <updated>2026-06-13T06:59:36Z</updated>
+    <summary>The gate that edits a gate is rejected by the gate it edits</summary>
+  </entry>
   <entry>
     <title>Ten rounds of an agent improving one game</title>
     <link href="https://kiwimaddog2020.github.io/oneshot-bench/"/>

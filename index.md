@@ -17,6 +17,7 @@ live at the same address.
 <div class="notes-list">
 <!-- notes:start -->
 <ul role="list">
+<li><a class="note-title" href="https://kiwimaddog2020.github.io/self-improvement-gate/">The gate that edits a gate is rejected by the gate it edits</a><a class="note-code" href="https://github.com/KiwiMaddog2020/self-improvement-gate" aria-label="Code repository: The gate that edits a gate is rejected by the gate it edits">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/oneshot-bench/">Ten rounds of an agent improving one game</a><a class="note-code" href="https://github.com/KiwiMaddog2020/oneshot-bench" aria-label="Code repository: Ten rounds of an agent improving one game">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/craft-fit-rating/">Rating your own work without lying to yourself</a><a class="note-code" href="https://github.com/KiwiMaddog2020/craft-fit-rating" aria-label="Code repository: Rating your own work without lying to yourself">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/trust-weighted-evals/">An evaluation framework you can trust: the doer never rates its own work</a><a class="note-code" href="https://github.com/KiwiMaddog2020/trust-weighted-evals" aria-label="Code repository: An evaluation framework you can trust: the doer never rates its own work">code</a></li>
