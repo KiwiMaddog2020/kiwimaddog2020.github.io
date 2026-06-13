@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kiwimaddog2020.github.io/sitemap.xml
+Sitemap: https://kiwimaddog2020.github.io/trust-weighted-evals/sitemap.xml

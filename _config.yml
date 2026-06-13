@@ -1,7 +1,9 @@
-title: Kevin Madson, research notes
-description: Agentic systems, multi-model evaluation, and operational guard rails
+title: Kevin Madson · Research notes
+description: Agentic systems, multi-model evaluation, and the operational guardrails that make autonomous coding defensible
+url: https://kiwimaddog2020.github.io
 plugins:
   - jekyll-optional-front-matter
   - jekyll-default-layout
   - jekyll-titles-from-headings
-exclude: ["bin/", "tests/", "README.md"]
+  - jekyll-sitemap
+exclude: ["bin/", "tests/", "README.md", "LICENSE"]
