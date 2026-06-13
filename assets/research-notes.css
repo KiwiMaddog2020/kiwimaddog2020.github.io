@@ -414,19 +414,23 @@ th {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 20px 24px;
+  padding: 22px 24px;
   margin-bottom: 14px;
   transition: border-color 0.2s ease;
+  /* Centered so a title that wraps stays symmetric, like the masthead. */
+  text-align: center;
 }
 .notes-list li:hover { border-color: var(--border-warm); }
 .notes-list a { text-decoration: none; }
 .notes-list .note-title {
   font-family: var(--serif);
-  font-size: 23px;
+  font-size: 26px;
   font-weight: 600;
   line-height: 1.3;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: var(--text);
 }
 .notes-list .note-title:hover { color: var(--copper-bright); }
