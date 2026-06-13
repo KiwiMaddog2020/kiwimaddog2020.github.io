@@ -234,17 +234,36 @@ h3 {
    on <html> drives the dictionary), so the even right edge never opens
    rivers of whitespace. Single-line and card text opt back out below. */
 p {
-  margin: 0 0 var(--space-flow);
-  /* Justified edges, but hyphenation off: lines fill by adjusting word
-     spacing rather than breaking words mid-word. */
+  margin: 0;
+  /* Justified edges, hyphenation off, with a first-line indent marking each
+     new paragraph (book style): paragraphs flow without blank-line gaps and
+     the indent does the separating. */
   text-align: justify;
+  text-indent: 1.5em;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
 
-/* The hub is a short centered index, so its prose centers with the masthead
-   and the note cards rather than running left like a long-form article. */
-body.hub main p { text-align: center; }
+/* The opening paragraph of a section is set flush; only continuation
+   paragraphs indent. Cards and centered rows never indent. */
+h1 + p, h2 + p, h3 + p, hr + p, ul + p, ol + p, pre + p, table + p, blockquote + p,
+blockquote p, .dek, .meta, .contact-card { text-indent: 0; }
+
+/* Paragraphs no longer carry bottom spacing, so restore separation around the
+   article's block elements that used to rely on it. */
+body:not(.hub) main ul,
+body:not(.hub) main ol,
+body:not(.hub) main blockquote,
+body:not(.hub) main pre,
+body:not(.hub) main table { margin-top: var(--space-flow); }
+
+/* The hub is a short centered index: its prose centers and keeps block-style
+   spacing, with no first-line indent. */
+body.hub main p {
+  text-align: center;
+  text-indent: 0;
+  margin-bottom: var(--space-flow);
+}
 
 /* Article opening: a Cormorant drop cap on the first body paragraph gives the
    long read editorial presence. Scoped to article pages. */
