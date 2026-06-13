@@ -235,7 +235,9 @@ h3 {
    rivers of whitespace. Single-line and card text opt back out below. */
 p {
   margin: 0 0 var(--space-flow);
-  text-align: left;
+  /* Justified edges, but hyphenation off: lines fill by adjusting word
+     spacing rather than breaking words mid-word. */
+  text-align: justify;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
