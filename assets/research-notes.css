@@ -2,7 +2,7 @@
    One canonical copy, served by the hub at /assets/research-notes.css; every
    note site on this host links it absolutely, so a restyle here updates the
    whole aggregator. Design system carried over from the VeraNota web pages:
-   ink ground, copper accent, Cormorant Garamond display over Inter body.
+   ink ground, blue accent, Cormorant Garamond display over Inter body.
 
    Fonts are self-hosted variable woff2 (latin + latin-ext subsets) under
    /assets/fonts/, so the render chain has no third-party origin. */
@@ -66,15 +66,15 @@
   --bg: #0f0f12;
   --bg-elevated: #16161a;
   --bg-card: #1c1c22;
-  --copper: #cf7830;
-  --copper-bright: #e08740;
-  --copper-soft: #dfa371;
+  --accent: #2e8fe6;
+  --accent-bright: #54a6f5;
+  --accent-soft: #8fc4f2;
   --text: #e8e6e1;
   --text-strong: #f2f0eb;
   --text-2: #9a9690;
   --text-muted: #8a857f;
   --border: rgba(255, 255, 255, 0.06);
-  --border-warm: rgba(207, 120, 48, 0.22);
+  --border-accent: rgba(46, 143, 230, 0.24);
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
@@ -97,7 +97,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image:
-    radial-gradient(circle at 15% 8%, rgba(207, 120, 48, 0.07) 0%, transparent 42%),
+    radial-gradient(circle at 15% 8%, rgba(46, 143, 230, 0.07) 0%, transparent 42%),
     radial-gradient(circle at 88% 78%, rgba(122, 138, 158, 0.05) 0%, transparent 48%);
   background-attachment: fixed;
 }
@@ -109,7 +109,7 @@ body {
    in engines without :focus-visible support instead of removing it. */
 :focus:not(:focus-visible) { outline: none; }
 :focus-visible {
-  outline: 2px solid var(--copper);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -130,7 +130,7 @@ body {
   height: auto;
   padding: 12px 18px;
   background: var(--bg-card);
-  border: 1px solid var(--copper);
+  border: 1px solid var(--accent);
   border-radius: 8px;
   color: var(--text);
   font-weight: 600;
@@ -156,7 +156,7 @@ nav.top .wordmark {
   color: var(--text);
   text-decoration: none;
 }
-nav.top .wordmark:hover { color: var(--copper-bright); }
+nav.top .wordmark:hover { color: var(--accent-bright); }
 nav.top .crumb {
   color: var(--text-muted);
   font-size: 14px;
@@ -178,7 +178,7 @@ nav.top .links a {
   padding: 13px 6px;
   margin: -13px -6px;
 }
-nav.top .links a:hover { color: var(--copper); }
+nav.top .links a:hover { color: var(--accent); }
 
 /* Long-form typography */
 main { display: block; padding-bottom: 24px; }
@@ -208,8 +208,8 @@ h2 {
   color: var(--text);
   position: relative;
 }
-/* A short copper tick above each section header marks the seam in the
-   bronze-on-ink register without a heavy rule. */
+/* A short blue tick above each section header marks the seam in the
+   blue-on-ink register without a heavy rule. */
 h2::before {
   content: "";
   position: absolute;
@@ -217,7 +217,7 @@ h2::before {
   left: 0;
   width: 38px;
   height: 2px;
-  background: var(--copper);
+  background: var(--accent);
   border-radius: 2px;
 }
 
@@ -274,7 +274,7 @@ body:not(.hub) main h2:first-of-type + p::first-letter {
   font-size: 64px;
   line-height: 0.82;
   margin: 6px 12px 0 0;
-  color: var(--copper);
+  color: var(--accent);
 }
 
 /* Standfirst under an article h1, and the small meta row beneath it. */
@@ -301,12 +301,12 @@ body:not(.hub) main h2:first-of-type + p::first-letter {
 .meta a { color: var(--text-2); }
 
 a {
-  color: var(--copper);
+  color: var(--accent);
   text-decoration: none;
   transition: color 0.18s ease;
 }
 a:hover {
-  color: var(--copper-bright);
+  color: var(--accent-bright);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -316,24 +316,24 @@ a:hover {
    headings opt out below. */
 main p a, main li a, main blockquote a, footer a {
   text-decoration: underline;
-  text-decoration-color: var(--border-warm);
+  text-decoration-color: var(--border-accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 main p a:hover, main li a:hover, main blockquote a:hover, footer a:hover {
-  text-decoration-color: var(--copper-bright);
+  text-decoration-color: var(--accent-bright);
 }
 
 strong { font-weight: 600; color: var(--text-strong); }
 
 ul, ol { margin: 0 0 var(--space-flow); padding-left: 26px; }
 li { margin-bottom: 10px; }
-li::marker { color: var(--copper); }
+li::marker { color: var(--accent); }
 
 blockquote {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--copper);
+  border-left: 3px solid var(--accent);
   border-radius: 14px;
   padding: 22px 26px;
   margin: 0 0 var(--space-block);
@@ -353,7 +353,7 @@ blockquote strong { color: var(--text); }
    sitting just below the forwarded-reader note. */
 .contact-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-warm);
+  border: 1px solid var(--border-accent);
   border-radius: 14px;
   padding: 14px 26px;
   margin: 0 auto var(--space-block);
@@ -363,13 +363,13 @@ blockquote strong { color: var(--text); }
   line-height: 1.95;
 }
 .contact-card a {
-  color: var(--copper);
+  color: var(--accent);
   text-decoration: underline;
-  text-decoration-color: var(--border-warm);
+  text-decoration-color: var(--border-accent);
   text-underline-offset: 3px;
   white-space: nowrap;
 }
-.contact-card a:hover { text-decoration-color: var(--copper-bright); }
+.contact-card a:hover { text-decoration-color: var(--accent-bright); }
 .contact-card .sep { color: var(--text-muted); margin: 0 8px; }
 
 code {
@@ -379,7 +379,7 @@ code {
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 2px 7px;
-  color: var(--copper-soft);
+  color: var(--accent-soft);
 }
 
 pre {
@@ -400,8 +400,8 @@ pre code {
 
 /* Rouge highlight roles, kept to the same restrained palette. */
 .highlight .c, .highlight .c1, .highlight .cm { color: var(--text-muted); font-style: italic; }
-.highlight .s, .highlight .s1, .highlight .s2 { color: var(--copper-soft); }
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--copper-bright); }
+.highlight .s, .highlight .s1, .highlight .s2 { color: var(--accent-soft); }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--accent-bright); }
 
 hr {
   border: none;
@@ -446,7 +446,7 @@ th {
   /* Centered so a title that wraps stays symmetric, like the masthead. */
   text-align: center;
 }
-.notes-list li:hover { border-color: var(--border-warm); }
+.notes-list li:hover { border-color: var(--border-accent); }
 .notes-list a { text-decoration: none; }
 .notes-list .note-title {
   font-family: var(--serif);
@@ -459,7 +459,7 @@ th {
   margin-bottom: 10px;
   color: var(--text);
 }
-.notes-list .note-title:hover { color: var(--copper-bright); }
+.notes-list .note-title:hover { color: var(--accent-bright); }
 .notes-list .note-code {
   font-size: 12px;
   font-weight: 500;
@@ -471,10 +471,10 @@ th {
   padding: 3px 10px;
 }
 .notes-list .note-code:hover {
-  color: var(--copper);
-  border-color: var(--border-warm);
+  color: var(--accent);
+  border-color: var(--border-accent);
   text-decoration: underline;
-  text-decoration-color: var(--copper);
+  text-decoration-color: var(--accent);
   text-underline-offset: 3px;
 }
 
@@ -490,7 +490,7 @@ footer a {
   padding: 13px 6px;
   margin: -13px -6px;
 }
-footer a:hover { color: var(--copper); }
+footer a:hover { color: var(--accent); }
 
 @media (max-width: 720px) {
   body { font-size: 16px; }
