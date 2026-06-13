@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Kevin Madson · Research notes</title>
+  <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
+  <link href="https://kiwimaddog2020.github.io/"/>
+  <id>https://kiwimaddog2020.github.io/</id>
+  <updated>2026-06-12T22:30:01Z</updated>
+  <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>An evaluation framework you can trust: the doer never rates its own work</title>
+    <link href="https://kiwimaddog2020.github.io/trust-weighted-evals/"/>
+    <id>https://kiwimaddog2020.github.io/trust-weighted-evals/</id>
+    <updated>2026-06-12T22:30:01Z</updated>
+    <summary>An evaluation framework you can trust: the doer never rates its own work</summary>
+  </entry>
+</feed>
