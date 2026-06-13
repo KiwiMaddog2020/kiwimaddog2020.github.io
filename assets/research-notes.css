@@ -240,6 +240,14 @@ p {
   hyphens: auto;
 }
 
+/* The hub is a short centered index, so its prose centers with the masthead
+   and the note cards rather than running justified like a long-form article. */
+body.hub main p {
+  text-align: center;
+  -webkit-hyphens: manual;
+  hyphens: manual;
+}
+
 /* Article opening: a Cormorant drop cap on the first body paragraph gives
    the long read editorial presence. Scoped to article pages (the hub, which
    opens on an index, keeps a clean lede). */
