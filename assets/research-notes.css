@@ -63,9 +63,9 @@
 }
 
 :root {
-  --bg: #0f0f12;
-  --bg-elevated: #16161a;
-  --bg-card: #1c1c22;
+  --bg: #14141a;
+  --bg-elevated: #1b1b22;
+  --bg-card: #21212a;
   --accent: #2a95ea;
   --accent-bright: #5aabf6;
   --accent-soft: #94c9f5;
@@ -97,8 +97,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image:
-    radial-gradient(circle at 15% 8%, rgba(42, 149, 234, 0.07) 0%, transparent 42%),
-    radial-gradient(circle at 88% 78%, rgba(122, 138, 158, 0.05) 0%, transparent 48%);
+    radial-gradient(circle at 15% 8%, rgba(42, 149, 234, 0.12) 0%, transparent 46%),
+    radial-gradient(circle at 88% 78%, rgba(122, 138, 158, 0.08) 0%, transparent 52%);
   background-attachment: fixed;
 }
 
@@ -331,7 +331,7 @@ blockquote {
   hyphens: manual;
 }
 /* Cards keep their text left-aligned even while body paragraphs center. */
-blockquote p { text-align: left; }
+blockquote p { text-align: center; }
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
 
