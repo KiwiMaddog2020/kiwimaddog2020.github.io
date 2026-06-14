@@ -5,8 +5,15 @@
   <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
   <link href="https://kiwimaddog2020.github.io/"/>
   <id>https://kiwimaddog2020.github.io/</id>
-  <updated>2026-06-13T07:27:28Z</updated>
+  <updated>2026-06-13T23:56:27Z</updated>
   <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>Do AI code reviewers have complementary blind spots?</title>
+    <link href="https://kiwimaddog2020.github.io/decorrelation-study/"/>
+    <id>https://kiwimaddog2020.github.io/decorrelation-study/</id>
+    <updated>2026-06-13T23:56:27Z</updated>
+    <summary>Do AI code reviewers have complementary blind spots?</summary>
+  </entry>
   <entry>
     <title>How to know if your AI is actually working</title>
     <link href="https://kiwimaddog2020.github.io/evaluating-claude/"/>

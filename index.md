@@ -18,6 +18,7 @@ so the write-up and the code you can run sit at the same address.
 <div class="notes-list">
 <!-- notes:start -->
 <ul role="list">
+<li><a class="note-title" href="https://kiwimaddog2020.github.io/decorrelation-study/">Do AI code reviewers have complementary blind spots?</a><a class="note-code" href="https://github.com/KiwiMaddog2020/decorrelation-study" aria-label="Code repository: Do AI code reviewers have complementary blind spots?">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/evaluating-claude/">How to know if your AI is actually working</a><a class="note-code" href="https://github.com/KiwiMaddog2020/evaluating-claude" aria-label="Code repository: How to know if your AI is actually working">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/self-improvement-gate/">The gate that edits a gate is rejected by the gate it edits</a><a class="note-code" href="https://github.com/KiwiMaddog2020/self-improvement-gate" aria-label="Code repository: The gate that edits a gate is rejected by the gate it edits">code</a></li>
 <li><a class="note-title" href="https://kiwimaddog2020.github.io/oneshot-bench/">Ten rounds of an agent improving one game</a><a class="note-code" href="https://github.com/KiwiMaddog2020/oneshot-bench" aria-label="Code repository: Ten rounds of an agent improving one game">code</a></li>
