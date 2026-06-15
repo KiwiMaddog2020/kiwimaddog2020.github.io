@@ -5,8 +5,15 @@
   <link href="https://kiwimaddog2020.github.io/feed.xml" rel="self"/>
   <link href="https://kiwimaddog2020.github.io/"/>
   <id>https://kiwimaddog2020.github.io/</id>
-  <updated>2026-06-13T23:56:27Z</updated>
+  <updated>2026-06-15T04:41:40Z</updated>
   <author><name>Kevin Madson</name></author>
+  <entry>
+    <title>An honest eval harness, and a controlled experiment on what makes AI refinement actually improve.</title>
+    <link href="https://kiwimaddog2020.github.io/trutina/"/>
+    <id>https://kiwimaddog2020.github.io/trutina/</id>
+    <updated>2026-06-15T04:41:40Z</updated>
+    <summary>An honest eval harness, and a controlled experiment on what makes AI refinement actually improve.</summary>
+  </entry>
   <entry>
     <title>Do AI code reviewers have complementary blind spots?</title>
     <link href="https://kiwimaddog2020.github.io/decorrelation-study/"/>
