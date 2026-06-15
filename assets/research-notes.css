@@ -105,6 +105,18 @@ body {
 /* 720px frame puts the 17px Inter column at ~75 characters per line. */
 .page { max-width: 720px; margin: 0 auto; padding: 0 32px; }
 
+/* Figures fit the column and never force the page wider than the viewport.
+   Without this, an intrinsic-width chart (e.g. a 1920px PNG) blows out the
+   mobile layout and crushes the text column. */
+main img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
 /* Focus visibility (WCAG 2.1 AA). :not(:focus-visible) keeps the UA ring
    in engines without :focus-visible support instead of removing it. */
 :focus:not(:focus-visible) { outline: none; }
