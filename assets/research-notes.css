@@ -431,6 +431,12 @@ pre {
   border-radius: 14px;
   padding: 20px 24px;
   margin: 0 0 var(--space-block);
+  /* Wrap long lines inside the card instead of letting them run off the
+     right edge. macOS auto-hides the overflow scrollbar, so a scrolling
+     code block reads as silently clipped; wrapping keeps every character
+     visible. overflow-x stays as a fallback for content that cannot wrap. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   overflow-x: auto;
   line-height: 1.55;
 }
