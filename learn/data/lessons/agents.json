@@ -1220,7 +1220,15 @@
     "prereqs": [
       "ag_tool_use"
     ],
-    "next": "ag_production_costs"
+    "next": "ag_production_costs",
+    "sources": [
+      {
+        "claim": "Prompt injection is an open, unsolved class of vulnerability for tool-using agents.",
+        "title": "OWASP Top 10 for LLM Applications",
+        "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+        "last_verified": "2026-06-18"
+      }
+    ]
   },
   {
     "id": "ag_production_costs",

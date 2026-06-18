@@ -83,7 +83,15 @@
     },
     "outcome": "You can explain why self-grading inflates results and how role separation fixes it.",
     "prereqs": [],
-    "next": "eval_catch_rate_discrimination"
+    "next": "eval_catch_rate_discrimination",
+    "sources": [
+      {
+        "claim": "Eval results should be reported with uncertainty, not a single point number.",
+        "title": "Anthropic: A statistical approach to model evals",
+        "url": "https://www.anthropic.com/research/statistical-approach-to-model-evals",
+        "last_verified": "2026-06-18"
+      }
+    ]
   },
   {
     "id": "eval_catch_rate_discrimination",
@@ -633,7 +641,15 @@
     "prereqs": [
       "eval_confounds"
     ],
-    "next": "eval_not_measured_ledger"
+    "next": "eval_not_measured_ledger",
+    "sources": [
+      {
+        "claim": "RLHF-trained assistants show measurable sycophancy, agreeing with users over being correct.",
+        "title": "Anthropic: Towards Understanding Sycophancy in Language Models",
+        "url": "https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models",
+        "last_verified": "2026-06-18"
+      }
+    ]
   },
   {
     "id": "eval_not_measured_ledger",
