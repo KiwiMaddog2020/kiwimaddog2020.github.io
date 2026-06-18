@@ -6,7 +6,7 @@
     "level_range": "Beginner to Advanced",
     "blurb": "Build the mental model for models, weights, training, tokens, embeddings, attention, and inference.",
     "icon": "network",
-    "lessons": ["ml_weights_stub"]
+    "lessons": ["fnd_what_is_a_model", "fnd_neurons_layers", "fnd_training_gradient_descent", "fnd_loss_overfitting", "fnd_tokens_embeddings", "fnd_attention_transformers", "fnd_pretrain_finetune", "fnd_inference_sampling", "fnd_context_window"]
   },
   {
     "id": "agents",
