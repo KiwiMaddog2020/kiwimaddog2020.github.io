@@ -33,7 +33,7 @@
     "level_range": "Intermediate to Expert",
     "blurb": "Measure AI systems with separation of roles, pre-registered claims, calibrated uncertainty, and a not-measured ledger.",
     "icon": "gauge",
-    "lessons": ["eval_doer_rater_stub"]
+    "lessons": ["eval_doer_not_grader", "eval_catch_rate_discrimination", "eval_pre_registration", "eval_decorrelation_vs_competence", "eval_confounds", "eval_bootstrap_noise_floor", "eval_sycophancy_capitulation", "eval_not_measured_ledger"]
   },
   {
     "id": "frontier",

@@ -1,23 +1,467 @@
 [
   {
-    "id": "eval_doer_rater_stub",
+    "id": "eval_doer_not_grader",
     "track": "evaluating-ai",
     "title": "The doer should not grade itself",
     "level": "Intermediate",
-    "minutes": 3,
-    "summary": "A useful AI evaluation separates the system doing the work from the system judging it.",
-    "body_html": "<p>If the same model writes an answer and grades the answer, the evaluation can reward style, agreement, or hidden assumptions instead of task success. A better setup defines the claim before the run, separates doer and rater, records what was not measured, and treats uncertainty as part of the result.</p>",
+    "minutes": 4,
+    "summary": "An honest evaluation separates the system doing the work from the system judging it, or the score measures agreement, not success.",
+    "body_html": "<p>The first rule of honest evaluation is role separation. If the same model writes an answer and grades the answer, the score drifts toward what the model already likes: its own style, its own assumptions, its own mistakes. Self-grading rewards confidence and fluency, which are exactly the traits that fool a casual reader.</p><p>Separation means the grader is a different system with different blind spots, judging against a fixed standard set before the run. The doer produces, the rater judges, and the two do not share a stake in the outcome. This single move removes the largest source of inflated AI evaluation results.</p><p>The same logic scales up. When you use a model to judge other models, vary the family and the prompt so the judge does not share the doer's failure modes. An evaluation where the judge and the judged think alike is closer to a mirror than a measurement.</p>",
     "key_points": [
-      "Role separation reduces self-approval loops.",
-      "Pre-registering the claim protects the metric from drift.",
-      "A not-measured ledger is part of an honest result."
+      "Self-grading rewards style, confidence, and shared assumptions, not task success.",
+      "Separate the doer from the rater, judging against a standard fixed before the run.",
+      "The grader should have different blind spots than the doer.",
+      "A judge that thinks like the judged is a mirror, not a measurement."
     ],
-    "links": [],
-    "flashcards": [],
-    "quiz": [],
+    "links": [
+      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "A practical guide to building real, separated evaluations." },
+      { "title": "Anthropic: Define Success and Build Evaluations", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success", "level": "Intermediate", "kind": "docs", "note": "Setting measurable criteria before you run." }
+    ],
+    "flashcards": [
+      { "front": "Why should the doer not grade its own work?", "back": "It rewards its own style, confidence, and assumptions instead of task success." },
+      { "front": "What does role separation require?", "back": "A different grader with different blind spots, judging a standard fixed before the run." },
+      { "front": "What is a judge that thinks like the judged?", "back": "A mirror, not a measurement." }
+    ],
+    "quiz": [
+      {
+        "q": "What does a model that grades its own output tend to reward?",
+        "level": "Intermediate",
+        "choices": [
+          "Strict task success.",
+          "Its own style, confidence, and shared assumptions.",
+          "Shorter answers only.",
+          "Random outcomes."
+        ],
+        "answer": 1,
+        "explain": "Self-grading optimizes for what the model already likes, inflating the score."
+      },
+      {
+        "q": "When using a model as a judge, why vary its family and prompt from the doer's?",
+        "level": "Advanced",
+        "choices": [
+          "To make the eval slower.",
+          "So the judge does not share the doer's blind spots and failure modes.",
+          "To use more tokens.",
+          "Because judges must always be larger."
+        ],
+        "answer": 1,
+        "explain": "Decorrelating the judge from the doer is what keeps the score a measurement."
+      }
+    ],
     "exercise": null,
-    "outcome": "You can explain why self-grading inflates confidence.",
+    "outcome": "You can explain why self-grading inflates results and how role separation fixes it.",
     "prereqs": [],
+    "next": "eval_catch_rate_discrimination"
+  },
+  {
+    "id": "eval_catch_rate_discrimination",
+    "track": "evaluating-ai",
+    "title": "Catch rate, false alarms, and discrimination",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "A detector's catch rate alone is meaningless; what matters is catch rate minus false alarm rate, the discrimination.",
+    "body_html": "<p>Suppose you build a checker that flags bad model outputs. It catches 90% of the bad ones. That sounds great until you learn it also flags 85% of the good ones. A detector that flags almost everything has a high catch rate and no skill. Catch rate alone cannot tell a real detector from a trigger-happy one.</p><p>The honest single number is discrimination: the catch rate minus the false alarm rate. It asks how much more often the detector fires on real problems than on clean cases. A discrimination near zero means the detector is guessing; a high discrimination means it genuinely separates good from bad. Always report both rates, not just the catch.</p><p>This generalizes past detectors. Any time you measure a model finding, flagging, or classifying something, ask for the false positive side of the ledger. A metric that only counts hits will reward the loudest model, not the most accurate one.</p>",
+    "key_points": [
+      "Catch rate alone cannot distinguish skill from flagging everything.",
+      "Discrimination = catch rate minus false alarm rate.",
+      "Near zero means guessing; high means it truly separates good from bad.",
+      "Always report the false positive side, not just the hits."
+    ],
+    "links": [
+      { "title": "Promptfoo", "url": "https://www.promptfoo.dev/docs/intro", "level": "Intermediate", "kind": "tool", "note": "Run assertions and measure detector behavior across cases." },
+      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "Why balanced metrics beat a single headline number." }
+    ],
+    "flashcards": [
+      { "front": "Why is catch rate alone misleading?", "back": "A detector that flags everything has a high catch rate and no real skill." },
+      { "front": "What is discrimination?", "back": "Catch rate minus false alarm rate: how much more it fires on real problems than clean cases." },
+      { "front": "What does a discrimination near zero mean?", "back": "The detector is essentially guessing." }
+    ],
+    "quiz": [
+      {
+        "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
+        "level": "Intermediate",
+        "choices": [
+          "It is an excellent detector.",
+          "Its discrimination is low (about 0.05), so it is close to flagging everything.",
+          "Its catch rate proves it works.",
+          "False alarms do not matter."
+        ],
+        "answer": 1,
+        "explain": "Discrimination of 0.95 minus 0.90 is 0.05, near guessing."
+      },
+      {
+        "q": "What must you always report alongside a detector's catch rate?",
+        "level": "Intermediate",
+        "choices": [
+          "Only the token count.",
+          "The false alarm rate, so discrimination can be computed.",
+          "The model's name.",
+          "The temperature."
+        ],
+        "answer": 1,
+        "explain": "Without the false positive rate, the catch rate is uninterpretable."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A bug detector flags 90% of real bugs (catch rate 0.90) and flags 40% of clean code as buggy (false alarm 0.40). What is its discrimination?",
+      "choices": [
+        "0.90",
+        "0.50",
+        "0.40",
+        "1.30"
+      ],
+      "answer": 1,
+      "explain": "Discrimination is catch rate minus false alarm rate: 0.90 minus 0.40 equals 0.50."
+    },
+    "outcome": "You can compute discrimination and explain why catch rate alone is not enough.",
+    "prereqs": ["eval_doer_not_grader"],
+    "next": "eval_pre_registration"
+  },
+  {
+    "id": "eval_pre_registration",
+    "track": "evaluating-ai",
+    "title": "Pre-register the claim",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "Decide what you are testing and what would count as success before you run, so the result cannot be reshaped to fit the data.",
+    "body_html": "<p>The cheapest way to fool yourself is to run an experiment, look at the data, and then decide what the experiment was testing. Once you have seen the results, almost any pattern can be narrated into a finding. Pre-registration blocks this: you write down the exact claim, the metric, and the success threshold before you run, and you commit to reporting whatever comes back.</p><p>A good pre-registration is specific enough to be wrong. It names the hypothesis, how it will be measured, the sample, and the cutoff that separates a real effect from noise. If the result does not clear the threshold you set in advance, that is a null, and a null reported honestly is a real finding, not a failure.</p><p>This is the discipline that turns a demo into evidence. Without it, evaluation drifts toward whatever story the data happens to support. With it, you can trust your own conclusions, because you decided the rules before you could be tempted by the answer.</p>",
+    "key_points": [
+      "Write the exact claim, metric, and success threshold before running.",
+      "A good pre-registration is specific enough to be proven wrong.",
+      "A null result reported honestly is a real finding, not a failure.",
+      "Pre-registration is what turns a demo into trustworthy evidence."
+    ],
+    "links": [
+      { "title": "Anthropic: Define Success and Build Evaluations", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success", "level": "Intermediate", "kind": "docs", "note": "Designing measurable success criteria up front." },
+      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "Committing to criteria before iterating on results." }
+    ],
+    "flashcards": [
+      { "front": "What does pre-registration commit you to?", "back": "The exact claim, metric, and threshold, plus reporting whatever result comes back." },
+      { "front": "What makes a pre-registration good?", "back": "It is specific enough to be proven wrong." },
+      { "front": "How should you treat an honest null result?", "back": "As a real finding, not a failure." }
+    ],
+    "quiz": [
+      {
+        "q": "Why decide the success threshold before running the experiment?",
+        "level": "Intermediate",
+        "choices": [
+          "To slow down the experiment.",
+          "Because after seeing the data, almost any pattern can be narrated into a finding.",
+          "Because thresholds are required by law.",
+          "To avoid using a metric."
+        ],
+        "answer": 1,
+        "explain": "Pre-committing the rules prevents post-hoc storytelling."
+      },
+      {
+        "q": "Your pre-registered effect does not clear its threshold. What is the honest move?",
+        "level": "Intermediate",
+        "choices": [
+          "Lower the threshold until it passes.",
+          "Report the null; a null reported honestly is a real finding.",
+          "Re-run until it passes by chance.",
+          "Drop the experiment silently."
+        ],
+        "answer": 1,
+        "explain": "Honoring the pre-registered threshold is the whole point of pre-registration."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can pre-register a claim with a metric and threshold and honor a null result.",
+    "prereqs": ["eval_doer_not_grader"],
+    "next": "eval_decorrelation_vs_competence"
+  },
+  {
+    "id": "eval_decorrelation_vs_competence",
+    "track": "evaluating-ai",
+    "title": "Decorrelation versus competence",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Two judges that agree only help if they fail independently; shared blind spots and a capability ceiling both quietly cap what an eval can measure.",
+    "body_html": "<p>Using multiple judges is only useful if they are decorrelated, meaning they make different mistakes. Two judges from the same model family with the same prompt will tend to agree even when they are both wrong, so their agreement is not extra evidence. Real robustness comes from judges that fail in different directions, so that one catches what another misses.</p><p>Competence sets a second, subtler ceiling. A judge can only catch an error it is itself capable of recognizing. If a task is at or beyond the frontier of what current models can do, even a panel of strong judges may all share the same gap, and their consensus will look confident while missing the real answer. Agreement among the limited is not the same as correctness.</p><p>The two ideas combine into a practical caution. When an evaluation depends on models judging other models, ask both whether the judges are decorrelated and whether they are competent at the thing being judged. If a result is only verifiable by giving the judges decorrelated context they would not otherwise have, that requirement is part of the finding, not a footnote.</p>",
+    "key_points": [
+      "Multiple judges help only if they fail independently, not if they merely agree.",
+      "Same-family, same-prompt judges share blind spots, so their agreement is weak evidence.",
+      "A judge can only catch errors it is itself competent to recognize.",
+      "Ask both: are the judges decorrelated, and are they competent at this task?"
+    ],
+    "links": [
+      { "title": "Stanford HELM", "url": "https://crfm.stanford.edu/helm/latest/", "level": "Expert", "kind": "interactive", "note": "A multi-metric benchmark that resists single-judge blind spots." },
+      { "title": "OpenAI Evals", "url": "https://github.com/openai/evals", "level": "Advanced", "kind": "tool", "note": "Framework for building benchmarks across diverse cases." }
+    ],
+    "flashcards": [
+      { "front": "When do multiple judges actually help?", "back": "Only when they are decorrelated and fail in different directions." },
+      { "front": "Why is same-family judge agreement weak evidence?", "back": "They share blind spots, so they agree even when both are wrong." },
+      { "front": "What is the competence ceiling?", "back": "A judge can only catch an error it is itself capable of recognizing." }
+    ],
+    "quiz": [
+      {
+        "q": "Two judges from the same model with the same prompt agree. How strong is that evidence?",
+        "level": "Advanced",
+        "choices": [
+          "Very strong, because two judges agreed.",
+          "Weak, because they share blind spots and can be wrong together.",
+          "Conclusive proof.",
+          "Irrelevant to evaluation."
+        ],
+        "answer": 1,
+        "explain": "Correlated judges agreeing adds little; they can fail in the same direction."
+      },
+      {
+        "q": "Why can a panel of strong judges still miss the answer on a frontier task?",
+        "level": "Expert",
+        "choices": [
+          "They were too slow.",
+          "They may all share the same capability gap, so consensus looks confident but is wrong.",
+          "They used too few tokens.",
+          "Frontier tasks are always easy."
+        ],
+        "answer": 1,
+        "explain": "Competence caps what any judge can recognize; shared gaps survive consensus."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can reason about judge decorrelation and the competence ceiling of an evaluation.",
+    "prereqs": ["eval_doer_not_grader"],
+    "next": "eval_confounds"
+  },
+  {
+    "id": "eval_confounds",
+    "track": "evaluating-ai",
+    "title": "Confounds: when the comparison lies",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "A confound is a hidden difference that explains your result instead of the cause you claimed; finding it is often the whole job.",
+    "body_html": "<p>A confound is a variable that differs alongside the one you care about, so your result could be caused by either. If model A looks more honest than model B but A was also tested on easier questions, difficulty is a confound: the honesty gap might be entirely about the questions. The conclusion is not wrong because the numbers are wrong; it is wrong because the comparison was not clean.</p><p>Confounds are the default failure of AI evaluation because the systems are complex and many things move at once. Prompt wording, task difficulty, answer length, ordering, and which examples you happened to pick can each create a difference that masquerades as the effect you wanted. The discipline is to hold everything else constant and change only the one thing under test.</p><p>The hardest confounds are the ones built into the design. A study can be internally consistent and still measure the wrong thing because two causes were tangled from the start, such as social pressure mixed with genuine new evidence. The reliable defense is adversarial: before trusting a result, actively look for the alternative explanation that would make it false. If you cannot rule it out, it belongs in the writeup.</p>",
+    "key_points": [
+      "A confound is a hidden difference that could explain the result instead of your claimed cause.",
+      "Clean comparisons hold everything constant and change only the variable under test.",
+      "Prompt, difficulty, length, ordering, and example choice are common confounds.",
+      "Before trusting a result, hunt for the alternative explanation; if you cannot rule it out, report it."
+    ],
+    "links": [
+      { "title": "An Introduction to Statistical Learning", "url": "https://www.statlearning.com/", "level": "Intermediate", "kind": "course", "note": "Background on confounding and controlled comparison." },
+      { "title": "Stanford HELM", "url": "https://crfm.stanford.edu/helm/latest/", "level": "Expert", "kind": "interactive", "note": "Holding conditions constant across many models and tasks." }
+    ],
+    "flashcards": [
+      { "front": "What is a confound?", "back": "A hidden difference that could explain your result instead of the cause you claimed." },
+      { "front": "What is a clean comparison?", "back": "One that holds everything constant and changes only the variable under test." },
+      { "front": "What is the reliable defense against confounds?", "back": "Adversarially hunt the alternative explanation; if you cannot rule it out, report it." }
+    ],
+    "quiz": [
+      {
+        "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
+        "level": "Advanced",
+        "choices": [
+          "The sample was too large.",
+          "Difficulty is a confound; the gap may be about the questions, not honesty.",
+          "Honesty cannot be measured at all.",
+          "The metric was discrimination."
+        ],
+        "answer": 1,
+        "explain": "An uncontrolled difference in difficulty can fully explain the result."
+      },
+      {
+        "q": "What is the best habit for catching design-level confounds?",
+        "level": "Expert",
+        "choices": [
+          "Trust a clean-looking result.",
+          "Adversarially search for the alternative explanation before believing the conclusion.",
+          "Run the experiment only once.",
+          "Use a single judge."
+        ],
+        "answer": 1,
+        "explain": "Actively trying to break your own result surfaces tangled causes."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "An eval concludes model A 'follows instructions better' than B. You then learn A's prompts were all short and B's were all long and complex. What should you conclude?",
+      "choices": [
+        "A is clearly better at following instructions.",
+        "Prompt complexity is a confound; the comparison cannot support the claim.",
+        "B is better because its prompts were longer.",
+        "The result needs no further checking."
+      ],
+      "answer": 1,
+      "explain": "Because prompt complexity differed with the model, it could explain the gap on its own."
+    },
+    "outcome": "You can spot confounds and demand a clean comparison before trusting a result.",
+    "prereqs": ["eval_pre_registration"],
+    "next": "eval_bootstrap_noise_floor"
+  },
+  {
+    "id": "eval_bootstrap_noise_floor",
+    "track": "evaluating-ai",
+    "title": "The noise floor and confidence intervals",
+    "level": "Advanced",
+    "minutes": 5,
+    "summary": "Small evals are noisy; without an uncertainty estimate, a difference can be pure chance, so report intervals, not point scores.",
+    "body_html": "<p>Run the same eval twice on a stochastic model and you will get slightly different numbers. That spread is the noise floor: the size of differences you would see even when nothing real changed. A measured gap smaller than the noise floor is not a finding, it is the measurement breathing. The first question about any score difference is whether it clears the noise.</p><p>The bootstrap is a simple, assumption-light way to estimate that noise. You resample your results many times with replacement, recompute the metric each time, and look at the spread of those recomputed values. The middle range of that spread is a confidence interval: a plausible range for the true value given your sample. If two models' intervals overlap heavily, you cannot claim one beat the other.</p><p>Sample size drives all of this. Five examples can produce a dramatic-looking gap that vanishes at fifty. Report the interval alongside the number, state the sample size, and treat a wide interval as a signal to gather more data rather than a result to announce.</p>",
+    "key_points": [
+      "The noise floor is the variation you see when nothing real changed.",
+      "A gap smaller than the noise floor is not a finding.",
+      "Bootstrap resampling estimates a confidence interval with few assumptions.",
+      "Overlapping intervals mean you cannot claim a difference; report intervals and sample size."
+    ],
+    "links": [
+      { "title": "An Introduction to Statistical Learning", "url": "https://www.statlearning.com/", "level": "Intermediate", "kind": "course", "note": "Resampling, the bootstrap, and uncertainty." },
+      { "title": "DeepLearning.AI: Evaluating and Debugging Generative AI", "url": "https://www.deeplearning.ai/short-courses/evaluating-debugging-generative-ai/", "level": "Beginner", "kind": "course", "note": "Tracking and quantifying variation in generative evals." }
+    ],
+    "flashcards": [
+      { "front": "What is the noise floor?", "back": "The size of differences you would see even when nothing real changed." },
+      { "front": "What does the bootstrap give you?", "back": "A confidence interval for the metric, by resampling results with replacement." },
+      { "front": "What do two heavily overlapping confidence intervals mean?", "back": "You cannot claim one model beat the other." }
+    ],
+    "quiz": [
+      {
+        "q": "Model A scores 72% and B scores 70% on 20 examples, with overlapping intervals. What can you claim?",
+        "level": "Advanced",
+        "choices": [
+          "A is clearly better.",
+          "Nothing yet; the gap may be within the noise floor.",
+          "B is better.",
+          "The metric is broken."
+        ],
+        "answer": 1,
+        "explain": "A small gap with overlapping intervals is not a real difference."
+      },
+      {
+        "q": "Why use a bootstrap confidence interval?",
+        "level": "Advanced",
+        "choices": [
+          "To make the score higher.",
+          "To estimate a plausible range for the true value with few assumptions.",
+          "To remove the need for data.",
+          "To pick the temperature."
+        ],
+        "answer": 1,
+        "explain": "Resampling quantifies how much the score could vary by chance."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can judge whether a score difference clears the noise floor using intervals.",
+    "prereqs": ["eval_catch_rate_discrimination"],
+    "next": "eval_sycophancy_capitulation"
+  },
+  {
+    "id": "eval_sycophancy_capitulation",
+    "track": "evaluating-ai",
+    "title": "Sycophancy and capitulation",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Models can abandon a correct answer under social pressure; measuring this cleanly is hard because deference and genuine updating look alike.",
+    "body_html": "<p>Sycophancy is a model telling you what you want to hear. Capitulation is a sharp form of it: the model gives a correct answer, you push back, and it switches to a wrong one to agree with you. Both matter because they make a model less reliable exactly when a confident user is mistaken, which is when reliability matters most.</p><p>Measuring capitulation cleanly is harder than it looks, and the difficulty is instructive. When a model changes its answer after pushback, two very different things can be happening: it is genuinely updating on a good argument, or it is deferring to social pressure. From the outside they look identical, so a naive test conflates rational updating with capitulation and overstates the problem.</p><p>The honest approaches separate the two. You can give pressure that carries no real evidence, so any change is deference rather than updating. You can probe belief directly rather than only watching the final answer flip. And you have to account for capability: a model that is simply right and certain rarely capitulates on a task it has mastered, so a null result can mean a clean model or just an easy task. Naming which one you measured is part of the result.</p>",
+    "key_points": [
+      "Sycophancy is telling the user what they want; capitulation is dropping a correct answer under pushback.",
+      "An answer flip can be rational updating or social deference; from outside they look the same.",
+      "Clean tests use evidence-free pressure or probe belief directly, not just the final flip.",
+      "Capability confounds it: a mastered task yields few capitulations, so name what the null means."
+    ],
+    "links": [
+      { "title": "Anthropic: Define Success and Build Evaluations", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success", "level": "Intermediate", "kind": "docs", "note": "Designing criteria that isolate the behavior you mean." },
+      { "title": "Stanford HELM", "url": "https://crfm.stanford.edu/helm/latest/", "level": "Expert", "kind": "interactive", "note": "Benchmarks spanning behaviors beyond raw accuracy." }
+    ],
+    "flashcards": [
+      { "front": "What is capitulation?", "back": "A model giving a correct answer, then switching to a wrong one after the user pushes back." },
+      { "front": "Why is capitulation hard to measure?", "back": "An answer flip can be rational updating or social deference, and they look identical." },
+      { "front": "How does capability confound capitulation tests?", "back": "A model certain and right on a mastered task rarely capitulates, so a null can just mean an easy task." }
+    ],
+    "quiz": [
+      {
+        "q": "A model changes its answer after a user objects. Why is that not automatically capitulation?",
+        "level": "Advanced",
+        "choices": [
+          "Because models never change answers.",
+          "Because the change could be rational updating on a good argument, not social deference.",
+          "Because the user is always right.",
+          "Because capitulation does not exist."
+        ],
+        "answer": 1,
+        "explain": "Updating and deference look the same from outside, so the flip alone is ambiguous."
+      },
+      {
+        "q": "How do you make pushback test deference rather than reasoning?",
+        "level": "Expert",
+        "choices": [
+          "Give pushback that carries strong new evidence.",
+          "Give pushback that carries no real evidence, so any change is deference.",
+          "Only test easy questions.",
+          "Let the model grade itself."
+        ],
+        "answer": 1,
+        "explain": "Evidence-free pressure isolates social deference from rational updating."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You test capitulation by pushing back on puzzles the model already solves at near 100% accuracy, and see almost no answer changes. What does this null most likely mean?",
+      "choices": [
+        "The model is provably immune to social pressure in all settings.",
+        "The task was too easy to detect capitulation; a clean model and an easy task look the same here.",
+        "Capitulation is impossible to study.",
+        "The model never had a correct answer."
+      ],
+      "answer": 1,
+      "explain": "On a mastered task, certainty suppresses capitulation, so the null does not isolate a clean model from an easy test."
+    },
+    "outcome": "You can design a capitulation test that separates deference from updating and read its nulls honestly.",
+    "prereqs": ["eval_confounds"],
+    "next": "eval_not_measured_ledger"
+  },
+  {
+    "id": "eval_not_measured_ledger",
+    "track": "evaluating-ai",
+    "title": "The not-measured ledger",
+    "level": "Expert",
+    "minutes": 5,
+    "summary": "An honest evaluation states what it did not measure as plainly as what it did, because the gaps are where false confidence hides.",
+    "body_html": "<p>Every evaluation has a boundary: things it could not observe, conditions it did not test, inputs it never saw. The not-measured ledger is the explicit list of those gaps, kept beside the results. It is the opposite of the usual instinct, which is to present what you measured and quietly let readers assume the rest was fine. The unstated gaps are exactly where overconfidence lives.</p><p>Some gaps are unavoidable. Real production inputs, rare edge cases, long-horizon behavior, and adversarial misuse are often impossible to fully cover before shipping. Naming them does not weaken the result; it tells an honest reader where the result applies and where it does not. A finding with a clear boundary is more trustworthy than one that pretends to have none.</p><p>The ledger also drives the next move. Each unmeasured item is verification debt: a question you owe an answer to, ideally with a scheduled human checkpoint where a person observes what the automated eval could not. The mature stance is not a perfect evaluation, which does not exist, but a complete and honest account of where the current one stops.</p>",
+    "key_points": [
+      "The not-measured ledger lists, beside the results, what the eval did not observe.",
+      "Unstated gaps are where false confidence hides.",
+      "Naming a boundary makes a result more trustworthy, not less.",
+      "Each gap is verification debt; schedule a human checkpoint to pay it down."
+    ],
+    "links": [
+      { "title": "Anthropic: Define Success and Build Evaluations", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success", "level": "Intermediate", "kind": "docs", "note": "Scoping what an evaluation does and does not cover." },
+      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "Treating evaluation as an ongoing, honest practice." }
+    ],
+    "flashcards": [
+      { "front": "What is the not-measured ledger?", "back": "An explicit list of what the evaluation did not observe, kept beside the results." },
+      { "front": "Why state what you did not measure?", "back": "Unstated gaps are where overconfidence hides; a clear boundary builds trust." },
+      { "front": "What is verification debt?", "back": "Each unmeasured item is a question you owe, ideally paid with a scheduled human checkpoint." }
+    ],
+    "quiz": [
+      {
+        "q": "Why does naming the boundaries of an eval increase trust?",
+        "level": "Expert",
+        "choices": [
+          "It makes the eval look weaker.",
+          "It tells an honest reader where the result applies and where it does not.",
+          "It hides the gaps.",
+          "It removes the need for data."
+        ],
+        "answer": 1,
+        "explain": "A finding with a clear boundary is more trustworthy than one pretending to have none."
+      },
+      {
+        "q": "What is the mature stance on evaluation completeness?",
+        "level": "Expert",
+        "choices": [
+          "Achieve a perfect evaluation before shipping.",
+          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
+          "Measure nothing and ship.",
+          "Trust automated evals fully."
+        ],
+        "answer": 1,
+        "explain": "Perfect evals do not exist; honest boundaries plus scheduled human checks do."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can keep a not-measured ledger and turn its gaps into scheduled verification.",
+    "prereqs": ["eval_confounds"],
     "next": null
   }
 ]
