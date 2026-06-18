@@ -1,0 +1,5 @@
+#!/bin/sh
+# Content-hash cache busting: stamp asset links, then re-stage the touched HTML.
+python3 bin/stamp-cache.py || exit 1
+git add _layouts/default.html study/index.html 2>/dev/null
+exit 0
