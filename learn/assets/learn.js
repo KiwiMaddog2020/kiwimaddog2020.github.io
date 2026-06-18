@@ -21,6 +21,96 @@
 
   let lastSearch = "";
 
+  // Inline SVG diagrams (bronze-on-ink, currentColor-aware). Keyed by lesson.diagram.
+  const BR = "#c8a96b";
+  const diagrams = {
+    agent_loop: `
+      <svg viewBox="0 0 460 150" role="img" aria-label="The agent loop: think, act, observe, decide, repeating until a stop condition.">
+        <g fill="none" stroke="${BR}" stroke-width="1.5">
+          ${["Think", "Act (tool)", "Observe", "Decide"].map((t, i) => `<rect x="${10 + i * 112}" y="50" width="96" height="46" rx="8"/>`).join("")}
+          ${[0, 1, 2].map((i) => `<path d="M${106 + i * 112} 73 h16" marker-end="url(#ah)"/>`).join("")}
+          <path d="M444 96 v18 a6 6 0 0 1 -6 6 H22 a6 6 0 0 1 -6 -6 v-18" marker-end="url(#ah)"/>
+        </g>
+        <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${BR}"/></marker></defs>
+        <g fill="currentColor" font-size="13" text-anchor="middle" font-family="Inter, system-ui, sans-serif">
+          ${["Think", "Act (tool)", "Observe", "Decide"].map((t, i) => `<text x="${58 + i * 112}" y="78">${t}</text>`).join("")}
+          <text x="230" y="140" fill="${BR}" font-size="12">loop until a stop condition</text>
+        </g>
+      </svg>`,
+    rag: `
+      <svg viewBox="0 0 460 140" role="img" aria-label="RAG pipeline: a query retrieves passages from a knowledge base, which augment the prompt before generation.">
+        <defs><marker id="rh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${BR}"/></marker></defs>
+        <g fill="none" stroke="${BR}" stroke-width="1.5">
+          <rect x="8" y="52" width="80" height="40" rx="8"/>
+          <rect x="138" y="52" width="92" height="40" rx="8"/>
+          <rect x="280" y="52" width="92" height="40" rx="8"/>
+          <rect x="138" y="8" width="92" height="30" rx="8" stroke-dasharray="4 3"/>
+          <path d="M88 72 h48" marker-end="url(#rh)"/>
+          <path d="M230 72 h48" marker-end="url(#rh)"/>
+          <path d="M184 38 v12" marker-end="url(#rh)"/>
+        </g>
+        <g fill="currentColor" font-size="12.5" text-anchor="middle" font-family="Inter, system-ui, sans-serif">
+          <text x="48" y="76">Query</text>
+          <text x="184" y="76">Retrieve</text>
+          <text x="326" y="76">Generate</text>
+          <text x="184" y="27" fill="${BR}">Knowledge base</text>
+        </g>
+      </svg>`,
+    attention: `
+      <svg viewBox="0 0 460 160" role="img" aria-label="Self-attention: a token's query is compared with every token's key to weight how much each token's value contributes.">
+        <defs><marker id="th" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${BR}"/></marker></defs>
+        <g fill="currentColor" font-size="12.5" text-anchor="middle" font-family="Inter, system-ui, sans-serif">
+          ${["the", "cat", "sat"].map((t, i) => `<text x="${70 + i * 130}" y="28">${t}</text>`).join("")}
+          <text x="200" y="150" fill="${BR}">query of "sat" weighs the keys of all earlier tokens</text>
+        </g>
+        <g fill="none" stroke="${BR}" stroke-width="1.5">
+          ${[0, 1, 2].map((i) => `<circle cx="${70 + i * 130}" cy="60" r="14"/>`).join("")}
+          <circle cx="330" cy="60" r="18" stroke-width="2"/>
+          <path d="M316 72 C 240 110, 150 110, 80 74" stroke-dasharray="3 3" marker-end="url(#th)"/>
+          <path d="M324 70 C 280 100, 230 100, 196 74" stroke-dasharray="3 3" marker-end="url(#th)"/>
+        </g>
+      </svg>`,
+    context_window: `
+      <svg viewBox="0 0 460 120" role="img" aria-label="The context window: a fixed-size budget of tokens; input plus output must fit, and tokens outside it are unavailable.">
+        <g fill="none" stroke="${BR}" stroke-width="1.5"><rect x="120" y="34" width="230" height="44" rx="8"/></g>
+        <g fill="${BR}" opacity="0.25">${[0, 1, 2, 3, 4, 5].map((i) => `<rect x="${126 + i * 37}" y="40" width="32" height="32" rx="4"/>`).join("")}</g>
+        <g fill="currentColor" font-size="12.5" font-family="Inter, system-ui, sans-serif">
+          <text x="8" y="60">older</text>
+          <text x="372" y="60">newer</text>
+          <text x="120" y="98" fill="${BR}" font-size="12">fixed token budget (input + output); anything outside is gone</text>
+        </g>
+      </svg>`,
+    confusion_matrix: `
+      <svg viewBox="0 0 320 200" role="img" aria-label="Confusion matrix: true and false positives on the predicted-positive row, false and true negatives on the predicted-negative row.">
+        <g fill="none" stroke="${BR}" stroke-width="1.5">
+          <rect x="90" y="40" width="100" height="60"/><rect x="190" y="40" width="100" height="60"/>
+          <rect x="90" y="100" width="100" height="60"/><rect x="190" y="100" width="100" height="60"/>
+        </g>
+        <g fill="currentColor" font-size="13" text-anchor="middle" font-family="Inter, system-ui, sans-serif">
+          <text x="140" y="74" fill="${BR}">TP</text><text x="240" y="74">FP</text>
+          <text x="140" y="134">FN</text><text x="240" y="134" fill="${BR}">TN</text>
+          <text x="140" y="30" font-size="11">actual +</text><text x="240" y="30" font-size="11">actual -</text>
+        </g>
+        <g fill="currentColor" font-size="11" text-anchor="end" font-family="Inter, system-ui, sans-serif">
+          <text x="84" y="74">pred +</text><text x="84" y="134">pred -</text>
+        </g>
+      </svg>`,
+    tokens_embeddings: `
+      <svg viewBox="0 0 460 120" role="img" aria-label="Text is split into tokens, then each token is mapped to an embedding vector of numbers.">
+        <defs><marker id="eh" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="${BR}"/></marker></defs>
+        <g fill="none" stroke="${BR}" stroke-width="1.5">
+          ${["learn", "ing"].map((t, i) => `<rect x="${20 + i * 70}" y="46" width="60" height="34" rx="6"/>`).join("")}
+          <path d="M160 63 h30" marker-end="url(#eh)"/>
+          <rect x="200" y="40" width="240" height="46" rx="8"/>
+        </g>
+        <g fill="currentColor" font-size="12.5" text-anchor="middle" font-family="Inter, system-ui, sans-serif">
+          <text x="50" y="67">learn</text><text x="120" y="67">ing</text>
+          <text x="320" y="60" font-family="ui-monospace, monospace" font-size="12">[0.12, -0.4, 0.9, ...]</text>
+          <text x="320" y="104" fill="${BR}" font-size="12">embedding vector</text>
+        </g>
+      </svg>`
+  };
+
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, function (char) {
       return {
@@ -459,6 +549,7 @@
         <div class="lesson-body">
           ${lesson.body_html || ""}
         </div>
+        ${lesson.diagram && diagrams[lesson.diagram] ? `<figure class="lesson-diagram">${diagrams[lesson.diagram]}</figure>` : ""}
         ${keyPoints}
         ${lesson.exercise ? `
           <section class="learn-section tight" aria-labelledby="exercise-title">
@@ -1023,7 +1114,197 @@
       mountChoiceExercise(container, exercise);
       return;
     }
+    if (exercise.type === "metric_lab") {
+      mountMetricLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "sampling_lab") {
+      mountSamplingLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "ordering") {
+      mountOrdering(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
+  }
+
+  function mountMetricLab(container, exercise) {
+    const fields = exercise.fields.map((f) => Object.assign({}, f));
+    let checked = false;
+
+    function vals() {
+      const m = {};
+      fields.forEach((f) => { m[f.key] = Math.max(0, Number(f.value) || 0); });
+      return m;
+    }
+    function metrics() {
+      const v = vals();
+      const recall = (v.tp + v.fn) ? v.tp / (v.tp + v.fn) : 0;
+      const far = (v.fp + v.tn) ? v.fp / (v.fp + v.tn) : 0;
+      const precision = (v.tp + v.fp) ? v.tp / (v.tp + v.fp) : 0;
+      return { recall, far, precision, discrimination: recall - far };
+    }
+    function fmt(x) { return (Math.round(x * 100) / 100).toFixed(2); }
+
+    function render() {
+      const m = metrics();
+      const target = exercise.target || {};
+      const hit = target.metric ? (m[target.metric] >= (target.min != null ? target.min : -Infinity) && m[target.metric] <= (target.max != null ? target.max : Infinity)) : false;
+      container.innerHTML = `
+        <div class="exercise-card metric-lab">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <div class="metric-inputs">
+            ${fields.map(function (f) {
+              return `
+                <label>
+                  <span>${escapeHtml(f.label)}</span>
+                  <input type="number" min="0" step="1" data-key="${escapeHtml(f.key)}" value="${Number(f.value) || 0}">
+                </label>`;
+            }).join("")}
+          </div>
+          <dl class="metric-readout">
+            <div><dt>Catch rate (recall)</dt><dd>${fmt(m.recall)}</dd></div>
+            <div><dt>False alarm rate</dt><dd>${fmt(m.far)}</dd></div>
+            <div><dt>Precision</dt><dd>${fmt(m.precision)}</dd></div>
+            <div class="metric-headline"><dt>Discrimination</dt><dd>${fmt(m.discrimination)}</dd></div>
+          </dl>
+          ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+          ${exercise.target ? `<button class="button primary" type="button" data-metric-check>Check</button>` : ""}
+          ${checked ? `<p class="feedback-line ${hit ? "good" : "bad"}">${hit ? "Target met." : "Not yet."} ${escapeHtml(exercise.explain || "")}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("input", function (event) {
+      const input = event.target.closest("[data-key]");
+      if (!input) return;
+      const f = fields.find((x) => x.key === input.dataset.key);
+      if (f) { f.value = input.value; }
+      checked = false;
+      // live update readout without losing focus: update only the readout + headline
+      const m = metrics();
+      const ro = container.querySelector(".metric-readout");
+      if (ro) {
+        const dds = ro.querySelectorAll("dd");
+        if (dds.length === 4) {
+          dds[0].textContent = fmt(m.recall);
+          dds[1].textContent = fmt(m.far);
+          dds[2].textContent = fmt(m.precision);
+          dds[3].textContent = fmt(m.discrimination);
+        }
+      }
+    });
+    container.addEventListener("click", function (event) {
+      if (!event.target.closest("[data-metric-check]")) return;
+      checked = true;
+      render();
+    });
+
+    render();
+  }
+
+  function mountSamplingLab(container, exercise) {
+    let temp = exercise.start != null ? exercise.start : 1.0;
+    const tokens = exercise.tokens || [];
+
+    function softmax(t) {
+      const scaled = tokens.map((tk) => (Number(tk.logit) || 0) / Math.max(0.05, t));
+      const max = Math.max.apply(null, scaled);
+      const exps = scaled.map((s) => Math.exp(s - max));
+      const sum = exps.reduce((a, b) => a + b, 0) || 1;
+      return exps.map((e) => e / sum);
+    }
+
+    function renderBars() {
+      const probs = softmax(temp);
+      const barsHost = container.querySelector(".sampling-bars");
+      if (!barsHost) return;
+      barsHost.innerHTML = tokens.map(function (tk, i) {
+        const pct = Math.round(probs[i] * 100);
+        return `
+          <div class="sampling-row">
+            <span class="sampling-label">${escapeHtml(tk.label)}</span>
+            <span class="sampling-bar"><span style="width:${Math.max(1, pct)}%"></span></span>
+            <span class="sampling-pct">${pct}%</span>
+          </div>`;
+      }).join("");
+      const out = container.querySelector(".sampling-temp-val");
+      if (out) out.textContent = temp.toFixed(2);
+    }
+
+    container.innerHTML = `
+      <div class="exercise-card sampling-lab">
+        <p>${escapeHtml(exercise.prompt)}</p>
+        <label class="sampling-control">
+          <span>Temperature <strong class="sampling-temp-val">${temp.toFixed(2)}</strong></span>
+          <input type="range" min="0.1" max="2" step="0.05" value="${temp}" data-sampling-temp aria-label="Temperature">
+        </label>
+        <div class="sampling-bars" aria-live="polite"></div>
+        ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+        ${exercise.explain ? `<p class="feedback-line">${escapeHtml(exercise.explain)}</p>` : ""}
+      </div>`;
+
+    container.addEventListener("input", function (event) {
+      const slider = event.target.closest("[data-sampling-temp]");
+      if (!slider) return;
+      temp = Number(slider.value);
+      renderBars();
+    });
+    renderBars();
+  }
+
+  function mountOrdering(container, exercise) {
+    const correct = exercise.items.slice();
+    let order = shuffle(correct.map((_, i) => i));
+    // avoid starting already-correct
+    if (order.every((v, i) => v === i) && order.length > 1) {
+      order.push(order.shift());
+    }
+    let checked = false;
+    let allRight = false;
+
+    function render() {
+      allRight = order.every((v, i) => v === i);
+      container.innerHTML = `
+        <div class="exercise-card ordering">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <ol class="ordering-list">
+            ${order.map(function (itemIndex, pos) {
+              const rowClass = checked ? (itemIndex === pos ? "is-answer" : "is-incorrect") : "";
+              return `
+                <li class="ordering-row ${rowClass}">
+                  <span class="ordering-controls">
+                    <button class="button ordering-move" type="button" data-move="up" data-pos="${pos}" ${pos === 0 ? "disabled" : ""} aria-label="Move up">^</button>
+                    <button class="button ordering-move" type="button" data-move="down" data-pos="${pos}" ${pos === order.length - 1 ? "disabled" : ""} aria-label="Move down">v</button>
+                  </span>
+                  <span class="ordering-text">${escapeHtml(exercise.items[itemIndex])}</span>
+                </li>`;
+            }).join("")}
+          </ol>
+          <button class="button primary" type="button" data-ordering-check>Check order</button>
+          ${checked ? `<p class="feedback-line ${allRight ? "good" : "bad"}">${allRight ? "Correct order." : "Not quite, keep adjusting."} ${escapeHtml(exercise.explain || "")}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("click", function (event) {
+      const move = event.target.closest("[data-move]");
+      if (move) {
+        const pos = Number(move.dataset.pos);
+        const dir = move.dataset.move === "up" ? -1 : 1;
+        const swap = pos + dir;
+        if (swap < 0 || swap >= order.length) return;
+        const tmp = order[pos]; order[pos] = order[swap]; order[swap] = tmp;
+        checked = false;
+        render();
+        return;
+      }
+      if (event.target.closest("[data-ordering-check]")) {
+        checked = true;
+        render();
+      }
+    });
+
+    render();
   }
 
   function mountSpotTheBug(container, exercise) {

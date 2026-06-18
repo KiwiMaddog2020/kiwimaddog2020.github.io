@@ -244,16 +244,15 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "You set the learning rate very high and start training. What is the most likely result?",
-      "choices": [
-        "The loss oscillates wildly or diverges to infinity.",
-        "Training finishes instantly with a perfect model.",
-        "Nothing changes, because the learning rate has no effect.",
-        "The loss decreases smoothly to zero."
+      "type": "ordering",
+      "prompt": "Put one step of gradient-descent training in the order it happens.",
+      "items": [
+        "Run the batch forward to get predictions",
+        "Compute the loss against the targets",
+        "Backpropagate to get the gradient for every weight",
+        "Step each weight a little along the negative gradient"
       ],
-      "answer": 0,
-      "explain": "Too large a step overshoots the minimum, so the loss bounces or blows up rather than settling."
+      "explain": "Forward, loss, backprop, update, then repeat over many batches. The learning rate sets how big each update step is."
     },
     "outcome": "You can explain how a model learns from data and what the learning rate does.",
     "prereqs": [
@@ -435,7 +434,8 @@
     "prereqs": [
       "fnd_what_is_a_model"
     ],
-    "next": "fnd_attention_transformers"
+    "next": "fnd_attention_transformers",
+    "diagram": "tokens_embeddings"
   },
   {
     "id": "fnd_attention_transformers",
@@ -530,7 +530,8 @@
     "prereqs": [
       "fnd_tokens_embeddings"
     ],
-    "next": "fnd_pretrain_finetune"
+    "next": "fnd_pretrain_finetune",
+    "diagram": "attention"
   },
   {
     "id": "fnd_pretrain_finetune",
@@ -691,16 +692,33 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "You raise temperature from 0.2 to 1.5 for a factual question-answering task. What is the likely effect?",
-      "choices": [
-        "Faster generation with no quality change.",
-        "The model stops sampling entirely.",
-        "More consistent, focused answers.",
-        "More varied and creative output, with a higher chance of off-target or wrong answers."
+      "type": "sampling_lab",
+      "prompt": "Drag the temperature. Low values sharpen the distribution onto the top token; high values flatten it toward uniform.",
+      "tokens": [
+        {
+          "label": "the",
+          "logit": 3.2
+        },
+        {
+          "label": "a",
+          "logit": 2.5
+        },
+        {
+          "label": "cat",
+          "logit": 1.7
+        },
+        {
+          "label": "banana",
+          "logit": 0.5
+        },
+        {
+          "label": "xylophone",
+          "logit": -1.2
+        }
       ],
-      "answer": 3,
-      "explain": "Higher temperature flattens the distribution, adding diversity at the cost of reliability."
+      "start": 1.0,
+      "question": "Set the temperature near 0.2, then near 1.8, and watch how the top token's share changes.",
+      "explain": "Each probability is softmax(logit / temperature). Near zero the top logit dominates (greedy); high temperature spreads probability toward uniform."
     },
     "outcome": "You can choose sampling settings to match a task's need for reliability or diversity.",
     "prereqs": [
@@ -794,7 +812,8 @@
     "prereqs": [
       "fnd_what_is_a_model"
     ],
-    "next": "fnd_data_quality"
+    "next": "fnd_data_quality",
+    "diagram": "context_window"
   },
   {
     "id": "fnd_data_quality",

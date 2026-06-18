@@ -189,7 +189,8 @@
     "prereqs": [
       "ag_what_is_an_agent"
     ],
-    "next": "ag_tool_use"
+    "next": "ag_tool_use",
+    "diagram": "agent_loop"
   },
   {
     "id": "ag_tool_use",
@@ -1079,22 +1080,21 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "Your RAG support bot keeps citing last year's pricing. The generation prompt is fine. What is the most likely cause?",
-      "choices": [
-        "The model needs a higher temperature.",
-        "The vector index is stale and still holds last year's documents.",
-        "The model is too small.",
-        "RAG cannot cite sources."
+      "type": "ordering",
+      "prompt": "Put the RAG pipeline in the order it runs.",
+      "items": [
+        "Embed the query and search the index for relevant passages",
+        "Add the top passages to the prompt as context",
+        "Generate an answer grounded in those passages, with citations"
       ],
-      "answer": 1,
-      "explain": "Stale retrieval feeds outdated passages; refresh and re-index the knowledge base."
+      "explain": "RAG runs retrieve, then augment, then generate. Retrieval quality bounds the whole pipeline, which is why you debug it first."
     },
     "outcome": "You can explain the RAG pattern, its failure modes, and when to choose it over fine-tuning.",
     "prereqs": [
       "ag_context_memory"
     ],
-    "next": "ag_security_injection"
+    "next": "ag_security_injection",
+    "diagram": "rag"
   },
   {
     "id": "ag_security_injection",

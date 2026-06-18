@@ -157,22 +157,43 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "A bug detector flags 90% of real bugs (catch rate 0.90) and flags 40% of clean code as buggy (false alarm 0.40). What is its discrimination?",
-      "choices": [
-        "1.30",
-        "0.90",
-        "0.50",
-        "0.40"
+      "type": "metric_lab",
+      "prompt": "This is a real confusion matrix. Change the counts and watch the catch rate, false alarm rate, and discrimination update live.",
+      "fields": [
+        {
+          "key": "tp",
+          "label": "True positives (real problems caught)",
+          "value": 90
+        },
+        {
+          "key": "fn",
+          "label": "False negatives (real problems missed)",
+          "value": 10
+        },
+        {
+          "key": "fp",
+          "label": "False positives (clean cases flagged)",
+          "value": 40
+        },
+        {
+          "key": "tn",
+          "label": "True negatives (clean cases passed)",
+          "value": 60
+        }
       ],
-      "answer": 2,
-      "explain": "Discrimination is catch rate minus false alarm rate: 0.90 minus 0.40 equals 0.50."
+      "question": "Adjust the counts so discrimination is at least 0.60, then check.",
+      "target": {
+        "metric": "discrimination",
+        "min": 0.6
+      },
+      "explain": "Discrimination = catch rate (TP/(TP+FN)) minus false alarm rate (FP/(FP+TN)). Catching more real problems or flagging fewer clean cases raises it."
     },
     "outcome": "You can compute discrimination and explain why catch rate alone is not enough.",
     "prereqs": [
       "eval_doer_not_grader"
     ],
-    "next": "eval_pre_registration"
+    "next": "eval_pre_registration",
+    "diagram": "confusion_matrix"
   },
   {
     "id": "eval_pre_registration",
