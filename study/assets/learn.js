@@ -2085,7 +2085,11 @@
 
   loadData()
     .then(function () {
-      window.addEventListener("hashchange", renderRoute);
+      window.addEventListener("hashchange", function () {
+        const toggle = document.getElementById("nav-toggle");
+        if (toggle) toggle.checked = false;  // close the mobile menu after navigating
+        renderRoute();
+      });
       renderRoute();
     })
     .catch(function (error) {

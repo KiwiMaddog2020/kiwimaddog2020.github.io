@@ -233,6 +233,13 @@ nav.top .links a {
 }
 nav.top .links a:hover { color: var(--accent); }
 
+/* Mobile hamburger: a no-JS checkbox toggle. On desktop the checkbox and burger
+   are removed and the links sit inline (unchanged). On narrow screens the links
+   collapse into a tap-to-open menu so the bar never wraps to a second line. */
+nav.top { position: relative; }
+nav.top .nav-toggle,
+nav.top .nav-burger { display: none; }
+
 /* Long-form typography */
 main { display: block; padding-bottom: 24px; }
 
@@ -548,7 +555,43 @@ footer a:hover { color: var(--accent); }
   h1 { font-size: 36px; }
   body.hub h1 { font-size: 32px; }
   h2 { font-size: 27px; }
-  nav.top { flex-wrap: wrap; row-gap: 10px; }
+  nav.top { flex-wrap: nowrap; align-items: center; }
+  nav.top .nav-toggle {
+    display: block; position: absolute; width: 1px; height: 1px;
+    margin: 0; opacity: 0; pointer-events: none;
+  }
+  nav.top .nav-burger {
+    display: inline-flex; align-items: center; justify-content: center;
+    margin-left: auto;
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    color: var(--text-2);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  nav.top .nav-burger:hover { color: var(--accent); }
+  nav.top .nav-burger .x { display: none; }
+  nav.top .nav-toggle:focus-visible ~ .nav-burger { outline: 2px solid var(--accent); outline-offset: 3px; }
+  nav.top .nav-toggle:checked ~ .nav-burger { color: var(--accent); }
+  nav.top .nav-toggle:checked ~ .nav-burger .bars { display: none; }
+  nav.top .nav-toggle:checked ~ .nav-burger .x { display: inline; }
+  nav.top .links {
+    display: none;
+    position: absolute; top: calc(100% + 6px); right: 0;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    margin: 0; padding: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    min-width: 172px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    z-index: 60;
+  }
+  nav.top .nav-toggle:checked ~ .links { display: flex; }
+  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 6px; text-align: right; }
+  nav.top .links a:hover { background: rgba(255, 255, 255, 0.04); }
   blockquote { padding: 16px 18px; }
   table { display: block; overflow-x: auto; }
 }
