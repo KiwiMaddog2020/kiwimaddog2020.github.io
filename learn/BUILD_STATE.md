@@ -53,8 +53,33 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   - breadth: +5 production lessons (RAG, prompt-injection/security w/ agent_trace,
     production observability, data quality + leakage, multimodal/MoE/distillation).
     44 -> 49 lessons; answers rebalanced to 25/24/25/25.
-- Round 3 (rate): IN FLIGHT (Codex + Gemini).
-- Now 49 lessons across 5 tracks; 49 exercises; 47-link resources library.
+- Round 3 (rate): Codex 76, Gemini 83. Codex: deepen exercises to applied formats,
+  more production breadth, diagrams; 5 more overclaim nuances; the new lessons orphaned
+  in prev/next nav. Gemini: same nav-orphan regression + small UX/a11y.
+- Round 3 (fix), committed + pushed live: threaded the next-chain to the 5 new lessons;
+  6 more accuracy nuances (byte/char models, FlashAttention, RAG-grounding-as-goal,
+  'a common' agent failure, CI semantics, multimodal common-thread); role=listitem on
+  spot-the-bug; clickable home crumb; bookmarkable home search; auto-complete on a
+  perfect lesson quiz; shuffle decks on load. Added ROADMAP.md (gap-to-88 ledger).
+- Round 4 (rate, FINAL): Codex 78 (pedagogy 21/breadth 15/concision 13/interactivity 9/
+  craft 12/links 8), Gemini 83 (pedagogy 22/breadth 18/concision 15/interactivity 12/
+  craft 11/links 5). NOTE: Gemini's 5/10 links is a verified FALSE NEGATIVE -- a fresh
+  curl of all 54 unique URLs returned 200 for every one; Gemini asserted dead-ness from
+  canonical-domain memory without fetching. Fair-link-adjusted Gemini ~86.
+
+## Final state (goal loop closed at round 4)
+
+- Score trajectory: Codex 70->73->76->78; Gemini 76->85->83->83. Both confirm the prose is
+  accurate (no factual errors) and dense/non-patronizing. The remaining gap to 88-both is
+  PRODUCT DEPTH, not correctness: applied interactive widgets (calculators/diagrams) and
+  more breadth -- a scoped v2 (see ROADMAP.md), not fixes.
+- EXIT rationale (per global CLAUDE.md anti-inflation): 4 rate->fix->rate rounds done; every
+  correctness/UX/a11y/breadth-fix item addressed; remaining work is a major build; the harsh
+  outlier's one disprovable claim (dead links) was refuted by a decorrelated ground-truth check.
+- LIVE: 49 lessons / 5 tracks / 49 interactive exercises / 47-link library / search /
+  flashcards / quizzes, at https://kiwimaddog2020.github.io/learn/. All links verified 200,
+  em-dash-free, JSON valid, learn.js node-check clean.
+- v2 to reach the 90s: ROADMAP.md (richer widgets, diagrams, classical-ML breadth, nav depth).
 
 ## Verify ledger (what was checked)
 
