@@ -1,10 +1,10 @@
 # Learn Center: build state (durable, resumable)
 
 Autonomous overnight build started 2026-06-17/18. Spec: [PLAN.md](PLAN.md). Home:
-`kiwimaddog2020.github.io/learn/`. Push live as built. Goal: >= 88 on the PLAN rubric via a doer
+`kiwimaddog2020.github.io/study/`. Push live as built. Goal: >= 88 on the PLAN rubric via a doer
 (Claude) != rater (Codex+Gemini) loop.
 
-LIVE: https://kiwimaddog2020.github.io/learn/
+LIVE: https://kiwimaddog2020.github.io/study/
 
 ## Phase status
 
@@ -77,7 +77,7 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   correctness/UX/a11y/breadth-fix item addressed; remaining work is a major build; the harsh
   outlier's one disprovable claim (dead links) was refuted by a decorrelated ground-truth check.
 - LIVE: 49 lessons / 5 tracks / 49 interactive exercises / 47-link library / search /
-  flashcards / quizzes, at https://kiwimaddog2020.github.io/learn/. All links verified 200,
+  flashcards / quizzes, at https://kiwimaddog2020.github.io/study/. All links verified 200,
   em-dash-free, JSON valid, learn.js node-check clean.
 - v2 to reach the 90s: ROADMAP.md (richer widgets, diagrams, classical-ML breadth, nav depth).
 
@@ -98,7 +98,7 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   file AND to tracks.json `lessons`.
 - Claude is the DOER (authors pedagogy, merges, verifies). Codex+Gemini are RATERS in the goal loop
   (never Claude). Verify agent output before commit; verify links resolve; push + check deploy each phase.
-- Preview: launch.json `learn-center` (port 8156, --directory .../learn).
+- Preview: launch.json `study` (port 8156, --directory .../study).
 
 ## v2 (interactive widgets + diagrams + breadth)
 
@@ -135,7 +135,7 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   links with last-verified dates, a global index/tag nav, and dedup of the few near-duplicate
   quiz/exercise pairs. See ROADMAP.md.
 - LIVE: 53 lessons / 5 tracks / 53 exercises (incl. 3 interactive labs + 4 ordering) / 6 diagrams /
-  57-link library, https://kiwimaddog2020.github.io/learn/. All links 200, JSON valid, node-check clean.
+  57-link library, https://kiwimaddog2020.github.io/study/. All links 200, JSON valid, node-check clean.
 
 ## v3 (checklist-gated: binary per-feature gate, not a 0-100 score)
 
@@ -177,4 +177,4 @@ each item against the LIVE site; disagreements resolved by ground truth (curl / 
   closed, not the v1/v2 score random-walk. The checklist gate worked exactly as Kevin intended.
 - v3 LIVE: 65 lessons / 5 tracks / 9 interactive labs (4 new: bootstrap, ROC, RAG, context-budget) +
   5 capstones / 6 diagrams / global index + resume + per-track mastery + per-claim sources, at
-  https://kiwimaddog2020.github.io/learn/. All 76 links 200, JSON valid, node-check clean, em-dash-free.
+  https://kiwimaddog2020.github.io/study/. All 76 links 200, JSON valid, node-check clean, em-dash-free.
