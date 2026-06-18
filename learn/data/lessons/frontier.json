@@ -668,5 +668,107 @@
       "fr_scaling_laws_emergence"
     ],
     "next": null
+  },
+  {
+    "id": "fr_beyond_text",
+    "track": "frontier",
+    "title": "Beyond text: multimodal, MoE, and distillation",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Frontier systems move past dense text-only transformers with multimodal inputs, sparse mixture-of-experts, and distillation.",
+    "body_html": "<p>The dense, text-only transformer is the starting point, not the whole frontier. Multimodal models learn a shared representation across text, images, and audio, so one model can describe an image, read a chart, or answer questions that mix words and pictures. The same attention machinery applies; the inputs are just encoded into a common space first.</p><p>Mixture-of-experts (MoE) changes how capacity scales. Instead of running every parameter on every token, a router sends each token to a few specialized expert sub-networks. The model can hold very many parameters while activating only a fraction per token, buying capacity without paying full compute for every token. The tradeoff is routing complexity and memory.</p><p>Distillation goes the other way, toward efficiency. A smaller student model is trained to mimic a larger teacher, capturing much of its behavior at a fraction of the serving cost. Each of these is a lever with a tradeoff: multimodality broadens inputs, MoE scales capacity per unit compute, and distillation trades a little quality for cheaper deployment. Frontier systems mix and match them.</p>",
+    "key_points": [
+      "Multimodal models share one representation space across text, images, and audio.",
+      "Mixture-of-experts routes each token to a few experts, scaling parameters without full per-token compute.",
+      "Distillation trains a smaller student to mimic a larger teacher for cheaper serving.",
+      "Each is a lever with a tradeoff; frontier systems combine them."
+    ],
+    "links": [
+      {
+        "title": "Learning Transferable Visual Models (CLIP)",
+        "url": "https://arxiv.org/abs/2103.00020",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "A foundational multimodal text-image model."
+      },
+      {
+        "title": "Switch Transformers (Mixture-of-Experts)",
+        "url": "https://arxiv.org/abs/2101.03961",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "Scaling parameters with sparse expert routing."
+      },
+      {
+        "title": "Distilling the Knowledge in a Neural Network",
+        "url": "https://arxiv.org/abs/1503.02531",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The original knowledge-distillation method."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What does a multimodal model share across modalities?",
+        "back": "A common representation space, so one model handles text, images, and audio together."
+      },
+      {
+        "front": "What does mixture-of-experts do?",
+        "back": "Routes each token to a few expert sub-networks, scaling parameters without full per-token compute."
+      },
+      {
+        "front": "What is distillation?",
+        "back": "Training a smaller student to mimic a larger teacher for cheaper serving at some quality cost."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A model has 100B parameters but activates only about 13B per token. What architecture is this?",
+        "level": "Advanced",
+        "choices": [
+          "A distilled student model.",
+          "A multimodal encoder.",
+          "A dense transformer.",
+          "A mixture-of-experts model with sparse routing."
+        ],
+        "answer": 3,
+        "explain": "Activating a fraction of parameters per token via routing is the defining trait of MoE."
+      },
+      {
+        "q": "You need to cut serving cost while keeping most of a large model's behavior. Which lever fits?",
+        "level": "Advanced",
+        "choices": [
+          "Distillation into a smaller student.",
+          "A larger context window.",
+          "A higher temperature.",
+          "Multimodality."
+        ],
+        "answer": 0,
+        "explain": "Distillation trades a little quality for much cheaper deployment."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You must answer questions that combine a paragraph of text and a bar chart image. What kind of model do you need?",
+      "choices": [
+        "A text-only transformer.",
+        "A multimodal model that shares a representation across text and images.",
+        "A mixture-of-experts router alone.",
+        "A distilled student of a text model."
+      ],
+      "answer": 1,
+      "explain": "Mixed text-and-image input requires a multimodal model with a shared representation space."
+    },
+    "source": {
+      "type": "paper",
+      "date": "2021-01",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
+    "outcome": "You can describe multimodal models, mixture-of-experts, and distillation and their tradeoffs.",
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
+    "next": null
   }
 ]

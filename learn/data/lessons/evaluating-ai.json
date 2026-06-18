@@ -48,24 +48,24 @@
         "q": "What does a model that grades its own output tend to reward?",
         "level": "Intermediate",
         "choices": [
-          "Shorter answers only.",
-          "Random outcomes.",
           "Strict task success.",
-          "Its own style, confidence, and shared assumptions."
+          "Its own style, confidence, and shared assumptions.",
+          "Shorter answers only.",
+          "Random outcomes."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Self-grading optimizes for what the model already likes, inflating the score."
       },
       {
         "q": "When using a model as a judge, why vary its family and prompt from the doer's?",
         "level": "Advanced",
         "choices": [
-          "So the judge does not share the doer's blind spots and failure modes.",
-          "To use more tokens.",
           "Because judges must always be larger.",
-          "To make the eval slower."
+          "To make the eval slower.",
+          "So the judge does not share the doer's blind spots and failure modes.",
+          "To use more tokens."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Decorrelating the judge from the doer is what keeps the score a measurement."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "You use the same model and prompt to both write answers and grade them, and the scores look great. What is the risk?",
       "choices": [
-        "No risk; matched models are fair.",
-        "Self-grading inflates scores by rewarding the model's own style and shared blind spots.",
         "The grader will be too harsh.",
-        "It only affects speed."
+        "It only affects speed.",
+        "No risk; matched models are fair.",
+        "Self-grading inflates scores by rewarding the model's own style and shared blind spots."
       ],
-      "answer": 1,
+      "answer": 3,
       "explain": "A grader that shares the doer's assumptions measures agreement, not task success."
     },
     "outcome": "You can explain why self-grading inflates results and how role separation fixes it.",
@@ -135,24 +135,24 @@
         "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
         "level": "Intermediate",
         "choices": [
-          "False alarms do not matter.",
-          "It is an excellent detector.",
           "Its discrimination is low (about 0.05), so it is close to flagging everything.",
-          "Its catch rate proves it works."
+          "Its catch rate proves it works.",
+          "False alarms do not matter.",
+          "It is an excellent detector."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Discrimination of 0.95 minus 0.90 is 0.05, near guessing."
       },
       {
         "q": "What must you always report alongside a detector's catch rate?",
         "level": "Intermediate",
         "choices": [
-          "The model's name.",
-          "The temperature.",
           "Only the token count.",
-          "The false alarm rate, so discrimination can be computed."
+          "The false alarm rate, so discrimination can be computed.",
+          "The model's name.",
+          "The temperature."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Without the false positive rate, the catch rate is uninterpretable."
       }
     ],
@@ -160,12 +160,12 @@
       "type": "predict_output",
       "prompt": "A bug detector flags 90% of real bugs (catch rate 0.90) and flags 40% of clean code as buggy (false alarm 0.40). What is its discrimination?",
       "choices": [
-        "0.50",
-        "0.40",
         "1.30",
-        "0.90"
+        "0.90",
+        "0.50",
+        "0.40"
       ],
-      "answer": 0,
+      "answer": 2,
       "explain": "Discrimination is catch rate minus false alarm rate: 0.90 minus 0.40 equals 0.50."
     },
     "outcome": "You can compute discrimination and explain why catch rate alone is not enough.",
@@ -223,24 +223,24 @@
         "q": "Why decide the success threshold before running the experiment?",
         "level": "Intermediate",
         "choices": [
-          "To slow down the experiment.",
-          "Because after seeing the data, almost any pattern can be narrated into a finding.",
           "Because thresholds are required by law.",
-          "To avoid using a metric."
+          "To avoid using a metric.",
+          "To slow down the experiment.",
+          "Because after seeing the data, almost any pattern can be narrated into a finding."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Pre-committing the rules prevents post-hoc storytelling."
       },
       {
         "q": "Your pre-registered effect does not clear its threshold. What is the honest move?",
         "level": "Intermediate",
         "choices": [
-          "Drop the experiment silently.",
-          "Lower the threshold until it passes.",
           "Report the null; a null reported honestly is a real finding.",
-          "Re-run until it passes by chance."
+          "Re-run until it passes by chance.",
+          "Drop the experiment silently.",
+          "Lower the threshold until it passes."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Honoring the pre-registered threshold is the whole point of pre-registration."
       }
     ],
@@ -248,12 +248,12 @@
       "type": "predict_output",
       "prompt": "After seeing the results, you pick the metric that makes your model look best. What did you violate?",
       "choices": [
-        "The noise floor.",
-        "Decorrelation.",
         "Nothing; pick whatever metric you like.",
-        "Pre-registration; choosing the metric after seeing data invites cherry-picking."
+        "Pre-registration; choosing the metric after seeing data invites cherry-picking.",
+        "The noise floor.",
+        "Decorrelation."
       ],
-      "answer": 3,
+      "answer": 1,
       "explain": "Deciding the metric and threshold before the run is what stops post-hoc storytelling."
     },
     "outcome": "You can pre-register a claim with a metric and threshold and honor a null result.",
@@ -311,24 +311,24 @@
         "q": "Two judges from the same model with the same prompt agree. How strong is that evidence?",
         "level": "Advanced",
         "choices": [
-          "Weak, because they share blind spots and can be wrong together.",
-          "Conclusive proof.",
           "Irrelevant to evaluation.",
-          "Very strong, because two judges agreed."
+          "Very strong, because two judges agreed.",
+          "Weak, because they share blind spots and can be wrong together.",
+          "Conclusive proof."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Correlated judges agreeing adds little; they can fail in the same direction."
       },
       {
         "q": "Why can a panel of strong judges still miss the answer on a frontier task?",
         "level": "Expert",
         "choices": [
-          "They were too slow.",
-          "They may all share the same capability gap, so consensus looks confident but is wrong.",
           "They used too few tokens.",
-          "Frontier tasks are always easy."
+          "Frontier tasks are always easy.",
+          "They were too slow.",
+          "They may all share the same capability gap, so consensus looks confident but is wrong."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Competence caps what any judge can recognize; shared gaps survive consensus."
       }
     ],
@@ -336,12 +336,12 @@
       "type": "predict_output",
       "prompt": "Three judges from the same model family, with the same prompt, all agree the answer is correct. How much extra confidence does their agreement give?",
       "choices": [
-        "None of them can judge at all.",
-        "A lot; three judges agreed.",
         "Little; correlated judges share blind spots, so they can be wrong together.",
-        "It is conclusive proof."
+        "It is conclusive proof.",
+        "None of them can judge at all.",
+        "A lot; three judges agreed."
       ],
-      "answer": 2,
+      "answer": 0,
       "explain": "Agreement only adds evidence when judges fail independently; same-family judges do not."
     },
     "outcome": "You can reason about judge decorrelation and the competence ceiling of an evaluation.",
@@ -399,24 +399,24 @@
         "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
         "level": "Advanced",
         "choices": [
-          "Honesty cannot be measured at all.",
-          "The metric was discrimination.",
           "The sample was too large.",
-          "Difficulty is a confound; the gap may be about the questions, not honesty."
+          "Difficulty is a confound; the gap may be about the questions, not honesty.",
+          "Honesty cannot be measured at all.",
+          "The metric was discrimination."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "An uncontrolled difference in difficulty can fully explain the result."
       },
       {
         "q": "What is the best habit for catching design-level confounds?",
         "level": "Expert",
         "choices": [
-          "Adversarially search for the alternative explanation before believing the conclusion.",
-          "Run the experiment only once.",
           "Use a single judge.",
-          "Trust a clean-looking result."
+          "Trust a clean-looking result.",
+          "Adversarially search for the alternative explanation before believing the conclusion.",
+          "Run the experiment only once."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Actively trying to break your own result surfaces tangled causes."
       }
     ],
@@ -424,12 +424,12 @@
       "type": "predict_output",
       "prompt": "An eval concludes model A 'follows instructions better' than B. You then learn A's prompts were all short and B's were all long and complex. What should you conclude?",
       "choices": [
-        "A is clearly better at following instructions.",
-        "Prompt complexity is a confound; the comparison cannot support the claim.",
         "B is better because its prompts were longer.",
-        "The result needs no further checking."
+        "The result needs no further checking.",
+        "A is clearly better at following instructions.",
+        "Prompt complexity is a confound; the comparison cannot support the claim."
       ],
-      "answer": 1,
+      "answer": 3,
       "explain": "Because prompt complexity differed with the model, it could explain the gap on its own."
     },
     "outcome": "You can spot confounds and demand a clean comparison before trusting a result.",
@@ -488,24 +488,24 @@
         "q": "Model A scores 72% and B scores 70% on the same 20 test items, and their separate intervals overlap. What is the right move?",
         "level": "Advanced",
         "choices": [
-          "Raise the temperature and rerun.",
-          "Conclude A is better, since 72 beats 70.",
           "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
-          "Conclude there is definitely no difference, because the intervals overlap."
+          "Conclude there is definitely no difference, because the intervals overlap.",
+          "Raise the temperature and rerun.",
+          "Conclude A is better, since 72 beats 70."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Overlapping separate intervals are inconclusive and conservative; the paired difference is the sensitive, correct test."
       },
       {
         "q": "Why use a bootstrap confidence interval?",
         "level": "Advanced",
         "choices": [
-          "To remove the need for data.",
-          "To pick the temperature.",
           "To make the score higher.",
-          "To estimate a plausible range for the true value with few assumptions."
+          "To estimate a plausible range for the true value with few assumptions.",
+          "To remove the need for data.",
+          "To pick the temperature."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Resampling quantifies how much the score could vary by chance."
       }
     ],
@@ -513,12 +513,12 @@
       "type": "predict_output",
       "prompt": "You are comparing two models on the SAME 50 test items. How should you test whether A really beats B?",
       "choices": [
-        "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
-        "Pick whichever has the higher raw score.",
         "Run each once and compare.",
-        "Check whether their separate confidence intervals overlap."
+        "Check whether their separate confidence intervals overlap.",
+        "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
+        "Pick whichever has the higher raw score."
       ],
-      "answer": 0,
+      "answer": 2,
       "explain": "Paired data calls for bootstrapping the difference; comparing separate intervals is conservative and ignores the pairing."
     },
     "outcome": "You can judge whether a score difference clears the noise floor using intervals.",
@@ -576,24 +576,24 @@
         "q": "A model changes its answer after a user objects. Why is that not automatically capitulation?",
         "level": "Advanced",
         "choices": [
-          "Because models never change answers.",
-          "Because the change could be rational updating on a good argument, not social deference.",
           "Because the user is always right.",
-          "Because capitulation does not exist."
+          "Because capitulation does not exist.",
+          "Because models never change answers.",
+          "Because the change could be rational updating on a good argument, not social deference."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Updating and deference look the same from outside, so the flip alone is ambiguous."
       },
       {
         "q": "How do you make pushback test deference rather than reasoning?",
         "level": "Expert",
         "choices": [
-          "Let the model grade itself.",
-          "Give pushback that carries strong new evidence.",
           "Give pushback that carries no real evidence, so any change is deference.",
-          "Only test easy questions."
+          "Only test easy questions.",
+          "Let the model grade itself.",
+          "Give pushback that carries strong new evidence."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Evidence-free pressure isolates social deference from rational updating."
       }
     ],
@@ -601,12 +601,12 @@
       "type": "predict_output",
       "prompt": "You test capitulation by pushing back on puzzles the model already solves at near 100% accuracy, and see almost no answer changes. What does this null most likely mean?",
       "choices": [
-        "Capitulation is impossible to study.",
-        "The model never had a correct answer.",
         "The model is provably immune to social pressure in all settings.",
-        "The task was too easy to detect capitulation; a clean model and an easy task look the same here."
+        "The task was too easy to detect capitulation; a clean model and an easy task look the same here.",
+        "Capitulation is impossible to study.",
+        "The model never had a correct answer."
       ],
-      "answer": 3,
+      "answer": 1,
       "explain": "On a mastered task, certainty suppresses capitulation, so the null does not isolate a clean model from an easy test."
     },
     "outcome": "You can design a capitulation test that separates deference from updating and read its nulls honestly.",
@@ -664,24 +664,24 @@
         "q": "Why does naming the boundaries of an eval increase trust?",
         "level": "Expert",
         "choices": [
-          "It tells an honest reader where the result applies and where it does not.",
-          "It hides the gaps.",
           "It removes the need for data.",
-          "It makes the eval look weaker."
+          "It makes the eval look weaker.",
+          "It tells an honest reader where the result applies and where it does not.",
+          "It hides the gaps."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "A finding with a clear boundary is more trustworthy than one pretending to have none."
       },
       {
         "q": "What is the mature stance on evaluation completeness?",
         "level": "Expert",
         "choices": [
-          "Achieve a perfect evaluation before shipping.",
-          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
           "Measure nothing and ship.",
-          "Trust automated evals fully."
+          "Trust automated evals fully.",
+          "Achieve a perfect evaluation before shipping.",
+          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Perfect evals do not exist; honest boundaries plus scheduled human checks do."
       }
     ],
@@ -689,17 +689,105 @@
       "type": "predict_output",
       "prompt": "Your evaluation never tested adversarial inputs. What should the report do?",
       "choices": [
-        "Delete the result.",
-        "Say nothing and let readers assume it was fine.",
         "List it in the not-measured ledger and schedule a human check.",
-        "Claim the model is robust anyway."
+        "Claim the model is robust anyway.",
+        "Delete the result.",
+        "Say nothing and let readers assume it was fine."
       ],
-      "answer": 2,
+      "answer": 0,
       "explain": "Naming the gap and scheduling a check is more trustworthy than an unstated boundary."
     },
     "outcome": "You can keep a not-measured ledger and turn its gaps into scheduled verification.",
     "prereqs": [
       "eval_confounds"
+    ],
+    "next": null
+  },
+  {
+    "id": "eval_production_observability",
+    "track": "evaluating-ai",
+    "title": "Evaluation in production",
+    "level": "Advanced",
+    "minutes": 5,
+    "summary": "Offline evals only cover known cases; production needs tracing, monitoring, and a feedback loop to catch drift and real failures.",
+    "body_html": "<p>An offline eval on a fixed test set tells you how the system does on cases you thought of. Production is different: inputs drift, users do unexpected things, and the costly failures are often the ones you did not anticipate. A system that scored well offline can still disappoint after launch, and without instrumentation you will not know why.</p><p>Observability is the fix. Trace each request end to end: the input, the retrieved context, the tool calls, and the final output. Log outcomes and monitor metrics over time so you can see distribution shift, regressions after a prompt or model change, and rare high-cost errors. The point is to make production behavior visible rather than inferred.</p><p>Then close the loop. Sample real traffic, label it, and feed it back into your eval set so the offline suite tracks reality. Online signals such as task success, user corrections, or thumbs complement offline scores. Evaluation is not a one-time gate before launch; it is a standing practice that production data continually feeds.</p>",
+    "key_points": [
+      "Offline evals cover anticipated cases; production has drift and surprises.",
+      "Trace each request (input, context, tool calls, output) and monitor over time.",
+      "Watch for distribution shift, post-change regressions, and rare high-cost failures.",
+      "Close the loop: sample and label production traffic back into the eval set."
+    ],
+    "links": [
+      {
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "Treats evaluation as a standing, production-fed practice."
+      },
+      {
+        "title": "Anthropic: Define Success and Build Evaluations",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/define-success",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Designing criteria you can monitor in production."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Why are offline evals not enough?",
+        "back": "They only cover anticipated cases; production has drift and unexpected inputs."
+      },
+      {
+        "front": "What does observability capture for an LLM system?",
+        "back": "End-to-end traces: input, retrieved context, tool calls, and output, monitored over time."
+      },
+      {
+        "front": "How do you close the evaluation loop?",
+        "back": "Sample and label production traffic and feed it back into the offline eval set."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A system scores 95% offline but users complain after launch. Most likely cause?",
+        "level": "Advanced",
+        "choices": [
+          "The offline score was faked.",
+          "Distribution shift: production inputs differ from the eval set.",
+          "The model got smaller.",
+          "Users are wrong."
+        ],
+        "answer": 1,
+        "explain": "Real inputs often differ from a fixed test set; trace and sample production to find out how."
+      },
+      {
+        "q": "What turns evaluation into a standing practice rather than a launch gate?",
+        "level": "Advanced",
+        "choices": [
+          "Raising the temperature.",
+          "Running it once before release.",
+          "Feeding sampled, labeled production traffic back into the eval set.",
+          "Using a larger model."
+        ],
+        "answer": 2,
+        "explain": "A feedback loop keeps the offline suite tracking real-world behavior."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "After a prompt change, offline scores are unchanged but production error reports spike. What is the most useful next step?",
+      "choices": [
+        "Raise the temperature.",
+        "Roll forward and hope it settles.",
+        "Ignore it; offline scores are unchanged.",
+        "Trace failing production requests and add those cases to the eval set."
+      ],
+      "answer": 3,
+      "explain": "Production traces reveal failures the fixed offline set missed; capture them to make the suite reflect reality."
+    },
+    "outcome": "You can explain why production evaluation needs tracing, monitoring, and a feedback loop.",
+    "prereqs": [
+      "eval_not_measured_ledger"
     ],
     "next": null
   }

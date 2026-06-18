@@ -48,24 +48,24 @@
         "q": "What is the central skill of productive vibe coding?",
         "level": "Beginner",
         "choices": [
-          "Trusting the model's output without review.",
           "Avoiding tests.",
           "Typing faster than the model.",
-          "Steering: precise intent, small reviewable units, and verification."
+          "Steering: precise intent, small reviewable units, and verification.",
+          "Trusting the model's output without review."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Steering and verification are what keep speed from costing correctness."
       },
       {
         "q": "Who owns the product contract and release risk when vibe coding?",
         "level": "Beginner",
         "choices": [
-          "The human; the model is a fast collaborator, not the final authority.",
           "Nobody.",
           "The user of the app.",
-          "The model."
+          "The model.",
+          "The human; the model is a fast collaborator, not the final authority."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "The model writes plausibly but does not own correctness or risk."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "You accept an AI-written patch without reading it because it 'looks right'. What responsibility did you skip?",
       "choices": [
-        "None; the model owns correctness.",
         "Review and verification; you still own the result.",
         "Writing the prompt.",
-        "Choosing the model."
+        "Choosing the model.",
+        "None; the model owns correctness."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "Vibe coding speeds you up but keeps design, review, and acceptance human-owned."
     },
     "outcome": "You can describe what vibe coding is and where human responsibility stays.",
@@ -141,24 +141,24 @@
         "q": "What most distinguishes a CLI coding agent from inline completion?",
         "level": "Beginner",
         "choices": [
-          "It cannot edit files.",
           "It uses a different programming language.",
           "It can change many files and run commands in a loop before stopping.",
-          "It never makes mistakes."
+          "It never makes mistakes.",
+          "It cannot edit files."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "The difference is how much it does autonomously between your reviews."
       },
       {
         "q": "How should you choose a coding tool?",
         "level": "Beginner",
         "choices": [
-          "By which has the most features.",
           "Always pick the most autonomous one.",
           "By which is newest.",
-          "By fit: match the tool's autonomy to how well-specified and reversible the task is."
+          "By fit: match the tool's autonomy to how well-specified and reversible the task is.",
+          "By which has the most features."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Fit to the task beats hype; autonomy should match specification and reversibility."
       }
     ],
@@ -166,12 +166,12 @@
       "type": "predict_output",
       "prompt": "You need one small local edit and want to learn as you go. Which tool tier fits best?",
       "choices": [
-        "Inline completion or a chat assistant for a small, local change.",
         "A multi-agent swarm.",
         "None; do it without any AI.",
-        "A fully autonomous CLI agent that edits many files."
+        "A fully autonomous CLI agent that edits many files.",
+        "Inline completion or a chat assistant for a small, local change."
       ],
-      "answer": 0,
+      "answer": 3,
       "explain": "Match tool autonomy to the task; a small local edit does not need a multi-file agent."
     },
     "outcome": "You can categorize coding tools by interaction model and pick one to fit a task.",
@@ -229,24 +229,24 @@
         "q": "Why map one prompt to one reviewable change?",
         "level": "Beginner",
         "choices": [
-          "To use more tokens.",
           "Because small, checkable steps are easier to verify and revert than a large opaque diff.",
           "Because models cannot make big changes.",
-          "To avoid using tools."
+          "To avoid using tools.",
+          "To use more tokens."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Reviewability is the goal; small units make it achievable."
       },
       {
         "q": "What is the purpose of stating non-goals in a coding prompt?",
         "level": "Beginner",
         "choices": [
-          "To raise the temperature.",
           "To make the prompt longer.",
           "To protect nearby code from opportunistic, unrequested edits.",
-          "To confuse the model."
+          "To confuse the model.",
+          "To raise the temperature."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Boundaries keep the change inside the scope you intended."
       }
     ],
@@ -324,24 +324,24 @@
         "q": "Your prompts keep producing code that ignores your conventions. Best fix?",
         "level": "Intermediate",
         "choices": [
-          "Ask for more code at once.",
           "Switch to a smaller model.",
           "Raise the temperature.",
-          "Include a short example of existing code and name the libraries and style to use."
+          "Include a short example of existing code and name the libraries and style to use.",
+          "Ask for more code at once."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "A concrete example and named constraints give the model your context to match."
       },
       {
         "q": "Why ask for the test alongside the implementation?",
         "level": "Intermediate",
         "choices": [
-          "It turns a plausible draft into something you can immediately verify.",
           "It makes the model slower.",
           "It replaces the need to read the code.",
-          "Tests are required by law."
+          "Tests are required by law.",
+          "It turns a plausible draft into something you can immediately verify."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Requesting the check yields the acceptance criteria in the same pass."
       }
     ],
@@ -412,24 +412,24 @@
         "q": "What is the main benefit of reviewing a plan before code exists?",
         "level": "Intermediate",
         "choices": [
-          "It makes the model write faster.",
           "You catch a misread requirement while it still costs a sentence to fix.",
           "It removes the need for tests.",
-          "It guarantees correct code."
+          "It guarantees correct code.",
+          "It makes the model write faster."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Correcting a plan is far cheaper than unwinding a wrong implementation."
       },
       {
         "q": "How does plan-first convert an intimidating change into a safe one?",
         "level": "Intermediate",
         "choices": [
-          "By using a larger model.",
           "By doing it all in one diff.",
           "By turning agreed steps into a sequence of small, verified changes.",
-          "By skipping verification."
+          "By skipping verification.",
+          "By using a larger model."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Stepwise execution against an agreed plan keeps each change reviewable."
       }
     ],
@@ -518,36 +518,36 @@
         "q": "A generated function passes the sample case. What is the next best move?",
         "level": "Intermediate",
         "choices": [
-          "Accept the patch because the model already saw the repository.",
           "Ask the model whether the code is correct and accept a confident answer.",
           "Rewrite the whole module manually before looking at the patch.",
-          "Check the contract and run or add a focused test for the likely edge case."
+          "Check the contract and run or add a focused test for the likely edge case.",
+          "Accept the patch because the model already saw the repository."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "The sample case is a clue, not acceptance. Verify the contract and the risky edge."
       },
       {
         "q": "Which review question is most useful for AI-written code?",
         "level": "Intermediate",
         "choices": [
-          "What invariant could this patch violate while still passing the happy path?",
           "Could a larger model have written it faster?",
           "Does the code look idiomatic?",
-          "Did the model explain it fluently?"
+          "Did the model explain it fluently?",
+          "What invariant could this patch violate while still passing the happy path?"
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Generated code often handles the visible example while missing the invariant."
       },
       {
         "q": "When should you ask the model to explain a suspicious line?",
         "level": "Intermediate",
         "choices": [
-          "Before reading the code, so it can frame the review.",
           "After you have a specific question or hypothesis to test.",
           "Only after merging, so you do not slow down.",
-          "Never, because explanations from models cannot be useful."
+          "Never, because explanations from models cannot be useful.",
+          "Before reading the code, so it can frame the review."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "A specific question lets the explanation support your review instead of replacing it."
       }
     ],
@@ -619,24 +619,24 @@
         "q": "Why does pasting only the error message produce weak AI debugging?",
         "level": "Intermediate",
         "choices": [
-          "It uses too many tokens.",
           "Models cannot read errors.",
           "Without a repro, the code, and expected behavior, the model speculates instead of reasoning.",
-          "Error messages are always wrong."
+          "Error messages are always wrong.",
+          "It uses too many tokens."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Evidence turns guessing into reasoning about the actual cause."
       },
       {
         "q": "An AI fix makes the error disappear. What should you confirm?",
         "level": "Intermediate",
         "choices": [
-          "That the code is shorter.",
           "That the model is confident.",
           "Nothing; a gone error means done.",
-          "That the fix addresses the identified cause, then add a regression test."
+          "That the fix addresses the identified cause, then add a regression test.",
+          "That the code is shorter."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Fixing the mechanism and adding a test prevents a silent return."
       }
     ],
@@ -708,24 +708,24 @@
         "q": "What is the real danger when reviewing AI-written code?",
         "level": "Advanced",
         "choices": [
-          "Clean, fluent code that quietly violates an invariant the happy path never exercises.",
           "Code with too many comments.",
           "Code that is too short.",
-          "Obviously ugly code you catch on sight."
+          "Obviously ugly code you catch on sight.",
+          "Clean, fluent code that quietly violates an invariant the happy path never exercises."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Fluency masks the quiet invariant violation, which is the hard case to catch."
       },
       {
         "q": "What should drive your reading of generated code?",
         "level": "Advanced",
         "choices": [
-          "Whether it looks idiomatic.",
           "Whether it actually guarantees the contract on the edges.",
           "How long it is.",
-          "How confident the comments sound."
+          "How confident the comments sound.",
+          "Whether it looks idiomatic."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Edges and invariants, not style, decide correctness."
       }
     ],
@@ -797,24 +797,24 @@
         "q": "What best describes expert-level vibe coding?",
         "level": "Expert",
         "choices": [
-          "Always rewriting the model's output.",
           "Automating as much as technically possible.",
           "Calibrated delegation: routing routine work to the model and consequential work to yourself.",
-          "Never using AI for code."
+          "Never using AI for code.",
+          "Always rewriting the model's output."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "The skill is judgment about what to delegate, not the amount of automation."
       },
       {
         "q": "You have reprompted three times and the model still cannot fix a subtle bug. Best move?",
         "level": "Expert",
         "choices": [
-          "Accept the broken code.",
           "Switch to a larger model and retry indefinitely.",
           "Reprompt five more times.",
-          "Take the wheel: write the hard part yourself, then hand back the routine parts."
+          "Take the wheel: write the hard part yourself, then hand back the routine parts.",
+          "Accept the broken code."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Recognizing the unreachable-fix loop early and taking over saves the most time."
       }
     ],
@@ -822,12 +822,12 @@
       "type": "predict_output",
       "prompt": "You have reprompted three times and the model still cannot fix a subtle concurrency bug. Best move?",
       "choices": [
-        "Take the wheel: write the hard part yourself, then hand back the routine parts.",
         "Ship the broken code.",
         "Switch models and retry indefinitely.",
-        "Reprompt five more times."
+        "Reprompt five more times.",
+        "Take the wheel: write the hard part yourself, then hand back the routine parts."
       ],
-      "answer": 0,
+      "answer": 3,
       "explain": "Recognizing the unreachable-fix loop early and taking over is faster than more reprompts."
     },
     "outcome": "You can decide what to delegate to a coding model and when to take over yourself.",

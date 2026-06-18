@@ -48,24 +48,24 @@
         "q": "What distinguishes a learned model from an ordinary program?",
         "level": "Beginner",
         "choices": [
+          "Its behavior is controlled by weights fitted to data rather than hand-written rules.",
           "It runs faster than hand-written code.",
           "It never makes mistakes once trained.",
-          "It understands inputs the way a person does.",
-          "Its behavior is controlled by weights fitted to data rather than hand-written rules."
+          "It understands inputs the way a person does."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "The defining trait is learned parameters, not speed, infallibility, or understanding."
       },
       {
         "q": "Why is calling a model a fitted function more useful than calling it magic?",
         "level": "Beginner",
         "choices": [
+          "Because it sounds more technical.",
           "Because a fitted function has a predictable failure model: it degrades away from its training data.",
           "Because functions are always correct.",
-          "Because it means the model has no weights.",
-          "Because it sounds more technical."
+          "Because it means the model has no weights."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "The point is predictability of failure, which magic cannot give you."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "A classifier was trained only on photos of golden retrievers labeled 'dog'. You show it a husky. What is the safest expectation?",
       "choices": [
+        "It will refuse to answer.",
         "It will classify the husky correctly because training lowered the loss.",
         "It may be unreliable, because the husky is outside the data it was fitted on.",
-        "It cannot output anything unless 'husky' is in the prompt.",
-        "It will refuse to answer."
+        "It cannot output anything unless 'husky' is in the prompt."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "A model is a function fitted to its training data; performance degrades as inputs move away from that data."
     },
     "outcome": "You can explain what a model is and why its failures are predictable.",
@@ -134,24 +134,24 @@
         "q": "Why is the activation function essential to a neural network?",
         "level": "Beginner",
         "choices": [
+          "It stores the model's weights.",
           "It replaces the need for data.",
           "It makes training faster.",
-          "Without it, stacked layers reduce to one linear function and cannot fit curved patterns.",
-          "It stores the model's weights."
+          "Without it, stacked layers reduce to one linear function and cannot fit curved patterns."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Nonlinearity is what gives depth its expressive power."
       },
       {
         "q": "What is the practical meaning of depth in a network?",
         "level": "Beginner",
         "choices": [
+          "Later layers can compose earlier features into more abstract representations.",
           "Depth removes the need for training.",
           "Depth only affects memory usage.",
-          "More layers always means better accuracy.",
-          "Later layers can compose earlier features into more abstract representations."
+          "More layers always means better accuracy."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Depth buys hierarchical composition of features, not guaranteed accuracy."
       }
     ],
@@ -159,12 +159,12 @@
       "type": "predict_output",
       "prompt": "You stack ten linear layers with NO activation function between them. What can the network represent?",
       "choices": [
+        "Far more than one layer, because depth always adds power.",
         "Only what a single linear layer can, since without nonlinearity the stack collapses.",
         "Nothing; it cannot run.",
-        "Any function, because it is deep.",
-        "Far more than one layer, because depth always adds power."
+        "Any function, because it is deep."
       ],
-      "answer": 0,
+      "answer": 1,
       "explain": "Without a nonlinearity, composed linear layers reduce algebraically to one linear function."
     },
     "outcome": "You can describe how layers compose features and why nonlinearity matters.",
@@ -222,24 +222,24 @@
         "q": "What is backpropagation responsible for?",
         "level": "Beginner",
         "choices": [
+          "Serving the model in production.",
           "Choosing the model architecture.",
           "Computing the gradient of the loss with respect to every weight.",
-          "Collecting the training data.",
-          "Serving the model in production."
+          "Collecting the training data."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Backprop computes gradients; everything else is a separate concern."
       },
       {
         "q": "A model's loss keeps bouncing up and down and never settles. What is a likely cause?",
         "level": "Intermediate",
         "choices": [
+          "The model has too few weights.",
           "Backpropagation is disabled.",
           "The data is too clean.",
-          "The learning rate is too high, so steps overshoot the minimum.",
-          "The model has too few weights."
+          "The learning rate is too high, so steps overshoot the minimum."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "An oversized learning rate causes the descent to overshoot and oscillate."
       }
     ],
@@ -247,12 +247,12 @@
       "type": "predict_output",
       "prompt": "You set the learning rate very high and start training. What is the most likely result?",
       "choices": [
+        "The loss oscillates wildly or diverges to infinity.",
         "Training finishes instantly with a perfect model.",
         "Nothing changes, because the learning rate has no effect.",
-        "The loss decreases smoothly to zero.",
-        "The loss oscillates wildly or diverges to infinity."
+        "The loss decreases smoothly to zero."
       ],
-      "answer": 3,
+      "answer": 0,
       "explain": "Too large a step overshoots the minimum, so the loss bounces or blows up rather than settling."
     },
     "outcome": "You can explain how a model learns from data and what the learning rate does.",
@@ -310,24 +310,24 @@
         "q": "Training loss is near zero but the model performs poorly on new inputs. What is happening?",
         "level": "Intermediate",
         "choices": [
+          "Underfitting.",
           "Overfitting: the model memorized the training set instead of generalizing.",
           "The learning rate is too small.",
-          "The model has too many layers to train.",
-          "Underfitting."
+          "The model has too many layers to train."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Low train loss with poor new-data performance is the signature of overfitting."
       },
       {
         "q": "Why hold out a validation set?",
         "level": "Intermediate",
         "choices": [
+          "Because backpropagation requires it.",
           "To make training faster.",
           "To estimate performance on data the model did not train on.",
-          "To increase the model's capacity.",
-          "Because backpropagation requires it."
+          "To increase the model's capacity."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Validation data approximates the deployment distribution the model has not seen."
       }
     ],
@@ -335,12 +335,12 @@
       "type": "predict_output",
       "prompt": "During training, training loss keeps falling but validation loss has started rising. What should you conclude?",
       "choices": [
+        "The learning rate is too low.",
         "The validation set is unnecessary.",
         "The model is underfitting and needs more capacity.",
-        "The model is starting to overfit; consider early stopping or regularization.",
-        "The learning rate is too low."
+        "The model is starting to overfit; consider early stopping or regularization."
       ],
-      "answer": 2,
+      "answer": 3,
       "explain": "A falling train loss with a rising validation loss is the canonical overfitting signal."
     },
     "outcome": "You can diagnose overfitting versus underfitting and name fixes for each.",
@@ -398,24 +398,24 @@
         "q": "Why might a long, rare word cost more tokens than a short common one?",
         "level": "Intermediate",
         "choices": [
+          "Rare or long words are split into several subword tokens.",
           "Long words are always one token.",
           "The model spells out each letter as a token.",
-          "Token count depends only on language, not the word.",
-          "Rare or long words are split into several subword tokens."
+          "Token count depends only on language, not the word."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Tokenizers break uncommon words into multiple subword pieces."
       },
       {
         "q": "What property makes embeddings useful for semantic search?",
         "level": "Intermediate",
         "choices": [
+          "They compress text to save disk space.",
           "Similar meanings map to nearby vectors, so closeness approximates relatedness.",
           "They convert text to lowercase.",
-          "They remove all punctuation.",
-          "They compress text to save disk space."
+          "They remove all punctuation."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Search ranks by vector distance, which tracks semantic similarity."
       }
     ],
@@ -423,12 +423,12 @@
       "type": "predict_output",
       "prompt": "In a good word-embedding space, the vector 'king' minus 'man' plus 'woman' lands nearest to which word?",
       "choices": [
+        "apple",
         "throne",
         "queen",
-        "king",
-        "apple"
+        "king"
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "Embeddings place related meanings so that analogy directions roughly add up; this classic example lands near 'queen'."
     },
     "outcome": "You can explain tokens, why cost scales with them, and what embeddings encode.",
@@ -493,24 +493,24 @@
         "q": "What problem does self-attention solve for language?",
         "level": "Intermediate",
         "choices": [
+          "It compresses the model to fewer weights.",
           "It guarantees the output is factually correct.",
           "It removes the need for training data.",
-          "It lets each token draw on the most relevant other tokens, capturing long-range relationships.",
-          "It compresses the model to fewer weights."
+          "It lets each token draw on the most relevant other tokens, capturing long-range relationships."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Attention routes information between related tokens regardless of distance."
       },
       {
         "q": "In attention, what is compared to produce the weights?",
         "level": "Advanced",
         "choices": [
+          "Each token's query against every token's key.",
           "Each token's value against the loss.",
           "The learning rate against the batch size.",
-          "Two random tokens chosen each step.",
-          "Each token's query against every token's key."
+          "Two random tokens chosen each step."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Query-key comparisons produce the attention weights that combine the values."
       }
     ],
@@ -518,12 +518,12 @@
       "type": "predict_output",
       "prompt": "While a decoder-only LLM generates text, can the token at position 5 attend to the token at position 9?",
       "choices": [
+        "Yes, every token attends to every other token.",
         "No, causal masking blocks attending to later tokens.",
         "Only if temperature is high.",
-        "Only in the first layer.",
-        "Yes, every token attends to every other token."
+        "Only in the first layer."
       ],
-      "answer": 0,
+      "answer": 1,
       "explain": "Text-generating LLMs use a causal mask, so a token attends only to itself and earlier tokens."
     },
     "outcome": "You can explain attention and why the transformer enabled modern LLMs.",
@@ -581,24 +581,24 @@
         "q": "Why is fine-tuning much cheaper than pretraining?",
         "level": "Advanced",
         "choices": [
+          "It does not change any weights.",
           "It uses a larger dataset than pretraining.",
           "It adjusts an already-capable model on a smaller, targeted dataset.",
-          "It skips backpropagation.",
-          "It does not change any weights."
+          "It skips backpropagation."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Fine-tuning starts from a trained base, so it needs far less data and compute."
       },
       {
         "q": "What does the preference-tuning stage primarily shape?",
         "level": "Advanced",
         "choices": [
+          "The tokenizer.",
           "The size of the context window.",
           "The model's raw factual knowledge.",
-          "Tone, helpfulness, and safety, by optimizing toward preferred responses.",
-          "The tokenizer."
+          "Tone, helpfulness, and safety, by optimizing toward preferred responses."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "RLHF and similar methods align behavior, not raw capability."
       }
     ],
@@ -606,12 +606,12 @@
       "type": "predict_output",
       "prompt": "You have a strong base model and want it to follow instructions in a support chat. What is the cheapest effective step?",
       "choices": [
+        "Instruction fine-tune the base model on curated request-response examples.",
         "Raise the temperature.",
         "Add more tokens to every prompt forever.",
-        "Pretrain a new model from scratch.",
-        "Instruction fine-tune the base model on curated request-response examples."
+        "Pretrain a new model from scratch."
       ],
-      "answer": 3,
+      "answer": 0,
       "explain": "Fine-tuning adapts an already-capable base cheaply; pretraining from scratch is far more expensive."
     },
     "outcome": "You can describe the pretraining, fine-tuning, and preference-tuning pipeline.",
@@ -669,24 +669,24 @@
         "q": "Why does the same prompt sometimes produce different answers?",
         "level": "Intermediate",
         "choices": [
+          "The model's weights change between runs.",
           "Each token is sampled from a probability distribution, so runs can differ.",
           "The prompt is secretly edited.",
-          "The model retrains on every request.",
-          "The model's weights change between runs."
+          "The model retrains on every request."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Sampling introduces variation unless you force greedy decoding."
       },
       {
         "q": "You need maximally consistent, repeatable output. What setting helps most?",
         "level": "Intermediate",
         "choices": [
+          "More layers.",
           "A very high temperature.",
           "A very low temperature (near zero), approaching greedy decoding.",
-          "A larger vocabulary.",
-          "More layers."
+          "A larger vocabulary."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Low temperature concentrates probability on the top token, reducing variation."
       }
     ],
@@ -694,12 +694,12 @@
       "type": "predict_output",
       "prompt": "You raise temperature from 0.2 to 1.5 for a factual question-answering task. What is the likely effect?",
       "choices": [
+        "Faster generation with no quality change.",
         "The model stops sampling entirely.",
         "More consistent, focused answers.",
-        "More varied and creative output, with a higher chance of off-target or wrong answers.",
-        "Faster generation with no quality change."
+        "More varied and creative output, with a higher chance of off-target or wrong answers."
       ],
-      "answer": 2,
+      "answer": 3,
       "explain": "Higher temperature flattens the distribution, adding diversity at the cost of reliability."
     },
     "outcome": "You can choose sampling settings to match a task's need for reliability or diversity.",
@@ -757,24 +757,24 @@
         "q": "In a long conversation, the model stops referencing something you said at the start. Most likely cause?",
         "level": "Beginner",
         "choices": [
+          "The early tokens fell outside the context window.",
           "The temperature was too low.",
           "The model needs retraining.",
-          "The model deleted the information on purpose.",
-          "The early tokens fell outside the context window."
+          "The model deleted the information on purpose."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Once content scrolls past the window, the model cannot see it."
       },
       {
         "q": "Why do retrieval systems fetch only the most relevant passages instead of the whole document?",
         "level": "Intermediate",
         "choices": [
+          "To hide information from the model.",
           "Because context is a finite, costly budget that should hold what matters most.",
           "Because models cannot read documents at all.",
-          "To slow the model down.",
-          "To hide information from the model."
+          "To slow the model down."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Spending the limited window on the most relevant content gives better answers per token."
       }
     ],
@@ -782,17 +782,105 @@
       "type": "predict_output",
       "prompt": "A 200-page document is far larger than the model's context window. What is the right approach?",
       "choices": [
+        "Ask the model to memorize it first.",
         "Paste the whole document and hope it fits.",
         "Chunk it and retrieve the most relevant passages for each question.",
-        "Lower the temperature so it fits.",
-        "Ask the model to memorize it first."
+        "Lower the temperature so it fits."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "Context is finite, so chunk the document and spend the budget on the most relevant passages."
     },
     "outcome": "You can explain the context window and why it governs memory, chunking, and retrieval.",
     "prereqs": [
       "fnd_what_is_a_model"
+    ],
+    "next": null
+  },
+  {
+    "id": "fnd_data_quality",
+    "track": "foundations",
+    "title": "Data quality and leakage",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "A model is only as good as its data; quality, coverage, and especially leakage matter more than clever architecture.",
+    "body_html": "<p>It is tempting to focus on the model, but data usually decides the outcome. Noisy or inconsistent labels, duplicates, and biased coverage cap performance no matter how good the architecture is. The unglamorous work of cleaning, deduplicating, and balancing data often beats a fancier model on the same data.</p><p>The silent killer is data leakage: information from the test set, or from the future, sneaking into training. When it happens, evaluation scores look excellent and then collapse in production, because the model was effectively graded on data it had already seen. Leakage hides in subtle places: the same user or record in both train and test, a feature that encodes the label, or a random split of time-ordered data.</p><p>The defenses are concrete. Deduplicate between train and test, and split by time or by entity when the real task is to generalize to new periods or new users, not a random row. Check that labels are consistent and that the data covers the inputs you will actually see, because a model is unreliable wherever its training data was thin.</p>",
+    "key_points": [
+      "Data quality and coverage often matter more than model architecture.",
+      "Leakage is information from the test set or the future entering training; it inflates scores then collapses in production.",
+      "Dedup train and test, and split by time or entity when that matches the real task.",
+      "A model is unreliable on input regions its training data underrepresents."
+    ],
+    "links": [
+      {
+        "title": "An Introduction to Statistical Learning",
+        "url": "https://www.statlearning.com/",
+        "level": "Intermediate",
+        "kind": "course",
+        "note": "Foundations of train/test discipline and generalization."
+      },
+      {
+        "title": "Google: Machine Learning Crash Course",
+        "url": "https://developers.google.com/machine-learning/crash-course",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Practical guidance on data, splits, and fairness."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What often matters more than model architecture?",
+        "back": "Data quality, coverage, and the absence of leakage."
+      },
+      {
+        "front": "What is data leakage?",
+        "back": "Information from the test set or the future entering training, inflating scores that then collapse in production."
+      },
+      {
+        "front": "When should you split by time or entity instead of randomly?",
+        "back": "When the real task is to generalize to new periods or new users, not a random row."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A model scores 99% in testing but fails in production. You find the same customers in both train and test sets. What happened?",
+        "level": "Intermediate",
+        "choices": [
+          "The temperature was wrong.",
+          "The test set was too large.",
+          "The model is too small.",
+          "Data leakage: overlapping train and test inflated the score."
+        ],
+        "answer": 3,
+        "explain": "Shared records across splits let the model be graded on data it trained on; split by entity."
+      },
+      {
+        "q": "Why split time-ordered data by time rather than randomly?",
+        "level": "Advanced",
+        "choices": [
+          "Because the real task is predicting the future, and a random split leaks future information.",
+          "To use less data.",
+          "Because random splits are illegal.",
+          "To make training faster."
+        ],
+        "answer": 0,
+        "explain": "A random split lets future rows train the model, leaking information it would not have in production."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A churn model includes a feature 'account_closed_date'. It scores almost perfectly in testing. What should you suspect?",
+      "choices": [
+        "The model is simply excellent.",
+        "Target leakage: the feature encodes the outcome you are predicting.",
+        "The learning rate is too high.",
+        "The data set is too small."
+      ],
+      "answer": 1,
+      "explain": "A feature that is only known after the outcome leaks the label; near-perfect scores are a red flag, not a triumph."
+    },
+    "outcome": "You can spot data-quality problems and leakage that inflate scores before deployment.",
+    "prereqs": [
+      "fnd_loss_overfitting"
     ],
     "next": null
   }
