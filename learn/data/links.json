@@ -33,5 +33,5 @@
   {"title":"Training Compute-Optimal LLMs (Chinchilla)","url":"https://arxiv.org/abs/2203.15556","track":"frontier","level":"Advanced","kind":"paper","note":"The scaling laws balancing parameters and training tokens.","start_here":false},
   {"title":"Constitutional AI","url":"https://arxiv.org/abs/2212.08073","track":"frontier","level":"Advanced","kind":"paper","note":"Aligning model behavior with an AI constitution.","start_here":false},
   {"title":"Emergent Abilities of Large Language Models","url":"https://arxiv.org/abs/2206.07682","track":"frontier","level":"Intermediate","kind":"paper","note":"How complex skills appear at scale boundaries.","start_here":false},
-  {"title":"OpenAI: Learning to Reason with LLMs","url":"https://openai.com/index/learning-to-reason-with-llms/","track":"frontier","level":"Intermediate","kind":"article","note":"How RL-trained chain-of-thought powers reasoning models.","start_here":false}
+  {"title":"Scaling LLM Test-Time Compute Optimally","url":"https://arxiv.org/abs/2408.03314","track":"frontier","level":"Intermediate","kind":"paper","note":"When spending more compute at inference beats a larger model.","start_here":false}
 ]

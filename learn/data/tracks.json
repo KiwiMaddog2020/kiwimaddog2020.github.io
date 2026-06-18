@@ -42,6 +42,6 @@
     "level_range": "Advanced to Expert",
     "blurb": "Track frontier concepts with source discipline: transformers, alignment, interpretability, evals, and test-time compute.",
     "icon": "paper",
-    "lessons": ["fr_attention_stub"]
+    "lessons": ["fr_scaling_laws_emergence", "fr_rlhf_rlaif_alignment", "fr_reasoning_test_time_compute", "fr_interpretability", "fr_evals_benchmarks", "fr_capabilities_limits", "fr_research_landscape"]
   }
 ]
