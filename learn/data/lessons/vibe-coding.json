@@ -285,14 +285,14 @@
     "links": [
       {
         "title": "Anthropic: Prompt Engineering Overview",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Concrete techniques: context, examples, and constraints."
       },
       {
         "title": "OpenAI: Prompt Engineering",
-        "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+        "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
         "level": "Beginner",
         "kind": "docs",
         "note": "Actionable tactics for clearer model outputs."
@@ -387,7 +387,7 @@
       },
       {
         "title": "Anthropic: Prompt Engineering Overview",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Asking a model to reason and plan before acting."
@@ -489,7 +489,7 @@
       },
       {
         "title": "OpenAI: Prompt Engineering",
-        "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+        "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
         "level": "Beginner",
         "kind": "docs",
         "note": "Prompting principles that help when asking for checks, alternatives, and constraints."
@@ -651,7 +651,7 @@
         "}"
       ],
       "bug_line": 1,
-      "explain": "Array.sort() with no comparator sorts as strings, so [1, 2, 10] becomes [1, 10, 2], and it also mutates the caller's array. Use sort((a, b) => a - b) on a copy."
+      "explain": "Array.sort() with no comparator sorts as strings, so [1, 2, 10] becomes [1, 10, 2], and it also mutates the caller's array. Use sort((a, b) => a - b) on a copy. A complete median should also average the two middle values on even-length input."
     },
     "outcome": "You can debug with AI by supplying evidence and verifying the cause, not the symptom.",
     "prereqs": [

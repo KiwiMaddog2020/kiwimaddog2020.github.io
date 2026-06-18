@@ -6,7 +6,7 @@
     "level": "Intermediate",
     "minutes": 4,
     "summary": "An honest evaluation separates the system doing the work from the system judging it, or the score measures agreement, not success.",
-    "body_html": "<p>The first rule of honest evaluation is role separation. If the same model writes an answer and grades the answer, the score drifts toward what the model already likes: its own style, its own assumptions, its own mistakes. Self-grading rewards confidence and fluency, which are exactly the traits that fool a casual reader.</p><p>Separation means the grader is a different system with different blind spots, judging against a fixed standard set before the run. The doer produces, the rater judges, and the two do not share a stake in the outcome. This single move removes the largest source of inflated AI evaluation results.</p><p>The same logic scales up. When you use a model to judge other models, vary the family and the prompt so the judge does not share the doer's failure modes. An evaluation where the judge and the judged think alike is closer to a mirror than a measurement.</p>",
+    "body_html": "<p>The first rule of honest evaluation is role separation. If the same model writes an answer and grades the answer, the score drifts toward what the model already likes: its own style, its own assumptions, its own mistakes. Self-grading rewards confidence and fluency, which are exactly the traits that fool a casual reader.</p><p>Separation means the grader is a different system with different blind spots, judging against a fixed standard set before the run. The doer produces, the rater judges, and the two do not share a stake in the outcome. This single move removes one of the largest sources of inflated AI evaluation results.</p><p>The same logic scales up. When you use a model to judge other models, vary the family and the prompt so the judge does not share the doer's failure modes. An evaluation where the judge and the judged think alike is closer to a mirror than a measurement.</p>",
     "key_points": [
       "Self-grading rewards style, confidence, and shared assumptions, not task success.",
       "Separate the doer from the rater, judging against a standard fixed before the run.",
@@ -23,7 +23,7 @@
       },
       {
         "title": "Anthropic: Define Success and Build Evaluations",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/define-success",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Setting measurable criteria before you run."
@@ -191,7 +191,7 @@
     "links": [
       {
         "title": "Anthropic: Define Success and Build Evaluations",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/define-success",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Designing measurable success criteria up front."
@@ -544,7 +544,7 @@
     "links": [
       {
         "title": "Anthropic: Define Success and Build Evaluations",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/define-success",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Designing criteria that isolate the behavior you mean."
@@ -632,7 +632,7 @@
     "links": [
       {
         "title": "Anthropic: Define Success and Build Evaluations",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/define-success",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/define-success",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Scoping what an evaluation does and does not cover."

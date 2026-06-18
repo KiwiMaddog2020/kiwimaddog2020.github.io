@@ -303,7 +303,7 @@
       },
       {
         "title": "Anthropic: Prompt Engineering Overview",
-        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Prompting techniques that carry over to agent system prompts."
@@ -550,7 +550,7 @@
     "level": "Intermediate",
     "minutes": 5,
     "summary": "The Model Context Protocol is a standard way to connect agents to tools and data, so integrations are reusable instead of bespoke.",
-    "body_html": "<p>Early agents wired each tool in by hand, which meant every integration was custom and non-portable. The Model Context Protocol (MCP) is an open standard that fixes this: a tool or data source is exposed once as an MCP server, and any MCP-compatible agent can use it. Think of it as a common port for plugging capabilities into agents.</p><p>The value is reuse and separation of concerns. The team that owns a system can publish one MCP server describing its tools, resources, and prompts, and many different agents can connect without bespoke glue. It is the same shift that standard APIs brought: less custom plumbing, more interoperable parts.</p><p>A standard interface does not remove the design work. The same rules apply: each exposed tool should have a clear job, sensible arguments, and concise output. A standard makes a well-designed tool reusable, but it cannot make a poorly-designed one good. Connecting external servers also means trusting their behavior, so scope and permissions still matter.</p>",
+    "body_html": "<p>Early agents wired each tool in by hand, which meant every integration was custom and non-portable. The Model Context Protocol (MCP) is an open standard that addresses this: a tool or data source is exposed once as an MCP server, and any MCP-compatible agent can use it. It standardizes the integration; it does not by itself solve security, permissions, or tool quality. Think of it as a common port for plugging capabilities into agents.</p><p>The value is reuse and separation of concerns. The team that owns a system can publish one MCP server describing its tools, resources, and prompts, and many different agents can connect without bespoke glue. It is the same shift that standard APIs brought: less custom plumbing, more interoperable parts.</p><p>A standard interface does not remove the design work. The same rules apply: each exposed tool should have a clear job, sensible arguments, and concise output. A standard makes a well-designed tool reusable, but it cannot make a poorly-designed one good. Connecting external servers also means trusting their behavior, so scope and permissions still matter.</p>",
     "key_points": [
       "MCP is an open standard for connecting agents to tools and data sources.",
       "Expose a capability once as an MCP server; any compatible agent can use it.",
@@ -655,7 +655,7 @@
       },
       {
         "title": "Microsoft AutoGen",
-        "url": "https://microsoft.github.io/autogen/",
+        "url": "https://microsoft.github.io/autogen/stable/",
         "level": "Advanced",
         "kind": "docs",
         "note": "A framework for multi-agent conversation and cooperation."
