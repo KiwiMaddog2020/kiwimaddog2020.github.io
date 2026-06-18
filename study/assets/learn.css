@@ -1278,3 +1278,10 @@ button:disabled,
 #app:focus-visible {
   outline: none;
 }
+
+/* Google sign-in control in the nav (hidden until Firebase is configured). */
+.nav-auth { display: inline-flex; align-items: center; }
+.nav-auth:empty { display: none; }
+.nav-signin, .nav-signout { min-height: 0; padding: 6px 12px; font-size: 13px; }
+.nav-account { display: inline-flex; align-items: center; gap: 10px; }
+.nav-account-name { color: var(--text-2); font-size: 14px; font-weight: 500; max-width: 12ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

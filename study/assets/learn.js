@@ -186,6 +186,145 @@
     setStorage(name, JSON.stringify(value));
   }
 
+  // ---- Optional Google sign-in (Firebase Auth) + cloud progress sync ----
+  // The web config below is PUBLIC and safe to commit; access is gated by
+  // Firestore security rules + authorized domains, not by hiding these keys.
+  // Paste the config from the Firebase console (Project settings > Your apps).
+  // Until then FIREBASE_ENABLED is false and no sign-in UI is shown -- the
+  // section works exactly as before, storing progress in this browser only.
+  const firebaseConfig = {
+    apiKey: "PASTE_API_KEY",
+    authDomain: "PASTE_AUTH_DOMAIN",
+    projectId: "PASTE_PROJECT_ID",
+    appId: "PASTE_APP_ID"
+  };
+  const FIREBASE_ENABLED = !!firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf("PASTE") === -1;
+  const SYNC_PREFIXES = ["lesson:", "quiz:", "deck:"];
+  const SYNC_KEYS = ["last-lesson"];
+  let fbAuth = null, fbDb = null, fbUser = null, fbApi = null, cloudTimer = null;
+
+  // Gather the progress-related localStorage entries into a plain object.
+  function progressSnapshot() {
+    const out = {};
+    try {
+      for (let i = 0; i < window.localStorage.length; i += 1) {
+        const k = window.localStorage.key(i);
+        if (!k || k.indexOf("learn:") !== 0) continue;
+        const bare = k.slice("learn:".length);
+        if (SYNC_PREFIXES.some((p) => bare.indexOf(p) === 0) || SYNC_KEYS.indexOf(bare) !== -1) {
+          out[bare] = window.localStorage.getItem(k);
+        }
+      }
+    } catch (error) { /* private mode */ }
+    return out;
+  }
+
+  // Merge a cloud snapshot into local storage without losing anything:
+  // completion is kept if set on either side; quiz keeps the higher score;
+  // decks union their seen/got/review; last-lesson stays local (this device).
+  function mergeSnapshotIntoLocal(remote) {
+    if (!remote) return;
+    Object.keys(remote).forEach((bare) => {
+      const rval = remote[bare];
+      const lkey = "learn:" + bare;
+      let lval = null;
+      try { lval = window.localStorage.getItem(lkey); } catch (e) { return; }
+      if (lval == null) { try { window.localStorage.setItem(lkey, rval); } catch (e) {} return; }
+      try {
+        if (bare.indexOf("quiz:") === 0) {
+          const r = JSON.parse(rval), l = JSON.parse(lval);
+          if ((r.percent || 0) > (l.percent || 0)) window.localStorage.setItem(lkey, rval);
+        } else if (bare.indexOf("deck:") === 0) {
+          const r = JSON.parse(rval), l = JSON.parse(lval);
+          window.localStorage.setItem(lkey, JSON.stringify({
+            seen: Object.assign({}, r.seen, l.seen),
+            got: Object.assign({}, r.got, l.got),
+            review: Object.assign({}, r.review, l.review),
+            updatedAt: new Date().toISOString()
+          }));
+        }
+        // lesson:*:complete -> presence means done; local already present, keep it.
+        // last-lesson -> keep local.
+      } catch (e) { /* leave local as-is on parse trouble */ }
+    });
+  }
+
+  function scheduleCloudSync() {
+    if (!fbUser || !fbDb || !fbApi) return;
+    if (cloudTimer) clearTimeout(cloudTimer);
+    cloudTimer = setTimeout(pushCloud, 1500);
+  }
+
+  async function pushCloud() {
+    if (!fbUser || !fbDb || !fbApi) return;
+    try {
+      await fbApi.setDoc(
+        fbApi.doc(fbDb, "study_progress", fbUser.uid),
+        { progress: progressSnapshot(), updatedAt: fbApi.serverTimestamp() },
+        { merge: true }
+      );
+    } catch (error) { /* offline or rules; local copy is still intact */ }
+  }
+
+  async function pullMergePush() {
+    if (!fbUser || !fbDb || !fbApi) return;
+    try {
+      const snap = await fbApi.getDoc(fbApi.doc(fbDb, "study_progress", fbUser.uid));
+      if (snap.exists()) mergeSnapshotIntoLocal((snap.data() || {}).progress || {});
+    } catch (error) { /* offline; keep local */ }
+    await pushCloud();
+    renderRoute();
+  }
+
+  function renderAuthUI() {
+    const slot = document.getElementById("nav-auth");
+    if (!slot) return;
+    if (!FIREBASE_ENABLED) { slot.innerHTML = ""; return; }
+    if (!fbUser) {
+      slot.innerHTML = `<button class="button nav-signin" type="button" data-auth="in">Sign in</button>`;
+    } else {
+      const name = escapeHtml((fbUser.displayName || fbUser.email || "Account").split(" ")[0]);
+      slot.innerHTML = `<span class="nav-account"><span class="nav-account-name" title="${escapeHtml(fbUser.email || "")}">${name}</span><button class="button nav-signout" type="button" data-auth="out">Sign out</button></span>`;
+    }
+  }
+
+  async function initAuth() {
+    renderAuthUI();
+    if (!FIREBASE_ENABLED) return;
+    try {
+      const V = "10.12.2";
+      const [appMod, authMod, dbMod] = await Promise.all([
+        import(`https://www.gstatic.com/firebasejs/${V}/firebase-app.js`),
+        import(`https://www.gstatic.com/firebasejs/${V}/firebase-auth.js`),
+        import(`https://www.gstatic.com/firebasejs/${V}/firebase-firestore.js`)
+      ]);
+      const app = appMod.initializeApp(firebaseConfig);
+      fbAuth = authMod.getAuth(app);
+      fbDb = dbMod.getFirestore(app);
+      fbApi = {
+        doc: dbMod.doc, getDoc: dbMod.getDoc, setDoc: dbMod.setDoc, serverTimestamp: dbMod.serverTimestamp,
+        signIn: () => authMod.signInWithPopup(fbAuth, new authMod.GoogleAuthProvider()),
+        signOut: () => authMod.signOut(fbAuth)
+      };
+      authMod.onAuthStateChanged(fbAuth, function (user) {
+        fbUser = user || null;
+        renderAuthUI();
+        if (fbUser) pullMergePush();
+      });
+    } catch (error) {
+      console.warn("Sign-in unavailable:", error);
+      const slot = document.getElementById("nav-auth");
+      if (slot) slot.innerHTML = "";
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    const btn = event.target.closest("[data-auth]");
+    if (!btn || !fbApi) return;
+    if (btn.dataset.auth === "in") fbApi.signIn().catch((e) => console.warn("sign-in:", e));
+    else fbApi.signOut().catch(() => {});
+  });
+
   function isLessonComplete(id) {
     return getStorage(`lesson:${id}:complete`) !== null;
   }
@@ -196,6 +335,7 @@
     } else {
       removeStorage(`lesson:${id}:complete`);
     }
+    scheduleCloudSync();
   }
 
   function getQuizBest(id) {
@@ -212,6 +352,7 @@
     const previous = getQuizBest(id);
     if (!previous || next.percent >= previous.percent) {
       setJsonStorage(`quiz:${id}:best`, next);
+      scheduleCloudSync();
     }
   }
 
@@ -232,6 +373,7 @@
       review: progress.review || {},
       updatedAt: new Date().toISOString()
     });
+    scheduleCloudSync();
   }
 
   async function fetchJson(path) {
@@ -545,6 +687,7 @@
     }
 
     setStorage("last-lesson", lesson.id);
+    scheduleCloudSync();
 
     const track = getTrack(lesson.track);
     const keyPoints = Array.isArray(lesson.key_points) && lesson.key_points.length
@@ -2091,6 +2234,7 @@
         renderRoute();
       });
       renderRoute();
+      initAuth();
     })
     .catch(function (error) {
       replaceApp(`
