@@ -44,3 +44,26 @@ a deliberate v2, scoped here.
 - The site is intentionally served from the hub root, so a learn-rooted local server cannot
   resolve the absolute `/assets/research-notes.css`; this is correct for the GitHub Pages
   deployment, not a production bug.
+
+## v2 shipped (2026-06-18) + where it landed
+
+v2 added the depth both raters asked for: three applied interactive widgets (a live confusion-matrix
+/ discrimination calculator, a temperature->softmax visualizer, ordering tasks), six inline SVG
+diagrams, and four breadth lessons (classical ML, LLM-as-judge, inter-rater reliability, production
+cost/latency). 49 -> 53 lessons. The goal-loop ran two more rounds: Codex 78->82->80, Gemini 83->86->84.
+
+The loop then plateaued: a re-rate of a strictly-improved build moved both scores *down*, which means
+the rubric scoring is noise-dominated at this quality level. Exited per anti-inflation discipline.
+Both raters confirm the content is accurate and dense throughout; the gap to a stable 88+ is structural.
+
+## v3 (would push past the mid-80s plateau)
+
+- More applied labs: a bootstrap confidence-interval simulator, an ROC/PR threshold slider, a RAG
+  chunking/retrieval sandbox, a prompt-injection permission sandbox, a context-window budget visualizer.
+- One capstone per track (build+evaluate a tiny classifier, debug an agent trace, review an AI patch,
+  design an eval, read a frontier paper).
+- Breadth: F1/AUC/PR curves, statistical significance, LoRA/PEFT, quantization, residual connections,
+  normalization, positional encodings, BPE tokenization, privacy/copyright/fairness, MLOps/data pipelines.
+- Source discipline: clickable per-claim source links with last-verified dates, beyond frontier lessons.
+- Navigation: a global index/tag view, per-track mastery, "continue learning," randomized quiz mode.
+- Dedup the few near-duplicate quiz/exercise pairs flagged in pedagogy review.
