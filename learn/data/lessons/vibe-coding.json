@@ -14,41 +14,73 @@
       "The core skill is steering: precise intent, small units, and verification."
     ],
     "links": [
-      { "title": "Karpathy: Vibe Coding MenuGen", "url": "https://karpathy.bearblog.dev/vibe-coding-menugen/", "level": "Beginner", "kind": "article", "note": "The case study that named vibe coding, with its honest tradeoffs." },
-      { "title": "DeepLearning.AI: Prompt Engineering for Developers", "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/", "level": "Beginner", "kind": "course", "note": "The foundational course on building with LLMs." }
+      {
+        "title": "Karpathy: Vibe Coding MenuGen",
+        "url": "https://karpathy.bearblog.dev/vibe-coding-menugen/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "The case study that named vibe coding, with its honest tradeoffs."
+      },
+      {
+        "title": "DeepLearning.AI: Prompt Engineering for Developers",
+        "url": "https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "The foundational course on building with LLMs."
+      }
     ],
     "flashcards": [
-      { "front": "What is vibe coding?", "back": "Building software by describing intent to a model and steering its output, while owning the result." },
-      { "front": "What shifts when you vibe code?", "back": "The bottleneck moves from typing code to specifying intent, reviewing, and steering." },
-      { "front": "What does vibe coding NOT mean?", "back": "It does not mean handing over judgment; you stay responsible for design and review." }
+      {
+        "front": "What is vibe coding?",
+        "back": "Building software by describing intent to a model and steering its output, while owning the result."
+      },
+      {
+        "front": "What shifts when you vibe code?",
+        "back": "The bottleneck moves from typing code to specifying intent, reviewing, and steering."
+      },
+      {
+        "front": "What does vibe coding NOT mean?",
+        "back": "It does not mean handing over judgment; you stay responsible for design and review."
+      }
     ],
     "quiz": [
       {
         "q": "What is the central skill of productive vibe coding?",
         "level": "Beginner",
         "choices": [
-          "Typing faster than the model.",
-          "Steering: precise intent, small reviewable units, and verification.",
           "Trusting the model's output without review.",
-          "Avoiding tests."
+          "Avoiding tests.",
+          "Typing faster than the model.",
+          "Steering: precise intent, small reviewable units, and verification."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Steering and verification are what keep speed from costing correctness."
       },
       {
         "q": "Who owns the product contract and release risk when vibe coding?",
         "level": "Beginner",
         "choices": [
-          "The model.",
           "The human; the model is a fast collaborator, not the final authority.",
           "Nobody.",
-          "The user of the app."
+          "The user of the app.",
+          "The model."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "The model writes plausibly but does not own correctness or risk."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You accept an AI-written patch without reading it because it 'looks right'. What responsibility did you skip?",
+      "choices": [
+        "None; the model owns correctness.",
+        "Review and verification; you still own the result.",
+        "Writing the prompt.",
+        "Choosing the model."
+      ],
+      "answer": 1,
+      "explain": "Vibe coding speeds you up but keeps design, review, and acceptance human-owned."
+    },
     "outcome": "You can describe what vibe coding is and where human responsibility stays.",
     "prereqs": [],
     "next": "vc_coding_model_landscape"
@@ -68,44 +100,84 @@
       "More autonomy means more leverage and a larger blast radius; match it to the task."
     ],
     "links": [
-      { "title": "Cursor Documentation", "url": "https://docs.cursor.com/", "level": "Beginner", "kind": "docs", "note": "An AI-first editor that put the model in the editing surface." },
-      { "title": "Aider Documentation", "url": "https://aider.chat/docs/", "level": "Intermediate", "kind": "docs", "note": "A command-line AI pair programmer that edits files in Git." },
-      { "title": "Claude Code: Common Workflows", "url": "https://code.claude.com/docs/en/common-workflows", "level": "Beginner", "kind": "docs", "note": "Operational patterns for a CLI coding agent." }
+      {
+        "title": "Cursor Documentation",
+        "url": "https://docs.cursor.com/",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "An AI-first editor that put the model in the editing surface."
+      },
+      {
+        "title": "Aider Documentation",
+        "url": "https://aider.chat/docs/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "A command-line AI pair programmer that edits files in Git."
+      },
+      {
+        "title": "Claude Code: Common Workflows",
+        "url": "https://code.claude.com/docs/en/common-workflows",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Operational patterns for a CLI coding agent."
+      }
     ],
     "flashcards": [
-      { "front": "What is the useful axis for sorting coding tools?", "back": "How much they do between your reviews, from one line to many files." },
-      { "front": "Name the four interaction categories.", "back": "Inline completion, chat assistants, AI-first editors, and CLI agents." },
-      { "front": "What does more tool autonomy bring?", "back": "More leverage and a larger blast radius, so match it to the task." }
+      {
+        "front": "What is the useful axis for sorting coding tools?",
+        "back": "How much they do between your reviews, from one line to many files."
+      },
+      {
+        "front": "Name the four interaction categories.",
+        "back": "Inline completion, chat assistants, AI-first editors, and CLI agents."
+      },
+      {
+        "front": "What does more tool autonomy bring?",
+        "back": "More leverage and a larger blast radius, so match it to the task."
+      }
     ],
     "quiz": [
       {
         "q": "What most distinguishes a CLI coding agent from inline completion?",
         "level": "Beginner",
         "choices": [
+          "It cannot edit files.",
           "It uses a different programming language.",
           "It can change many files and run commands in a loop before stopping.",
-          "It never makes mistakes.",
-          "It cannot edit files."
+          "It never makes mistakes."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "The difference is how much it does autonomously between your reviews."
       },
       {
         "q": "How should you choose a coding tool?",
         "level": "Beginner",
         "choices": [
-          "By which is newest.",
-          "By fit: match the tool's autonomy to how well-specified and reversible the task is.",
           "By which has the most features.",
-          "Always pick the most autonomous one."
+          "Always pick the most autonomous one.",
+          "By which is newest.",
+          "By fit: match the tool's autonomy to how well-specified and reversible the task is."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Fit to the task beats hype; autonomy should match specification and reversibility."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You need one small local edit and want to learn as you go. Which tool tier fits best?",
+      "choices": [
+        "Inline completion or a chat assistant for a small, local change.",
+        "A multi-agent swarm.",
+        "None; do it without any AI.",
+        "A fully autonomous CLI agent that edits many files."
+      ],
+      "answer": 0,
+      "explain": "Match tool autonomy to the task; a small local edit does not need a multi-file agent."
+    },
     "outcome": "You can categorize coding tools by interaction model and pick one to fit a task.",
-    "prereqs": ["vc_what_is_vibe_coding"],
+    "prereqs": [
+      "vc_what_is_vibe_coding"
+    ],
     "next": "vc_prompt_small_commits"
   },
   {
@@ -123,13 +195,34 @@
       "Non-goals protect nearby code from opportunistic edits."
     ],
     "links": [
-      { "title": "Claude Code: Common Workflows", "url": "https://code.claude.com/docs/en/common-workflows", "level": "Beginner", "kind": "docs", "note": "Patterns for scoping coding-agent work into reviewable units." },
-      { "title": "Aider Documentation", "url": "https://aider.chat/docs/", "level": "Intermediate", "kind": "docs", "note": "Editing in small, Git-tracked steps with an AI pair programmer." }
+      {
+        "title": "Claude Code: Common Workflows",
+        "url": "https://code.claude.com/docs/en/common-workflows",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Patterns for scoping coding-agent work into reviewable units."
+      },
+      {
+        "title": "Aider Documentation",
+        "url": "https://aider.chat/docs/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Editing in small, Git-tracked steps with an AI pair programmer."
+      }
     ],
     "flashcards": [
-      { "front": "What four things should a coding prompt name?", "back": "The file or surface, the behavior change, the non-goals, and the verification." },
-      { "front": "Why prefer small units?", "back": "A change you can read in one sitting is one you can actually verify and revert." },
-      { "front": "What do non-goals protect against?", "back": "Opportunistic edits to nearby code that grow the change beyond what you asked." }
+      {
+        "front": "What four things should a coding prompt name?",
+        "back": "The file or surface, the behavior change, the non-goals, and the verification."
+      },
+      {
+        "front": "Why prefer small units?",
+        "back": "A change you can read in one sitting is one you can actually verify and revert."
+      },
+      {
+        "front": "What do non-goals protect against?",
+        "back": "Opportunistic edits to nearby code that grow the change beyond what you asked."
+      }
     ],
     "quiz": [
       {
@@ -148,12 +241,12 @@
         "q": "What is the purpose of stating non-goals in a coding prompt?",
         "level": "Beginner",
         "choices": [
+          "To raise the temperature.",
           "To make the prompt longer.",
           "To protect nearby code from opportunistic, unrequested edits.",
-          "To confuse the model.",
-          "To raise the temperature."
+          "To confuse the model."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Boundaries keep the change inside the scope you intended."
       }
     ],
@@ -162,15 +255,17 @@
       "weak_prompt": "make auth better",
       "goal": "Ask for a small, reviewable change that adds a timeout to an existing auth token refresh call.",
       "choices": [
+        "Rewrite the auth module with better error handling.",
         "Improve auth and clean up anything nearby.",
-        "In auth/refresh.js, add a 5 second timeout to the token refresh request only. Do not change storage or login flow. Add or update one test that proves timeout rejection.",
-        "Rewrite the auth module with better error handling."
+        "In auth/refresh.js, add a 5 second timeout to the token refresh request only. Do not change storage or login flow. Add or update one test that proves timeout rejection."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "The best rewrite names the file, boundary, behavior, non-goals, and check."
     },
     "outcome": "You can shape a coding-agent request so the result is small enough to audit.",
-    "prereqs": ["vc_coding_model_landscape"],
+    "prereqs": [
+      "vc_coding_model_landscape"
+    ],
     "next": "vc_effective_code_prompting"
   },
   {
@@ -188,38 +283,65 @@
       "Ask for the test or verification alongside the code."
     ],
     "links": [
-      { "title": "Anthropic: Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview", "level": "Intermediate", "kind": "docs", "note": "Concrete techniques: context, examples, and constraints." },
-      { "title": "OpenAI: Prompt Engineering", "url": "https://platform.openai.com/docs/guides/prompt-engineering", "level": "Beginner", "kind": "docs", "note": "Actionable tactics for clearer model outputs." },
-      { "title": "DAIR.AI Prompting Guide", "url": "https://www.promptingguide.ai/", "level": "Beginner", "kind": "article", "note": "A broad compendium of prompting techniques." }
+      {
+        "title": "Anthropic: Prompt Engineering Overview",
+        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Concrete techniques: context, examples, and constraints."
+      },
+      {
+        "title": "OpenAI: Prompt Engineering",
+        "url": "https://platform.openai.com/docs/guides/prompt-engineering",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Actionable tactics for clearer model outputs."
+      },
+      {
+        "title": "DAIR.AI Prompting Guide",
+        "url": "https://www.promptingguide.ai/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "A broad compendium of prompting techniques."
+      }
     ],
     "flashcards": [
-      { "front": "Why does a model produce generic boilerplate?", "back": "It fills gaps with the most common pattern unless you supply your context." },
-      { "front": "What three things sharpen a code prompt?", "back": "A precise contract, a short example of your conventions, and explicit constraints." },
-      { "front": "What should a strong code prompt also request?", "back": "The test or verification, so you get acceptance criteria with the code." }
+      {
+        "front": "Why does a model produce generic boilerplate?",
+        "back": "It fills gaps with the most common pattern unless you supply your context."
+      },
+      {
+        "front": "What three things sharpen a code prompt?",
+        "back": "A precise contract, a short example of your conventions, and explicit constraints."
+      },
+      {
+        "front": "What should a strong code prompt also request?",
+        "back": "The test or verification, so you get acceptance criteria with the code."
+      }
     ],
     "quiz": [
       {
         "q": "Your prompts keep producing code that ignores your conventions. Best fix?",
         "level": "Intermediate",
         "choices": [
-          "Raise the temperature.",
-          "Include a short example of existing code and name the libraries and style to use.",
           "Ask for more code at once.",
-          "Switch to a smaller model."
+          "Switch to a smaller model.",
+          "Raise the temperature.",
+          "Include a short example of existing code and name the libraries and style to use."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "A concrete example and named constraints give the model your context to match."
       },
       {
         "q": "Why ask for the test alongside the implementation?",
         "level": "Intermediate",
         "choices": [
-          "Tests are required by law.",
           "It turns a plausible draft into something you can immediately verify.",
           "It makes the model slower.",
-          "It replaces the need to read the code."
+          "It replaces the need to read the code.",
+          "Tests are required by law."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Requesting the check yields the acceptance criteria in the same pass."
       }
     ],
@@ -228,15 +350,17 @@
       "weak_prompt": "Write a function to validate emails.",
       "goal": "Ask for a small, testable function with the exact rule, the edge cases, and tests specified.",
       "choices": [
-        "Write a function to validate emails. Make it robust and production ready.",
         "In validators.py, add is_valid_email(s) that returns True only when s has exactly one @ with non-empty local and domain parts and at least one dot in the domain, and rejects leading or trailing dots. Add tests for a valid address, a missing @, and a trailing dot.",
-        "Add full RFC 5322 email validation using one large regular expression."
+        "Add full RFC 5322 email validation using one large regular expression.",
+        "Write a function to validate emails. Make it robust and production ready."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "The strong prompt names the file, the exact rule, the edge cases, and the tests, so the result is small and checkable."
     },
     "outcome": "You can write code prompts that carry context, constraints, and a built-in check.",
-    "prereqs": ["vc_prompt_small_commits"],
+    "prereqs": [
+      "vc_prompt_small_commits"
+    ],
     "next": "vc_plan_first"
   },
   {
@@ -254,13 +378,34 @@
       "Agreeing on steps lets you execute and check them one at a time."
     ],
     "links": [
-      { "title": "Claude Code: Common Workflows", "url": "https://code.claude.com/docs/en/common-workflows", "level": "Beginner", "kind": "docs", "note": "Plan-then-execute patterns for agent-driven coding." },
-      { "title": "Anthropic: Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview", "level": "Intermediate", "kind": "docs", "note": "Asking a model to reason and plan before acting." }
+      {
+        "title": "Claude Code: Common Workflows",
+        "url": "https://code.claude.com/docs/en/common-workflows",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Plan-then-execute patterns for agent-driven coding."
+      },
+      {
+        "title": "Anthropic: Prompt Engineering Overview",
+        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Asking a model to reason and plan before acting."
+      }
     ],
     "flashcards": [
-      { "front": "Why plan before coding with a model?", "back": "A plan is cheap to fix; a wrong implementation is expensive to unwind." },
-      { "front": "What does a good plan name?", "back": "The files to touch, the order of changes, and the final verification." },
-      { "front": "How does plan-first keep big tasks reviewable?", "back": "You execute the agreed steps one at a time, checking each before the next." }
+      {
+        "front": "Why plan before coding with a model?",
+        "back": "A plan is cheap to fix; a wrong implementation is expensive to unwind."
+      },
+      {
+        "front": "What does a good plan name?",
+        "back": "The files to touch, the order of changes, and the final verification."
+      },
+      {
+        "front": "How does plan-first keep big tasks reviewable?",
+        "back": "You execute the agreed steps one at a time, checking each before the next."
+      }
     ],
     "quiz": [
       {
@@ -279,18 +424,31 @@
         "q": "How does plan-first convert an intimidating change into a safe one?",
         "level": "Intermediate",
         "choices": [
+          "By using a larger model.",
           "By doing it all in one diff.",
           "By turning agreed steps into a sequence of small, verified changes.",
-          "By skipping verification.",
-          "By using a larger model."
+          "By skipping verification."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Stepwise execution against an agreed plan keeps each change reviewable."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "prompt_repair",
+      "weak_prompt": "Refactor the auth module.",
+      "goal": "Get a short plan before any code so you can catch a wrong assumption early.",
+      "choices": [
+        "Refactor the auth module and make it cleaner.",
+        "Propose a short plan first: the files you will touch, the order of changes, and the test you will run; wait for my approval before editing.",
+        "Rewrite the whole auth system your way."
+      ],
+      "answer": 1,
+      "explain": "Reviewing the plan first catches a misread requirement while it still costs a sentence to fix."
+    },
     "outcome": "You can use a plan-first loop to keep non-trivial AI changes on track.",
-    "prereqs": ["vc_effective_code_prompting"],
+    "prereqs": [
+      "vc_effective_code_prompting"
+    ],
     "next": "vc_trust_but_verify"
   },
   {
@@ -360,24 +518,24 @@
         "q": "A generated function passes the sample case. What is the next best move?",
         "level": "Intermediate",
         "choices": [
-          "Check the contract and run or add a focused test for the likely edge case.",
           "Accept the patch because the model already saw the repository.",
           "Ask the model whether the code is correct and accept a confident answer.",
-          "Rewrite the whole module manually before looking at the patch."
+          "Rewrite the whole module manually before looking at the patch.",
+          "Check the contract and run or add a focused test for the likely edge case."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "The sample case is a clue, not acceptance. Verify the contract and the risky edge."
       },
       {
         "q": "Which review question is most useful for AI-written code?",
         "level": "Intermediate",
         "choices": [
-          "Does the code look idiomatic?",
-          "Did the model explain it fluently?",
           "What invariant could this patch violate while still passing the happy path?",
-          "Could a larger model have written it faster?"
+          "Could a larger model have written it faster?",
+          "Does the code look idiomatic?",
+          "Did the model explain it fluently?"
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Generated code often handles the visible example while missing the invariant."
       },
       {
@@ -407,7 +565,9 @@
       "explain": "The reducer ignores quantity, so it charges one unit no matter how many the cart contains."
     },
     "outcome": "You can turn a plausible generated patch into a checked change with explicit acceptance evidence.",
-    "prereqs": ["vc_plan_first"],
+    "prereqs": [
+      "vc_plan_first"
+    ],
     "next": "vc_debugging_with_ai"
   },
   {
@@ -425,37 +585,58 @@
       "Add a regression test that would have caught the bug."
     ],
     "links": [
-      { "title": "Claude Code: Common Workflows", "url": "https://code.claude.com/docs/en/common-workflows", "level": "Beginner", "kind": "docs", "note": "Patterns for debugging with a coding agent." },
-      { "title": "Software Engineering at Google: Testing Overview", "url": "https://abseil.io/resources/swe-book/html/ch11.html", "level": "Intermediate", "kind": "article", "note": "Why a regression test makes a fix durable." }
+      {
+        "title": "Claude Code: Common Workflows",
+        "url": "https://code.claude.com/docs/en/common-workflows",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Patterns for debugging with a coding agent."
+      },
+      {
+        "title": "Software Engineering at Google: Testing Overview",
+        "url": "https://abseil.io/resources/swe-book/html/ch11.html",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Why a regression test makes a fix durable."
+      }
     ],
     "flashcards": [
-      { "front": "What evidence should you give an AI to debug well?", "back": "The exact error, a minimal repro, the relevant code, and expected versus actual." },
-      { "front": "Why is a vanished symptom not enough?", "back": "A fix can hide the symptom while leaving the underlying cause in place." },
-      { "front": "What confirms a debugging fix is durable?", "back": "A regression test that would have caught the original bug." }
+      {
+        "front": "What evidence should you give an AI to debug well?",
+        "back": "The exact error, a minimal repro, the relevant code, and expected versus actual."
+      },
+      {
+        "front": "Why is a vanished symptom not enough?",
+        "back": "A fix can hide the symptom while leaving the underlying cause in place."
+      },
+      {
+        "front": "What confirms a debugging fix is durable?",
+        "back": "A regression test that would have caught the original bug."
+      }
     ],
     "quiz": [
       {
         "q": "Why does pasting only the error message produce weak AI debugging?",
         "level": "Intermediate",
         "choices": [
+          "It uses too many tokens.",
           "Models cannot read errors.",
           "Without a repro, the code, and expected behavior, the model speculates instead of reasoning.",
-          "Error messages are always wrong.",
-          "It uses too many tokens."
+          "Error messages are always wrong."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Evidence turns guessing into reasoning about the actual cause."
       },
       {
         "q": "An AI fix makes the error disappear. What should you confirm?",
         "level": "Intermediate",
         "choices": [
-          "Nothing; a gone error means done.",
-          "That the fix addresses the identified cause, then add a regression test.",
           "That the code is shorter.",
-          "That the model is confident."
+          "That the model is confident.",
+          "Nothing; a gone error means done.",
+          "That the fix addresses the identified cause, then add a regression test."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Fixing the mechanism and adding a test prevents a silent return."
       }
     ],
@@ -473,7 +654,9 @@
       "explain": "Array.sort() with no comparator sorts as strings, so [1, 2, 10] becomes [1, 10, 2], and it also mutates the caller's array. Use sort((a, b) => a - b) on a copy."
     },
     "outcome": "You can debug with AI by supplying evidence and verifying the cause, not the symptom.",
-    "prereqs": ["vc_trust_but_verify"],
+    "prereqs": [
+      "vc_trust_but_verify"
+    ],
     "next": "vc_reading_ai_code"
   },
   {
@@ -491,25 +674,46 @@
       "Be most skeptical where the code is most confident."
     ],
     "links": [
-      { "title": "Software Engineering at Google: Testing Overview", "url": "https://abseil.io/resources/swe-book/html/ch11.html", "level": "Intermediate", "kind": "article", "note": "Invariants and tests as the backstop for review." },
-      { "title": "GitHub Docs: Use Copilot Code Review", "url": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review", "level": "Intermediate", "kind": "docs", "note": "Workflows for reviewing AI-assisted changes." }
+      {
+        "title": "Software Engineering at Google: Testing Overview",
+        "url": "https://abseil.io/resources/swe-book/html/ch11.html",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Invariants and tests as the backstop for review."
+      },
+      {
+        "title": "GitHub Docs: Use Copilot Code Review",
+        "url": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Workflows for reviewing AI-assisted changes."
+      }
     ],
     "flashcards": [
-      { "front": "Why is reading AI code its own skill?", "back": "It is fluent and plausible, so the risk is clean code that quietly does the wrong thing." },
-      { "front": "What should you read generated code against?", "back": "The contract and its invariants, especially on the edges, not surface style." },
-      { "front": "Where should you be most skeptical?", "back": "Where the code is most confident: asserting comments, plausible values, gap-filling defaults." }
+      {
+        "front": "Why is reading AI code its own skill?",
+        "back": "It is fluent and plausible, so the risk is clean code that quietly does the wrong thing."
+      },
+      {
+        "front": "What should you read generated code against?",
+        "back": "The contract and its invariants, especially on the edges, not surface style."
+      },
+      {
+        "front": "Where should you be most skeptical?",
+        "back": "Where the code is most confident: asserting comments, plausible values, gap-filling defaults."
+      }
     ],
     "quiz": [
       {
         "q": "What is the real danger when reviewing AI-written code?",
         "level": "Advanced",
         "choices": [
-          "Obviously ugly code you catch on sight.",
           "Clean, fluent code that quietly violates an invariant the happy path never exercises.",
           "Code with too many comments.",
-          "Code that is too short."
+          "Code that is too short.",
+          "Obviously ugly code you catch on sight."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Fluency masks the quiet invariant violation, which is the hard case to catch."
       },
       {
@@ -539,7 +743,9 @@
       "explain": "Since percent is a whole number, the formula must divide by 100. As written it computes 50 - 50*20, which is far below zero. The fluent comment hid the missing /100."
     },
     "outcome": "You can read generated code for intent and invariants instead of being lulled by its fluency.",
-    "prereqs": ["vc_debugging_with_ai"],
+    "prereqs": [
+      "vc_debugging_with_ai"
+    ],
     "next": "vc_human_in_the_loop"
   },
   {
@@ -557,43 +763,77 @@
       "After a couple of failed reprompts, take the wheel; recognizing that moment saves time."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Matching autonomy to task is the same calibration here." },
-      { "title": "Karpathy: Vibe Coding MenuGen", "url": "https://karpathy.bearblog.dev/vibe-coding-menugen/", "level": "Beginner", "kind": "article", "note": "An honest account of where vibe coding helped and where it did not." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Matching autonomy to task is the same calibration here."
+      },
+      {
+        "title": "Karpathy: Vibe Coding MenuGen",
+        "url": "https://karpathy.bearblog.dev/vibe-coding-menugen/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "An honest account of where vibe coding helped and where it did not."
+      }
     ],
     "flashcards": [
-      { "front": "What is the expert vibe-coding skill?", "back": "Calibrated delegation: routing work to the model or to yourself based on reliability." },
-      { "front": "What work should stay close to the human?", "back": "Concurrency, security-sensitive logic, novel architecture, and high-cost-of-error work." },
-      { "front": "When should you take the wheel?", "back": "After a couple of failed reprompts on a fix the model cannot quite reach." }
+      {
+        "front": "What is the expert vibe-coding skill?",
+        "back": "Calibrated delegation: routing work to the model or to yourself based on reliability."
+      },
+      {
+        "front": "What work should stay close to the human?",
+        "back": "Concurrency, security-sensitive logic, novel architecture, and high-cost-of-error work."
+      },
+      {
+        "front": "When should you take the wheel?",
+        "back": "After a couple of failed reprompts on a fix the model cannot quite reach."
+      }
     ],
     "quiz": [
       {
         "q": "What best describes expert-level vibe coding?",
         "level": "Expert",
         "choices": [
+          "Always rewriting the model's output.",
           "Automating as much as technically possible.",
           "Calibrated delegation: routing routine work to the model and consequential work to yourself.",
-          "Never using AI for code.",
-          "Always rewriting the model's output."
+          "Never using AI for code."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "The skill is judgment about what to delegate, not the amount of automation."
       },
       {
         "q": "You have reprompted three times and the model still cannot fix a subtle bug. Best move?",
         "level": "Expert",
         "choices": [
-          "Reprompt five more times.",
-          "Take the wheel: write the hard part yourself, then hand back the routine parts.",
           "Accept the broken code.",
-          "Switch to a larger model and retry indefinitely."
+          "Switch to a larger model and retry indefinitely.",
+          "Reprompt five more times.",
+          "Take the wheel: write the hard part yourself, then hand back the routine parts."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Recognizing the unreachable-fix loop early and taking over saves the most time."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You have reprompted three times and the model still cannot fix a subtle concurrency bug. Best move?",
+      "choices": [
+        "Take the wheel: write the hard part yourself, then hand back the routine parts.",
+        "Ship the broken code.",
+        "Switch models and retry indefinitely.",
+        "Reprompt five more times."
+      ],
+      "answer": 0,
+      "explain": "Recognizing the unreachable-fix loop early and taking over is faster than more reprompts."
+    },
     "outcome": "You can decide what to delegate to a coding model and when to take over yourself.",
-    "prereqs": ["vc_reading_ai_code"],
+    "prereqs": [
+      "vc_reading_ai_code"
+    ],
     "next": null
   }
 ]

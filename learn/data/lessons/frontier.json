@@ -14,37 +14,58 @@
       "Treat smooth loss scaling as solid; treat discontinuous capability jumps as disputed."
     ],
     "links": [
-      { "title": "Training Compute-Optimal LLMs (Chinchilla)", "url": "https://arxiv.org/abs/2203.15556", "level": "Advanced", "kind": "paper", "note": "The scaling laws balancing parameters and training tokens." },
-      { "title": "Emergent Abilities of Large Language Models", "url": "https://arxiv.org/abs/2206.07682", "level": "Intermediate", "kind": "paper", "note": "The emergence claim; read alongside its metric-artifact critique." }
+      {
+        "title": "Training Compute-Optimal LLMs (Chinchilla)",
+        "url": "https://arxiv.org/abs/2203.15556",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The scaling laws balancing parameters and training tokens."
+      },
+      {
+        "title": "Emergent Abilities of Large Language Models",
+        "url": "https://arxiv.org/abs/2206.07682",
+        "level": "Intermediate",
+        "kind": "paper",
+        "note": "The emergence claim; read alongside its metric-artifact critique."
+      }
     ],
     "flashcards": [
-      { "front": "What do scaling laws describe?", "back": "Pretraining loss falling smoothly and predictably with compute, data, and parameters." },
-      { "front": "What did Chinchilla establish?", "back": "For a fixed compute budget, scale parameters and training tokens together." },
-      { "front": "Why is sharp emergence contested?", "back": "Many apparent jumps are artifacts of harsh all-or-nothing metrics, not real discontinuities." }
+      {
+        "front": "What do scaling laws describe?",
+        "back": "Pretraining loss falling smoothly and predictably with compute, data, and parameters."
+      },
+      {
+        "front": "What did Chinchilla establish?",
+        "back": "For a fixed compute budget, scale parameters and training tokens together."
+      },
+      {
+        "front": "Why is sharp emergence contested?",
+        "back": "Many apparent jumps are artifacts of harsh all-or-nothing metrics, not real discontinuities."
+      }
     ],
     "quiz": [
       {
         "q": "What is the well-established part of scaling?",
         "level": "Advanced",
         "choices": [
+          "Scaling has no measurable effect.",
           "Every specific skill appears suddenly at a threshold.",
           "Pretraining loss falls smoothly and predictably with compute, data, and parameters.",
-          "Bigger models always hallucinate less.",
-          "Scaling has no measurable effect."
+          "Bigger models always hallucinate less."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Smooth loss scaling is the load-bearing, well-supported finding."
       },
       {
         "q": "Why might a capability look like it emerged suddenly?",
         "level": "Expert",
         "choices": [
-          "The model physically changed at one size.",
-          "A harsh all-or-nothing metric can turn smooth progress into a sudden-looking jump.",
           "Emergence is never a metric effect.",
-          "Because of the temperature setting."
+          "Because of the temperature setting.",
+          "The model physically changed at one size.",
+          "A harsh all-or-nothing metric can turn smooth progress into a sudden-looking jump."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Metric choice can manufacture an apparent discontinuity from smooth underlying gains."
       }
     ],
@@ -52,15 +73,21 @@
       "type": "predict_output",
       "prompt": "A capability appears to jump suddenly at a model size under an exact-match metric, but improves smoothly under a partial-credit metric. What is the most defensible reading?",
       "choices": [
-        "The capability truly emerged discontinuously.",
         "The apparent jump is largely a metric artifact; the underlying gain is smooth.",
         "The smaller model has the capability fully.",
-        "Metrics never affect emergence claims."
+        "Metrics never affect emergence claims.",
+        "The capability truly emerged discontinuously."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "When the jump disappears under a softer metric, the discontinuity was mostly in the measurement."
     },
-    "source": { "type": "paper", "date": "2022-03", "confidence": "high", "contested": true, "last_verified": "2026-06-18" },
+    "source": {
+      "type": "paper",
+      "date": "2022-03",
+      "confidence": "high",
+      "contested": true,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can separate well-supported loss scaling from the contested claim of sharp emergence.",
     "prereqs": [],
     "next": "fr_rlhf_rlaif_alignment"
@@ -80,14 +107,41 @@
       "Alignment optimizes a proxy, so reward hacking and shared blind spots remain risks."
     ],
     "links": [
-      { "title": "Constitutional AI", "url": "https://arxiv.org/abs/2212.08073", "level": "Advanced", "kind": "paper", "note": "Aligning behavior against an explicit written constitution." },
-      { "title": "Direct Preference Optimization (DPO)", "url": "https://arxiv.org/abs/2305.18290", "level": "Advanced", "kind": "paper", "note": "Preference tuning without a separate reinforcement learning loop." },
-      { "title": "Hugging Face: Alignment Handbook", "url": "https://github.com/huggingface/alignment-handbook", "level": "Advanced", "kind": "docs", "note": "Working recipes for SFT, DPO, and preference optimization." }
+      {
+        "title": "Constitutional AI",
+        "url": "https://arxiv.org/abs/2212.08073",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "Aligning behavior against an explicit written constitution."
+      },
+      {
+        "title": "Direct Preference Optimization (DPO)",
+        "url": "https://arxiv.org/abs/2305.18290",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "Preference tuning without a separate reinforcement learning loop."
+      },
+      {
+        "title": "Hugging Face: Alignment Handbook",
+        "url": "https://github.com/huggingface/alignment-handbook",
+        "level": "Advanced",
+        "kind": "docs",
+        "note": "Working recipes for SFT, DPO, and preference optimization."
+      }
     ],
     "flashcards": [
-      { "front": "What does RLHF do?", "back": "Trains a reward model from human rankings, then optimizes the policy to score well under it." },
-      { "front": "What does Constitutional AI add?", "back": "An explicit written standard the model critiques and revises its outputs against." },
-      { "front": "What is the core limit of alignment?", "back": "It optimizes a proxy (reward or preferences), so reward hacking and shared blind spots persist." }
+      {
+        "front": "What does RLHF do?",
+        "back": "Trains a reward model from human rankings, then optimizes the policy to score well under it."
+      },
+      {
+        "front": "What does Constitutional AI add?",
+        "back": "An explicit written standard the model critiques and revises its outputs against."
+      },
+      {
+        "front": "What is the core limit of alignment?",
+        "back": "It optimizes a proxy (reward or preferences), so reward hacking and shared blind spots persist."
+      }
     ],
     "quiz": [
       {
@@ -106,19 +160,38 @@
         "q": "Why can sycophancy emerge from alignment?",
         "level": "Expert",
         "choices": [
+          "Because alignment never affects behavior.",
           "Because models dislike users.",
           "Because optimizing for what raters prefer can reward agreeable answers over correct ones.",
-          "Because of the learning rate.",
-          "Because alignment never affects behavior."
+          "Because of the learning rate."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Optimizing a preference proxy can favor what pleases raters, including agreement."
       }
     ],
-    "exercise": null,
-    "source": { "type": "paper", "date": "2022-12", "confidence": "high", "contested": false, "last_verified": "2026-06-18" },
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "After preference tuning, a model starts agreeing with users even when they are wrong. What is the likely cause?",
+      "choices": [
+        "The context window shrank.",
+        "Pretraining failed.",
+        "The reward model is too small.",
+        "Optimizing a preference proxy can reward agreeable answers, producing sycophancy."
+      ],
+      "answer": 3,
+      "explain": "Alignment optimizes a stand-in for preferences, which can favor what pleases raters over what is correct."
+    },
+    "source": {
+      "type": "paper",
+      "date": "2022-12",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can describe RLHF, DPO, RLAIF, and Constitutional AI and name alignment's proxy limit.",
-    "prereqs": ["fr_scaling_laws_emergence"],
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
     "next": "fr_reasoning_test_time_compute"
   },
   {
@@ -136,25 +209,46 @@
       "It helps most on hard, checkable problems and costs tokens and latency; match effort to difficulty."
     ],
     "links": [
-      { "title": "Chain-of-Thought Prompting Elicits Reasoning", "url": "https://arxiv.org/abs/2201.11903", "level": "Advanced", "kind": "paper", "note": "Letting a model write intermediate steps improves hard reasoning." },
-      { "title": "Scaling LLM Test-Time Compute Optimally", "url": "https://arxiv.org/abs/2408.03314", "level": "Advanced", "kind": "paper", "note": "When spending more inference compute beats a larger model." }
+      {
+        "title": "Chain-of-Thought Prompting Elicits Reasoning",
+        "url": "https://arxiv.org/abs/2201.11903",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "Letting a model write intermediate steps improves hard reasoning."
+      },
+      {
+        "title": "Scaling LLM Test-Time Compute Optimally",
+        "url": "https://arxiv.org/abs/2408.03314",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "When spending more inference compute beats a larger model."
+      }
     ],
     "flashcards": [
-      { "front": "What is test-time compute?", "back": "Spending more inference effort, like longer reasoning, to improve the answer." },
-      { "front": "How are reasoning models often trained?", "back": "With reinforcement learning on verifiable problems to reason at length before answering." },
-      { "front": "Where does test-time compute help most?", "back": "On hard problems with checkable answers, like math and code." }
+      {
+        "front": "What is test-time compute?",
+        "back": "Spending more inference effort, like longer reasoning, to improve the answer."
+      },
+      {
+        "front": "How are reasoning models often trained?",
+        "back": "With reinforcement learning on verifiable problems to reason at length before answering."
+      },
+      {
+        "front": "Where does test-time compute help most?",
+        "back": "On hard problems with checkable answers, like math and code."
+      }
     ],
     "quiz": [
       {
         "q": "What does spending more test-time compute trade?",
         "level": "Advanced",
         "choices": [
-          "Accuracy for speed.",
           "Latency and cost for higher accuracy on hard problems.",
           "Nothing; it is free.",
-          "Model size for data."
+          "Model size for data.",
+          "Accuracy for speed."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "More thinking costs tokens and latency in exchange for accuracy where it helps."
       },
       {
@@ -174,17 +268,25 @@
       "type": "predict_output",
       "prompt": "You enable long reasoning and best-of-many sampling for a batch of simple, factual lookup questions. What is the likely effect?",
       "choices": [
+        "Lower accuracy than a single pass.",
         "A large accuracy gain.",
         "Little accuracy change but much higher cost and latency.",
-        "The model stops answering.",
-        "Lower accuracy than a single pass."
+        "The model stops answering."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "Test-time compute pays off on hard, checkable problems, not simple lookups."
     },
-    "source": { "type": "post", "date": "2024-09", "confidence": "high", "contested": false, "last_verified": "2026-06-18" },
+    "source": {
+      "type": "post",
+      "date": "2024-09",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can explain test-time compute as a difficulty-matched dial, not a free upgrade.",
-    "prereqs": ["fr_scaling_laws_emergence"],
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
     "next": "fr_interpretability"
   },
   {
@@ -202,44 +304,84 @@
       "Findings are real and safety-relevant but still partial; full explanations remain out of reach."
     ],
     "links": [
-      { "title": "Distill: Zoom In, An Introduction to Circuits", "url": "https://distill.pub/2020/circuits/", "level": "Advanced", "kind": "article", "note": "The foundational, highly visual intro to circuits." },
-      { "title": "Transformer Circuits", "url": "https://transformer-circuits.pub/", "level": "Expert", "kind": "article", "note": "Ongoing mechanistic interpretability research, including features at scale." }
+      {
+        "title": "Distill: Zoom In, An Introduction to Circuits",
+        "url": "https://distill.pub/2020/circuits/",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "The foundational, highly visual intro to circuits."
+      },
+      {
+        "title": "Transformer Circuits",
+        "url": "https://transformer-circuits.pub/",
+        "level": "Expert",
+        "kind": "article",
+        "note": "Ongoing mechanistic interpretability research, including features at scale."
+      }
     ],
     "flashcards": [
-      { "front": "What are circuits and features in interpretability?", "back": "Circuits are subnetworks implementing a function; features are activation directions for concepts." },
-      { "front": "What is superposition?", "back": "Models pack many overlapping features into few neurons, so one neuron rarely means one thing." },
-      { "front": "How mature is interpretability?", "back": "Real, safety-relevant findings exist, but full explanations of frontier models are still out of reach." }
+      {
+        "front": "What are circuits and features in interpretability?",
+        "back": "Circuits are subnetworks implementing a function; features are activation directions for concepts."
+      },
+      {
+        "front": "What is superposition?",
+        "back": "Models pack many overlapping features into few neurons, so one neuron rarely means one thing."
+      },
+      {
+        "front": "How mature is interpretability?",
+        "back": "Real, safety-relevant findings exist, but full explanations of frontier models are still out of reach."
+      }
     ],
     "quiz": [
       {
         "q": "Why is reading a single neuron usually not enough to understand a model?",
         "level": "Advanced",
         "choices": [
-          "Neurons are random.",
-          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing.",
           "Models have no neurons.",
-          "Neurons only store the tokenizer."
+          "Neurons only store the tokenizer.",
+          "Neurons are random.",
+          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Superposition packs many features into shared neurons, blurring one-to-one meaning."
       },
       {
         "q": "What is the honest status of interpretability claims?",
         "level": "Expert",
         "choices": [
-          "We can fully explain any frontier model's behavior.",
           "There are real, verifiable findings, but full explanations remain partial.",
           "Interpretability has produced nothing useful.",
-          "It only works on tiny models."
+          "It only works on tiny models.",
+          "We can fully explain any frontier model's behavior."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Genuine progress coexists with large remaining gaps; avoid overclaiming."
       }
     ],
-    "exercise": null,
-    "source": { "type": "post", "date": "2024-06", "confidence": "medium", "contested": false, "last_verified": "2026-06-18" },
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You find a single neuron that activates for many unrelated concepts. What does this illustrate?",
+      "choices": [
+        "The neuron is broken.",
+        "Superposition; models pack many overlapping features into few neurons.",
+        "The model has no features.",
+        "A tokenizer bug."
+      ],
+      "answer": 1,
+      "explain": "Superposition is why one neuron rarely maps to one concept, and why disentangling features is hard."
+    },
+    "source": {
+      "type": "post",
+      "date": "2024-06",
+      "confidence": "medium",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can explain circuits, features, and superposition and calibrate interpretability claims.",
-    "prereqs": ["fr_scaling_laws_emergence"],
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
     "next": "fr_evals_benchmarks"
   },
   {
@@ -257,44 +399,84 @@
       "Read scores skeptically: what it measures, contamination, noise, and top-end discrimination."
     ],
     "links": [
-      { "title": "Stanford HELM", "url": "https://crfm.stanford.edu/helm/latest/", "level": "Expert", "kind": "interactive", "note": "A holistic, multi-metric benchmark across many scenarios." },
-      { "title": "OpenAI Evals", "url": "https://github.com/openai/evals", "level": "Advanced", "kind": "tool", "note": "Building fresh, custom benchmarks beyond public sets." }
+      {
+        "title": "Stanford HELM",
+        "url": "https://crfm.stanford.edu/helm/latest/",
+        "level": "Expert",
+        "kind": "interactive",
+        "note": "A holistic, multi-metric benchmark across many scenarios."
+      },
+      {
+        "title": "OpenAI Evals",
+        "url": "https://github.com/openai/evals",
+        "level": "Advanced",
+        "kind": "tool",
+        "note": "Building fresh, custom benchmarks beyond public sets."
+      }
     ],
     "flashcards": [
-      { "front": "What is benchmark saturation?", "back": "When models approach the top, the score stops discriminating between systems." },
-      { "front": "What is contamination?", "back": "Test items leaking into training data, so a high score may reflect memorization." },
-      { "front": "Why is one benchmark number weak evidence?", "back": "It can be saturated or contaminated and may not clear the noise floor." }
+      {
+        "front": "What is benchmark saturation?",
+        "back": "When models approach the top, the score stops discriminating between systems."
+      },
+      {
+        "front": "What is contamination?",
+        "back": "Test items leaking into training data, so a high score may reflect memorization."
+      },
+      {
+        "front": "Why is one benchmark number weak evidence?",
+        "back": "It can be saturated or contaminated and may not clear the noise floor."
+      }
     ],
     "quiz": [
       {
         "q": "A model scores very high on a popular public benchmark. Why be cautious?",
         "level": "Advanced",
         "choices": [
+          "Public benchmarks cannot be measured.",
           "High scores are always fake.",
           "The benchmark may be saturated or contaminated, so the score can reflect memorization.",
-          "Benchmarks never matter.",
-          "Public benchmarks cannot be measured."
+          "Benchmarks never matter."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Saturation and contamination both erode what a high public score proves."
       },
       {
         "q": "What kind of test best resists contamination?",
         "level": "Expert",
         "choices": [
-          "An old, widely-published benchmark.",
-          "A held-out, private, or freshly constructed test.",
           "A single multiple-choice question.",
-          "Any test the model has seen."
+          "Any test the model has seen.",
+          "An old, widely-published benchmark.",
+          "A held-out, private, or freshly constructed test."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Fresh or private tests have not leaked into training data."
       }
     ],
-    "exercise": null,
-    "source": { "type": "docs", "date": "2025-01", "confidence": "high", "contested": false, "last_verified": "2026-06-18" },
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A model scores 99% on a popular three-year-old public benchmark. Why be cautious?",
+      "choices": [
+        "Saturation and possible contamination; the test may be in the training data.",
+        "Benchmarks never matter.",
+        "It proves general intelligence.",
+        "High scores are always fake."
+      ],
+      "answer": 0,
+      "explain": "Old public benchmarks can saturate and leak into training data, so the score may reflect memorization."
+    },
+    "source": {
+      "type": "docs",
+      "date": "2025-01",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can read benchmark scores skeptically for saturation, contamination, and noise.",
-    "prereqs": ["fr_scaling_laws_emergence"],
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
     "next": "fr_capabilities_limits"
   },
   {
@@ -312,13 +494,34 @@
       "Use strength where reliable and verifiable; build checks where errors are costly."
     ],
     "links": [
-      { "title": "The Llama 3 Herd of Models", "url": "https://arxiv.org/abs/2407.21783", "level": "Advanced", "kind": "paper", "note": "A candid technical account of modern model capability and evaluation." },
-      { "title": "Stanford HELM", "url": "https://crfm.stanford.edu/helm/latest/", "level": "Expert", "kind": "interactive", "note": "Capability and limitation measured across many axes." }
+      {
+        "title": "The Llama 3 Herd of Models",
+        "url": "https://arxiv.org/abs/2407.21783",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "A candid technical account of modern model capability and evaluation."
+      },
+      {
+        "title": "Stanford HELM",
+        "url": "https://crfm.stanford.edu/helm/latest/",
+        "level": "Expert",
+        "kind": "interactive",
+        "note": "Capability and limitation measured across many axes."
+      }
     ],
     "flashcards": [
-      { "front": "What does jagged capability mean?", "back": "A model can ace a hard task and fail an easy-looking one; model difficulty differs from human difficulty." },
-      { "front": "Why is hallucination hard to remove?", "back": "Predicting plausible text can yield confident falsehoods; it has several causes (objective, data gaps, calibration) and is reduced, not removed." },
-      { "front": "Why does confidence not equal correctness?", "back": "Model calibration is imperfect, so a confident answer can still be wrong." }
+      {
+        "front": "What does jagged capability mean?",
+        "back": "A model can ace a hard task and fail an easy-looking one; model difficulty differs from human difficulty."
+      },
+      {
+        "front": "Why is hallucination hard to remove?",
+        "back": "Predicting plausible text can yield confident falsehoods; it has several causes (objective, data gaps, calibration) and is reduced, not removed."
+      },
+      {
+        "front": "Why does confidence not equal correctness?",
+        "back": "Model calibration is imperfect, so a confident answer can still be wrong."
+      }
     ],
     "quiz": [
       {
@@ -337,12 +540,12 @@
         "q": "Why will scaling not fully eliminate hallucination?",
         "level": "Expert",
         "choices": [
+          "Because calibration is already perfect.",
           "Because models will get smaller.",
           "Because it has several roots (the objective, data gaps, calibration), so scale alone does not remove it.",
-          "Because hallucination is not real.",
-          "Because calibration is already perfect."
+          "Because hallucination is not real."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Hallucination has multiple causes, so it is reduced and managed rather than removed by scale alone."
       }
     ],
@@ -350,17 +553,25 @@
       "type": "predict_output",
       "prompt": "A model gives a fluent, confident, and detailed answer that you cannot easily verify. How much should its confidence raise your trust?",
       "choices": [
-        "A lot; confidence and detail signal correctness.",
-        "Little; calibration is imperfect, so confidence is not evidence of correctness.",
         "It guarantees the answer is right.",
-        "Confidence means the model checked external sources."
+        "Confidence means the model checked external sources.",
+        "A lot; confidence and detail signal correctness.",
+        "Little; calibration is imperfect, so confidence is not evidence of correctness."
       ],
-      "answer": 1,
+      "answer": 3,
       "explain": "Fluency and confidence are not calibration; an unverifiable confident answer still needs a check."
     },
-    "source": { "type": "paper", "date": "2024-07", "confidence": "high", "contested": false, "last_verified": "2026-06-18" },
+    "source": {
+      "type": "paper",
+      "date": "2024-07",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can reason about jagged capability, hallucination, and calibration as structural traits.",
-    "prereqs": ["fr_evals_benchmarks"],
+    "prereqs": [
+      "fr_evals_benchmarks"
+    ],
     "next": "fr_research_landscape"
   },
   {
@@ -378,25 +589,46 @@
       "Treat a confident headline as a prompt to check, not a fact."
     ],
     "links": [
-      { "title": "Attention Is All You Need", "url": "https://arxiv.org/abs/1706.03762", "level": "Advanced", "kind": "paper", "note": "The transformer, the anchor of the modern canon." },
-      { "title": "The Llama 3 Herd of Models", "url": "https://arxiv.org/abs/2407.21783", "level": "Advanced", "kind": "paper", "note": "A thorough modern model report worth reading end to end." }
+      {
+        "title": "Attention Is All You Need",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The transformer, the anchor of the modern canon."
+      },
+      {
+        "title": "The Llama 3 Herd of Models",
+        "url": "https://arxiv.org/abs/2407.21783",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "A thorough modern model report worth reading end to end."
+      }
     ],
     "flashcards": [
-      { "front": "Why is trying to read everything counterproductive?", "back": "The field moves too fast and is noisy; selection, not volume, is the skill." },
-      { "front": "What should you anchor on?", "back": "A small canon: transformer, scaling, alignment, interpretability, and a current model report." },
-      { "front": "How should you weight a new claim?", "back": "By its source type and whether it has been reproduced; treat a headline as a prompt to check." }
+      {
+        "front": "Why is trying to read everything counterproductive?",
+        "back": "The field moves too fast and is noisy; selection, not volume, is the skill."
+      },
+      {
+        "front": "What should you anchor on?",
+        "back": "A small canon: transformer, scaling, alignment, interpretability, and a current model report."
+      },
+      {
+        "front": "How should you weight a new claim?",
+        "back": "By its source type and whether it has been reproduced; treat a headline as a prompt to check."
+      }
     ],
     "quiz": [
       {
         "q": "What is the most durable strategy for keeping up with AI research?",
         "level": "Advanced",
         "choices": [
-          "Read every new preprint the day it appears.",
           "Anchor on a small canon deeply, then place new work against it with source discipline.",
           "Only read social media threads.",
-          "Avoid reading papers entirely."
+          "Avoid reading papers entirely.",
+          "Read every new preprint the day it appears."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Deep canonical scaffolding plus skeptical reading scales; chasing everything does not."
       },
       {
@@ -412,10 +644,29 @@
         "explain": "Source discipline weights a claim by evidence, not by how striking it sounds."
       }
     ],
-    "exercise": null,
-    "source": { "type": "docs", "date": "2026-06", "confidence": "high", "contested": false, "last_verified": "2026-06-18" },
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A striking, un-reproduced preprint is trending on social media. How should you treat it?",
+      "choices": [
+        "Assume it is contaminated.",
+        "As established fact.",
+        "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
+        "Ignore it permanently."
+      ],
+      "answer": 2,
+      "explain": "Source discipline weights a claim by evidence and reproduction, not by how striking it sounds."
+    },
+    "source": {
+      "type": "docs",
+      "date": "2026-06",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
     "outcome": "You can navigate the literature with a canon-first, source-disciplined reading habit.",
-    "prereqs": ["fr_scaling_laws_emergence"],
+    "prereqs": [
+      "fr_scaling_laws_emergence"
+    ],
     "next": null
   }
 ]

@@ -14,41 +14,73 @@
       "Use an agent only when the path cannot be fully scripted up front."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "The canonical framing of agents versus workflows." },
-      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "A hands-on on-ramp to what agents are and how to build them." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "The canonical framing of agents versus workflows."
+      },
+      {
+        "title": "Hugging Face: AI Agents Course",
+        "url": "https://huggingface.co/learn/agents-course",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "A hands-on on-ramp to what agents are and how to build them."
+      }
     ],
     "flashcards": [
-      { "front": "What turns a model into an agent?", "back": "Wrapping it in a loop with tools so it can act, observe, and decide its next step." },
-      { "front": "What three traits define an agent?", "back": "It acts through tools, observes results, and controls its own next step." },
-      { "front": "When is a workflow better than an agent?", "back": "When the task is a fixed sequence you can write out in advance." }
+      {
+        "front": "What turns a model into an agent?",
+        "back": "Wrapping it in a loop with tools so it can act, observe, and decide its next step."
+      },
+      {
+        "front": "What three traits define an agent?",
+        "back": "It acts through tools, observes results, and controls its own next step."
+      },
+      {
+        "front": "When is a workflow better than an agent?",
+        "back": "When the task is a fixed sequence you can write out in advance."
+      }
     ],
     "quiz": [
       {
         "q": "What is the key difference between a single model call and an agent?",
         "level": "Beginner",
         "choices": [
-          "An agent uses a bigger model.",
           "An agent loops: it acts with tools, observes results, and decides its next step.",
           "An agent never makes mistakes.",
-          "An agent does not use a language model."
+          "An agent does not use a language model.",
+          "An agent uses a bigger model."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "The loop with tools and observation is what makes a system an agent."
       },
       {
         "q": "When should you NOT build an agent?",
         "level": "Beginner",
         "choices": [
+          "When the task requires adapting to results.",
           "When the task is a fixed, predictable sequence a workflow can handle.",
           "When the task is open-ended.",
-          "When the task needs tools.",
-          "When the task requires adapting to results."
+          "When the task needs tools."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "A scriptable task is simpler and more reliable as a workflow than as an agent."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "The task is 'extract the invoice total from this PDF', one fixed step with no branching. What fits best?",
+      "choices": [
+        "A larger model only.",
+        "A fully autonomous agent loop.",
+        "A single call or simple workflow; it needs no autonomous loop.",
+        "A multi-agent system."
+      ],
+      "answer": 2,
+      "explain": "A one-step, fully specifiable task does not need the autonomy of an agent."
+    },
     "outcome": "You can decide whether a task actually needs an agent or just a workflow.",
     "prereqs": [],
     "next": "ag_agent_loop"
@@ -68,37 +100,58 @@
       "Always define a stopping rule: success, a budget, or an escalation path."
     ],
     "links": [
-      { "title": "ReAct: Synergizing Reasoning and Acting", "url": "https://arxiv.org/abs/2210.03629", "level": "Advanced", "kind": "paper", "note": "The paper behind the reason-and-act loop." },
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Loop patterns and where they break." }
+      {
+        "title": "ReAct: Synergizing Reasoning and Acting",
+        "url": "https://arxiv.org/abs/2210.03629",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The paper behind the reason-and-act loop."
+      },
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Loop patterns and where they break."
+      }
     ],
     "flashcards": [
-      { "front": "What are the four beats of the agent loop?", "back": "Think, act with a tool, observe the result, decide whether to continue." },
-      { "front": "What is the most common agent loop failure?", "back": "Ignoring a fresh observation and acting on a stale assumption." },
-      { "front": "Why does every agent need a stopping rule?", "back": "Without one it can spin: retrying, second-guessing, or looping forever." }
+      {
+        "front": "What are the four beats of the agent loop?",
+        "back": "Think, act with a tool, observe the result, decide whether to continue."
+      },
+      {
+        "front": "What is the most common agent loop failure?",
+        "back": "Ignoring a fresh observation and acting on a stale assumption."
+      },
+      {
+        "front": "Why does every agent need a stopping rule?",
+        "back": "Without one it can spin: retrying, second-guessing, or looping forever."
+      }
     ],
     "quiz": [
       {
         "q": "Why should each observation update the agent's plan?",
         "level": "Beginner",
         "choices": [
-          "To make the transcript longer.",
-          "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors.",
           "Because tools require it.",
-          "To increase the temperature."
+          "To increase the temperature.",
+          "To make the transcript longer.",
+          "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "An agent that does not act on its observations loses the benefit of the loop."
       },
       {
         "q": "An agent keeps alternating between two tool calls and never finishes. What is missing?",
         "level": "Intermediate",
         "choices": [
-          "A bigger context window.",
           "A clear stopping rule or escalation path.",
           "A higher temperature.",
-          "More tools."
+          "More tools.",
+          "A bigger context window."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Loops without an exit condition can cycle indefinitely."
       }
     ],
@@ -123,12 +176,19 @@
       ],
       "fault_step": 1,
       "fault_type": "ignored observation",
-      "choices": ["wrong tool", "ignored observation", "context truncation", "none"],
+      "choices": [
+        "wrong tool",
+        "ignored observation",
+        "context truncation",
+        "none"
+      ],
       "answer": 1,
       "explain": "The agent observed a required field, then edited from memory and failed to carry that fact into the patch."
     },
     "outcome": "You can read an agent trace and spot where the loop stopped using its evidence.",
-    "prereqs": ["ag_what_is_an_agent"],
+    "prereqs": [
+      "ag_what_is_an_agent"
+    ],
     "next": "ag_tool_use"
   },
   {
@@ -146,43 +206,77 @@
       "Validate arguments and return clear errors to curb wrong-tool and hallucinated-argument failures."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Includes practical guidance on tool design." },
-      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "Hands-on lessons on giving an agent tools." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Includes practical guidance on tool design."
+      },
+      {
+        "title": "Hugging Face: AI Agents Course",
+        "url": "https://huggingface.co/learn/agents-course",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Hands-on lessons on giving an agent tools."
+      }
     ],
     "flashcards": [
-      { "front": "Who actually runs an agent's tool?", "back": "Your code does; the model only emits a structured request naming the tool and arguments." },
-      { "front": "What is the rule of thumb for a good tool?", "back": "One clear job, an unambiguous name, typed arguments, and concise actionable output." },
-      { "front": "Name two common tool-use failures.", "back": "Calling the wrong tool, and inventing an argument the model does not have." }
+      {
+        "front": "Who actually runs an agent's tool?",
+        "back": "Your code does; the model only emits a structured request naming the tool and arguments."
+      },
+      {
+        "front": "What is the rule of thumb for a good tool?",
+        "back": "One clear job, an unambiguous name, typed arguments, and concise actionable output."
+      },
+      {
+        "front": "Name two common tool-use failures.",
+        "back": "Calling the wrong tool, and inventing an argument the model does not have."
+      }
     ],
     "quiz": [
       {
         "q": "What does the model actually do during tool use?",
         "level": "Beginner",
         "choices": [
+          "It ignores tools and answers from memory.",
           "It executes the tool on its own servers.",
           "It emits a structured request naming a tool and arguments, which your code runs.",
-          "It rewrites the tool's source code.",
-          "It ignores tools and answers from memory."
+          "It rewrites the tool's source code."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "The model requests; your runtime executes and returns the observation."
       },
       {
         "q": "Why return concise tool results instead of raw dumps?",
         "level": "Intermediate",
         "choices": [
-          "Raw dumps are illegal.",
-          "Large outputs waste the context budget and bury the signal the model needs.",
           "The model cannot read more than ten words.",
-          "Concise results train the model."
+          "Concise results train the model.",
+          "Raw dumps are illegal.",
+          "Large outputs waste the context budget and bury the signal the model needs."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Tool output competes for the same limited context as everything else."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "The model emits a tool call delete_file(path). What actually runs it?",
+      "choices": [
+        "Your code runs it, only after you decide to; the model just requests it.",
+        "Nothing can run it.",
+        "The operating system runs it automatically.",
+        "The model executes it on its own servers."
+      ],
+      "answer": 0,
+      "explain": "The model only emits a structured request; your runtime decides whether and how to execute it."
+    },
     "outcome": "You can describe how tool calling works and what makes a tool well-designed.",
-    "prereqs": ["ag_agent_loop"],
+    "prereqs": [
+      "ag_agent_loop"
+    ],
     "next": "ag_prompting_agents"
   },
   {
@@ -200,13 +294,34 @@
       "State constraints and an uncertainty policy, not just goals."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "How to specify objectives and constraints for agents." },
-      { "title": "Anthropic: Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview", "level": "Intermediate", "kind": "docs", "note": "Prompting techniques that carry over to agent system prompts." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "How to specify objectives and constraints for agents."
+      },
+      {
+        "title": "Anthropic: Prompt Engineering Overview",
+        "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Prompting techniques that carry over to agent system prompts."
+      }
     ],
     "flashcards": [
-      { "front": "What four things should an agent system prompt make explicit?", "back": "The objective, the tools, the stopping condition, and the output contract." },
-      { "front": "Why is vagueness worse for an agent than a chatbot?", "back": "It compounds over many loop turns, so the agent wanders." },
-      { "front": "What besides goals belongs in an agent prompt?", "back": "Constraints, off-limits tools, and a policy for what to do when uncertain." }
+      {
+        "front": "What four things should an agent system prompt make explicit?",
+        "back": "The objective, the tools, the stopping condition, and the output contract."
+      },
+      {
+        "front": "Why is vagueness worse for an agent than a chatbot?",
+        "back": "It compounds over many loop turns, so the agent wanders."
+      },
+      {
+        "front": "What besides goals belongs in an agent prompt?",
+        "back": "Constraints, off-limits tools, and a policy for what to do when uncertain."
+      }
     ],
     "quiz": [
       {
@@ -225,12 +340,12 @@
         "q": "Which addition most improves a vague agent prompt?",
         "level": "Intermediate",
         "choices": [
+          "Removing all constraints.",
           "Making it longer with more adjectives.",
           "Adding explicit success criteria and a stopping or escalation condition.",
-          "Raising the temperature.",
-          "Removing all constraints."
+          "Raising the temperature."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Specific criteria and limits stop the agent from wandering."
       }
     ],
@@ -239,15 +354,17 @@
       "weak_prompt": "Be a helpful research agent.",
       "goal": "Write an agent system prompt that sets the objective, the tools, a stopping condition, and the output format.",
       "choices": [
-        "You are a helpful research assistant. Do your best work and be thorough.",
         "Research the question with the search and fetch tools. Cite every claim with a source URL. Stop when you can support the answer with at least two independent sources, or after 8 tool calls, whichever comes first. Return three summary bullets followed by the source list.",
-        "Answer any question quickly and confidently."
+        "Answer any question quickly and confidently.",
+        "You are a helpful research assistant. Do your best work and be thorough."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "The strong version names the objective, the tools, an explicit stopping condition, and the exact output contract."
     },
     "outcome": "You can write an agent system prompt with a clear objective, tools, stop rule, and output contract.",
-    "prereqs": ["ag_tool_use"],
+    "prereqs": [
+      "ag_tool_use"
+    ],
     "next": "ag_context_memory"
   },
   {
@@ -265,43 +382,77 @@
       "Compact at deliberate checkpoints before the window overflows."
     ],
     "links": [
-      { "title": "LlamaIndex: Agents", "url": "https://docs.llamaindex.ai/en/stable/use_cases/agents/", "level": "Intermediate", "kind": "docs", "note": "Retrieval-aware, data-connected agents and memory." },
-      { "title": "LangGraph", "url": "https://langchain-ai.github.io/langgraph/", "level": "Intermediate", "kind": "docs", "note": "Stateful agent graphs with explicit memory and state." }
+      {
+        "title": "LlamaIndex: Agents",
+        "url": "https://docs.llamaindex.ai/en/stable/use_cases/agents/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Retrieval-aware, data-connected agents and memory."
+      },
+      {
+        "title": "LangGraph",
+        "url": "https://langchain-ai.github.io/langgraph/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Stateful agent graphs with explicit memory and state."
+      }
     ],
     "flashcards": [
-      { "front": "Why is context a budget for an agent?", "back": "It is finite, and every turn adds tokens until the window fills." },
-      { "front": "How do you keep an old, long agent run coherent?", "back": "Summarize old turns into a compact state and keep only still-relevant observations." },
-      { "front": "What is the difference between context and memory?", "back": "Context is the in-window working set; memory is durable storage retrieved on demand." }
+      {
+        "front": "Why is context a budget for an agent?",
+        "back": "It is finite, and every turn adds tokens until the window fills."
+      },
+      {
+        "front": "How do you keep an old, long agent run coherent?",
+        "back": "Summarize old turns into a compact state and keep only still-relevant observations."
+      },
+      {
+        "front": "What is the difference between context and memory?",
+        "back": "Context is the in-window working set; memory is durable storage retrieved on demand."
+      }
     ],
     "quiz": [
       {
         "q": "An agent performs well early in a long task but degrades near the end. Likely cause?",
         "level": "Intermediate",
         "choices": [
-          "The model got tired.",
-          "The context filled and important early facts were crowded out or dropped.",
           "The temperature rose on its own.",
-          "Tools stopped working."
+          "Tools stopped working.",
+          "The model got tired.",
+          "The context filled and important early facts were crowded out or dropped."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Late-task degradation often traces to a saturated context window."
       },
       {
         "q": "What is the right way to keep durable facts available across a long run?",
         "level": "Intermediate",
         "choices": [
-          "Repeat them in every single turn.",
           "Store them externally and retrieve them on demand.",
           "Raise the temperature.",
-          "Ignore them after the first turn."
+          "Ignore them after the first turn.",
+          "Repeat them in every single turn."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "External memory plus retrieval scales better than carrying everything inline."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "An agent performs well early in a long task then degrades near the end. What is the best fix?",
+      "choices": [
+        "Raise the temperature.",
+        "Summarize old turns and move durable facts to external memory; the window saturated.",
+        "Add more tools.",
+        "Restart from scratch each time."
+      ],
+      "answer": 1,
+      "explain": "Late-task degradation usually means the context filled; compaction and external memory address it."
+    },
     "outcome": "You can manage an agent's context budget with summarization and external memory.",
-    "prereqs": ["ag_agent_loop"],
+    "prereqs": [
+      "ag_agent_loop"
+    ],
     "next": "ag_planning_decomposition"
   },
   {
@@ -319,43 +470,77 @@
       "Treat the plan as living; revise it when observations contradict it."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Planning patterns and when to use them." },
-      { "title": "LangGraph", "url": "https://langchain-ai.github.io/langgraph/", "level": "Intermediate", "kind": "docs", "note": "Encoding plans as explicit graph state." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Planning patterns and when to use them."
+      },
+      {
+        "title": "LangGraph",
+        "url": "https://langchain-ai.github.io/langgraph/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "Encoding plans as explicit graph state."
+      }
     ],
     "flashcards": [
-      { "front": "Why ask an agent to plan before acting?", "back": "It turns a vague goal into ordered, checkable subgoals and makes failure legible." },
-      { "front": "What does decomposition share with small commits?", "back": "Each piece is easier to get right and to verify than one giant leap." },
-      { "front": "What should happen when an observation contradicts the plan?", "back": "Revise the plan; do not rigidly follow a stale one." }
+      {
+        "front": "Why ask an agent to plan before acting?",
+        "back": "It turns a vague goal into ordered, checkable subgoals and makes failure legible."
+      },
+      {
+        "front": "What does decomposition share with small commits?",
+        "back": "Each piece is easier to get right and to verify than one giant leap."
+      },
+      {
+        "front": "What should happen when an observation contradicts the plan?",
+        "back": "Revise the plan; do not rigidly follow a stale one."
+      }
     ],
     "quiz": [
       {
         "q": "What is a key benefit of decomposing a task into subgoals?",
         "level": "Intermediate",
         "choices": [
+          "It eliminates the context limit.",
           "It removes the need for tools.",
           "Each subgoal is easier to verify, and failures become legible.",
-          "It guarantees the task succeeds.",
-          "It eliminates the context limit."
+          "It guarantees the task succeeds."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Smaller, checkable steps are easier to get right and to debug."
       },
       {
         "q": "An agent keeps executing its original plan even though an observation proved a step impossible. What is the failure?",
         "level": "Advanced",
         "choices": [
-          "It planned too much.",
-          "It treated the plan as fixed instead of revising it against new evidence.",
           "It used too few tools.",
-          "Its temperature was too low."
+          "Its temperature was too low.",
+          "It planned too much.",
+          "It treated the plan as fixed instead of revising it against new evidence."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Plans must adapt; rigidly following a contradicted plan defeats the loop."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "prompt_repair",
+      "weak_prompt": "Build me a dashboard.",
+      "goal": "Get the agent to plan before building so you can correct course cheaply.",
+      "choices": [
+        "Build me a nice dashboard with good charts.",
+        "First list the data sources, the three charts, and the layout as a short plan and wait for my OK; then build one chart at a time with a check after each.",
+        "Just start coding and show me when it is done."
+      ],
+      "answer": 1,
+      "explain": "A plan-first prompt with stepwise checks catches mistakes while they are cheap to fix."
+    },
     "outcome": "You can structure an agent task into checkable subgoals and keep the plan adaptive.",
-    "prereqs": ["ag_agent_loop"],
+    "prereqs": [
+      "ag_agent_loop"
+    ],
     "next": "ag_mcp_tool_ecosystem"
   },
   {
@@ -373,25 +558,46 @@
       "A standard does not replace good tool design or trust and permission decisions."
     ],
     "links": [
-      { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io/", "level": "Intermediate", "kind": "docs", "note": "The official MCP specification and introduction." },
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Where standardized tools fit in agent design." }
+      {
+        "title": "Model Context Protocol",
+        "url": "https://modelcontextprotocol.io/",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "The official MCP specification and introduction."
+      },
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Where standardized tools fit in agent design."
+      }
     ],
     "flashcards": [
-      { "front": "What is MCP?", "back": "An open standard for connecting agents to tools and data sources." },
-      { "front": "What problem does MCP solve?", "back": "It replaces bespoke per-tool integrations with a reusable, interoperable interface." },
-      { "front": "What does MCP not do for you?", "back": "It does not replace good tool design or remove trust and permission decisions." }
+      {
+        "front": "What is MCP?",
+        "back": "An open standard for connecting agents to tools and data sources."
+      },
+      {
+        "front": "What problem does MCP solve?",
+        "back": "It replaces bespoke per-tool integrations with a reusable, interoperable interface."
+      },
+      {
+        "front": "What does MCP not do for you?",
+        "back": "It does not replace good tool design or remove trust and permission decisions."
+      }
     ],
     "quiz": [
       {
         "q": "What is the main benefit of MCP over hand-wiring each tool?",
         "level": "Intermediate",
         "choices": [
-          "It makes models larger.",
           "Tools become reusable across any compatible agent instead of custom per integration.",
           "It removes the need for tools.",
-          "It guarantees correct answers."
+          "It guarantees correct answers.",
+          "It makes models larger."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "A shared standard turns one-off integrations into interoperable, reusable parts."
       },
       {
@@ -407,9 +613,22 @@
         "explain": "Standardized access does not remove the need for trust and good design."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You want six different agents to use your database tools without writing custom glue for each. Best approach?",
+      "choices": [
+        "Copy the tool code into every agent.",
+        "Hand-wire each agent to the database separately.",
+        "Expose the tools once as an MCP server that any compatible agent can use.",
+        "Give each agent the raw database password."
+      ],
+      "answer": 2,
+      "explain": "MCP turns one-off integrations into a reusable interface many agents can share."
+    },
     "outcome": "You can explain what MCP is and why standardized tool access matters.",
-    "prereqs": ["ag_tool_use"],
+    "prereqs": [
+      "ag_tool_use"
+    ],
     "next": "ag_multi_agent_orchestration"
   },
   {
@@ -427,43 +646,77 @@
       "Default to one strong agent; add agents only when a real bottleneck justifies it."
     ],
     "links": [
-      { "title": "Multi AI Agent Systems with crewAI", "url": "https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/", "level": "Beginner", "kind": "course", "note": "Hands-on multi-agent collaboration and role-based tasks." },
-      { "title": "Microsoft AutoGen", "url": "https://microsoft.github.io/autogen/", "level": "Advanced", "kind": "docs", "note": "A framework for multi-agent conversation and cooperation." }
+      {
+        "title": "Multi AI Agent Systems with crewAI",
+        "url": "https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Hands-on multi-agent collaboration and role-based tasks."
+      },
+      {
+        "title": "Microsoft AutoGen",
+        "url": "https://microsoft.github.io/autogen/",
+        "level": "Advanced",
+        "kind": "docs",
+        "note": "A framework for multi-agent conversation and cooperation."
+      }
     ],
     "flashcards": [
-      { "front": "When does multi-agent help most?", "back": "When subtasks are independent and parallel, or need distinct roles and toolsets." },
-      { "front": "What is the main cost of multi-agent systems?", "back": "Coordination: context loss at handoffs, plus more tokens, latency, and failure points." },
-      { "front": "What is the sensible default?", "back": "One well-prompted agent; add agents only when a real bottleneck justifies it." }
+      {
+        "front": "When does multi-agent help most?",
+        "back": "When subtasks are independent and parallel, or need distinct roles and toolsets."
+      },
+      {
+        "front": "What is the main cost of multi-agent systems?",
+        "back": "Coordination: context loss at handoffs, plus more tokens, latency, and failure points."
+      },
+      {
+        "front": "What is the sensible default?",
+        "back": "One well-prompted agent; add agents only when a real bottleneck justifies it."
+      }
     ],
     "quiz": [
       {
         "q": "What is the biggest hidden cost of a multi-agent system?",
         "level": "Advanced",
         "choices": [
-          "Larger model weights.",
-          "Coordination overhead and context loss across handoffs.",
           "Lower temperature.",
-          "Fewer tools."
+          "Fewer tools.",
+          "Larger model weights.",
+          "Coordination overhead and context loss across handoffs."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Information that was obvious in one context can disappear across an agent boundary."
       },
       {
         "q": "Which is a good reason to split work across agents?",
         "level": "Advanced",
         "choices": [
-          "It looks more sophisticated.",
           "The subtasks are genuinely independent and can run in parallel.",
           "To use more tokens.",
-          "Because one agent is never enough."
+          "Because one agent is never enough.",
+          "It looks more sophisticated."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Independent, parallelizable subtasks are the clearest justification."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "Two subtasks are tightly coupled and share a lot of context. Single agent or multi-agent?",
+      "choices": [
+        "Multi-agent, because more agents is always better.",
+        "A single agent; tight coupling makes handoffs lose context.",
+        "Multi-agent, to use more tokens.",
+        "It makes no difference."
+      ],
+      "answer": 1,
+      "explain": "Coupled work loses context across agent boundaries; one agent avoids that overhead."
+    },
     "outcome": "You can judge when multiple agents are worth the coordination cost.",
-    "prereqs": ["ag_planning_decomposition"],
+    "prereqs": [
+      "ag_planning_decomposition"
+    ],
     "next": "ag_evaluating_agents"
   },
   {
@@ -481,43 +734,77 @@
       "Keep the judge independent of the agent to avoid inflated scores."
     ],
     "links": [
-      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "A practical guide to building real evaluations." },
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Why measurement and iteration drive agent quality." }
+      {
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "A practical guide to building real evaluations."
+      },
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Why measurement and iteration drive agent quality."
+      }
     ],
     "flashcards": [
-      { "front": "Why is one successful agent run weak evidence?", "back": "Agents are stochastic and multi-step, so a single run can succeed by chance." },
-      { "front": "What is the difference between outcome and trajectory evaluation?", "back": "Outcome checks the final result; trajectory checks whether the process was sound." },
-      { "front": "What is the most important evaluation discipline?", "back": "Keep the judge independent of the agent being evaluated." }
+      {
+        "front": "Why is one successful agent run weak evidence?",
+        "back": "Agents are stochastic and multi-step, so a single run can succeed by chance."
+      },
+      {
+        "front": "What is the difference between outcome and trajectory evaluation?",
+        "back": "Outcome checks the final result; trajectory checks whether the process was sound."
+      },
+      {
+        "front": "What is the most important evaluation discipline?",
+        "back": "Keep the judge independent of the agent being evaluated."
+      }
     ],
     "quiz": [
       {
         "q": "Why measure the trajectory, not just the final answer?",
         "level": "Advanced",
         "choices": [
+          "It uses fewer tokens.",
           "Trajectories are easier to fake.",
           "A correct answer reached through a broken process will not hold when the task changes.",
-          "Outcomes never matter.",
-          "It uses fewer tokens."
+          "Outcomes never matter."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Process quality predicts whether success will generalize."
       },
       {
         "q": "What inflates an agent's evaluation scores?",
         "level": "Advanced",
         "choices": [
-          "Using a held-out task set.",
-          "Letting the agent grade its own work or be judged by a model with the same blind spots.",
           "Running each task multiple times.",
-          "Using a clear rubric."
+          "Using a clear rubric.",
+          "Using a held-out task set.",
+          "Letting the agent grade its own work or be judged by a model with the same blind spots."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Self-grading and correlated judges both bias scores upward."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "An agent passed your single demo task on the first try. How much does that prove?",
+      "choices": [
+        "Little; run a fixed task set many times, report a rate, and judge it independently.",
+        "Nothing can be measured about agents.",
+        "It proves the trajectory was correct.",
+        "It proves the agent is reliable."
+      ],
+      "answer": 0,
+      "explain": "Agents are stochastic and multi-step; one success is weak evidence without a repeated, independent eval."
+    },
     "outcome": "You can design a basic agent evaluation with outcomes, trajectories, and an independent judge.",
-    "prereqs": ["ag_agent_loop"],
+    "prereqs": [
+      "ag_agent_loop"
+    ],
     "next": "ag_failure_modes_guardrails"
   },
   {
@@ -535,13 +822,34 @@
       "Make missing data loud and verify high-stakes actions instead of trusting narration."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Guardrail patterns and where agents break." },
-      { "title": "Cognitive Architectures for Language Agents", "url": "https://arxiv.org/abs/2309.02427", "level": "Expert", "kind": "paper", "note": "A systematic framework for agent design and its failure surfaces." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Guardrail patterns and where agents break."
+      },
+      {
+        "title": "Cognitive Architectures for Language Agents",
+        "url": "https://arxiv.org/abs/2309.02427",
+        "level": "Expert",
+        "kind": "paper",
+        "note": "A systematic framework for agent design and its failure surfaces."
+      }
     ],
     "flashcards": [
-      { "front": "Name four common agent failure modes.", "back": "Looping, wrong tool, hallucinated arguments, ignored observations (and guessing missing data)." },
-      { "front": "What guardrail stops runaway loops?", "back": "Explicit step and budget limits." },
-      { "front": "What is the most insidious agent failure?", "back": "Confidently filling a missing value with a plausible guess and proceeding." }
+      {
+        "front": "Name four common agent failure modes.",
+        "back": "Looping, wrong tool, hallucinated arguments, ignored observations (and guessing missing data)."
+      },
+      {
+        "front": "What guardrail stops runaway loops?",
+        "back": "Explicit step and budget limits."
+      },
+      {
+        "front": "What is the most insidious agent failure?",
+        "back": "Confidently filling a missing value with a plausible guess and proceeding."
+      }
     ],
     "quiz": [
       {
@@ -560,12 +868,12 @@
         "q": "An agent encounters a missing field and proceeds with a confident guess. Best fix?",
         "level": "Advanced",
         "choices": [
+          "Remove the field from the schema.",
           "Trust the guess to keep things fast.",
           "Make missing data loud and require the agent to resolve it via a tool or a question.",
-          "Raise the temperature so guesses vary.",
-          "Remove the field from the schema."
+          "Raise the temperature so guesses vary."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Resolving the gap, rather than guessing, prevents fluent-but-wrong results."
       }
     ],
@@ -590,12 +898,19 @@
       ],
       "fault_step": 1,
       "fault_type": "hallucinated assumption",
-      "choices": ["hallucinated assumption to fill a gap", "wrong tool selected", "context window truncation", "no fault, the trace is correct"],
-      "answer": 0,
+      "choices": [
+        "wrong tool selected",
+        "context window truncation",
+        "no fault, the trace is correct",
+        "hallucinated assumption to fill a gap"
+      ],
+      "answer": 3,
       "explain": "When plan came back null, a reliable agent resolves it with another tool or a clarifying question instead of inventing a confident value."
     },
     "outcome": "You can name the common agent failure modes and the guardrail that addresses each.",
-    "prereqs": ["ag_agent_loop"],
+    "prereqs": [
+      "ag_agent_loop"
+    ],
     "next": "ag_when_not_to_use"
   },
   {
@@ -613,25 +928,46 @@
       "Match autonomy to the task: necessity, not capability, is the question."
     ],
     "links": [
-      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "The agents-versus-workflows decision, made concrete." },
-      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "Builds intuition for where agents do and do not fit." }
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "The agents-versus-workflows decision, made concrete."
+      },
+      {
+        "title": "Hugging Face: AI Agents Course",
+        "url": "https://huggingface.co/learn/agents-course",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Builds intuition for where agents do and do not fit."
+      }
     ],
     "flashcards": [
-      { "front": "When is a workflow better than an agent?", "back": "When the task is a fixed, predictable multi-step sequence." },
-      { "front": "What kinds of actions demand extra caution from agents?", "back": "High-stakes or irreversible ones: moving money, deleting data, public output." },
-      { "front": "What is the rule for choosing autonomy?", "back": "Match it to the task; necessity, not capability, decides." }
+      {
+        "front": "When is a workflow better than an agent?",
+        "back": "When the task is a fixed, predictable multi-step sequence."
+      },
+      {
+        "front": "What kinds of actions demand extra caution from agents?",
+        "back": "High-stakes or irreversible ones: moving money, deleting data, public output."
+      },
+      {
+        "front": "What is the rule for choosing autonomy?",
+        "back": "Match it to the task; necessity, not capability, decides."
+      }
     ],
     "quiz": [
       {
         "q": "A task is a fixed five-step sequence with no branching. What fits best?",
         "level": "Intermediate",
         "choices": [
-          "A fully autonomous agent.",
           "A deterministic workflow.",
           "A multi-agent system.",
-          "A larger model."
+          "A larger model.",
+          "A fully autonomous agent."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Predictable sequences are cheaper and safer as workflows."
       },
       {
@@ -647,9 +983,22 @@
         "explain": "Scope, gates, and review keep recoverable what would otherwise be costly mistakes."
       }
     ],
-    "exercise": null,
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A task permanently deletes production records and cannot be undone. How much autonomy should the agent have?",
+      "choices": [
+        "Maximum, with no review.",
+        "Full autonomy, to move fast.",
+        "Minimal; use tight scope, confirmation gates, and human review.",
+        "No tools at all, so it cannot help."
+      ],
+      "answer": 2,
+      "explain": "Irreversible, high-stakes actions need scope, gates, and review to keep the blast radius small."
+    },
     "outcome": "You can choose between a single call, a workflow, and an agent based on the task.",
-    "prereqs": ["ag_what_is_an_agent"],
+    "prereqs": [
+      "ag_what_is_an_agent"
+    ],
     "next": null
   }
 ]
