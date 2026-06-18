@@ -445,7 +445,7 @@
     "level": "Advanced",
     "minutes": 5,
     "summary": "Small evals are noisy; without an uncertainty estimate, a difference can be pure chance, so report intervals, not point scores.",
-    "body_html": "<p>Run the same eval twice on a stochastic model and you will get slightly different numbers. That spread is the noise floor: the size of differences you would see even when nothing real changed. A measured gap smaller than the noise floor is not a finding, it is the measurement breathing. The first question about any score difference is whether it clears the noise.</p><p>The bootstrap is a simple, assumption-light way to estimate that noise. You resample your results many times with replacement, recompute the metric each time, and look at the spread of those recomputed values. The middle range of that spread is a confidence interval: a plausible range for the true value given your sample. When you compare two models on the same test items, do not just check whether their separate intervals overlap, which is a conservative test that throws away the pairing. Instead bootstrap the per-item difference between the two models and ask whether that difference's interval excludes zero. Paired comparison is more sensitive because it cancels the shared difficulty of each item.</p><p>Sample size drives all of this. Five examples can produce a dramatic-looking gap that vanishes at fifty. Report the interval alongside the number, state the sample size, and treat a wide interval as a signal to gather more data rather than a result to announce.</p>",
+    "body_html": "<p>Run the same eval twice on a stochastic model and you will get slightly different numbers. That spread is the noise floor: the size of differences you would see even when nothing real changed. A measured gap smaller than the noise floor is not a finding, it is the measurement breathing. The first question about any score difference is whether it clears the noise.</p><p>The bootstrap is a simple, assumption-light way to estimate that noise. You resample your results many times with replacement, recompute the metric each time, and look at the spread of those recomputed values. The middle range of that spread is a confidence interval: a plausible range for the true value (strictly, an interval whose construction would contain the true value a set fraction of the time across repeated samples). When you compare two models on the same test items, do not just check whether their separate intervals overlap, which is a conservative test that throws away the pairing. Instead bootstrap the per-item difference between the two models and ask whether that difference's interval excludes zero. Paired comparison is more sensitive because it cancels the shared difficulty of each item.</p><p>Sample size drives all of this. Five examples can produce a dramatic-looking gap that vanishes at fifty. Report the interval alongside the number, state the sample size, and treat a wide interval as a signal to gather more data rather than a result to announce.</p>",
     "key_points": [
       "The noise floor is the variation you see when nothing real changed.",
       "A gap smaller than the noise floor is not a finding.",
@@ -701,7 +701,7 @@
     "prereqs": [
       "eval_confounds"
     ],
-    "next": null
+    "next": "eval_production_observability"
   },
   {
     "id": "eval_production_observability",

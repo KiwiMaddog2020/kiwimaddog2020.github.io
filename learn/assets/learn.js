@@ -214,8 +214,6 @@
   function replaceApp(markup, title) {
     app.innerHTML = markup;
     document.title = title ? `${title} · Learn Center` : "Learn Center · Kevin Madson";
-    const crumb = document.querySelector(".crumb");
-    if (crumb) crumb.textContent = title || "Learn Center";
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     app.focus({ preventScroll: true });
   }
@@ -312,7 +310,7 @@
       searchForm.addEventListener("submit", function (event) {
         event.preventDefault();
         lastSearch = app.querySelector("#home-search").value.trim();
-        location.hash = "#/search";
+        location.hash = lastSearch ? `#/search/${encodeURIComponent(lastSearch)}` : "#/search";
       });
     }
   }
@@ -797,7 +795,7 @@
     function buildQueue() {
       return cards.map((_, index) => index).filter((index) => !progress.got[cards[index].id]);
     }
-    let queue = buildQueue();
+    let queue = shuffle(buildQueue());
     let pos = 0;
     let flipped = false;
     let message = "";
@@ -1001,6 +999,9 @@
       answered.set(qIndex, questions[qIndex].answer === cIndex);
       if (answered.size === questions.length) {
         saveQuizBest(quizId, score(), questions.length);
+        if (score() === questions.length && quizId.indexOf("lesson:") === 0) {
+          setLessonComplete(quizId.slice("lesson:".length), true);
+        }
       }
       render();
     });
@@ -1041,7 +1042,7 @@
                 : "";
               const answerClass = answered && index === exercise.bug_line ? "is-answer" : "";
               return `
-                <button class="code-line ${pickedClass} ${answerClass}" type="button" data-line="${index}" ${answered ? "disabled" : ""}>
+                <button class="code-line ${pickedClass} ${answerClass}" type="button" role="listitem" data-line="${index}" ${answered ? "disabled" : ""}>
                   <span class="line-number">${index + 1}</span>
                   <code>${escapeHtml(line || " ")}</code>
                 </button>

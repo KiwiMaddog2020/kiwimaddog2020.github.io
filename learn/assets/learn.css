@@ -20,6 +20,12 @@ body.learn-page h3 {
 
 .learn-top .crumb {
   color: #c8a96b;
+  text-decoration: none;
+}
+
+.learn-top a.crumb:hover {
+  color: var(--text-strong);
+  text-decoration: underline;
 }
 
 .learn-loading,
