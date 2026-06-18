@@ -163,5 +163,18 @@ each item against the LIVE site; disagreements resolved by ground truth (curl / 
   1.00 matches were empty non-displayed `prompt` fields on prompt_repair/agent_trace, which render
   weak_prompt/goal/steps instead). `sources` extended beyond frontier to all 5 tracks (7 lessons:
   +ag_security_injection, eval_sycophancy_capitulation, eval_doer_not_grader). All 76 unique site URLs curl-200.
-- GATE: Codex + Gemini launched against the live site with CHECKLIST_V3.md to binary-verify each item
-  (A1-E2) + flag any factual error in the 12 new lessons. Resolve any NOT; re-verify until all green.
+- GATE (CLOSED, all green): Codex + Gemini binary-verified CHECKLIST_V3.md against the live site.
+  Gemini (live): all 21 items CONFIRMED, 0 factual errors, self-fetched all 75 links 200, diffed
+  local==live. Codex (gpt-5.5, workspace copy; its sandbox DNS blocked the live fetch, so it honestly
+  marked live/links CANNOT-VERIFY rather than guessing -- the eval-honesty discipline in the rater
+  itself): all 21 CONFIRMED in source/data + 4 real accuracy catches: (1) eval_capstone_design used
+  reopen/resolution of never-sent agent drafts as the offline primary metric -- counterfactual, can't
+  be observed offline; reframed to blinded offline quality grading + a pilot/A-B for true outcomes
+  (the old answer became the trap); (2) transformer "permutation-invariant" -> equivariant; (3)
+  quantization speedup hedged on kernels; (4) deployer still owns provenance diligence. All 4 fixed
+  (3411fa7) + adversarially re-verified by a 3-verifier panel (0 major; 1 minor positional-encoding
+  imprecision tightened, 470a4a5). Binary checklist converged cleanly -- a real defect class found and
+  closed, not the v1/v2 score random-walk. The checklist gate worked exactly as Kevin intended.
+- v3 LIVE: 65 lessons / 5 tracks / 9 interactive labs (4 new: bootstrap, ROC, RAG, context-budget) +
+  5 capstones / 6 diagrams / global index + resume + per-track mastery + per-claim sources, at
+  https://kiwimaddog2020.github.io/learn/. All 76 links 200, JSON valid, node-check clean, em-dash-free.
