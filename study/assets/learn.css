@@ -57,7 +57,7 @@ body.learn-page h1 { letter-spacing: -0.015em; }
 .track-header h1,
 .lesson-header h1 {
   max-width: 760px;
-  margin: 6px 0 16px;
+  margin: 6px auto 16px;
   font-size: 48px;
   line-height: 1.04;
 }
