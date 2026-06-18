@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ml_weights_stub",
+    "track": "foundations",
+    "title": "Weights are adjustable knobs",
+    "level": "Beginner",
+    "minutes": 2,
+    "summary": "A model learns by changing numbers that shape how inputs become outputs.",
+    "body_html": "<p>A weight is a learned number inside a model. During training, the system compares a prediction with the target, computes a loss, and nudges many weights so future predictions move in a better direction. The idea is simple; the scale is what makes modern models surprising.</p>",
+    "key_points": [
+      "Weights are learned parameters, not hand-written rules.",
+      "Training adjusts weights to reduce loss on examples.",
+      "Generalization is the test: useful behavior on cases not memorized."
+    ],
+    "links": [],
+    "flashcards": [],
+    "quiz": [],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A classifier has only seen training examples with red labels. What is the safest prediction about a new blue example?",
+      "choices": [
+        "It will certainly classify blue correctly because training reduced loss.",
+        "It may fail because training success does not prove generalization to unseen cases.",
+        "It cannot make any prediction unless blue appears in the prompt."
+      ],
+      "answer": 1,
+      "explain": "Lower training loss is not the same as tested generalization."
+    },
+    "outcome": "You can distinguish learned parameters from hand-coded rules.",
+    "prereqs": [],
+    "next": null
+  }
+]

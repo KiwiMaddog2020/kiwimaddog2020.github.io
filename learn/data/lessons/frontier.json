@@ -1,0 +1,30 @@
+[
+  {
+    "id": "fr_attention_stub",
+    "track": "frontier",
+    "title": "Attention as routing",
+    "level": "Advanced",
+    "minutes": 3,
+    "summary": "Attention lets each token build a context-sensitive mixture of information from other tokens.",
+    "body_html": "<p>In a transformer, attention is a learned routing operation. A token forms queries, keys, and values, then uses compatibility scores to decide which other token representations should influence its next representation. This is one reason transformers can model long-range dependencies without processing text strictly left to right.</p>",
+    "key_points": [
+      "Attention routes information between token representations.",
+      "Queries and keys score relevance; values carry content.",
+      "The mechanism is central, but it is not the whole model."
+    ],
+    "links": [],
+    "flashcards": [],
+    "quiz": [],
+    "exercise": null,
+    "source": {
+      "type": "paper",
+      "date": "2017-06-12",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
+    "outcome": "You can describe attention without treating it as magic memory.",
+    "prereqs": [],
+    "next": null
+  }
+]

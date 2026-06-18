@@ -1,0 +1,23 @@
+[
+  {
+    "id": "eval_doer_rater_stub",
+    "track": "evaluating-ai",
+    "title": "The doer should not grade itself",
+    "level": "Intermediate",
+    "minutes": 3,
+    "summary": "A useful AI evaluation separates the system doing the work from the system judging it.",
+    "body_html": "<p>If the same model writes an answer and grades the answer, the evaluation can reward style, agreement, or hidden assumptions instead of task success. A better setup defines the claim before the run, separates doer and rater, records what was not measured, and treats uncertainty as part of the result.</p>",
+    "key_points": [
+      "Role separation reduces self-approval loops.",
+      "Pre-registering the claim protects the metric from drift.",
+      "A not-measured ledger is part of an honest result."
+    ],
+    "links": [],
+    "flashcards": [],
+    "quiz": [],
+    "exercise": null,
+    "outcome": "You can explain why self-grading inflates confidence.",
+    "prereqs": [],
+    "next": null
+  }
+]

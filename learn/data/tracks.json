@@ -1,0 +1,47 @@
+[
+  {
+    "id": "foundations",
+    "title": "Foundations of ML",
+    "order": 1,
+    "level_range": "Beginner to Advanced",
+    "blurb": "Build the mental model for models, weights, training, tokens, embeddings, attention, and inference.",
+    "icon": "network",
+    "lessons": ["ml_weights_stub"]
+  },
+  {
+    "id": "agents",
+    "title": "Working with Agents",
+    "order": 2,
+    "level_range": "Beginner to Expert",
+    "blurb": "Learn the agent loop, tool use, context discipline, orchestration, evaluation, and failure modes.",
+    "icon": "loop",
+    "lessons": ["ag_agent_loop_stub"]
+  },
+  {
+    "id": "vibe-coding",
+    "title": "Vibe Coding",
+    "order": 3,
+    "level_range": "Beginner to Expert",
+    "blurb": "Use coding models as fast collaborators while keeping design, review, tests, and acceptance criteria human-owned.",
+    "icon": "code",
+    "lessons": ["vc_prompt_small_commits_stub", "vc_trust_but_verify"]
+  },
+  {
+    "id": "evaluating-ai",
+    "title": "Evaluating AI Honestly",
+    "order": 4,
+    "level_range": "Intermediate to Expert",
+    "blurb": "Measure AI systems with separation of roles, pre-registered claims, calibrated uncertainty, and a not-measured ledger.",
+    "icon": "gauge",
+    "lessons": ["eval_doer_rater_stub"]
+  },
+  {
+    "id": "frontier",
+    "title": "LLM Research and the Frontier",
+    "order": 5,
+    "level_range": "Advanced to Expert",
+    "blurb": "Track frontier concepts with source discipline: transformers, alignment, interpretability, evals, and test-time compute.",
+    "icon": "paper",
+    "lessons": ["fr_attention_stub"]
+  }
+]

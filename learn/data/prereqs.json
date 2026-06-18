@@ -1,0 +1,7 @@
+[
+  { "id": "foundations", "needs": [] },
+  { "id": "agents", "needs": ["foundations"] },
+  { "id": "vibe-coding", "needs": ["foundations"] },
+  { "id": "evaluating-ai", "needs": ["foundations"] },
+  { "id": "frontier", "needs": ["foundations", "evaluating-ai"] }
+]

@@ -1,0 +1,151 @@
+[
+  {
+    "id": "vc_prompt_small_commits_stub",
+    "track": "vibe-coding",
+    "title": "Prompt in reviewable units",
+    "level": "Beginner",
+    "minutes": 3,
+    "summary": "Good coding-agent prompts describe one change, one boundary, and one check.",
+    "body_html": "<p>A coding model is easiest to steer when the work unit is small enough to review without archaeology. Name the file or surface, state the behavior change, list the non-goals, and ask for the verification command. That prompt shape gives the model room to help without letting it silently redefine the task.</p>",
+    "key_points": [
+      "One prompt should map to one reviewable change.",
+      "Non-goals protect nearby code from opportunistic edits.",
+      "A verification command turns intent into an acceptance check."
+    ],
+    "links": [],
+    "flashcards": [],
+    "quiz": [],
+    "exercise": {
+      "type": "prompt_repair",
+      "weak_prompt": "make auth better",
+      "goal": "Ask for a small, reviewable change that adds a timeout to an existing auth token refresh call.",
+      "choices": [
+        "Improve auth and clean up anything nearby.",
+        "In auth/refresh.js, add a 5 second timeout to the token refresh request only. Do not change storage or login flow. Add or update one test that proves timeout rejection.",
+        "Rewrite the auth module with better error handling."
+      ],
+      "answer": 1,
+      "explain": "The best rewrite names the file, boundary, behavior, non-goals, and check."
+    },
+    "outcome": "You can shape a coding-agent request so the result is small enough to audit.",
+    "prereqs": [],
+    "next": "vc_trust_but_verify"
+  },
+  {
+    "id": "vc_trust_but_verify",
+    "track": "vibe-coding",
+    "title": "Trust but verify AI-written code",
+    "level": "Intermediate",
+    "minutes": 8,
+    "summary": "Treat model output as a useful draft, then prove the contract yourself before accepting it.",
+    "body_html": "<p>AI-written code is a hypothesis about your codebase, not evidence that the change is correct. The model may know the local symbols, but it does not own the product contract, the edge cases, or the release risk. Your job is to convert a plausible patch into a checked change.</p><p>The fastest verification loop is simple: restate the contract, inspect the data flow, run the narrowest useful tests, and add a missing test when the risk is real. Ask the model to explain a suspicious line only after you have formed your own question. Otherwise the answer can sound coherent while quietly moving your standard of proof.</p><p>For generated code, review the boundaries first. Check inputs, outputs, null cases, permissions, persistence, retries, time, and cleanup. Then look for the model's favorite failure mode: solving the example while missing the invariant. A passing happy-path test is useful, but it is not acceptance.</p>",
+    "key_points": [
+      "Accept the model's speed, not its authority.",
+      "Restate the contract before reading the patch so you know what evidence you need.",
+      "Run focused tests and add one when the likely failure is not covered.",
+      "Use the model for explanation and alternatives, but keep final judgment outside the model."
+    ],
+    "links": [
+      {
+        "title": "Claude Code: Common Workflows",
+        "url": "https://code.claude.com/docs/en/common-workflows",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Operational patterns for steering and checking coding-agent work."
+      },
+      {
+        "title": "GitHub Docs: Use Copilot Code Review",
+        "url": "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "A concrete reference point for AI-assisted code review flows."
+      },
+      {
+        "title": "Software Engineering at Google: Testing Overview",
+        "url": "https://abseil.io/resources/swe-book/html/ch11.html",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Why automated tests make repeated change safer."
+      },
+      {
+        "title": "OpenAI: Prompt Engineering",
+        "url": "https://developers.openai.com/api/docs/guides/prompt-engineering",
+        "level": "Beginner",
+        "kind": "docs",
+        "note": "Prompting principles that help when asking for checks, alternatives, and constraints."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What status should AI-written code have before review?",
+        "back": "A plausible draft or hypothesis, not evidence of correctness."
+      },
+      {
+        "front": "What should you restate before inspecting a generated patch?",
+        "back": "The contract: inputs, outputs, invariants, and acceptance checks."
+      },
+      {
+        "front": "Why ask the model for an explanation after forming your own question?",
+        "back": "It keeps the model from setting the standard of proof with a fluent story."
+      },
+      {
+        "front": "What is the common generated-code failure mode in this lesson?",
+        "back": "Solving the example while missing the invariant."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A generated function passes the sample case. What is the next best move?",
+        "level": "Intermediate",
+        "choices": [
+          "Check the contract and run or add a focused test for the likely edge case.",
+          "Accept the patch because the model already saw the repository.",
+          "Ask the model whether the code is correct and accept a confident answer.",
+          "Rewrite the whole module manually before looking at the patch."
+        ],
+        "answer": 0,
+        "explain": "The sample case is a clue, not acceptance. Verify the contract and the risky edge."
+      },
+      {
+        "q": "Which review question is most useful for AI-written code?",
+        "level": "Intermediate",
+        "choices": [
+          "Does the code look idiomatic?",
+          "Did the model explain it fluently?",
+          "What invariant could this patch violate while still passing the happy path?",
+          "Could a larger model have written it faster?"
+        ],
+        "answer": 2,
+        "explain": "Generated code often handles the visible example while missing the invariant."
+      },
+      {
+        "q": "When should you ask the model to explain a suspicious line?",
+        "level": "Intermediate",
+        "choices": [
+          "Before reading the code, so it can frame the review.",
+          "After you have a specific question or hypothesis to test.",
+          "Only after merging, so you do not slow down.",
+          "Never, because explanations from models cannot be useful."
+        ],
+        "answer": 1,
+        "explain": "A specific question lets the explanation support your review instead of replacing it."
+      }
+    ],
+    "exercise": {
+      "type": "spot_the_bug",
+      "prompt": "Cart items have priceCents and quantity. This AI-written helper passes one-item smoke tests but has one bug. Click the faulty line.",
+      "lines": [
+        "function totalCents(items) {",
+        "  return items.reduce((sum, item) => sum + item.priceCents, 0);",
+        "}",
+        "",
+        "const total = totalCents([{ priceCents: 499, quantity: 3 }]);"
+      ],
+      "bug_line": 1,
+      "explain": "The reducer ignores quantity, so it charges one unit no matter how many the cart contains."
+    },
+    "outcome": "You can turn a plausible generated patch into a checked change with explicit acceptance evidence.",
+    "prereqs": ["vc_prompt_small_commits_stub"],
+    "next": null
+  }
+]

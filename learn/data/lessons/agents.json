@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ag_agent_loop_stub",
+    "track": "agents",
+    "title": "The agent loop",
+    "level": "Beginner",
+    "minutes": 3,
+    "summary": "An agent alternates between deciding, using tools, observing results, and deciding again.",
+    "body_html": "<p>An agent is an LLM system allowed to choose steps, call tools, read observations, and continue until a task is done or stopped. The loop is powerful because it can adapt mid-task, but every loop also creates chances for stale context, wrong tool calls, and unchecked assumptions.</p>",
+    "key_points": [
+      "Agents need tools, state, stopping rules, and review points.",
+      "Observations should update the plan, not merely decorate it.",
+      "More autonomy trades predictability for reach."
+    ],
+    "links": [],
+    "flashcards": [],
+    "quiz": [],
+    "exercise": {
+      "type": "agent_trace",
+      "steps": [
+        {
+          "thought": "Find the latest API shape before editing.",
+          "tool": "open_docs('payments.refunds')",
+          "observation": "Docs show refundReason is required."
+        },
+        {
+          "thought": "Patch the call site from memory because the docs look familiar.",
+          "tool": "edit('refund.js')",
+          "observation": "Changed amount and id, but did not include refundReason."
+        },
+        {
+          "thought": "Run the focused test.",
+          "tool": "npm test -- refund",
+          "observation": "Test fails with missing refundReason."
+        }
+      ],
+      "fault_step": 1,
+      "fault_type": "ignored observation",
+      "choices": ["wrong tool", "ignored observation", "context truncation", "none"],
+      "answer": 1,
+      "explain": "The agent observed a required field, then edited from memory and failed to carry that fact into the patch."
+    },
+    "outcome": "You can read a simple agent trace and spot where the loop stopped using evidence.",
+    "prereqs": [],
+    "next": null
+  }
+]
