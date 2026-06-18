@@ -1254,3 +1254,17 @@ button:disabled,
 .lesson-list,
 .resource-list,
 .index-list { gap: 4px; }
+
+/* Flatten the last content boxes: lesson completion panel, deck-complete panel.
+   The capstone scenario keeps only a left rule so the reviewed artifact stays set off. */
+.completion-panel,
+.deck-complete {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+.capstone-scenario {
+  border: none;
+  border-left: 3px solid var(--accent);
+  background: none;
+}
