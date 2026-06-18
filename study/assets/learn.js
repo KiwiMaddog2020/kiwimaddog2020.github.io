@@ -193,10 +193,10 @@
   // Until then FIREBASE_ENABLED is false and no sign-in UI is shown -- the
   // section works exactly as before, storing progress in this browser only.
   const firebaseConfig = {
-    apiKey: "PASTE_API_KEY",
-    authDomain: "PASTE_AUTH_DOMAIN",
-    projectId: "PASTE_PROJECT_ID",
-    appId: "PASTE_APP_ID"
+    apiKey: "AIzaSyCTCfcSPXE4t0MU7wpVKkENKtqP5dNm4-4",
+    authDomain: "blog-and-research.firebaseapp.com",
+    projectId: "blog-and-research",
+    appId: "1:26234259394:web:e777d0437866819a60b85b"
   };
   const FIREBASE_ENABLED = !!firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf("PASTE") === -1;
   const SYNC_PREFIXES = ["lesson:", "quiz:", "deck:"];
