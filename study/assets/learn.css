@@ -1205,3 +1205,52 @@ button:disabled,
   .quiz-question,
   .continue-card { padding: 18px; }
 }
+
+/* ---- Flatten content cards: text flows on the page; interactive controls,
+   widget readouts, chips, and the capstone scenario keep their framing. ---- */
+.track-card,
+.lesson-row,
+.resource-item,
+.exercise-card,
+.quiz-question,
+.continue-card,
+.legend-item,
+.index-row,
+.source-row,
+.search-row,
+.path-grid > div,
+.lesson-diagram,
+.key-points li,
+.lesson-index {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.track-card { min-height: 0; padding: 0; gap: 10px; }
+.lesson-row,
+.resource-item,
+.search-row { padding: 12px 0; }
+.exercise-card,
+.quiz-question,
+.path-grid > div,
+.lesson-diagram { padding: 0; }
+.continue-card { padding: 8px 0; }
+.legend-item { min-height: 0; padding: 6px 0; }
+.index-row > a { padding: 12px 0; }
+.source-row { padding: 8px 0; }
+.lesson-index { color: var(--accent); }
+
+/* Key points: a clean bulleted list instead of a stack of boxes. */
+.key-points { display: block; list-style: disc; padding-left: 22px; }
+.key-points li { margin-bottom: 8px; padding: 0; border-radius: 0; }
+
+/* Hover feedback without a card box. */
+.continue-card:hover { background: none; }
+.continue-card:hover .continue-title { color: var(--accent-bright); }
+
+/* Air between flattened rows and questions. */
+.quiz-list { gap: 30px; }
+.lesson-list,
+.resource-list,
+.index-list { gap: 4px; }
