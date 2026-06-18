@@ -19,6 +19,8 @@
     ready: false
   };
 
+  let lastSearch = "";
+
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, function (char) {
       return {
@@ -229,6 +231,11 @@
       return;
     }
 
+    if (section === "search") {
+      renderSearch();
+      return;
+    }
+
     if (section === "flashcards") {
       renderFlashcards(id || "mixed");
       return;
@@ -240,6 +247,11 @@
     }
 
     renderNotFound();
+  }
+
+  function firstLessonHref() {
+    const first = state.lessons[0];
+    return first ? lessonHref(first.id) : "#/resources";
   }
 
   function renderLanding() {
@@ -258,8 +270,12 @@
         <p class="eyebrow">Interactive paths through AI work</p>
         <h1 id="learn-title">Learn Center</h1>
         <p class="lead">A compact, level-labeled path through machine learning, agents, vibe coding, honest evaluation, and frontier LLM research, built around short lessons, active checks, and curated source links.</p>
+        <form class="hero-search" role="search" aria-label="Search lessons and resources">
+          <input type="search" name="q" id="home-search" placeholder="Search lessons and resources" autocomplete="off" aria-label="Search">
+          <button class="button" type="submit">Search</button>
+        </form>
         <div class="hero-actions">
-          <a class="button primary" href="${lessonHref("ml_weights_stub")}">Start here</a>
+          <a class="button primary" href="${firstLessonHref()}">Start here</a>
           <a class="button" href="#/resources">Resources</a>
           <a class="button" href="#/flashcards">Flashcards</a>
           <a class="button" href="#/quiz">Quiz</a>
@@ -273,7 +289,16 @@
         <h2 id="tracks-title">Tracks</h2>
         <div class="track-grid">${trackCards}</div>
       </section>
-    `, "Learn Center");
+    `, null);
+
+    const searchForm = app.querySelector(".hero-search");
+    if (searchForm) {
+      searchForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        lastSearch = app.querySelector("#home-search").value.trim();
+        location.hash = "#/search";
+      });
+    }
   }
 
   function trackProgress(track) {
@@ -300,14 +325,28 @@
     `;
   }
 
+  function trackPrereqTitles(trackId) {
+    const entry = state.prereqs.find((item) => item.id === trackId);
+    if (!entry || !entry.needs || !entry.needs.length) return [];
+    return entry.needs.map(function (needId) {
+      const track = getTrack(needId);
+      return track ? track.title : needId;
+    });
+  }
+
   function renderTrackCard(track) {
     const progress = trackProgress(track);
     const lessonWord = track.lessons.length === 1 ? "lesson" : "lessons";
+    const prereqTitles = trackPrereqTitles(track.id);
+    const prereqLine = prereqTitles.length
+      ? `<p class="card-prereq">Best after: ${escapeHtml(prereqTitles.join(", "))}</p>`
+      : `<p class="card-prereq card-prereq-start">A good place to start</p>`;
     return `
       <article class="track-card">
         <div class="card-kicker">${escapeHtml(track.level_range)}</div>
         <h3><a href="${trackHref(track.id)}">${escapeHtml(track.title)}</a></h3>
         <p>${escapeHtml(track.blurb)}</p>
+        ${prereqLine}
         <div class="card-meta">
           <span>${track.lessons.length} ${lessonWord}</span>
           <span>${progress.percent}% complete</span>
@@ -590,6 +629,89 @@
     app.querySelector("#resource-results").innerHTML = filtered.length
       ? renderLinkList(filtered)
       : `<p class="empty-state">No resources match this filter yet.</p>`;
+  }
+
+  function stripHtml(html) {
+    return String(html || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  }
+
+  function lessonSearchText(lesson) {
+    return [
+      lesson.title,
+      lesson.summary,
+      (lesson.key_points || []).join(" "),
+      stripHtml(lesson.body_html),
+      lesson.outcome
+    ].join(" ").toLowerCase();
+  }
+
+  function renderSearch() {
+    replaceApp(`
+      <section class="track-header" aria-labelledby="search-title">
+        <p class="eyebrow">Find anything</p>
+        <h1 id="search-title">Search</h1>
+        <p class="lead">Search every lesson and resource by title, idea, or keyword. Try a term like attention, RAG, eval, or temperature.</p>
+      </section>
+      <form class="filter-bar" role="search" aria-label="Search the Learn Center">
+        <label class="search-field">
+          <span>Search</span>
+          <input type="search" id="search-input" autocomplete="off" placeholder="Search lessons and resources">
+        </label>
+      </form>
+      <div id="search-results" aria-live="polite"></div>
+    `, "Search");
+
+    const input = app.querySelector("#search-input");
+    const results = app.querySelector("#search-results");
+
+    function update() {
+      const query = input.value.trim().toLowerCase();
+      lastSearch = input.value.trim();
+      if (query.length < 2) {
+        results.innerHTML = `<p class="empty-state">Type at least two characters to search.</p>`;
+        return;
+      }
+      const lessonHits = state.lessons.filter((lesson) => lessonSearchText(lesson).includes(query));
+      const linkHits = state.links.filter(function (link) {
+        return `${link.title} ${link.note || ""}`.toLowerCase().includes(query);
+      });
+
+      const lessonMarkup = lessonHits.length
+        ? `<ul class="lesson-list">${lessonHits.map(function (lesson) {
+            const track = getTrack(lesson.track);
+            return `
+              <li class="lesson-row">
+                <a href="${lessonHref(lesson.id)}">
+                  <span>
+                    <strong>${escapeHtml(lesson.title)}</strong>
+                    <span class="lesson-summary">${escapeHtml(lesson.summary || "")}</span>
+                  </span>
+                  <span class="search-meta">${levelBadge(lesson.level)}<span>${escapeHtml(track ? track.title : lesson.track)}</span></span>
+                </a>
+              </li>`;
+          }).join("")}</ul>`
+        : `<p class="empty-state">No lessons match that search.</p>`;
+
+      const linkMarkup = linkHits.length ? renderLinkList(linkHits) : `<p class="empty-state">No resources match that search.</p>`;
+
+      results.innerHTML = `
+        <section class="learn-section tight" aria-labelledby="search-lessons">
+          <h2 id="search-lessons">Lessons <span class="count-chip">${lessonHits.length}</span></h2>
+          ${lessonMarkup}
+        </section>
+        <section class="learn-section tight" aria-labelledby="search-links">
+          <h2 id="search-links">Resources <span class="count-chip">${linkHits.length}</span></h2>
+          ${linkMarkup}
+        </section>
+      `;
+    }
+
+    input.addEventListener("input", update);
+    if (lastSearch) {
+      input.value = lastSearch;
+    }
+    input.focus();
+    update();
   }
 
   function renderFlashcards(trackId) {
