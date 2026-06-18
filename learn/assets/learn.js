@@ -340,6 +340,11 @@
       return;
     }
 
+    if (section === "index") {
+      renderIndex();
+      return;
+    }
+
     if (section === "flashcards") {
       renderFlashcards(id || "mixed");
       return;
@@ -356,6 +361,28 @@
   function firstLessonHref() {
     const first = state.lessons[0];
     return first ? lessonHref(first.id) : "#/resources";
+  }
+
+  function continueTarget() {
+    const lastId = getStorage("last-lesson");
+    const last = lastId ? getLesson(lastId) : null;
+    const firstIncomplete = state.lessons.find((lesson) => !isLessonComplete(lesson.id)) || null;
+    if (last && !isLessonComplete(last.id)) return { lesson: last, label: "Continue where you left off" };
+    if (last && last.next && getLesson(last.next) && !isLessonComplete(last.next)) return { lesson: getLesson(last.next), label: "Up next" };
+    if (firstIncomplete) return { lesson: firstIncomplete, label: last ? "Keep going" : "Start here" };
+    return null;
+  }
+
+  function renderContinueCard() {
+    const target = continueTarget();
+    if (!target) return "";
+    const track = getTrack(target.lesson.track);
+    return `
+      <a class="continue-card" href="${lessonHref(target.lesson.id)}">
+        <span class="continue-label">${escapeHtml(target.label)}</span>
+        <span class="continue-title">${escapeHtml(target.lesson.title)}</span>
+        <span class="continue-meta">${levelBadge(target.lesson.level)}<span>${escapeHtml(track ? track.title : target.lesson.track)}</span></span>
+      </a>`;
   }
 
   function renderLanding() {
@@ -380,11 +407,13 @@
         </form>
         <div class="hero-actions">
           <a class="button primary" href="${firstLessonHref()}">Start here</a>
+          <a class="button" href="#/index">All lessons</a>
           <a class="button" href="#/resources">Resources</a>
           <a class="button" href="#/flashcards">Flashcards</a>
           <a class="button" href="#/quiz">Quiz</a>
         </div>
       </section>
+      ${renderContinueCard()}
       <section class="learn-section" aria-labelledby="level-title">
         <h2 id="level-title">Levels</h2>
         <ul class="level-legend">${legend}</ul>
@@ -469,6 +498,7 @@
 
     const lessons = getLessonsForTrack(track.id);
     const progress = trackProgress(track);
+    const mastery = trackMastery(track);
     const lessonItems = lessons.map(function (lesson, index) {
       const complete = isLessonComplete(lesson.id);
       return `
@@ -494,6 +524,11 @@
         <h1 id="track-title">${escapeHtml(track.title)}</h1>
         <p class="lead">${escapeHtml(track.blurb)}</p>
         ${renderProgress(progress, "Track progress")}
+        <div class="mastery-row" aria-label="Track mastery">
+          <span class="mastery-chip"><strong>${mastery.complete}/${mastery.total}</strong> lessons complete</span>
+          <span class="mastery-chip"><strong>${mastery.quizzed}/${mastery.quizTotal}</strong> quizzes passed</span>
+          <span class="mastery-chip ${mastery.complete === mastery.total && mastery.total ? "is-mastered" : ""}">${mastery.complete === mastery.total && mastery.total ? "Track mastered" : "In progress"}</span>
+        </div>
       </section>
       <section class="learn-section" aria-labelledby="track-lessons">
         <h2 id="track-lessons">Lessons</h2>
@@ -508,6 +543,8 @@
       renderNotFound(`No lesson found for ${id}.`);
       return;
     }
+
+    setStorage("last-lesson", lesson.id);
 
     const track = getTrack(lesson.track);
     const keyPoints = Array.isArray(lesson.key_points) && lesson.key_points.length
@@ -526,6 +563,26 @@
         <section class="learn-section tight" aria-labelledby="lesson-links-title">
           <h2 id="lesson-links-title">Links</h2>
           ${renderLinkList(lesson.links)}
+        </section>
+      `
+      : "";
+
+    const sourcesSection = Array.isArray(lesson.sources) && lesson.sources.length
+      ? `
+        <section class="learn-section tight" aria-labelledby="lesson-sources-title">
+          <h2 id="lesson-sources-title">Sources</h2>
+          <ul class="source-list">
+            ${lesson.sources.map(function (src) {
+              const link = src.url
+                ? `<a href="${escapeHtml(src.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(src.title || src.url)}</a>`
+                : escapeHtml(src.title || "");
+              return `
+                <li class="source-row">
+                  <span class="source-claim">${escapeHtml(src.claim || "")}</span>
+                  <span class="source-cite">${link}${src.last_verified ? ` <span class="source-date">verified ${escapeHtml(src.last_verified)}</span>` : ""}</span>
+                </li>`;
+            }).join("")}
+          </ul>
         </section>
       `
       : "";
@@ -570,6 +627,7 @@
           </section>
         ` : ""}
         ${lessonLinks}
+        ${sourcesSection}
         <section class="lesson-nav learn-section tight" aria-labelledby="lesson-nav-title">
           <h2 id="lesson-nav-title">Path</h2>
           <div class="path-grid">
@@ -835,6 +893,91 @@
     input.addEventListener("input", update);
     input.value = startValue;
     input.focus();
+    update();
+  }
+
+  function quizPassed(lessonId) {
+    const best = getQuizBest(`lesson:${lessonId}`);
+    return !!(best && best.percent >= 80);
+  }
+
+  function trackMastery(track) {
+    const ids = track.lessons;
+    const complete = ids.filter(isLessonComplete).length;
+    const quizzed = ids.filter(quizPassed).length;
+    const quizTotal = ids.filter(function (id) {
+      const lesson = getLesson(id);
+      return lesson && Array.isArray(lesson.quiz) && lesson.quiz.length;
+    }).length;
+    return { complete, total: ids.length, quizzed, quizTotal };
+  }
+
+  function renderIndex() {
+    const trackOptions = state.tracks.map((track) => `<option value="${escapeHtml(track.id)}">${escapeHtml(track.title)}</option>`).join("");
+    const levelOptions = levels.map((item) => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)}</option>`).join("");
+    replaceApp(`
+      <section class="track-header" aria-labelledby="index-title">
+        <p class="eyebrow">Every lesson, one page</p>
+        <h1 id="index-title">Lesson Index</h1>
+        <p class="lead">All ${state.lessons.length} lessons across ${state.tracks.length} tracks, filterable by track and level. Use this to jump straight to a topic.</p>
+      </section>
+      <form class="filter-bar" aria-label="Index filters">
+        <label><span>Track</span>
+          <select id="index-track"><option value="all">All tracks</option>${trackOptions}</select></label>
+        <label><span>Level</span>
+          <select id="index-level"><option value="all">All levels</option>${levelOptions}</select></label>
+        <label class="search-field"><span>Filter</span>
+          <input type="search" id="index-filter" autocomplete="off" placeholder="Filter by title"></label>
+      </form>
+      <div id="index-results" aria-live="polite"></div>
+    `, "Lesson Index");
+
+    const trackSelect = app.querySelector("#index-track");
+    const levelSelect = app.querySelector("#index-level");
+    const filterInput = app.querySelector("#index-filter");
+
+    function update() {
+      const trackId = trackSelect.value;
+      const level = levelSelect.value;
+      const needle = filterInput.value.trim().toLowerCase();
+      const groups = state.tracks
+        .filter((track) => trackId === "all" || track.id === trackId)
+        .map(function (track) {
+          const rows = getLessonsForTrack(track.id).filter(function (lesson) {
+            const levelMatch = level === "all" || lesson.level === level;
+            const textMatch = !needle || `${lesson.title} ${lesson.summary || ""}`.toLowerCase().includes(needle);
+            return levelMatch && textMatch;
+          });
+          return { track, rows };
+        })
+        .filter((group) => group.rows.length);
+
+      const total = groups.reduce((a, g) => a + g.rows.length, 0);
+      app.querySelector("#index-results").innerHTML = total
+        ? groups.map(function (group) {
+            const items = group.rows.map(function (lesson) {
+              const complete = isLessonComplete(lesson.id);
+              return `
+                <li class="index-row">
+                  <a href="${lessonHref(lesson.id)}">
+                    <span class="index-text"><strong>${escapeHtml(lesson.title)}</strong>
+                      <span class="lesson-summary">${escapeHtml(lesson.summary || "")}</span></span>
+                    <span class="index-meta">${levelBadge(lesson.level)}<span class="completion-pill ${complete ? "is-complete" : ""}">${complete ? "Complete" : "Open"}</span></span>
+                  </a>
+                </li>`;
+            }).join("");
+            return `
+              <section class="learn-section tight" aria-label="${escapeHtml(group.track.title)} lessons">
+                <h2><a href="${trackHref(group.track.id)}">${escapeHtml(group.track.title)}</a> <span class="count-chip">${group.rows.length}</span></h2>
+                <ol class="index-list">${items}</ol>
+              </section>`;
+          }).join("")
+        : `<p class="empty-state">No lessons match this filter.</p>`;
+    }
+
+    trackSelect.addEventListener("change", update);
+    levelSelect.addEventListener("change", update);
+    filterInput.addEventListener("input", update);
     update();
   }
 
@@ -1147,6 +1290,26 @@
       mountOrdering(container, exercise);
       return;
     }
+    if (exercise.type === "bootstrap_lab") {
+      mountBootstrapLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "roc_lab") {
+      mountRocLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "rag_sandbox") {
+      mountRagSandbox(container, exercise);
+      return;
+    }
+    if (exercise.type === "context_budget") {
+      mountContextBudget(container, exercise);
+      return;
+    }
+    if (exercise.type === "capstone") {
+      mountCapstone(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
   }
 
@@ -1327,6 +1490,401 @@
         checked = true;
         render();
       }
+    });
+
+    render();
+  }
+
+  function mean(xs) {
+    return xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0;
+  }
+
+  function drawWithReplacement(pool, n) {
+    const out = [];
+    for (let i = 0; i < n; i += 1) {
+      out.push(pool[Math.floor(Math.random() * pool.length)]);
+    }
+    return out;
+  }
+
+  function mountBootstrapLab(container, exercise) {
+    const pool = (exercise.scores || []).map(Number).filter((x) => !Number.isNaN(x));
+    let n = exercise.start_n || Math.min(20, pool.length || 20);
+    let resamples = exercise.start_resamples || 1000;
+    let result = null;
+
+    function run() {
+      if (!pool.length) { result = null; return; }
+      const sample = drawWithReplacement(pool, n);
+      const observed = mean(sample);
+      const means = [];
+      for (let b = 0; b < resamples; b += 1) {
+        means.push(mean(drawWithReplacement(sample, n)));
+      }
+      means.sort((a, b) => a - b);
+      const lo = means[Math.max(0, Math.floor(0.025 * resamples))];
+      const hi = means[Math.min(resamples - 1, Math.floor(0.975 * resamples))];
+      // histogram over 18 bins between min and max of means
+      const min = means[0];
+      const max = means[means.length - 1];
+      const span = max - min || 1;
+      const binCount = 18;
+      const bins = new Array(binCount).fill(0);
+      means.forEach(function (m) {
+        const idx = Math.min(binCount - 1, Math.floor(((m - min) / span) * binCount));
+        bins[idx] += 1;
+      });
+      result = { observed, lo, hi, bins, min, max, width: hi - lo };
+    }
+
+    function fmt(x) { return (Math.round(x * 1000) / 1000).toFixed(3); }
+
+    function render() {
+      const peak = result ? Math.max.apply(null, result.bins) || 1 : 1;
+      const histo = result ? result.bins.map(function (count) {
+        const h = Math.round((count / peak) * 100);
+        return `<span class="histo-bar" style="height:${Math.max(2, h)}%" title="${count}"></span>`;
+      }).join("") : "";
+      container.innerHTML = `
+        <div class="exercise-card bootstrap-lab">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <div class="lab-controls">
+            <label>
+              <span>Eval items sampled (n) <strong>${n}</strong></span>
+              <input type="range" min="5" max="120" step="1" value="${n}" data-boot-n aria-label="Sample size n">
+            </label>
+            <div class="boot-resamples" role="group" aria-label="Number of resamples">
+              <span>Resamples</span>
+              ${[200, 1000, 5000].map((r) => `<button class="button ${r === resamples ? "is-active" : ""}" type="button" data-boot-resamples="${r}">${r}</button>`).join("")}
+            </div>
+            <button class="button primary" type="button" data-boot-run>Resample</button>
+          </div>
+          ${result ? `
+            <div class="boot-readout">
+              <div><dt>Observed mean</dt><dd>${fmt(result.observed)}</dd></div>
+              <div class="metric-headline"><dt>95% interval</dt><dd>${fmt(result.lo)} to ${fmt(result.hi)}</dd></div>
+              <div><dt>Interval width</dt><dd>${fmt(result.width)}</dd></div>
+            </div>
+            <div class="histo" aria-hidden="true">${histo}</div>
+            <p class="histo-axis"><span>${fmt(result.min)}</span><span>distribution of the resampled mean</span><span>${fmt(result.max)}</span></p>
+          ` : `<p class="empty-state">Press Resample to bootstrap the mean.</p>`}
+          ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+          ${exercise.explain ? `<p class="feedback-line">${escapeHtml(exercise.explain)}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("input", function (event) {
+      const slider = event.target.closest("[data-boot-n]");
+      if (!slider) return;
+      n = Number(slider.value);
+      const span = container.querySelector(".lab-controls label span strong");
+      if (span) span.textContent = n;
+    });
+    container.addEventListener("click", function (event) {
+      const pick = event.target.closest("[data-boot-resamples]");
+      if (pick) {
+        resamples = Number(pick.dataset.bootResamples);
+        run();
+        render();
+        return;
+      }
+      if (event.target.closest("[data-boot-run]")) {
+        run();
+        render();
+      }
+    });
+
+    run();
+    render();
+  }
+
+  function mountRocLab(container, exercise) {
+    const examples = (exercise.examples || []).map((e) => ({ score: Number(e.score), label: Number(e.label) ? 1 : 0 }));
+    let threshold = exercise.start != null ? exercise.start : 0.5;
+
+    function confusion(t) {
+      let tp = 0, fp = 0, fn = 0, tn = 0;
+      examples.forEach(function (e) {
+        const pred = e.score >= t ? 1 : 0;
+        if (pred === 1 && e.label === 1) tp += 1;
+        else if (pred === 1 && e.label === 0) fp += 1;
+        else if (pred === 0 && e.label === 1) fn += 1;
+        else tn += 1;
+      });
+      const tpr = (tp + fn) ? tp / (tp + fn) : 0;
+      const fpr = (fp + tn) ? fp / (fp + tn) : 0;
+      const precision = (tp + fp) ? tp / (tp + fp) : 0;
+      return { tp, fp, fn, tn, tpr, fpr, precision, recall: tpr };
+    }
+
+    // Static ROC curve: sweep thresholds from above-max down to 0.
+    const sweep = Array.from(new Set(examples.map((e) => e.score))).sort((a, b) => b - a);
+    const rocPoints = [{ fpr: 0, tpr: 0 }];
+    sweep.forEach(function (s) {
+      const c = confusion(s);
+      rocPoints.push({ fpr: c.fpr, tpr: c.tpr });
+    });
+    rocPoints.push({ fpr: 1, tpr: 1 });
+    const PAD = 30, SIZE = 180;
+    function px(fpr) { return PAD + fpr * SIZE; }
+    function py(tpr) { return PAD + (1 - tpr) * SIZE; }
+    const poly = rocPoints.map((p) => `${px(p.fpr).toFixed(1)},${py(p.tpr).toFixed(1)}`).join(" ");
+
+    function fmt(x) { return (Math.round(x * 100) / 100).toFixed(2); }
+
+    function render() {
+      const c = confusion(threshold);
+      container.innerHTML = `
+        <div class="exercise-card roc-lab">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <div class="roc-grid">
+            <svg class="roc-plot" viewBox="0 0 ${SIZE + PAD * 2} ${SIZE + PAD * 2}" role="img" aria-label="ROC curve with the current operating point.">
+              <g stroke="currentColor" stroke-width="1" opacity="0.5" fill="none">
+                <line x1="${PAD}" y1="${PAD}" x2="${PAD}" y2="${PAD + SIZE}"/>
+                <line x1="${PAD}" y1="${PAD + SIZE}" x2="${PAD + SIZE}" y2="${PAD + SIZE}"/>
+                <line x1="${PAD}" y1="${PAD + SIZE}" x2="${PAD + SIZE}" y2="${PAD}" stroke-dasharray="3 3"/>
+              </g>
+              <polyline points="${poly}" fill="none" stroke="${BR}" stroke-width="2"/>
+              <circle cx="${px(c.fpr).toFixed(1)}" cy="${py(c.tpr).toFixed(1)}" r="5" fill="${BR}"/>
+              <text x="${PAD}" y="${PAD + SIZE + 18}" font-size="10" fill="currentColor">FPR 0</text>
+              <text x="${PAD + SIZE - 18}" y="${PAD + SIZE + 18}" font-size="10" fill="currentColor">1</text>
+              <text x="2" y="${PAD + 6}" font-size="10" fill="currentColor">TPR 1</text>
+            </svg>
+            <dl class="roc-readout">
+              <div class="metric-headline"><dt>Threshold</dt><dd class="roc-thr-val">${fmt(threshold)}</dd></div>
+              <div><dt>TPR (recall)</dt><dd>${fmt(c.tpr)}</dd></div>
+              <div><dt>FPR</dt><dd>${fmt(c.fpr)}</dd></div>
+              <div><dt>Precision</dt><dd>${fmt(c.precision)}</dd></div>
+              <div><dt>TP / FP / FN / TN</dt><dd>${c.tp} / ${c.fp} / ${c.fn} / ${c.tn}</dd></div>
+            </dl>
+          </div>
+          <label class="sampling-control">
+            <span>Decision threshold <strong class="roc-thr-strong">${fmt(threshold)}</strong></span>
+            <input type="range" min="0" max="1" step="0.01" value="${threshold}" data-roc-threshold aria-label="Decision threshold">
+          </label>
+          ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+          ${exercise.explain ? `<p class="feedback-line">${escapeHtml(exercise.explain)}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("input", function (event) {
+      const slider = event.target.closest("[data-roc-threshold]");
+      if (!slider) return;
+      threshold = Number(slider.value);
+      render();
+      // keep slider focus + value after re-render
+      const fresh = container.querySelector("[data-roc-threshold]");
+      if (fresh) { fresh.value = threshold; fresh.focus(); }
+    });
+    render();
+  }
+
+  function tokenize(text) {
+    return String(text || "").toLowerCase().match(/[a-z0-9]+/g) || [];
+  }
+
+  function mountRagSandbox(container, exercise) {
+    const corpus = exercise.corpus || [];
+    let chunkSize = exercise.start_chunk || 16;
+    let topK = exercise.start_k || 2;
+    let query = exercise.query || "";
+    const stop = new Set(["the", "a", "an", "of", "to", "and", "is", "in", "on", "for", "with", "how", "what", "does", "do", "it", "that", "this"]);
+
+    function buildChunks() {
+      const chunks = [];
+      corpus.forEach(function (doc) {
+        const words = tokenizeKeep(doc.text);
+        for (let i = 0; i < words.length; i += chunkSize) {
+          chunks.push({ doc: doc.title, text: words.slice(i, i + chunkSize).join(" ") });
+        }
+      });
+      return chunks;
+    }
+    function tokenizeKeep(text) {
+      return String(text || "").trim().split(/\s+/).filter(Boolean);
+    }
+    function score(chunk) {
+      const qTerms = new Set(tokenize(query).filter((t) => !stop.has(t)));
+      if (!qTerms.size) return 0;
+      const chunkTerms = new Set(tokenize(chunk.text));
+      let hits = 0;
+      qTerms.forEach((t) => { if (chunkTerms.has(t)) hits += 1; });
+      return hits / qTerms.size;
+    }
+
+    function render() {
+      const chunks = buildChunks().map((c) => Object.assign(c, { s: score(c) }));
+      const ranked = chunks.slice().sort((a, b) => b.s - a.s);
+      const retrieved = ranked.slice(0, topK);
+      const retrievedSet = new Set(retrieved);
+      const wordsUsed = retrieved.reduce((a, c) => a + c.text.split(/\s+/).length, 0);
+      container.innerHTML = `
+        <div class="exercise-card rag-sandbox">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <label class="rag-query">
+            <span>Query</span>
+            <input type="text" value="${escapeHtml(query)}" data-rag-query aria-label="Retrieval query">
+          </label>
+          <div class="lab-controls">
+            <label><span>Chunk size (words) <strong>${chunkSize}</strong></span>
+              <input type="range" min="6" max="40" step="2" value="${chunkSize}" data-rag-chunk aria-label="Chunk size"></label>
+            <label><span>Top-k retrieved <strong>${topK}</strong></span>
+              <input type="range" min="1" max="5" step="1" value="${topK}" data-rag-k aria-label="Top k"></label>
+          </div>
+          <p class="rag-stat">${chunks.length} chunks total. Retrieving top ${topK}; about ${wordsUsed} words land in the prompt.</p>
+          <ul class="rag-chunks">
+            ${ranked.map(function (c) {
+              const on = retrievedSet.has(c);
+              return `<li class="rag-chunk ${on ? "is-retrieved" : ""}">
+                <span class="rag-chunk-meta">${escapeHtml(c.doc)} <span class="rag-score">overlap ${(Math.round(c.s * 100) / 100).toFixed(2)}</span>${on ? ' <span class="rag-tag">in prompt</span>' : ""}</span>
+                <span class="rag-chunk-text">${escapeHtml(c.text)}</span>
+              </li>`;
+            }).join("")}
+          </ul>
+          ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+          ${exercise.explain ? `<p class="feedback-line">${escapeHtml(exercise.explain)}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("input", function (event) {
+      if (event.target.closest("[data-rag-chunk]")) { chunkSize = Number(event.target.value); render(); }
+      else if (event.target.closest("[data-rag-k]")) { topK = Number(event.target.value); render(); }
+      else if (event.target.closest("[data-rag-query]")) {
+        query = event.target.value;
+        render();
+        const fresh = container.querySelector("[data-rag-query]");
+        if (fresh) { fresh.value = query; fresh.focus(); fresh.setSelectionRange(query.length, query.length); }
+      }
+    });
+    render();
+  }
+
+  function mountContextBudget(container, exercise) {
+    const window = exercise.window || 8000;
+    const parts = (exercise.parts || []).map((p) => Object.assign({}, p, { value: Number(p.value) || 0 }));
+    // priority high->low kept; truncation hits the last entries first
+    const priority = exercise.priority || ["output", "system", "retrieved", "history"];
+
+    function allocate() {
+      let remaining = window;
+      const order = parts.slice().sort((a, b) => priority.indexOf(a.key) - priority.indexOf(b.key));
+      const kept = new Map();
+      order.forEach(function (p) {
+        const give = Math.max(0, Math.min(p.value, remaining));
+        kept.set(p.key, give);
+        remaining -= give;
+      });
+      const requested = parts.reduce((a, p) => a + p.value, 0);
+      return { kept, remaining, requested, overflow: Math.max(0, requested - window) };
+    }
+
+    function render() {
+      const a = allocate();
+      const segs = parts.map(function (p) {
+        const give = a.kept.get(p.key) || 0;
+        const pct = (give / window) * 100;
+        const truncated = p.value - give;
+        return { p, give, pct, truncated };
+      });
+      const headroomPct = (a.remaining / window) * 100;
+      container.innerHTML = `
+        <div class="exercise-card context-budget">
+          <p>${escapeHtml(exercise.prompt)}</p>
+          <div class="lab-controls">
+            ${parts.map(function (p) {
+              return `<label><span>${escapeHtml(p.label)} <strong>${p.value}</strong></span>
+                <input type="range" min="0" max="${p.max || window}" step="${p.step || 100}" value="${p.value}" data-budget-key="${escapeHtml(p.key)}" aria-label="${escapeHtml(p.label)} tokens"></label>`;
+            }).join("")}
+          </div>
+          <div class="budget-bar" aria-hidden="true" title="${window} token window">
+            ${segs.map((s) => `<span class="budget-seg budget-${escapeHtml(s.p.key)}" style="width:${s.pct}%" title="${escapeHtml(s.p.label)}: ${s.give}"></span>`).join("")}
+            ${a.remaining > 0 ? `<span class="budget-headroom" style="width:${headroomPct}%" title="Headroom: ${a.remaining}"></span>` : ""}
+          </div>
+          <div class="budget-legend">
+            ${segs.map((s) => `<span class="budget-key"><i class="budget-${escapeHtml(s.p.key)}"></i>${escapeHtml(s.p.label)} ${s.give}${s.truncated > 0 ? ` <em>(${s.truncated} truncated)</em>` : ""}</span>`).join("")}
+            ${a.remaining > 0 ? `<span class="budget-key"><i class="budget-headroom"></i>Headroom ${a.remaining}</span>` : ""}
+          </div>
+          <p class="budget-status ${a.overflow > 0 ? "bad" : "good"}">
+            ${a.overflow > 0
+              ? `Over budget by ${a.overflow} tokens. Lowest-priority context is truncated first to fit the ${window}-token window.`
+              : `Fits the ${window}-token window with ${a.remaining} tokens to spare.`}
+          </p>
+          ${exercise.question ? `<p class="metric-task">${escapeHtml(exercise.question)}</p>` : ""}
+          ${exercise.explain ? `<p class="feedback-line">${escapeHtml(exercise.explain)}</p>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("input", function (event) {
+      const slider = event.target.closest("[data-budget-key]");
+      if (!slider) return;
+      const p = parts.find((x) => x.key === slider.dataset.budgetKey);
+      if (p) p.value = Number(slider.value);
+      render();
+      const fresh = container.querySelector(`[data-budget-key="${p.key}"]`);
+      if (fresh) { fresh.value = p.value; fresh.focus(); }
+    });
+    render();
+  }
+
+  function mountCapstone(container, exercise) {
+    const steps = exercise.steps || [];
+    let stepIndex = 0;
+    let picked = null;
+    let answered = false;
+    let done = false;
+
+    function render() {
+      if (done || !steps.length) {
+        container.innerHTML = `
+          <div class="exercise-card capstone">
+            ${exercise.scenario_html ? `<div class="capstone-scenario">${exercise.scenario_html}</div>` : ""}
+            <div class="capstone-done">
+              <p class="feedback-line good">Capstone complete. You worked every step.</p>
+              ${exercise.outcome ? `<p class="capstone-outcome">${escapeHtml(exercise.outcome)}</p>` : ""}
+              <button class="button" type="button" data-capstone-restart>Run it again</button>
+            </div>
+          </div>`;
+        return;
+      }
+      const step = steps[stepIndex];
+      const correct = picked === step.answer;
+      const isLast = stepIndex === steps.length - 1;
+      container.innerHTML = `
+        <div class="exercise-card capstone">
+          ${exercise.scenario_html ? `<div class="capstone-scenario">${exercise.scenario_html}</div>` : ""}
+          <div class="capstone-progress" aria-label="Capstone progress">
+            ${steps.map((_, i) => `<span class="capstone-dot ${i < stepIndex ? "is-done" : ""} ${i === stepIndex ? "is-current" : ""}"></span>`).join("")}
+            <span class="capstone-count">Step ${stepIndex + 1} of ${steps.length}</span>
+          </div>
+          <h3 class="capstone-q">${escapeHtml(step.q)}</h3>
+          <div class="option-grid">
+            ${step.choices.map(function (choice, index) {
+              const selectedClass = answered && picked === index ? (correct ? "is-correct" : "is-incorrect") : "";
+              const answerClass = answered && index === step.answer ? "is-answer" : "";
+              return `<button class="option-button ${selectedClass} ${answerClass}" type="button" data-capstone-choice="${index}" ${answered && correct ? "disabled" : ""}>${escapeHtml(choice)}</button>`;
+            }).join("")}
+          </div>
+          ${answered ? `<p class="feedback-line ${correct ? "good" : "bad"}">${correct ? "Correct." : "Not quite, try again."} ${escapeHtml(step.explain || "")}</p>` : ""}
+          ${answered && correct ? `<button class="button primary" type="button" data-capstone-next>${isLast ? "Finish capstone" : "Next step"}</button>` : ""}
+        </div>`;
+    }
+
+    container.addEventListener("click", function (event) {
+      if (event.target.closest("[data-capstone-restart]")) {
+        stepIndex = 0; picked = null; answered = false; done = false; render(); return;
+      }
+      if (event.target.closest("[data-capstone-next]")) {
+        if (stepIndex === steps.length - 1) { done = true; }
+        else { stepIndex += 1; picked = null; answered = false; }
+        render();
+        return;
+      }
+      const choice = event.target.closest("[data-capstone-choice]");
+      if (!choice) return;
+      if (answered && picked === steps[stepIndex].answer) return;
+      picked = Number(choice.dataset.capstoneChoice);
+      answered = true;
+      render();
     });
 
     render();
