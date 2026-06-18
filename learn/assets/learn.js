@@ -639,18 +639,30 @@
     });
   }
 
+  function sampleSpread(items, count) {
+    if (items.length <= count) return items;
+    const stride = items.length / count;
+    const out = [];
+    for (let i = 0; i < count; i += 1) {
+      out.push(items[Math.floor(i * stride)]);
+    }
+    return out;
+  }
+
   function getDeck(trackId) {
     const lessons = trackId === "mixed"
       ? state.lessons
       : getLessonsForTrack(trackId);
-    return lessons.flatMap(makeLessonDeck);
+    const all = lessons.flatMap(makeLessonDeck);
+    return trackId === "mixed" ? sampleSpread(all, 24) : all;
   }
 
   function getQuiz(trackId) {
     const lessons = trackId === "mixed"
       ? state.lessons
       : getLessonsForTrack(trackId);
-    return lessons.flatMap(makeLessonQuiz);
+    const all = lessons.flatMap(makeLessonQuiz);
+    return trackId === "mixed" ? sampleSpread(all, 20) : all;
   }
 
   function renderLinkList(links) {
@@ -1056,6 +1068,7 @@
             <h3>${escapeHtml(question.q)}</h3>
             <div class="option-grid">${options}</div>
             ${hasAnswer ? `<p class="feedback-line ${answered.get(qIndex) ? "good" : "bad"}">${answered.get(qIndex) ? "Correct." : "Not quite."} ${escapeHtml(question.explain || "")}</p>` : ""}
+            ${hasAnswer && !answered.get(qIndex) ? `<button class="button" type="button" data-q-retry="${qIndex}">Try this again</button>` : ""}
           </article>
         `;
       }).join("");
@@ -1064,13 +1077,21 @@
         <div class="quiz-status">
           <span>Score ${score()}/${questions.length}</span>
           <span>${best ? `Best ${best.correct}/${best.total} (${best.percent}%)` : "No best score yet"}</span>
-          <button class="button" type="button" data-quiz-retry>Retry</button>
+          <button class="button" type="button" data-quiz-retry>Reset all</button>
         </div>
         <div class="quiz-list">${questionMarkup}</div>
       `;
     }
 
     container.addEventListener("click", function (event) {
+      const qRetry = event.target.closest("[data-q-retry]");
+      if (qRetry) {
+        const qi = Number(qRetry.dataset.qRetry);
+        selected.delete(qi);
+        answered.delete(qi);
+        render();
+        return;
+      }
       const retry = event.target.closest("[data-quiz-retry]");
       if (retry) {
         selected = new Map();
