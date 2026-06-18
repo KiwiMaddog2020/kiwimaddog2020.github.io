@@ -1280,7 +1280,7 @@
     "body_html": "<p>This capstone walks one realistic brief end to end. Your team ships an agent that drafts replies to customer support tickets, and leadership wants a number for how good it is before a wider rollout. A weak eval would average a 1-to-5 quality rating from the same model that wrote the replies and call it 4.3 out of 5. Your job is to design something you would actually trust, using the discipline from this track: separate the doer from the grader, pre-register the claim, pick a metric tied to the real cost, set an honest baseline, and keep a ledger of what you did not measure.</p><p>Work each step in order. There is one defensible answer per step, with reasoning shown after you choose. The point is not trivia; it is the sequence of decisions that turns a vibe into a measurement.</p>",
     "key_points": [
       "Separation of roles: the system under test cannot also be its own grader.",
-      "Pick a metric tied to the real-world cost of the mistake, not the easiest number.",
+      "Tie the metric to the real cost, but only measure what is observable: outcomes of never-sent drafts are counterfactual and need a pilot or A/B test.",
       "A result needs a baseline and a pre-registered claim to mean anything.",
       "Name the failure mode your eval cannot see, and log it as verification debt."
     ],
@@ -1346,15 +1346,15 @@
           "explain": "Separate the doer from the grader, and blind the grader to authorship so it cannot favor the agent. This is the core honesty move."
         },
         {
-          "q": "Which primary metric best ties to the real cost?",
+          "q": "Which metric can you actually measure offline, and how do you get the true outcome?",
           "choices": [
-            "Average 1-to-5 style rating only",
-            "Reopen rate and resolution outcome on held-out tickets, with quality as a secondary check",
-            "Reply length",
+            "Average 1-to-5 rating from the drafting model itself",
+            "Blinded independent quality grading offline (agent draft versus the sent human reply, grader blind to authorship), with reopen and resolution outcomes measured later in a controlled pilot or A/B test",
+            "Reopen and resolution rate of the agent's drafts on the historical tickets",
             "Number of tickets processed per hour"
           ],
           "answer": 1,
-          "explain": "The business cost is unresolved tickets, not a Likert score. Anchor on outcomes; keep subjective quality as a secondary signal."
+          "explain": "The agent's drafts were never sent on the historical tickets, so their reopen and resolution outcomes are counterfactual and cannot be observed offline. Offline you can only compare reply quality, blinded, against the sent human reply; to learn the true outcome you must actually send the agent's replies in a controlled pilot or A/B test."
         },
         {
           "q": "What is the honest baseline to beat?",
