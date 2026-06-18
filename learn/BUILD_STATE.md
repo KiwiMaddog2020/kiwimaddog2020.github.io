@@ -136,3 +136,32 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   quiz/exercise pairs. See ROADMAP.md.
 - LIVE: 53 lessons / 5 tracks / 53 exercises (incl. 3 interactive labs + 4 ordering) / 6 diagrams /
   57-link library, https://kiwimaddog2020.github.io/learn/. All links 200, JSON valid, node-check clean.
+
+## v3 (checklist-gated: binary per-feature gate, not a 0-100 score)
+
+Kevin approved replacing the noise-dominated rubric with a fixed binary feature checklist
+(CHECKLIST_V3.md) as the gate. Doer (Opus) builds + self-verifies; Codex + Gemini binary-verify
+each item against the LIVE site; disagreements resolved by ground truth (curl / node / preview).
+
+- vP2 engine (commit b2ed346): 5 new exercise widgets -- bootstrap_lab (resample -> 95% percentile
+  CI + histogram; n narrows, resamples stabilize), roc_lab (threshold slider -> TPR/FPR/precision +
+  ROC curve operating point), rag_sandbox (chunk-size + top-k retrieval by term overlap), context_budget
+  (allocate against a fixed window; lowest-priority truncated first), capstone (multi-step stepper).
+  Nav: global #/index route (filter by track/level), continue/resume card on landing (last-lesson +
+  next-incomplete), per-track mastery chips (lessons complete + quizzes passed), per-claim sources
+  block (clickable + last-verified date). All verified in preview; node-check clean; no console errors.
+- vP3 content (commit 51e2185): 53 -> 65 lessons. 5 capstones (fnd_capstone_classifier,
+  ag_capstone_debug, vc_capstone_review, eval_capstone_design, fr_capstone_read_paper) + 7 breadth
+  (eval_metric_families, eval_significance_testing, fr_efficient_adaptation, fnd_transformer_internals,
+  fnd_bpe_tokenization, vc_responsible_shipping, vc_mlops_lifecycle). Labs wired: roc on metric_families,
+  bootstrap on significance_testing, rag_sandbox swapped into ag_rag, context_budget into fnd_context_window.
+  Per-track: foundations 14 / agents 15 / vibe-coding 12 / evaluating-ai 14 / frontier 10.
+  Widget math live-verified (ROC at t=0 -> TPR/FPR 1.0, precision 0.50, counts 5/5/0/0; context overflow
+  reports exact truncation; capstone advances on correct). Answers rebalanced (quiz 35/35/34/34;
+  capstone steps 5/5/5/5). All links 200; em-dash-free; JSON valid.
+- vP4 (commit 9fe2d5c): dedup scan found ZERO genuine near-duplicate quiz/exercise pairs (the apparent
+  1.00 matches were empty non-displayed `prompt` fields on prompt_repair/agent_trace, which render
+  weak_prompt/goal/steps instead). `sources` extended beyond frontier to all 5 tracks (7 lessons:
+  +ag_security_injection, eval_sycophancy_capitulation, eval_doer_not_grader). All 76 unique site URLs curl-200.
+- GATE: Codex + Gemini launched against the live site with CHECKLIST_V3.md to binary-verify each item
+  (A1-E2) + flag any factual error in the 12 new lessons. Resolve any NOT; re-verify until all green.
