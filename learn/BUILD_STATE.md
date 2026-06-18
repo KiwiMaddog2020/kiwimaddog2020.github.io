@@ -38,7 +38,23 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   - accuracy: all six flagged factual errors corrected across foundations/eval/frontier.
   - interactivity: exercises added to all 27 missing lessons (44/44 now); every MCQ answer
     position deterministically rebalanced by rotation (quiz now 22/21/22/24 across 0-3).
-- Round 2 (rate): IN FLIGHT (Codex + Gemini).
+- Round 2 (rate): Codex 73, Gemini 85. Codex (harsh) wanted production breadth +
+  diagnosis-level interactivity + 6 more subtle overclaims; Gemini wanted engine UX
+  (flashcard loop, trace highlights, bookmarkable search, link aggregation).
+- Round 2 (fix), all committed + pushed live:
+  - accuracy: 6 more nuances (quadratic attention cost, decoder-only scope, embedding
+    geometry caveat, multi-round post-training, doer/grader 'one of largest', MCP
+    'addresses' not 'fixes', median even-length).
+  - links: canonical non-redirecting URLs (platform.claude.com, developers.openai.com,
+    autogen /stable/).
+  - engine UX: lesson-link aggregation into resources (47), flashcard completion +
+    hide-known, agent_trace correctness highlights + validation, bookmarkable
+    #/search/<q>, dynamic crumb, frontier source metadata, search-row layout fix.
+  - breadth: +5 production lessons (RAG, prompt-injection/security w/ agent_trace,
+    production observability, data quality + leakage, multimodal/MoE/distillation).
+    44 -> 49 lessons; answers rebalanced to 25/24/25/25.
+- Round 3 (rate): IN FLIGHT (Codex + Gemini).
+- Now 49 lessons across 5 tracks; 49 exercises; 47-link resources library.
 
 ## Verify ledger (what was checked)
 
