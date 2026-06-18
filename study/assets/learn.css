@@ -858,7 +858,7 @@ button:disabled,
 .hero-search {
   display: flex;
   gap: 8px;
-  margin: 18px 0 6px;
+  margin: 18px auto 6px;
   max-width: 540px;
 }
 
