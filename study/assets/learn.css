@@ -1268,3 +1268,13 @@ button:disabled,
   border-left: 3px solid var(--accent);
   background: none;
 }
+
+/* The SPA programmatically focuses <main id="app"> on each route change for
+   screen-reader announcements. Safari paints :focus-visible on that programmatic
+   focus, drawing an accent outline around the whole content area. Suppress it --
+   the focus is for assistive tech, not a visible affordance. Real controls keep
+   their own focus rings. */
+#app:focus,
+#app:focus-visible {
+  outline: none;
+}
