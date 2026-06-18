@@ -22,7 +22,7 @@
   let lastSearch = "";
 
   // Inline SVG diagrams (bronze-on-ink, currentColor-aware). Keyed by lesson.diagram.
-  const BR = "#c8a96b";
+  const BR = "#2a95ea";  // hub house accent (research-notes.css --accent)
   const diagrams = {
     agent_loop: `
       <svg viewBox="0 0 460 150" role="img" aria-label="The agent loop: think, act, observe, decide, repeating until a stop condition.">
@@ -303,7 +303,7 @@
 
   function replaceApp(markup, title) {
     app.innerHTML = markup;
-    document.title = title ? `${title} · Learn Center` : "Learn Center · Kevin Madson";
+    document.title = title ? `${title} · Kevin Madson` : "Study · Kevin Madson";
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     app.focus({ preventScroll: true });
   }
@@ -399,7 +399,7 @@
     replaceApp(`
       <section class="learn-hero" aria-labelledby="learn-title">
         <p class="eyebrow">Interactive paths through AI work</p>
-        <h1 id="learn-title">Learn Center</h1>
+        <h1 id="learn-title">Study</h1>
         <p class="lead">A compact, level-labeled path through machine learning, agents, vibe coding, honest evaluation, and frontier LLM research, built around short lessons, active checks, and curated source links.</p>
         <form class="hero-search" role="search" aria-label="Search lessons and resources">
           <input type="search" name="q" id="home-search" placeholder="Search lessons and resources" autocomplete="off" aria-label="Search">
@@ -829,7 +829,7 @@
         <h1 id="search-title">Search</h1>
         <p class="lead">Search every lesson and resource by title, idea, or keyword. Try a term like attention, RAG, eval, or temperature.</p>
       </section>
-      <form class="filter-bar" role="search" aria-label="Search the Learn Center">
+      <form class="filter-bar" role="search" aria-label="Search Study">
         <label class="search-field">
           <span>Search</span>
           <input type="search" id="search-input" autocomplete="off" placeholder="Search lessons and resources">
@@ -2092,7 +2092,7 @@
       replaceApp(`
         <section class="track-header" aria-labelledby="error-title">
           <p class="eyebrow">Load error</p>
-          <h1 id="error-title">Learn Center could not load</h1>
+          <h1 id="error-title">Study could not load</h1>
           <p class="lead">${escapeHtml(error.message)}</p>
         </section>
       `, "Load error");
