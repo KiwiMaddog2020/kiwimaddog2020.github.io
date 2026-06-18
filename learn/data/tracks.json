@@ -24,7 +24,7 @@
     "level_range": "Beginner to Expert",
     "blurb": "Use coding models as fast collaborators while keeping design, review, tests, and acceptance criteria human-owned.",
     "icon": "code",
-    "lessons": ["vc_prompt_small_commits_stub", "vc_trust_but_verify"]
+    "lessons": ["vc_what_is_vibe_coding", "vc_coding_model_landscape", "vc_prompt_small_commits", "vc_effective_code_prompting", "vc_plan_first", "vc_trust_but_verify", "vc_debugging_with_ai", "vc_reading_ai_code", "vc_human_in_the_loop"]
   },
   {
     "id": "evaluating-ai",
