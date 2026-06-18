@@ -48,24 +48,24 @@
         "q": "What distinguishes a learned model from an ordinary program?",
         "level": "Beginner",
         "choices": [
-          "Its behavior is controlled by weights fitted to data rather than hand-written rules.",
-          "It runs faster than hand-written code.",
           "It never makes mistakes once trained.",
-          "It understands inputs the way a person does."
+          "It understands inputs the way a person does.",
+          "Its behavior is controlled by weights fitted to data rather than hand-written rules.",
+          "It runs faster than hand-written code."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "The defining trait is learned parameters, not speed, infallibility, or understanding."
       },
       {
         "q": "Why is calling a model a fitted function more useful than calling it magic?",
         "level": "Beginner",
         "choices": [
-          "Because it sounds more technical.",
-          "Because a fitted function has a predictable failure model: it degrades away from its training data.",
           "Because functions are always correct.",
-          "Because it means the model has no weights."
+          "Because it means the model has no weights.",
+          "Because it sounds more technical.",
+          "Because a fitted function has a predictable failure model: it degrades away from its training data."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "The point is predictability of failure, which magic cannot give you."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "A classifier was trained only on photos of golden retrievers labeled 'dog'. You show it a husky. What is the safest expectation?",
       "choices": [
-        "It will refuse to answer.",
-        "It will classify the husky correctly because training lowered the loss.",
         "It may be unreliable, because the husky is outside the data it was fitted on.",
-        "It cannot output anything unless 'husky' is in the prompt."
+        "It cannot output anything unless 'husky' is in the prompt.",
+        "It will refuse to answer.",
+        "It will classify the husky correctly because training lowered the loss."
       ],
-      "answer": 2,
+      "answer": 0,
       "explain": "A model is a function fitted to its training data; performance degrades as inputs move away from that data."
     },
     "outcome": "You can explain what a model is and why its failures are predictable.",
@@ -134,24 +134,24 @@
         "q": "Why is the activation function essential to a neural network?",
         "level": "Beginner",
         "choices": [
-          "It stores the model's weights.",
-          "It replaces the need for data.",
           "It makes training faster.",
-          "Without it, stacked layers reduce to one linear function and cannot fit curved patterns."
+          "Without it, stacked layers reduce to one linear function and cannot fit curved patterns.",
+          "It stores the model's weights.",
+          "It replaces the need for data."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Nonlinearity is what gives depth its expressive power."
       },
       {
         "q": "What is the practical meaning of depth in a network?",
         "level": "Beginner",
         "choices": [
-          "Later layers can compose earlier features into more abstract representations.",
-          "Depth removes the need for training.",
           "Depth only affects memory usage.",
-          "More layers always means better accuracy."
+          "More layers always means better accuracy.",
+          "Later layers can compose earlier features into more abstract representations.",
+          "Depth removes the need for training."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Depth buys hierarchical composition of features, not guaranteed accuracy."
       }
     ],
@@ -159,12 +159,12 @@
       "type": "predict_output",
       "prompt": "You stack ten linear layers with NO activation function between them. What can the network represent?",
       "choices": [
-        "Far more than one layer, because depth always adds power.",
-        "Only what a single linear layer can, since without nonlinearity the stack collapses.",
         "Nothing; it cannot run.",
-        "Any function, because it is deep."
+        "Any function, because it is deep.",
+        "Far more than one layer, because depth always adds power.",
+        "Only what a single linear layer can, since without nonlinearity the stack collapses."
       ],
-      "answer": 1,
+      "answer": 3,
       "explain": "Without a nonlinearity, composed linear layers reduce algebraically to one linear function."
     },
     "outcome": "You can describe how layers compose features and why nonlinearity matters.",
@@ -222,24 +222,24 @@
         "q": "What is backpropagation responsible for?",
         "level": "Beginner",
         "choices": [
-          "Serving the model in production.",
-          "Choosing the model architecture.",
           "Computing the gradient of the loss with respect to every weight.",
-          "Collecting the training data."
+          "Collecting the training data.",
+          "Serving the model in production.",
+          "Choosing the model architecture."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Backprop computes gradients; everything else is a separate concern."
       },
       {
         "q": "A model's loss keeps bouncing up and down and never settles. What is a likely cause?",
         "level": "Intermediate",
         "choices": [
-          "The model has too few weights.",
-          "Backpropagation is disabled.",
           "The data is too clean.",
-          "The learning rate is too high, so steps overshoot the minimum."
+          "The learning rate is too high, so steps overshoot the minimum.",
+          "The model has too few weights.",
+          "Backpropagation is disabled."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "An oversized learning rate causes the descent to overshoot and oscillate."
       }
     ],
@@ -309,24 +309,24 @@
         "q": "Training loss is near zero but the model performs poorly on new inputs. What is happening?",
         "level": "Intermediate",
         "choices": [
+          "The model has too many layers to train.",
           "Underfitting.",
           "Overfitting: the model memorized the training set instead of generalizing.",
-          "The learning rate is too small.",
-          "The model has too many layers to train."
+          "The learning rate is too small."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Low train loss with poor new-data performance is the signature of overfitting."
       },
       {
         "q": "Why hold out a validation set?",
         "level": "Intermediate",
         "choices": [
+          "To increase the model's capacity.",
           "Because backpropagation requires it.",
           "To make training faster.",
-          "To estimate performance on data the model did not train on.",
-          "To increase the model's capacity."
+          "To estimate performance on data the model did not train on."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Validation data approximates the deployment distribution the model has not seen."
       }
     ],
@@ -334,12 +334,12 @@
       "type": "predict_output",
       "prompt": "During training, training loss keeps falling but validation loss has started rising. What should you conclude?",
       "choices": [
+        "The model is starting to overfit; consider early stopping or regularization.",
         "The learning rate is too low.",
         "The validation set is unnecessary.",
-        "The model is underfitting and needs more capacity.",
-        "The model is starting to overfit; consider early stopping or regularization."
+        "The model is underfitting and needs more capacity."
       ],
-      "answer": 3,
+      "answer": 0,
       "explain": "A falling train loss with a rising validation loss is the canonical overfitting signal."
     },
     "outcome": "You can diagnose overfitting versus underfitting and name fixes for each.",
@@ -397,24 +397,24 @@
         "q": "Why might a long, rare word cost more tokens than a short common one?",
         "level": "Intermediate",
         "choices": [
+          "Token count depends only on language, not the word.",
           "Rare or long words are split into several subword tokens.",
           "Long words are always one token.",
-          "The model spells out each letter as a token.",
-          "Token count depends only on language, not the word."
+          "The model spells out each letter as a token."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Tokenizers break uncommon words into multiple subword pieces."
       },
       {
         "q": "What property makes embeddings useful for semantic search?",
         "level": "Intermediate",
         "choices": [
+          "They remove all punctuation.",
           "They compress text to save disk space.",
           "Similar meanings map to nearby vectors, so closeness approximates relatedness.",
-          "They convert text to lowercase.",
-          "They remove all punctuation."
+          "They convert text to lowercase."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Search ranks by vector distance, which tracks semantic similarity."
       }
     ],
@@ -422,12 +422,12 @@
       "type": "predict_output",
       "prompt": "In a good word-embedding space, the vector 'king' minus 'man' plus 'woman' lands nearest to which word?",
       "choices": [
+        "king",
         "apple",
         "throne",
-        "queen",
-        "king"
+        "queen"
       ],
-      "answer": 2,
+      "answer": 3,
       "explain": "Embeddings place related meanings so that analogy directions roughly add up; this classic example lands near 'queen'."
     },
     "outcome": "You can explain tokens, why cost scales with them, and what embeddings encode.",
@@ -493,24 +493,24 @@
         "q": "What problem does self-attention solve for language?",
         "level": "Intermediate",
         "choices": [
+          "It lets each token draw on the most relevant other tokens, capturing long-range relationships.",
           "It compresses the model to fewer weights.",
           "It guarantees the output is factually correct.",
-          "It removes the need for training data.",
-          "It lets each token draw on the most relevant other tokens, capturing long-range relationships."
+          "It removes the need for training data."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Attention routes information between related tokens regardless of distance."
       },
       {
         "q": "In attention, what is compared to produce the weights?",
         "level": "Advanced",
         "choices": [
+          "Two random tokens chosen each step.",
           "Each token's query against every token's key.",
           "Each token's value against the loss.",
-          "The learning rate against the batch size.",
-          "Two random tokens chosen each step."
+          "The learning rate against the batch size."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Query-key comparisons produce the attention weights that combine the values."
       }
     ],
@@ -518,12 +518,12 @@
       "type": "predict_output",
       "prompt": "While a decoder-only LLM generates text, can the token at position 5 attend to the token at position 9?",
       "choices": [
+        "Only in the first layer.",
         "Yes, every token attends to every other token.",
         "No, causal masking blocks attending to later tokens.",
-        "Only if temperature is high.",
-        "Only in the first layer."
+        "Only if temperature is high."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "Text-generating LLMs use a causal mask, so a token attends only to itself and earlier tokens."
     },
     "outcome": "You can explain attention and why the transformer enabled modern LLMs.",
@@ -582,24 +582,24 @@
         "q": "Why is fine-tuning much cheaper than pretraining?",
         "level": "Advanced",
         "choices": [
+          "It skips backpropagation.",
           "It does not change any weights.",
           "It uses a larger dataset than pretraining.",
-          "It adjusts an already-capable model on a smaller, targeted dataset.",
-          "It skips backpropagation."
+          "It adjusts an already-capable model on a smaller, targeted dataset."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Fine-tuning starts from a trained base, so it needs far less data and compute."
       },
       {
         "q": "What does the preference-tuning stage primarily shape?",
         "level": "Advanced",
         "choices": [
+          "Tone, helpfulness, and safety, by optimizing toward preferred responses.",
           "The tokenizer.",
           "The size of the context window.",
-          "The model's raw factual knowledge.",
-          "Tone, helpfulness, and safety, by optimizing toward preferred responses."
+          "The model's raw factual knowledge."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "RLHF and similar methods align behavior, not raw capability."
       }
     ],
@@ -607,12 +607,12 @@
       "type": "predict_output",
       "prompt": "You have a strong base model and want it to follow instructions in a support chat. What is the cheapest effective step?",
       "choices": [
+        "Pretrain a new model from scratch.",
         "Instruction fine-tune the base model on curated request-response examples.",
         "Raise the temperature.",
-        "Add more tokens to every prompt forever.",
-        "Pretrain a new model from scratch."
+        "Add more tokens to every prompt forever."
       ],
-      "answer": 0,
+      "answer": 1,
       "explain": "Fine-tuning adapts an already-capable base cheaply; pretraining from scratch is far more expensive."
     },
     "outcome": "You can describe the pretraining, fine-tuning, and preference-tuning pipeline.",
@@ -670,24 +670,24 @@
         "q": "Why does the same prompt sometimes produce different answers?",
         "level": "Intermediate",
         "choices": [
+          "The model retrains on every request.",
           "The model's weights change between runs.",
           "Each token is sampled from a probability distribution, so runs can differ.",
-          "The prompt is secretly edited.",
-          "The model retrains on every request."
+          "The prompt is secretly edited."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Sampling introduces variation unless you force greedy decoding."
       },
       {
         "q": "You need maximally consistent, repeatable output. What setting helps most?",
         "level": "Intermediate",
         "choices": [
+          "A larger vocabulary.",
           "More layers.",
           "A very high temperature.",
-          "A very low temperature (near zero), approaching greedy decoding.",
-          "A larger vocabulary."
+          "A very low temperature (near zero), approaching greedy decoding."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Low temperature concentrates probability on the top token, reducing variation."
       }
     ],
@@ -900,6 +900,94 @@
     "outcome": "You can spot data-quality problems and leakage that inflate scores before deployment.",
     "prereqs": [
       "fnd_loss_overfitting"
+    ],
+    "next": "fnd_supervised_unsupervised"
+  },
+  {
+    "id": "fnd_supervised_unsupervised",
+    "track": "foundations",
+    "title": "Supervised, unsupervised, and reinforcement learning",
+    "level": "Beginner",
+    "minutes": 5,
+    "summary": "The three classic learning settings differ by what signal the model learns from: labels, structure, or reward.",
+    "body_html": "<p>Before language models, machine learning was usually sorted into three settings, and the split still organizes the field. Supervised learning trains on labeled examples: each input comes with the correct output, and the model learns to map one to the other. Classification (spam or not) and regression (predict a price) are supervised. Most of the accuracy metrics you have seen assume this setting, because you need ground-truth labels to score against.</p><p>Unsupervised learning has no labels. The model finds structure in the data itself: clustering groups similar items, dimensionality reduction compresses them, and density models learn what typical data looks like. You reach for it when labels are expensive or you do not yet know what you are looking for. Notably, the pretraining of large language models is self-supervised, a close cousin: the label is just the next token, generated for free from the text.</p><p>Reinforcement learning is different again: an agent takes actions, receives a reward signal, and learns a policy that maximizes reward over time. It fits sequential decision problems where there is no single correct answer, only outcomes. RLHF, which you met earlier, borrows this machinery to tune models toward preferred behavior. Knowing which setting you are in tells you what data you need and how you can even measure success.</p>",
+    "key_points": [
+      "Supervised learning maps inputs to known labels (classification, regression).",
+      "Unsupervised learning finds structure without labels (clustering, dimensionality reduction).",
+      "LLM pretraining is self-supervised: the next token is a free label.",
+      "Reinforcement learning optimizes a policy from a reward signal over time."
+    ],
+    "links": [
+      {
+        "title": "An Introduction to Statistical Learning",
+        "url": "https://www.statlearning.com/",
+        "level": "Intermediate",
+        "kind": "course",
+        "note": "The classic treatment of supervised and unsupervised methods."
+      },
+      {
+        "title": "Google: Machine Learning Crash Course (Classification)",
+        "url": "https://developers.google.com/machine-learning/crash-course/classification",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Hands-on intro to supervised classification and its metrics."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What does supervised learning require?",
+        "back": "Labeled examples: each input paired with its correct output."
+      },
+      {
+        "front": "What does unsupervised learning find?",
+        "back": "Structure in unlabeled data, like clusters or a low-dimensional representation."
+      },
+      {
+        "front": "Why is LLM pretraining called self-supervised?",
+        "back": "The label is the next token, generated for free from the text itself."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "You have a pile of unlabeled support tickets and want to group similar ones. Which setting fits?",
+        "level": "Beginner",
+        "choices": [
+          "None; it cannot be done.",
+          "Supervised classification.",
+          "Unsupervised clustering.",
+          "Reinforcement learning."
+        ],
+        "answer": 2,
+        "explain": "No labels and a grouping goal points to unsupervised clustering."
+      },
+      {
+        "q": "Why can you compute accuracy for a supervised model but not directly for plain clustering?",
+        "level": "Intermediate",
+        "choices": [
+          "Clustering has no inputs.",
+          "Accuracy only works on text.",
+          "Clustering is slower.",
+          "Accuracy needs ground-truth labels, which unsupervised data lacks."
+        ],
+        "answer": 3,
+        "explain": "Accuracy compares predictions to known labels; unsupervised settings have none."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You want a model that learns to play a game well by trying moves and seeing the score. Which learning setting is this?",
+      "choices": [
+        "Reinforcement learning.",
+        "Self-supervised pretraining.",
+        "Supervised learning.",
+        "Unsupervised learning."
+      ],
+      "answer": 0,
+      "explain": "Acting, receiving a reward, and improving a policy over time is reinforcement learning."
+    },
+    "outcome": "You can classify a problem as supervised, unsupervised, or reinforcement learning and say what data each needs.",
+    "prereqs": [
+      "fnd_what_is_a_model"
     ],
     "next": null
   }

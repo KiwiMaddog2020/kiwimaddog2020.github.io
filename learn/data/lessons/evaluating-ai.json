@@ -48,24 +48,24 @@
         "q": "What does a model that grades its own output tend to reward?",
         "level": "Intermediate",
         "choices": [
-          "Strict task success.",
-          "Its own style, confidence, and shared assumptions.",
           "Shorter answers only.",
-          "Random outcomes."
+          "Random outcomes.",
+          "Strict task success.",
+          "Its own style, confidence, and shared assumptions."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Self-grading optimizes for what the model already likes, inflating the score."
       },
       {
         "q": "When using a model as a judge, why vary its family and prompt from the doer's?",
         "level": "Advanced",
         "choices": [
-          "Because judges must always be larger.",
-          "To make the eval slower.",
           "So the judge does not share the doer's blind spots and failure modes.",
-          "To use more tokens."
+          "To use more tokens.",
+          "Because judges must always be larger.",
+          "To make the eval slower."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Decorrelating the judge from the doer is what keeps the score a measurement."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "You use the same model and prompt to both write answers and grade them, and the scores look great. What is the risk?",
       "choices": [
-        "The grader will be too harsh.",
-        "It only affects speed.",
         "No risk; matched models are fair.",
-        "Self-grading inflates scores by rewarding the model's own style and shared blind spots."
+        "Self-grading inflates scores by rewarding the model's own style and shared blind spots.",
+        "The grader will be too harsh.",
+        "It only affects speed."
       ],
-      "answer": 3,
+      "answer": 1,
       "explain": "A grader that shares the doer's assumptions measures agreement, not task success."
     },
     "outcome": "You can explain why self-grading inflates results and how role separation fixes it.",
@@ -135,24 +135,24 @@
         "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
         "level": "Intermediate",
         "choices": [
-          "Its discrimination is low (about 0.05), so it is close to flagging everything.",
-          "Its catch rate proves it works.",
           "False alarms do not matter.",
-          "It is an excellent detector."
+          "It is an excellent detector.",
+          "Its discrimination is low (about 0.05), so it is close to flagging everything.",
+          "Its catch rate proves it works."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Discrimination of 0.95 minus 0.90 is 0.05, near guessing."
       },
       {
         "q": "What must you always report alongside a detector's catch rate?",
         "level": "Intermediate",
         "choices": [
-          "Only the token count.",
-          "The false alarm rate, so discrimination can be computed.",
           "The model's name.",
-          "The temperature."
+          "The temperature.",
+          "Only the token count.",
+          "The false alarm rate, so discrimination can be computed."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Without the false positive rate, the catch rate is uninterpretable."
       }
     ],
@@ -244,24 +244,24 @@
         "q": "Why decide the success threshold before running the experiment?",
         "level": "Intermediate",
         "choices": [
+          "Because after seeing the data, almost any pattern can be narrated into a finding.",
           "Because thresholds are required by law.",
           "To avoid using a metric.",
-          "To slow down the experiment.",
-          "Because after seeing the data, almost any pattern can be narrated into a finding."
+          "To slow down the experiment."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Pre-committing the rules prevents post-hoc storytelling."
       },
       {
         "q": "Your pre-registered effect does not clear its threshold. What is the honest move?",
         "level": "Intermediate",
         "choices": [
+          "Lower the threshold until it passes.",
           "Report the null; a null reported honestly is a real finding.",
           "Re-run until it passes by chance.",
-          "Drop the experiment silently.",
-          "Lower the threshold until it passes."
+          "Drop the experiment silently."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Honoring the pre-registered threshold is the whole point of pre-registration."
       }
     ],
@@ -269,12 +269,12 @@
       "type": "predict_output",
       "prompt": "After seeing the results, you pick the metric that makes your model look best. What did you violate?",
       "choices": [
+        "Decorrelation.",
         "Nothing; pick whatever metric you like.",
         "Pre-registration; choosing the metric after seeing data invites cherry-picking.",
-        "The noise floor.",
-        "Decorrelation."
+        "The noise floor."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "Deciding the metric and threshold before the run is what stops post-hoc storytelling."
     },
     "outcome": "You can pre-register a claim with a metric and threshold and honor a null result.",
@@ -332,24 +332,24 @@
         "q": "Two judges from the same model with the same prompt agree. How strong is that evidence?",
         "level": "Advanced",
         "choices": [
+          "Conclusive proof.",
           "Irrelevant to evaluation.",
           "Very strong, because two judges agreed.",
-          "Weak, because they share blind spots and can be wrong together.",
-          "Conclusive proof."
+          "Weak, because they share blind spots and can be wrong together."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Correlated judges agreeing adds little; they can fail in the same direction."
       },
       {
         "q": "Why can a panel of strong judges still miss the answer on a frontier task?",
         "level": "Expert",
         "choices": [
+          "They may all share the same capability gap, so consensus looks confident but is wrong.",
           "They used too few tokens.",
           "Frontier tasks are always easy.",
-          "They were too slow.",
-          "They may all share the same capability gap, so consensus looks confident but is wrong."
+          "They were too slow."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Competence caps what any judge can recognize; shared gaps survive consensus."
       }
     ],
@@ -357,12 +357,12 @@
       "type": "predict_output",
       "prompt": "Three judges from the same model family, with the same prompt, all agree the answer is correct. How much extra confidence does their agreement give?",
       "choices": [
+        "A lot; three judges agreed.",
         "Little; correlated judges share blind spots, so they can be wrong together.",
         "It is conclusive proof.",
-        "None of them can judge at all.",
-        "A lot; three judges agreed."
+        "None of them can judge at all."
       ],
-      "answer": 0,
+      "answer": 1,
       "explain": "Agreement only adds evidence when judges fail independently; same-family judges do not."
     },
     "outcome": "You can reason about judge decorrelation and the competence ceiling of an evaluation.",
@@ -420,24 +420,24 @@
         "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
         "level": "Advanced",
         "choices": [
+          "The metric was discrimination.",
           "The sample was too large.",
           "Difficulty is a confound; the gap may be about the questions, not honesty.",
-          "Honesty cannot be measured at all.",
-          "The metric was discrimination."
+          "Honesty cannot be measured at all."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "An uncontrolled difference in difficulty can fully explain the result."
       },
       {
         "q": "What is the best habit for catching design-level confounds?",
         "level": "Expert",
         "choices": [
+          "Run the experiment only once.",
           "Use a single judge.",
           "Trust a clean-looking result.",
-          "Adversarially search for the alternative explanation before believing the conclusion.",
-          "Run the experiment only once."
+          "Adversarially search for the alternative explanation before believing the conclusion."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Actively trying to break your own result surfaces tangled causes."
       }
     ],
@@ -445,12 +445,12 @@
       "type": "predict_output",
       "prompt": "An eval concludes model A 'follows instructions better' than B. You then learn A's prompts were all short and B's were all long and complex. What should you conclude?",
       "choices": [
+        "Prompt complexity is a confound; the comparison cannot support the claim.",
         "B is better because its prompts were longer.",
         "The result needs no further checking.",
-        "A is clearly better at following instructions.",
-        "Prompt complexity is a confound; the comparison cannot support the claim."
+        "A is clearly better at following instructions."
       ],
-      "answer": 3,
+      "answer": 0,
       "explain": "Because prompt complexity differed with the model, it could explain the gap on its own."
     },
     "outcome": "You can spot confounds and demand a clean comparison before trusting a result.",
@@ -509,24 +509,24 @@
         "q": "Model A scores 72% and B scores 70% on the same 20 test items, and their separate intervals overlap. What is the right move?",
         "level": "Advanced",
         "choices": [
+          "Conclude A is better, since 72 beats 70.",
           "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
           "Conclude there is definitely no difference, because the intervals overlap.",
-          "Raise the temperature and rerun.",
-          "Conclude A is better, since 72 beats 70."
+          "Raise the temperature and rerun."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Overlapping separate intervals are inconclusive and conservative; the paired difference is the sensitive, correct test."
       },
       {
         "q": "Why use a bootstrap confidence interval?",
         "level": "Advanced",
         "choices": [
+          "To pick the temperature.",
           "To make the score higher.",
           "To estimate a plausible range for the true value with few assumptions.",
-          "To remove the need for data.",
-          "To pick the temperature."
+          "To remove the need for data."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Resampling quantifies how much the score could vary by chance."
       }
     ],
@@ -534,12 +534,12 @@
       "type": "predict_output",
       "prompt": "You are comparing two models on the SAME 50 test items. How should you test whether A really beats B?",
       "choices": [
+        "Pick whichever has the higher raw score.",
         "Run each once and compare.",
         "Check whether their separate confidence intervals overlap.",
-        "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
-        "Pick whichever has the higher raw score."
+        "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero."
       ],
-      "answer": 2,
+      "answer": 3,
       "explain": "Paired data calls for bootstrapping the difference; comparing separate intervals is conservative and ignores the pairing."
     },
     "outcome": "You can judge whether a score difference clears the noise floor using intervals.",
@@ -597,24 +597,24 @@
         "q": "A model changes its answer after a user objects. Why is that not automatically capitulation?",
         "level": "Advanced",
         "choices": [
+          "Because the change could be rational updating on a good argument, not social deference.",
           "Because the user is always right.",
           "Because capitulation does not exist.",
-          "Because models never change answers.",
-          "Because the change could be rational updating on a good argument, not social deference."
+          "Because models never change answers."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Updating and deference look the same from outside, so the flip alone is ambiguous."
       },
       {
         "q": "How do you make pushback test deference rather than reasoning?",
         "level": "Expert",
         "choices": [
+          "Give pushback that carries strong new evidence.",
           "Give pushback that carries no real evidence, so any change is deference.",
           "Only test easy questions.",
-          "Let the model grade itself.",
-          "Give pushback that carries strong new evidence."
+          "Let the model grade itself."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Evidence-free pressure isolates social deference from rational updating."
       }
     ],
@@ -622,12 +622,12 @@
       "type": "predict_output",
       "prompt": "You test capitulation by pushing back on puzzles the model already solves at near 100% accuracy, and see almost no answer changes. What does this null most likely mean?",
       "choices": [
+        "The model never had a correct answer.",
         "The model is provably immune to social pressure in all settings.",
         "The task was too easy to detect capitulation; a clean model and an easy task look the same here.",
-        "Capitulation is impossible to study.",
-        "The model never had a correct answer."
+        "Capitulation is impossible to study."
       ],
-      "answer": 1,
+      "answer": 2,
       "explain": "On a mastered task, certainty suppresses capitulation, so the null does not isolate a clean model from an easy test."
     },
     "outcome": "You can design a capitulation test that separates deference from updating and read its nulls honestly.",
@@ -685,24 +685,24 @@
         "q": "Why does naming the boundaries of an eval increase trust?",
         "level": "Expert",
         "choices": [
+          "It hides the gaps.",
           "It removes the need for data.",
           "It makes the eval look weaker.",
-          "It tells an honest reader where the result applies and where it does not.",
-          "It hides the gaps."
+          "It tells an honest reader where the result applies and where it does not."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "A finding with a clear boundary is more trustworthy than one pretending to have none."
       },
       {
         "q": "What is the mature stance on evaluation completeness?",
         "level": "Expert",
         "choices": [
+          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
           "Measure nothing and ship.",
           "Trust automated evals fully.",
-          "Achieve a perfect evaluation before shipping.",
-          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps."
+          "Achieve a perfect evaluation before shipping."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Perfect evals do not exist; honest boundaries plus scheduled human checks do."
       }
     ],
@@ -710,12 +710,12 @@
       "type": "predict_output",
       "prompt": "Your evaluation never tested adversarial inputs. What should the report do?",
       "choices": [
+        "Say nothing and let readers assume it was fine.",
         "List it in the not-measured ledger and schedule a human check.",
         "Claim the model is robust anyway.",
-        "Delete the result.",
-        "Say nothing and let readers assume it was fine."
+        "Delete the result."
       ],
-      "answer": 0,
+      "answer": 1,
       "explain": "Naming the gap and scheduling a check is more trustworthy than an unstated boundary."
     },
     "outcome": "You can keep a not-measured ledger and turn its gaps into scheduled verification.",
@@ -773,24 +773,24 @@
         "q": "A system scores 95% offline but users complain after launch. Most likely cause?",
         "level": "Advanced",
         "choices": [
+          "Users are wrong.",
           "The offline score was faked.",
           "Distribution shift: production inputs differ from the eval set.",
-          "The model got smaller.",
-          "Users are wrong."
+          "The model got smaller."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Real inputs often differ from a fixed test set; trace and sample production to find out how."
       },
       {
         "q": "What turns evaluation into a standing practice rather than a launch gate?",
         "level": "Advanced",
         "choices": [
+          "Using a larger model.",
           "Raising the temperature.",
           "Running it once before release.",
-          "Feeding sampled, labeled production traffic back into the eval set.",
-          "Using a larger model."
+          "Feeding sampled, labeled production traffic back into the eval set."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "A feedback loop keeps the offline suite tracking real-world behavior."
       }
     ],
@@ -798,17 +798,193 @@
       "type": "predict_output",
       "prompt": "After a prompt change, offline scores are unchanged but production error reports spike. What is the most useful next step?",
       "choices": [
+        "Trace failing production requests and add those cases to the eval set.",
         "Raise the temperature.",
         "Roll forward and hope it settles.",
-        "Ignore it; offline scores are unchanged.",
-        "Trace failing production requests and add those cases to the eval set."
+        "Ignore it; offline scores are unchanged."
       ],
-      "answer": 3,
+      "answer": 0,
       "explain": "Production traces reveal failures the fixed offline set missed; capture them to make the suite reflect reality."
     },
     "outcome": "You can explain why production evaluation needs tracing, monitoring, and a feedback loop.",
     "prereqs": [
       "eval_not_measured_ledger"
+    ],
+    "next": "eval_llm_as_judge"
+  },
+  {
+    "id": "eval_llm_as_judge",
+    "track": "evaluating-ai",
+    "title": "LLM as a judge",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Using a model to grade outputs scales evaluation, but only with a clear rubric and an awareness of the judge's biases.",
+    "body_html": "<p>When outputs are open-ended, there is no exact-match key, so teams increasingly use a strong model as the grader. It scales and correlates reasonably with human judgment, but it is only as good as the rubric you give it. A vague instruction like rate this 1 to 10 produces noisy, drifting scores. A good judge prompt states explicit criteria, defines what each score means, and ideally shows a few anchored examples, so the judgment is reproducible rather than a vibe.</p><p>LLM judges have characteristic biases you must design around. They tend to prefer longer answers, to favor the first option in a pairwise comparison (position bias), and to rate their own family's outputs higher. Pairwise comparison (which of these two is better) is often more reliable than absolute scoring, and randomizing order plus swapping positions controls the position bias. None of this removes the need for the discipline from earlier in this track: the judge must stay decorrelated from the doer, and you must validate the judge against human labels on a sample.</p><p>The honest framing is that an LLM judge is a useful, scalable proxy, not ground truth. Treat its scores like any other metric: check them against humans, watch for the known biases, and report the rubric you used. A judge you have not validated is an opinion, not a measurement.</p>",
+    "key_points": [
+      "A clear rubric with defined score levels and anchors beats 'rate 1 to 10'.",
+      "Judges have biases: verbosity, position (first option), and self-preference.",
+      "Pairwise comparison with randomized, swapped order is more reliable than absolute scoring.",
+      "Validate the judge against human labels; an unvalidated judge is an opinion, not a measurement."
+    ],
+    "links": [
+      {
+        "title": "Judging LLM-as-a-Judge (MT-Bench, Chatbot Arena)",
+        "url": "https://arxiv.org/abs/2306.05685",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The paper that studied LLM judges, their agreement with humans, and their biases."
+      },
+      {
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "Practical guidance on building and validating judge-based evals."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What makes an LLM-judge prompt reproducible?",
+        "back": "Explicit criteria, defined score levels, and a few anchored examples, not 'rate 1 to 10'."
+      },
+      {
+        "front": "Name three biases of LLM judges.",
+        "back": "Verbosity preference, position bias (favoring the first option), and self-preference."
+      },
+      {
+        "front": "Why validate an LLM judge against humans?",
+        "back": "An unvalidated judge is an opinion, not a measurement; validation shows it tracks ground truth."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Your LLM judge gives noisy, inconsistent scores. What is the most likely fix?",
+        "level": "Advanced",
+        "choices": [
+          "Use a bigger judge model only.",
+          "Give it an explicit rubric with defined score levels and anchored examples.",
+          "Raise the temperature.",
+          "Average more random scores."
+        ],
+        "answer": 1,
+        "explain": "A clear, anchored rubric is what turns a vibe into a reproducible judgment."
+      },
+      {
+        "q": "Why is pairwise comparison often preferred over absolute 1 to 10 scoring?",
+        "level": "Advanced",
+        "choices": [
+          "It removes all bias.",
+          "It is faster to run.",
+          "It is usually more reliable, and swapping order controls position bias.",
+          "It needs no rubric."
+        ],
+        "answer": 2,
+        "explain": "Relative judgments are more stable, and randomized/swapped order counters position bias."
+      }
+    ],
+    "exercise": {
+      "type": "prompt_repair",
+      "weak_prompt": "Rate this answer from 1 to 10.",
+      "goal": "Turn a vague judge prompt into a reproducible, rubric-anchored one.",
+      "choices": [
+        "Tell me if the answer is good or bad.",
+        "Rate this answer from 1 to 10 and be fair.",
+        "Score the answer on three criteria, each 0 to 2: factual correctness, completeness, and clarity. Define each level (0 wrong/absent, 1 partial, 2 fully met), give the total, and quote the evidence for each score."
+      ],
+      "answer": 2,
+      "explain": "A reproducible judge prompt names explicit criteria, defines each score level, and asks for evidence."
+    },
+    "outcome": "You can design and validate an LLM-as-judge eval and control its known biases.",
+    "prereqs": [
+      "eval_doer_not_grader"
+    ],
+    "next": "eval_inter_rater_reliability"
+  },
+  {
+    "id": "eval_inter_rater_reliability",
+    "track": "evaluating-ai",
+    "title": "When raters disagree",
+    "level": "Advanced",
+    "minutes": 5,
+    "summary": "An eval is only as trustworthy as its labels; measure rater agreement, and correct for the agreement you would get by chance.",
+    "body_html": "<p>Every eval rests on labels, and labels come from raters who disagree. If two people (or two model judges) cannot consistently apply your rubric, the gold standard you are scoring against is shaky, and no amount of model improvement will show up cleanly. So before trusting a benchmark, measure inter-rater reliability: how often do independent raters give the same label?</p><p>Raw agreement is tempting but misleading when one answer is common. If 85% of cases are yes, two raters who both say yes most of the time will agree around 85% just by chance, so 90% raw agreement is barely better than guessing together. Chance-corrected measures like Cohen's kappa account for this: they ask how much agreement exceeds what you would expect at random. A high kappa means the rubric is genuinely shared; a low one means it needs sharpening.</p><p>The practical loop is to pilot the rubric on a sample, measure agreement, and when raters diverge, adjudicate and tighten the definitions until they converge. Disagreement is not noise to average away; it is a signal that the task is underspecified. Fix the rubric, then collect the labels you will actually trust.</p>",
+    "key_points": [
+      "An eval is only as good as the agreement among the raters who made its labels.",
+      "Raw agreement overstates reliability when one label is common.",
+      "Chance-corrected measures like Cohen's kappa show agreement beyond random.",
+      "Rater disagreement signals an underspecified rubric; adjudicate and tighten it."
+    ],
+    "links": [
+      {
+        "title": "Cohen's kappa",
+        "url": "https://en.wikipedia.org/wiki/Cohen%27s_kappa",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "The standard chance-corrected agreement statistic, with worked examples."
+      },
+      {
+        "title": "Your AI Product Needs Evals",
+        "url": "https://hamel.dev/blog/posts/evals/",
+        "level": "Beginner",
+        "kind": "article",
+        "note": "Why label quality and rater agreement underpin every eval."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Why measure inter-rater reliability before trusting a benchmark?",
+        "back": "The eval is only as good as its labels; if raters cannot agree, the gold standard is shaky."
+      },
+      {
+        "front": "Why is raw agreement misleading?",
+        "back": "When one label is common, raters agree a lot by chance, so high raw agreement can mean little."
+      },
+      {
+        "front": "What does Cohen's kappa add over raw agreement?",
+        "back": "It corrects for chance, showing how much agreement exceeds random."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Two raters agree 90% of the time, but 'pass' is the label 85% of the time. How impressed should you be?",
+        "level": "Advanced",
+        "choices": [
+          "It proves the rubric is perfect.",
+          "Raw agreement is always sufficient.",
+          "Very; 90% is high.",
+          "Not very; chance agreement is already high, so use a chance-corrected measure like kappa."
+        ],
+        "answer": 3,
+        "explain": "With a skewed label, 90% raw agreement is barely above chance; kappa reveals the real reliability."
+      },
+      {
+        "q": "Your raters keep disagreeing on a label. What does this most likely indicate?",
+        "level": "Advanced",
+        "choices": [
+          "The rubric is underspecified and needs tightening.",
+          "You need more raters only.",
+          "Agreement does not matter.",
+          "The model is bad."
+        ],
+        "answer": 0,
+        "explain": "Persistent disagreement is a signal that the task definition is unclear, not just noise."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "On a task where 95% of items are 'safe', two judges agree 94% of the time. What is the honest read?",
+      "choices": [
+        "Excellent reliability; 94% is high.",
+        "Weak evidence; with a 95%-skewed label, chance agreement is ~90%, so correct for chance (kappa).",
+        "The judges are broken.",
+        "Raw agreement settles it."
+      ],
+      "answer": 1,
+      "explain": "A heavily skewed label inflates raw agreement; chance-corrected kappa is needed to judge real reliability."
+    },
+    "outcome": "You can assess label quality with chance-corrected rater agreement and fix an underspecified rubric.",
+    "prereqs": [
+      "eval_doer_not_grader"
     ],
     "next": null
   }

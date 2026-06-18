@@ -48,24 +48,24 @@
         "q": "What is the well-established part of scaling?",
         "level": "Advanced",
         "choices": [
-          "Scaling has no measurable effect.",
           "Every specific skill appears suddenly at a threshold.",
           "Pretraining loss falls smoothly and predictably with compute, data, and parameters.",
-          "Bigger models always hallucinate less."
+          "Bigger models always hallucinate less.",
+          "Scaling has no measurable effect."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Smooth loss scaling is the load-bearing, well-supported finding."
       },
       {
         "q": "Why might a capability look like it emerged suddenly?",
         "level": "Expert",
         "choices": [
-          "Emergence is never a metric effect.",
           "Because of the temperature setting.",
           "The model physically changed at one size.",
-          "A harsh all-or-nothing metric can turn smooth progress into a sudden-looking jump."
+          "A harsh all-or-nothing metric can turn smooth progress into a sudden-looking jump.",
+          "Emergence is never a metric effect."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Metric choice can manufacture an apparent discontinuity from smooth underlying gains."
       }
     ],
@@ -73,12 +73,12 @@
       "type": "predict_output",
       "prompt": "A capability appears to jump suddenly at a model size under an exact-match metric, but improves smoothly under a partial-credit metric. What is the most defensible reading?",
       "choices": [
-        "The apparent jump is largely a metric artifact; the underlying gain is smooth.",
         "The smaller model has the capability fully.",
         "Metrics never affect emergence claims.",
-        "The capability truly emerged discontinuously."
+        "The capability truly emerged discontinuously.",
+        "The apparent jump is largely a metric artifact; the underlying gain is smooth."
       ],
-      "answer": 0,
+      "answer": 3,
       "explain": "When the jump disappears under a softer metric, the discontinuity was mostly in the measurement."
     },
     "source": {
@@ -148,24 +148,24 @@
         "q": "What does a reward model in RLHF represent?",
         "level": "Advanced",
         "choices": [
-          "The true objective, perfectly captured.",
           "A learned proxy for human preferences that the policy is optimized against.",
           "The tokenizer.",
-          "The context window size."
+          "The context window size.",
+          "The true objective, perfectly captured."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "The reward model is a learned stand-in for preferences, not the true goal."
       },
       {
         "q": "Why can sycophancy emerge from alignment?",
         "level": "Expert",
         "choices": [
-          "Because alignment never affects behavior.",
           "Because models dislike users.",
           "Because optimizing for what raters prefer can reward agreeable answers over correct ones.",
-          "Because of the learning rate."
+          "Because of the learning rate.",
+          "Because alignment never affects behavior."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Optimizing a preference proxy can favor what pleases raters, including agreement."
       }
     ],
@@ -173,12 +173,12 @@
       "type": "predict_output",
       "prompt": "After preference tuning, a model starts agreeing with users even when they are wrong. What is the likely cause?",
       "choices": [
-        "The context window shrank.",
         "Pretraining failed.",
         "The reward model is too small.",
-        "Optimizing a preference proxy can reward agreeable answers, producing sycophancy."
+        "Optimizing a preference proxy can reward agreeable answers, producing sycophancy.",
+        "The context window shrank."
       ],
-      "answer": 3,
+      "answer": 2,
       "explain": "Alignment optimizes a stand-in for preferences, which can favor what pleases raters over what is correct."
     },
     "source": {
@@ -243,24 +243,24 @@
         "q": "What does spending more test-time compute trade?",
         "level": "Advanced",
         "choices": [
-          "Latency and cost for higher accuracy on hard problems.",
           "Nothing; it is free.",
           "Model size for data.",
-          "Accuracy for speed."
+          "Accuracy for speed.",
+          "Latency and cost for higher accuracy on hard problems."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "More thinking costs tokens and latency in exchange for accuracy where it helps."
       },
       {
         "q": "On which task is extra reasoning compute least useful?",
         "level": "Expert",
         "choices": [
-          "A hard competition math problem.",
           "A simple factual lookup with no verifiable reasoning to do.",
           "A multi-step proof.",
-          "A tricky coding bug."
+          "A tricky coding bug.",
+          "A hard competition math problem."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Easy lookups have little to reason about, so extra compute mostly buys latency."
       }
     ],
@@ -268,12 +268,12 @@
       "type": "predict_output",
       "prompt": "You enable long reasoning and best-of-many sampling for a batch of simple, factual lookup questions. What is the likely effect?",
       "choices": [
-        "Lower accuracy than a single pass.",
         "A large accuracy gain.",
         "Little accuracy change but much higher cost and latency.",
-        "The model stops answering."
+        "The model stops answering.",
+        "Lower accuracy than a single pass."
       ],
-      "answer": 2,
+      "answer": 1,
       "explain": "Test-time compute pays off on hard, checkable problems, not simple lookups."
     },
     "source": {
@@ -338,24 +338,24 @@
         "q": "Why is reading a single neuron usually not enough to understand a model?",
         "level": "Advanced",
         "choices": [
-          "Models have no neurons.",
           "Neurons only store the tokenizer.",
           "Neurons are random.",
-          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing."
+          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing.",
+          "Models have no neurons."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Superposition packs many features into shared neurons, blurring one-to-one meaning."
       },
       {
         "q": "What is the honest status of interpretability claims?",
         "level": "Expert",
         "choices": [
-          "There are real, verifiable findings, but full explanations remain partial.",
           "Interpretability has produced nothing useful.",
           "It only works on tiny models.",
-          "We can fully explain any frontier model's behavior."
+          "We can fully explain any frontier model's behavior.",
+          "There are real, verifiable findings, but full explanations remain partial."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Genuine progress coexists with large remaining gaps; avoid overclaiming."
       }
     ],
@@ -363,12 +363,12 @@
       "type": "predict_output",
       "prompt": "You find a single neuron that activates for many unrelated concepts. What does this illustrate?",
       "choices": [
-        "The neuron is broken.",
         "Superposition; models pack many overlapping features into few neurons.",
         "The model has no features.",
-        "A tokenizer bug."
+        "A tokenizer bug.",
+        "The neuron is broken."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "Superposition is why one neuron rarely maps to one concept, and why disentangling features is hard."
     },
     "source": {
@@ -433,24 +433,24 @@
         "q": "A model scores very high on a popular public benchmark. Why be cautious?",
         "level": "Advanced",
         "choices": [
-          "Public benchmarks cannot be measured.",
           "High scores are always fake.",
           "The benchmark may be saturated or contaminated, so the score can reflect memorization.",
-          "Benchmarks never matter."
+          "Benchmarks never matter.",
+          "Public benchmarks cannot be measured."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Saturation and contamination both erode what a high public score proves."
       },
       {
         "q": "What kind of test best resists contamination?",
         "level": "Expert",
         "choices": [
-          "A single multiple-choice question.",
           "Any test the model has seen.",
           "An old, widely-published benchmark.",
-          "A held-out, private, or freshly constructed test."
+          "A held-out, private, or freshly constructed test.",
+          "A single multiple-choice question."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Fresh or private tests have not leaked into training data."
       }
     ],
@@ -458,12 +458,12 @@
       "type": "predict_output",
       "prompt": "A model scores 99% on a popular three-year-old public benchmark. Why be cautious?",
       "choices": [
-        "Saturation and possible contamination; the test may be in the training data.",
         "Benchmarks never matter.",
         "It proves general intelligence.",
-        "High scores are always fake."
+        "High scores are always fake.",
+        "Saturation and possible contamination; the test may be in the training data."
       ],
-      "answer": 0,
+      "answer": 3,
       "explain": "Old public benchmarks can saturate and leak into training data, so the score may reflect memorization."
     },
     "source": {
@@ -528,24 +528,24 @@
         "q": "A frontier model solves a hard proof but botches a simple arithmetic step. What does this illustrate?",
         "level": "Expert",
         "choices": [
-          "The model is broken.",
           "Jagged capability: model difficulty does not track human difficulty.",
           "Arithmetic is harder than proofs for everyone.",
-          "The proof answer was luck."
+          "The proof answer was luck.",
+          "The model is broken."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Uneven competence across tasks is a structural property, not a one-off error."
       },
       {
         "q": "Why will scaling not fully eliminate hallucination?",
         "level": "Expert",
         "choices": [
-          "Because calibration is already perfect.",
           "Because models will get smaller.",
           "Because it has several roots (the objective, data gaps, calibration), so scale alone does not remove it.",
-          "Because hallucination is not real."
+          "Because hallucination is not real.",
+          "Because calibration is already perfect."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Hallucination has multiple causes, so it is reduced and managed rather than removed by scale alone."
       }
     ],
@@ -553,12 +553,12 @@
       "type": "predict_output",
       "prompt": "A model gives a fluent, confident, and detailed answer that you cannot easily verify. How much should its confidence raise your trust?",
       "choices": [
-        "It guarantees the answer is right.",
         "Confidence means the model checked external sources.",
         "A lot; confidence and detail signal correctness.",
-        "Little; calibration is imperfect, so confidence is not evidence of correctness."
+        "Little; calibration is imperfect, so confidence is not evidence of correctness.",
+        "It guarantees the answer is right."
       ],
-      "answer": 3,
+      "answer": 2,
       "explain": "Fluency and confidence are not calibration; an unverifiable confident answer still needs a check."
     },
     "source": {
@@ -623,24 +623,24 @@
         "q": "What is the most durable strategy for keeping up with AI research?",
         "level": "Advanced",
         "choices": [
-          "Anchor on a small canon deeply, then place new work against it with source discipline.",
           "Only read social media threads.",
           "Avoid reading papers entirely.",
-          "Read every new preprint the day it appears."
+          "Read every new preprint the day it appears.",
+          "Anchor on a small canon deeply, then place new work against it with source discipline."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Deep canonical scaffolding plus skeptical reading scales; chasing everything does not."
       },
       {
         "q": "How should you treat a striking, un-reproduced preprint result?",
         "level": "Expert",
         "choices": [
-          "As established fact.",
           "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
           "Ignore it forever.",
-          "Assume it is contaminated."
+          "Assume it is contaminated.",
+          "As established fact."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Source discipline weights a claim by evidence, not by how striking it sounds."
       }
     ],
@@ -648,12 +648,12 @@
       "type": "predict_output",
       "prompt": "A striking, un-reproduced preprint is trending on social media. How should you treat it?",
       "choices": [
-        "Assume it is contaminated.",
         "As established fact.",
         "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
-        "Ignore it permanently."
+        "Ignore it permanently.",
+        "Assume it is contaminated."
       ],
-      "answer": 2,
+      "answer": 1,
       "explain": "Source discipline weights a claim by evidence and reproduction, not by how striking it sounds."
     },
     "source": {
@@ -725,24 +725,24 @@
         "q": "A model has 100B parameters but activates only about 13B per token. What architecture is this?",
         "level": "Advanced",
         "choices": [
-          "A distilled student model.",
           "A multimodal encoder.",
           "A dense transformer.",
-          "A mixture-of-experts model with sparse routing."
+          "A mixture-of-experts model with sparse routing.",
+          "A distilled student model."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Activating a fraction of parameters per token via routing is the defining trait of MoE."
       },
       {
         "q": "You need to cut serving cost while keeping most of a large model's behavior. Which lever fits?",
         "level": "Advanced",
         "choices": [
-          "Distillation into a smaller student.",
           "A larger context window.",
           "A higher temperature.",
-          "Multimodality."
+          "Multimodality.",
+          "Distillation into a smaller student."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Distillation trades a little quality for much cheaper deployment."
       }
     ],
@@ -750,12 +750,12 @@
       "type": "predict_output",
       "prompt": "You must answer questions that combine a paragraph of text and a bar chart image. What kind of model do you need?",
       "choices": [
-        "A text-only transformer.",
         "A multimodal model that shares a representation across text and images.",
         "A mixture-of-experts router alone.",
-        "A distilled student of a text model."
+        "A distilled student of a text model.",
+        "A text-only transformer."
       ],
-      "answer": 1,
+      "answer": 0,
       "explain": "Mixed text-and-image input requires a multimodal model with a shared representation space."
     },
     "source": {

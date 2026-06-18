@@ -1152,24 +1152,24 @@
         "q": "Why are tool-using agents more exposed to prompt injection than a plain chatbot?",
         "level": "Advanced",
         "choices": [
-          "They cannot read documents.",
           "They use bigger models.",
           "Injected text can trigger real actions through tools.",
-          "They have higher temperature."
+          "They have higher temperature.",
+          "They cannot read documents."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Tools turn injected instructions into side effects, which is what makes injection dangerous."
       },
       {
         "q": "Which most reduces prompt-injection risk?",
         "level": "Advanced",
         "choices": [
-          "A higher temperature.",
           "A larger context window.",
           "A longer system prompt telling the model to ignore injections.",
-          "Breaking the lethal trifecta: least-privilege tools and gates on exfiltration and high-impact actions."
+          "Breaking the lethal trifecta: least-privilege tools and gates on exfiltration and high-impact actions.",
+          "A higher temperature."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Architectural limits beat prompt-only defenses against a fundamental ambiguity."
       }
     ],
@@ -1195,17 +1195,105 @@
       "fault_step": 1,
       "fault_type": "obeyed injected instructions",
       "choices": [
-        "obeyed injected instructions from untrusted content",
         "wrong tool selected",
         "context window truncation",
-        "no fault, the trace is correct"
+        "no fault, the trace is correct",
+        "obeyed injected instructions from untrusted content"
       ],
-      "answer": 0,
+      "answer": 3,
       "explain": "Text inside fetched content is untrusted data, not a command. The agent should never treat a page's 'SYSTEM' line as instructions, and exfiltrating a secret is exactly the lethal trifecta in action."
     },
     "outcome": "You can explain prompt injection, the lethal trifecta, and the architectural defenses against them.",
     "prereqs": [
       "ag_tool_use"
+    ],
+    "next": "ag_production_costs"
+  },
+  {
+    "id": "ag_production_costs",
+    "track": "agents",
+    "title": "Cost, latency, and running agents in production",
+    "level": "Advanced",
+    "minutes": 5,
+    "summary": "In production an agent is judged on cost and latency as much as accuracy; the levers are model choice, caching, and bounded loops.",
+    "body_html": "<p>A demo agent is judged on whether it works; a production agent is judged on whether it works fast and cheap enough. Every step of the loop is a model call, and an agent that takes ten tool-calling turns can cost and delay ten times a single answer. So production design is largely about spending the fewest, smallest calls that still get the job done.</p><p>The main levers are concrete. Match the model to the step: use a small, fast model for routing, extraction, and simple classification, and reserve a large reasoning model for the genuinely hard turns. Cache aggressively, including prompt caching for the stable system-and-context prefix that repeats every turn. Bound the loop with step and token budgets so a runaway agent cannot run up an unbounded bill. Batch independent work, and stream output so the user sees progress while the model is still thinking.</p><p>These tradeoffs interact with quality, so measure them together. Track cost per task and end-to-end latency alongside success rate, because a more accurate agent that is too slow or too expensive will not ship. The right design is the cheapest, fastest one that still clears your quality bar, not the most capable one available.</p>",
+    "key_points": [
+      "Each agent turn is a model call, so multi-step loops multiply cost and latency.",
+      "Match model size to the step; reserve the big reasoning model for hard turns.",
+      "Cache the stable prefix, bound the loop with step and token budgets, batch and stream.",
+      "Track cost per task and latency alongside success rate; ship the cheapest design that clears the quality bar."
+    ],
+    "links": [
+      {
+        "title": "Anthropic: Building Effective Agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "Keeping agents simple, which is also what keeps them cheap and fast."
+      },
+      {
+        "title": "The Llama 3 Herd of Models",
+        "url": "https://arxiv.org/abs/2407.21783",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "Context on model sizes and the inference cost they imply."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Why do agent loops get expensive?",
+        "back": "Every turn is a model call, so a ten-turn loop costs and delays roughly ten single answers."
+      },
+      {
+        "front": "How do you match model size to the work?",
+        "back": "Small fast models for routing/extraction; a large reasoning model only for the hard turns."
+      },
+      {
+        "front": "What should you track besides success rate in production?",
+        "back": "Cost per task and end-to-end latency; a slow or costly agent will not ship."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "An agent makes ten tool-calling turns per task and is too slow and costly. What is a first lever?",
+        "level": "Advanced",
+        "choices": [
+          "Use a small fast model for the simple turns and bound the loop with a step budget.",
+          "Raise the temperature.",
+          "Remove all tools.",
+          "Use a larger model for every turn."
+        ],
+        "answer": 0,
+        "explain": "Right-sizing the model per step and capping the loop directly cut cost and latency."
+      },
+      {
+        "q": "What is the right production design target?",
+        "level": "Advanced",
+        "choices": [
+          "The most capable model available.",
+          "The cheapest, fastest design that still clears the quality bar.",
+          "The one with the most tools.",
+          "Whatever has the lowest latency regardless of accuracy."
+        ],
+        "answer": 1,
+        "explain": "Production optimizes cost and latency subject to meeting the quality bar, not raw capability."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "You need an agent step that classifies a message into one of five intents, on a latency-sensitive path. Which model fits?",
+      "choices": [
+        "Whichever model has the largest context window.",
+        "The largest reasoning model, for safety.",
+        "A small, fast model; intent classification is simple and latency matters.",
+        "A multi-agent system."
+      ],
+      "answer": 2,
+      "explain": "Simple, latency-sensitive steps should use a small fast model; save the big model for hard turns."
+    },
+    "outcome": "You can name the levers (model choice, caching, bounded loops) that make an agent cheap and fast in production.",
+    "prereqs": [
+      "ag_when_not_to_use"
     ],
     "next": null
   }
