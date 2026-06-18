@@ -113,3 +113,26 @@ LIVE: https://kiwimaddog2020.github.io/learn/
   (sampling_lab), ag_rag + fnd_training_gradient_descent (ordering); diagrams on 6 lessons.
 - All links verified 200, JSON valid, learn.js node-check clean, em-dash-free, answers rebalanced.
 - v2 goal-loop rating: round 1 IN FLIGHT (Codex + Gemini).
+
+## v2 goal-loop results + close
+
+- v2-r1: Codex 82, Gemini 86 (the widgets/diagrams/breadth jump). v2-r2: Codex 80, Gemini 84.
+- Both raters dropped on the v2-r2 re-rate even though that round contained only improvements
+  (4 factual corrections, the metric_lab stale-feedback bug fix, MCQ retry, 2 more ordering labs,
+  canonical link updates). Same build, scores swung -2 each. This is the converged-loop signal:
+  the rubric scoring is now NOISE-dominated at this quality level, so further "fix to 88" iterations
+  optimize a random walk. Notably, Gemini's v2-r2 review independently re-verified all 57 links alive
+  (0 dead), retiring its earlier false-negative link claim -- the eval-honesty thesis again.
+- Final v2 UX pass (real product fixes, not score-chasing): per-question quiz retry (a wrong answer
+  no longer resets the whole quiz) + capped the mixed deck/quiz (24/20, evenly sampled) so the mixed
+  pages are not 100+ items.
+- EXIT (per global CLAUDE.md anti-inflation: exit is legitimate; ties break down; harsh-outlier and
+  unverified claims discounted). Full trajectory across v1+v2: Codex 70->73->76->78->82->80;
+  Gemini 76->85->83->83->86->84. Plateaued mid-80s; both confirm accuracy and density throughout.
+- v3 (structural, a separate build) to push past the plateau: more applied labs (bootstrap-CI sim,
+  ROC/PR slider, RAG-chunking sandbox), capstone per track, MLOps/privacy/security-ops + hands-on
+  coding breadth, F1/AUC/LoRA/quantization/positional-encoding lessons, clickable per-claim source
+  links with last-verified dates, a global index/tag nav, and dedup of the few near-duplicate
+  quiz/exercise pairs. See ROADMAP.md.
+- LIVE: 53 lessons / 5 tracks / 53 exercises (incl. 3 interactive labs + 4 ordering) / 6 diagrams /
+  57-link library, https://kiwimaddog2020.github.io/learn/. All links 200, JSON valid, node-check clean.
