@@ -1180,7 +1180,11 @@
       if (!input) return;
       const f = fields.find((x) => x.key === input.dataset.key);
       if (f) { f.value = input.value; }
-      checked = false;
+      if (checked) {
+        checked = false;
+        const stale = container.querySelector(".feedback-line");
+        if (stale) stale.remove();
+      }
       // live update readout without losing focus: update only the readout + headline
       const m = metrics();
       const ro = container.querySelector(".metric-readout");
@@ -1388,11 +1392,18 @@
             }).join("")}
           </div>
           ${answered ? `<p class="feedback-line ${correct ? "good" : "bad"}">${correct ? "Correct." : "Not quite."} ${escapeHtml(exercise.explain)}</p>` : ""}
+          ${answered && !correct ? `<button class="button" type="button" data-choice-retry>Try again</button>` : ""}
         </div>
       `;
     }
 
     container.addEventListener("click", function (event) {
+      if (event.target.closest("[data-choice-retry]")) {
+        answered = false;
+        picked = null;
+        render();
+        return;
+      }
       const choice = event.target.closest("[data-choice]");
       if (!choice || answered) return;
       picked = Number(choice.dataset.choice);

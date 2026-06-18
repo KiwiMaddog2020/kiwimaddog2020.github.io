@@ -600,20 +600,18 @@
           "The model's raw factual knowledge."
         ],
         "answer": 0,
-        "explain": "RLHF and similar methods align behavior, not raw capability."
+        "explain": "RLHF and similar methods primarily shape behavior and preferences; base capability comes from pretraining, though post-training can also lift measured performance."
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "You have a strong base model and want it to follow instructions in a support chat. What is the cheapest effective step?",
-      "choices": [
-        "Pretrain a new model from scratch.",
-        "Instruction fine-tune the base model on curated request-response examples.",
-        "Raise the temperature.",
-        "Add more tokens to every prompt forever."
+      "type": "ordering",
+      "prompt": "Put the stages of building a modern model in order.",
+      "items": [
+        "Pretrain on a vast corpus by predicting the next token",
+        "Fine-tune on curated instruction-and-response examples",
+        "Tune toward human-preferred responses (RLHF or similar)"
       ],
-      "answer": 1,
-      "explain": "Fine-tuning adapts an already-capable base cheaply; pretraining from scratch is far more expensive."
+      "explain": "Broad pretraining first, then instruction tuning to follow directions, then preference tuning to shape behavior. Real pipelines layer more rounds, but this is the backbone."
     },
     "outcome": "You can describe the pretraining, fine-tuning, and preference-tuning pipeline.",
     "prereqs": [

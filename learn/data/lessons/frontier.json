@@ -756,7 +756,7 @@
         "A text-only transformer."
       ],
       "answer": 0,
-      "explain": "Mixed text-and-image input requires a multimodal model with a shared representation space."
+      "explain": "Mixed text-and-image input is best handled by a multimodal model with a shared representation space."
     },
     "source": {
       "type": "paper",

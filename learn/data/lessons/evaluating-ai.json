@@ -266,16 +266,15 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "After seeing the results, you pick the metric that makes your model look best. What did you violate?",
-      "choices": [
-        "Decorrelation.",
-        "Nothing; pick whatever metric you like.",
-        "Pre-registration; choosing the metric after seeing data invites cherry-picking.",
-        "The noise floor."
+      "type": "ordering",
+      "prompt": "Put the steps of a pre-registered evaluation in order.",
+      "items": [
+        "Write down the exact claim and the metric",
+        "Set the success threshold that separates a real effect from noise",
+        "Run the experiment",
+        "Report whatever result comes back, even a null"
       ],
-      "answer": 2,
-      "explain": "Deciding the metric and threshold before the run is what stops post-hoc storytelling."
+      "explain": "Decide the claim, metric, and threshold before running, then report honestly. Choosing any of these after seeing the data invites cherry-picking."
     },
     "outcome": "You can pre-register a claim with a metric and threshold and honor a null result.",
     "prereqs": [
@@ -819,7 +818,7 @@
     "level": "Advanced",
     "minutes": 6,
     "summary": "Using a model to grade outputs scales evaluation, but only with a clear rubric and an awareness of the judge's biases.",
-    "body_html": "<p>When outputs are open-ended, there is no exact-match key, so teams increasingly use a strong model as the grader. It scales and correlates reasonably with human judgment, but it is only as good as the rubric you give it. A vague instruction like rate this 1 to 10 produces noisy, drifting scores. A good judge prompt states explicit criteria, defines what each score means, and ideally shows a few anchored examples, so the judgment is reproducible rather than a vibe.</p><p>LLM judges have characteristic biases you must design around. They tend to prefer longer answers, to favor the first option in a pairwise comparison (position bias), and to rate their own family's outputs higher. Pairwise comparison (which of these two is better) is often more reliable than absolute scoring, and randomizing order plus swapping positions controls the position bias. None of this removes the need for the discipline from earlier in this track: the judge must stay decorrelated from the doer, and you must validate the judge against human labels on a sample.</p><p>The honest framing is that an LLM judge is a useful, scalable proxy, not ground truth. Treat its scores like any other metric: check them against humans, watch for the known biases, and report the rubric you used. A judge you have not validated is an opinion, not a measurement.</p>",
+    "body_html": "<p>When outputs are open-ended, there is no exact-match key, so teams increasingly use a strong model as the grader. It scales and correlates reasonably with human judgment, but it is only as good as the rubric you give it. A vague instruction like rate this 1 to 10 produces noisy, drifting scores. A good judge prompt states explicit criteria, defines what each score means, and ideally shows a few anchored examples, so the judgment is reproducible rather than a vibe.</p><p>LLM judges have characteristic biases you must design around. They tend to prefer longer answers, to favor a particular position in a pairwise comparison (order bias, whose direction depends on the model and prompt), and to rate their own family's outputs higher. Pairwise comparison (which of these two is better) is often more reliable than absolute scoring, and randomizing order plus swapping positions controls the position bias. None of this removes the need for the discipline from earlier in this track: the judge must stay decorrelated from the doer, and you must validate the judge against human labels on a sample.</p><p>The honest framing is that an LLM judge is a useful, scalable proxy, not ground truth. Treat its scores like any other metric: check them against humans, watch for the known biases, and report the rubric you used. A judge you have not validated is an opinion, not a measurement.</p>",
     "key_points": [
       "A clear rubric with defined score levels and anchors beats 'rate 1 to 10'.",
       "Judges have biases: verbosity, position (first option), and self-preference.",
@@ -849,7 +848,7 @@
       },
       {
         "front": "Name three biases of LLM judges.",
-        "back": "Verbosity preference, position bias (favoring the first option), and self-preference."
+        "back": "Verbosity preference, order bias (favoring a fixed position), and self-preference."
       },
       {
         "front": "Why validate an LLM judge against humans?",
@@ -907,7 +906,7 @@
     "level": "Advanced",
     "minutes": 5,
     "summary": "An eval is only as trustworthy as its labels; measure rater agreement, and correct for the agreement you would get by chance.",
-    "body_html": "<p>Every eval rests on labels, and labels come from raters who disagree. If two people (or two model judges) cannot consistently apply your rubric, the gold standard you are scoring against is shaky, and no amount of model improvement will show up cleanly. So before trusting a benchmark, measure inter-rater reliability: how often do independent raters give the same label?</p><p>Raw agreement is tempting but misleading when one answer is common. If 85% of cases are yes, two raters who both say yes most of the time will agree around 85% just by chance, so 90% raw agreement is barely better than guessing together. Chance-corrected measures like Cohen's kappa account for this: they ask how much agreement exceeds what you would expect at random. A high kappa means the rubric is genuinely shared; a low one means it needs sharpening.</p><p>The practical loop is to pilot the rubric on a sample, measure agreement, and when raters diverge, adjudicate and tighten the definitions until they converge. Disagreement is not noise to average away; it is a signal that the task is underspecified. Fix the rubric, then collect the labels you will actually trust.</p>",
+    "body_html": "<p>Every eval rests on labels, and labels come from raters who disagree. If two people (or two model judges) cannot consistently apply your rubric, the gold standard you are scoring against is shaky, and no amount of model improvement will show up cleanly. So before trusting a benchmark, measure inter-rater reliability: how often do independent raters give the same label?</p><p>Raw agreement is tempting but misleading when one answer is common. If 85% of cases are yes, two raters who each say yes about 85% of the time will agree roughly 75% of the time just by chance (0.85 squared plus 0.15 squared), so 90% raw agreement is only modestly above that chance baseline. Chance-corrected measures like Cohen's kappa account for this: they ask how much agreement exceeds what you would expect at random. A high kappa means the rubric is genuinely shared; a low one means it needs sharpening.</p><p>The practical loop is to pilot the rubric on a sample, measure agreement, and when raters diverge, adjudicate and tighten the definitions until they converge. Disagreement is not noise to average away; it is a signal that the task is underspecified. Fix the rubric, then collect the labels you will actually trust.</p>",
     "key_points": [
       "An eval is only as good as the agreement among the raters who made its labels.",
       "Raw agreement overstates reliability when one label is common.",

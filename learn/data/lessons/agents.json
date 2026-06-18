@@ -392,7 +392,7 @@
       },
       {
         "title": "LangGraph",
-        "url": "https://langchain-ai.github.io/langgraph/",
+        "url": "https://docs.langchain.com/oss/python/langgraph/overview",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Stateful agent graphs with explicit memory and state."
@@ -480,7 +480,7 @@
       },
       {
         "title": "LangGraph",
-        "url": "https://langchain-ai.github.io/langgraph/",
+        "url": "https://docs.langchain.com/oss/python/langgraph/overview",
         "level": "Intermediate",
         "kind": "docs",
         "note": "Encoding plans as explicit graph state."
