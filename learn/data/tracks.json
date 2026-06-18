@@ -15,7 +15,7 @@
     "level_range": "Beginner to Expert",
     "blurb": "Learn the agent loop, tool use, context discipline, orchestration, evaluation, and failure modes.",
     "icon": "loop",
-    "lessons": ["ag_agent_loop_stub"]
+    "lessons": ["ag_what_is_an_agent", "ag_agent_loop", "ag_tool_use", "ag_prompting_agents", "ag_context_memory", "ag_planning_decomposition", "ag_mcp_tool_ecosystem", "ag_multi_agent_orchestration", "ag_evaluating_agents", "ag_failure_modes_guardrails", "ag_when_not_to_use"]
   },
   {
     "id": "vibe-coding",

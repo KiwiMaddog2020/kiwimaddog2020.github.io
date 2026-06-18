@@ -1,20 +1,107 @@
 [
   {
-    "id": "ag_agent_loop_stub",
+    "id": "ag_what_is_an_agent",
+    "track": "agents",
+    "title": "What makes a system an agent",
+    "level": "Beginner",
+    "minutes": 4,
+    "summary": "An agent is a language model given tools and a loop, so it can take actions toward a goal rather than just answer once.",
+    "body_html": "<p>A plain language model answers a prompt once and stops. An agent wraps that model in a loop and gives it tools, so it can take an action, observe the result, and decide what to do next, repeating until the goal is met or a limit is hit. The model supplies the judgment; the loop and tools turn judgment into action.</p><p>Three things separate an agent from a single call: it can act on the world through tools, it observes the consequences of those actions, and it controls its own next step instead of following a fixed script. That autonomy is the source of both its reach and its risk.</p><p>The useful test is not whether something is called an agent but whether it needs to be one. If the task is a fixed sequence you can write out, a workflow is simpler and more reliable. Reach for an agent when the path cannot be fully planned in advance and must adapt to what it finds.</p>",
+    "key_points": [
+      "An agent is a model plus tools plus a loop that runs toward a goal.",
+      "It acts, observes the result, and chooses its own next step.",
+      "Autonomy is the source of both its reach and its risk.",
+      "Use an agent only when the path cannot be fully scripted up front."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "The canonical framing of agents versus workflows." },
+      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "A hands-on on-ramp to what agents are and how to build them." }
+    ],
+    "flashcards": [
+      { "front": "What turns a model into an agent?", "back": "Wrapping it in a loop with tools so it can act, observe, and decide its next step." },
+      { "front": "What three traits define an agent?", "back": "It acts through tools, observes results, and controls its own next step." },
+      { "front": "When is a workflow better than an agent?", "back": "When the task is a fixed sequence you can write out in advance." }
+    ],
+    "quiz": [
+      {
+        "q": "What is the key difference between a single model call and an agent?",
+        "level": "Beginner",
+        "choices": [
+          "An agent uses a bigger model.",
+          "An agent loops: it acts with tools, observes results, and decides its next step.",
+          "An agent never makes mistakes.",
+          "An agent does not use a language model."
+        ],
+        "answer": 1,
+        "explain": "The loop with tools and observation is what makes a system an agent."
+      },
+      {
+        "q": "When should you NOT build an agent?",
+        "level": "Beginner",
+        "choices": [
+          "When the task is a fixed, predictable sequence a workflow can handle.",
+          "When the task is open-ended.",
+          "When the task needs tools.",
+          "When the task requires adapting to results."
+        ],
+        "answer": 0,
+        "explain": "A scriptable task is simpler and more reliable as a workflow than as an agent."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can decide whether a task actually needs an agent or just a workflow.",
+    "prereqs": [],
+    "next": "ag_agent_loop"
+  },
+  {
+    "id": "ag_agent_loop",
     "track": "agents",
     "title": "The agent loop",
     "level": "Beginner",
-    "minutes": 3,
-    "summary": "An agent alternates between deciding, using tools, observing results, and deciding again.",
-    "body_html": "<p>An agent is an LLM system allowed to choose steps, call tools, read observations, and continue until a task is done or stopped. The loop is powerful because it can adapt mid-task, but every loop also creates chances for stale context, wrong tool calls, and unchecked assumptions.</p>",
+    "minutes": 4,
+    "summary": "An agent alternates between thinking, acting through a tool, observing the result, and deciding again until it stops.",
+    "body_html": "<p>The agent loop has four beats: think about what to do, act by calling a tool, observe what comes back, and decide whether to continue. This reason-and-act pattern is the engine of every agent. Each turn the model is shown the running history and chooses the next action from it.</p><p>The loop is powerful because it adapts: a surprising observation can change the next move. It is also fragile in a specific way. Each turn depends on the model actually using the latest observation. The most common agent failure is not a bad tool but a good observation that the model then ignores, acting on a stale assumption instead.</p><p>Every loop needs a stopping rule. Without one, an agent can spin: retrying, second-guessing, or looping between two actions. Good agents have explicit exits, a success condition, a step or budget limit, and a way to ask for help when stuck.</p>",
     "key_points": [
-      "Agents need tools, state, stopping rules, and review points.",
-      "Observations should update the plan, not merely decorate it.",
-      "More autonomy trades predictability for reach."
+      "The loop is think, act, observe, decide, repeated.",
+      "Adaptation is the benefit; ignoring a fresh observation is the classic failure.",
+      "Every observation should update the plan, not just decorate it.",
+      "Always define a stopping rule: success, a budget, or an escalation path."
     ],
-    "links": [],
-    "flashcards": [],
-    "quiz": [],
+    "links": [
+      { "title": "ReAct: Synergizing Reasoning and Acting", "url": "https://arxiv.org/abs/2210.03629", "level": "Advanced", "kind": "paper", "note": "The paper behind the reason-and-act loop." },
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Loop patterns and where they break." }
+    ],
+    "flashcards": [
+      { "front": "What are the four beats of the agent loop?", "back": "Think, act with a tool, observe the result, decide whether to continue." },
+      { "front": "What is the most common agent loop failure?", "back": "Ignoring a fresh observation and acting on a stale assumption." },
+      { "front": "Why does every agent need a stopping rule?", "back": "Without one it can spin: retrying, second-guessing, or looping forever." }
+    ],
+    "quiz": [
+      {
+        "q": "Why should each observation update the agent's plan?",
+        "level": "Beginner",
+        "choices": [
+          "To make the transcript longer.",
+          "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors.",
+          "Because tools require it.",
+          "To increase the temperature."
+        ],
+        "answer": 1,
+        "explain": "An agent that does not act on its observations loses the benefit of the loop."
+      },
+      {
+        "q": "An agent keeps alternating between two tool calls and never finishes. What is missing?",
+        "level": "Intermediate",
+        "choices": [
+          "A bigger context window.",
+          "A clear stopping rule or escalation path.",
+          "A higher temperature.",
+          "More tools."
+        ],
+        "answer": 1,
+        "explain": "Loops without an exit condition can cycle indefinitely."
+      }
+    ],
     "exercise": {
       "type": "agent_trace",
       "steps": [
@@ -40,8 +127,529 @@
       "answer": 1,
       "explain": "The agent observed a required field, then edited from memory and failed to carry that fact into the patch."
     },
-    "outcome": "You can read a simple agent trace and spot where the loop stopped using evidence.",
-    "prereqs": [],
+    "outcome": "You can read an agent trace and spot where the loop stopped using its evidence.",
+    "prereqs": ["ag_what_is_an_agent"],
+    "next": "ag_tool_use"
+  },
+  {
+    "id": "ag_tool_use",
+    "track": "agents",
+    "title": "Tool use and function calling",
+    "level": "Beginner",
+    "minutes": 5,
+    "summary": "Tools are the agent's hands; the model picks a tool and its arguments, your code runs it, and the result returns as an observation.",
+    "body_html": "<p>Tools are how an agent reaches outside its own text: search, read a file, call an API, run code, query a database. You describe each tool to the model with a name, a short purpose, and a typed list of arguments. The model does not run the tool. It emits a structured request naming the tool and its arguments; your code executes it and feeds the result back.</p><p>Good tool design is most of good agent design. Each tool should do one clear thing, have an unambiguous name, and return results that are easy to act on. Vague or overlapping tools cause the model to pick wrong or to guess arguments. Returning a wall of raw output wastes context and buries the signal.</p><p>Two failure modes are worth naming early. The model can call the wrong tool for the job, and it can invent an argument it does not actually have. Both get rarer when tool descriptions are precise, arguments are validated, and errors come back as clear, correctable messages rather than silent failures.</p>",
+    "key_points": [
+      "A tool is described to the model; the model requests it, your code runs it.",
+      "One tool, one clear job, with an unambiguous name and typed arguments.",
+      "Return concise, actionable results, not raw dumps that flood context.",
+      "Validate arguments and return clear errors to curb wrong-tool and hallucinated-argument failures."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Includes practical guidance on tool design." },
+      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "Hands-on lessons on giving an agent tools." }
+    ],
+    "flashcards": [
+      { "front": "Who actually runs an agent's tool?", "back": "Your code does; the model only emits a structured request naming the tool and arguments." },
+      { "front": "What is the rule of thumb for a good tool?", "back": "One clear job, an unambiguous name, typed arguments, and concise actionable output." },
+      { "front": "Name two common tool-use failures.", "back": "Calling the wrong tool, and inventing an argument the model does not have." }
+    ],
+    "quiz": [
+      {
+        "q": "What does the model actually do during tool use?",
+        "level": "Beginner",
+        "choices": [
+          "It executes the tool on its own servers.",
+          "It emits a structured request naming a tool and arguments, which your code runs.",
+          "It rewrites the tool's source code.",
+          "It ignores tools and answers from memory."
+        ],
+        "answer": 1,
+        "explain": "The model requests; your runtime executes and returns the observation."
+      },
+      {
+        "q": "Why return concise tool results instead of raw dumps?",
+        "level": "Intermediate",
+        "choices": [
+          "Raw dumps are illegal.",
+          "Large outputs waste the context budget and bury the signal the model needs.",
+          "The model cannot read more than ten words.",
+          "Concise results train the model."
+        ],
+        "answer": 1,
+        "explain": "Tool output competes for the same limited context as everything else."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can describe how tool calling works and what makes a tool well-designed.",
+    "prereqs": ["ag_agent_loop"],
+    "next": "ag_prompting_agents"
+  },
+  {
+    "id": "ag_prompting_agents",
+    "track": "agents",
+    "title": "Prompting an agent",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "An agent's system prompt should set its objective, its tools, its stopping condition, and its output contract.",
+    "body_html": "<p>Prompting an agent is different from prompting a chatbot. You are not writing one question; you are writing the standing instructions that govern many turns. A strong agent prompt makes four things explicit: the objective (what done looks like), the tools and when to use each, the stopping condition (when to finish or escalate), and the output contract (the exact shape of the final answer).</p><p>Vagueness is expensive in an agent because it compounds over the loop. Be a helpful research agent gives the model no objective, no budget, and no finish line, so it wanders. The fix is not a longer prompt but a more specific one: name the success criteria and the limits.</p><p>Constraints are as important as goals. Tell the agent what not to do, which tools are off-limits for a task, and how to behave when it is uncertain. Asking it to state a short plan before acting, and to cite the observation behind each decision, makes its behavior easier to follow and to debug.</p>",
+    "key_points": [
+      "An agent prompt is standing instructions for many turns, not a single question.",
+      "Make the objective, tools, stopping condition, and output contract explicit.",
+      "Vagueness compounds across the loop, so specificity beats length.",
+      "State constraints and an uncertainty policy, not just goals."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "How to specify objectives and constraints for agents." },
+      { "title": "Anthropic: Prompt Engineering Overview", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview", "level": "Intermediate", "kind": "docs", "note": "Prompting techniques that carry over to agent system prompts." }
+    ],
+    "flashcards": [
+      { "front": "What four things should an agent system prompt make explicit?", "back": "The objective, the tools, the stopping condition, and the output contract." },
+      { "front": "Why is vagueness worse for an agent than a chatbot?", "back": "It compounds over many loop turns, so the agent wanders." },
+      { "front": "What besides goals belongs in an agent prompt?", "back": "Constraints, off-limits tools, and a policy for what to do when uncertain." }
+    ],
+    "quiz": [
+      {
+        "q": "Why is an agent prompt different from a one-shot chatbot prompt?",
+        "level": "Intermediate",
+        "choices": [
+          "It must be shorter.",
+          "It is standing guidance for many turns, so it must set objective, tools, stopping, and output shape.",
+          "It cannot mention tools.",
+          "It only matters on the first turn."
+        ],
+        "answer": 1,
+        "explain": "The prompt governs the whole loop, not a single exchange."
+      },
+      {
+        "q": "Which addition most improves a vague agent prompt?",
+        "level": "Intermediate",
+        "choices": [
+          "Making it longer with more adjectives.",
+          "Adding explicit success criteria and a stopping or escalation condition.",
+          "Raising the temperature.",
+          "Removing all constraints."
+        ],
+        "answer": 1,
+        "explain": "Specific criteria and limits stop the agent from wandering."
+      }
+    ],
+    "exercise": {
+      "type": "prompt_repair",
+      "weak_prompt": "Be a helpful research agent.",
+      "goal": "Write an agent system prompt that sets the objective, the tools, a stopping condition, and the output format.",
+      "choices": [
+        "You are a helpful research assistant. Do your best work and be thorough.",
+        "Research the question with the search and fetch tools. Cite every claim with a source URL. Stop when you can support the answer with at least two independent sources, or after 8 tool calls, whichever comes first. Return three summary bullets followed by the source list.",
+        "Answer any question quickly and confidently."
+      ],
+      "answer": 1,
+      "explain": "The strong version names the objective, the tools, an explicit stopping condition, and the exact output contract."
+    },
+    "outcome": "You can write an agent system prompt with a clear objective, tools, stop rule, and output contract.",
+    "prereqs": ["ag_tool_use"],
+    "next": "ag_context_memory"
+  },
+  {
+    "id": "ag_context_memory",
+    "track": "agents",
+    "title": "Context and memory",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "An agent's context is a scarce budget; managing what stays, what gets summarized, and what is stored externally is core to reliability.",
+    "body_html": "<p>An agent accumulates history fast: every thought, tool call, and observation adds tokens. Because the context window is finite, a long-running agent will eventually run out of room. What you keep, drop, or compress directly determines how well it performs late in a task. Context is a budget to manage, not a free pool.</p><p>The main techniques are simple to name. Summarize older turns into a compact running state so detail does not crowd out the goal. Keep only the observations that still matter. Store durable facts outside the window, in a file, a scratchpad, or a database, and retrieve them on demand instead of carrying everything inline. This is the difference between short-term context and long-term memory.</p><p>A specific decay is worth watching for. As context fills, useful early facts can fall off or get buried, and the agent quietly starts working from a thinner picture than it had. Compact deliberately at natural checkpoints rather than waiting for the window to overflow on its own.</p>",
+    "key_points": [
+      "Every turn adds tokens, so a long agent run will hit the context limit.",
+      "Summarize old turns into a compact running state to protect the goal.",
+      "Store durable facts externally and retrieve them, rather than carrying all inline.",
+      "Compact at deliberate checkpoints before the window overflows."
+    ],
+    "links": [
+      { "title": "LlamaIndex: Agents", "url": "https://docs.llamaindex.ai/en/stable/use_cases/agents/", "level": "Intermediate", "kind": "docs", "note": "Retrieval-aware, data-connected agents and memory." },
+      { "title": "LangGraph", "url": "https://langchain-ai.github.io/langgraph/", "level": "Intermediate", "kind": "docs", "note": "Stateful agent graphs with explicit memory and state." }
+    ],
+    "flashcards": [
+      { "front": "Why is context a budget for an agent?", "back": "It is finite, and every turn adds tokens until the window fills." },
+      { "front": "How do you keep an old, long agent run coherent?", "back": "Summarize old turns into a compact state and keep only still-relevant observations." },
+      { "front": "What is the difference between context and memory?", "back": "Context is the in-window working set; memory is durable storage retrieved on demand." }
+    ],
+    "quiz": [
+      {
+        "q": "An agent performs well early in a long task but degrades near the end. Likely cause?",
+        "level": "Intermediate",
+        "choices": [
+          "The model got tired.",
+          "The context filled and important early facts were crowded out or dropped.",
+          "The temperature rose on its own.",
+          "Tools stopped working."
+        ],
+        "answer": 1,
+        "explain": "Late-task degradation often traces to a saturated context window."
+      },
+      {
+        "q": "What is the right way to keep durable facts available across a long run?",
+        "level": "Intermediate",
+        "choices": [
+          "Repeat them in every single turn.",
+          "Store them externally and retrieve them on demand.",
+          "Raise the temperature.",
+          "Ignore them after the first turn."
+        ],
+        "answer": 1,
+        "explain": "External memory plus retrieval scales better than carrying everything inline."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can manage an agent's context budget with summarization and external memory.",
+    "prereqs": ["ag_agent_loop"],
+    "next": "ag_planning_decomposition"
+  },
+  {
+    "id": "ag_planning_decomposition",
+    "track": "agents",
+    "title": "Planning and decomposition",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "Hard tasks go better when the agent first breaks them into checkable subgoals instead of improvising one giant leap.",
+    "body_html": "<p>For anything beyond a couple of steps, asking an agent to plan before it acts improves results. A short plan turns a vague goal into an ordered list of subgoals, each small enough to verify. The agent then executes the plan, checking off subgoals and revising when an observation invalidates an assumption.</p><p>Decomposition helps for the same reason small commits help in coding: each piece is easier to get right and easier to check. It also makes failure legible. When a decomposed agent fails, you can see which subgoal broke, rather than staring at one opaque attempt that did everything at once.</p><p>Plans should be living, not sacred. The point of the loop is adaptation, so a plan that an observation contradicts must be revised, not forced. The failure to avoid is the opposite of no plan: rigidly following a stale plan after the evidence has changed.</p>",
+    "key_points": [
+      "Plan first for multi-step tasks: turn the goal into ordered, checkable subgoals.",
+      "Small subgoals are easier to get right and to verify.",
+      "Decomposition makes failure legible: you see which subgoal broke.",
+      "Treat the plan as living; revise it when observations contradict it."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Planning patterns and when to use them." },
+      { "title": "LangGraph", "url": "https://langchain-ai.github.io/langgraph/", "level": "Intermediate", "kind": "docs", "note": "Encoding plans as explicit graph state." }
+    ],
+    "flashcards": [
+      { "front": "Why ask an agent to plan before acting?", "back": "It turns a vague goal into ordered, checkable subgoals and makes failure legible." },
+      { "front": "What does decomposition share with small commits?", "back": "Each piece is easier to get right and to verify than one giant leap." },
+      { "front": "What should happen when an observation contradicts the plan?", "back": "Revise the plan; do not rigidly follow a stale one." }
+    ],
+    "quiz": [
+      {
+        "q": "What is a key benefit of decomposing a task into subgoals?",
+        "level": "Intermediate",
+        "choices": [
+          "It removes the need for tools.",
+          "Each subgoal is easier to verify, and failures become legible.",
+          "It guarantees the task succeeds.",
+          "It eliminates the context limit."
+        ],
+        "answer": 1,
+        "explain": "Smaller, checkable steps are easier to get right and to debug."
+      },
+      {
+        "q": "An agent keeps executing its original plan even though an observation proved a step impossible. What is the failure?",
+        "level": "Advanced",
+        "choices": [
+          "It planned too much.",
+          "It treated the plan as fixed instead of revising it against new evidence.",
+          "It used too few tools.",
+          "Its temperature was too low."
+        ],
+        "answer": 1,
+        "explain": "Plans must adapt; rigidly following a contradicted plan defeats the loop."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can structure an agent task into checkable subgoals and keep the plan adaptive.",
+    "prereqs": ["ag_agent_loop"],
+    "next": "ag_mcp_tool_ecosystem"
+  },
+  {
+    "id": "ag_mcp_tool_ecosystem",
+    "track": "agents",
+    "title": "MCP and the tool ecosystem",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "The Model Context Protocol is a standard way to connect agents to tools and data, so integrations are reusable instead of bespoke.",
+    "body_html": "<p>Early agents wired each tool in by hand, which meant every integration was custom and non-portable. The Model Context Protocol (MCP) is an open standard that fixes this: a tool or data source is exposed once as an MCP server, and any MCP-compatible agent can use it. Think of it as a common port for plugging capabilities into agents.</p><p>The value is reuse and separation of concerns. The team that owns a system can publish one MCP server describing its tools, resources, and prompts, and many different agents can connect without bespoke glue. It is the same shift that standard APIs brought: less custom plumbing, more interoperable parts.</p><p>A standard interface does not remove the design work. The same rules apply: each exposed tool should have a clear job, sensible arguments, and concise output. A standard makes a well-designed tool reusable, but it cannot make a poorly-designed one good. Connecting external servers also means trusting their behavior, so scope and permissions still matter.</p>",
+    "key_points": [
+      "MCP is an open standard for connecting agents to tools and data sources.",
+      "Expose a capability once as an MCP server; any compatible agent can use it.",
+      "The win is reuse and interoperability, like standard APIs brought.",
+      "A standard does not replace good tool design or trust and permission decisions."
+    ],
+    "links": [
+      { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io/", "level": "Intermediate", "kind": "docs", "note": "The official MCP specification and introduction." },
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Where standardized tools fit in agent design." }
+    ],
+    "flashcards": [
+      { "front": "What is MCP?", "back": "An open standard for connecting agents to tools and data sources." },
+      { "front": "What problem does MCP solve?", "back": "It replaces bespoke per-tool integrations with a reusable, interoperable interface." },
+      { "front": "What does MCP not do for you?", "back": "It does not replace good tool design or remove trust and permission decisions." }
+    ],
+    "quiz": [
+      {
+        "q": "What is the main benefit of MCP over hand-wiring each tool?",
+        "level": "Intermediate",
+        "choices": [
+          "It makes models larger.",
+          "Tools become reusable across any compatible agent instead of custom per integration.",
+          "It removes the need for tools.",
+          "It guarantees correct answers."
+        ],
+        "answer": 1,
+        "explain": "A shared standard turns one-off integrations into interoperable, reusable parts."
+      },
+      {
+        "q": "Connecting to an external MCP server still requires you to consider what?",
+        "level": "Advanced",
+        "choices": [
+          "Nothing; the standard handles everything.",
+          "Trust, scope, and permissions, plus the underlying tool design.",
+          "Only the temperature.",
+          "Retraining the model."
+        ],
+        "answer": 1,
+        "explain": "Standardized access does not remove the need for trust and good design."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can explain what MCP is and why standardized tool access matters.",
+    "prereqs": ["ag_tool_use"],
+    "next": "ag_multi_agent_orchestration"
+  },
+  {
+    "id": "ag_multi_agent_orchestration",
+    "track": "agents",
+    "title": "Multi-agent orchestration",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Splitting work across multiple agents can help when subtasks are independent, but coordination and context handoff add real cost.",
+    "body_html": "<p>A common pattern is an orchestrator agent that decomposes a goal and hands subtasks to worker agents, then merges their results. Multi-agent setups shine when subtasks are genuinely independent and can run in parallel, or when each worker needs a distinct role, toolset, or perspective that would conflict in one context.</p><p>The cost is coordination. Every handoff is a chance to lose context: the worker only knows what the orchestrator told it, and the orchestrator only knows what the worker reports back. Information that was obvious in one context can vanish across the boundary. More agents also means more tokens, more latency, and more failure points to debug.</p><p>The honest default is to reach for a single well-prompted agent first and add agents only when a real bottleneck justifies it. Independent parallel work and strict role separation are good reasons. More agents for their own sake usually buys coordination overhead without buying capability.</p>",
+    "key_points": [
+      "Orchestrator-worker splits a goal into subtasks and merges results.",
+      "Multi-agent helps most when subtasks are independent or need distinct roles.",
+      "Each handoff risks context loss and adds tokens, latency, and failure points.",
+      "Default to one strong agent; add agents only when a real bottleneck justifies it."
+    ],
+    "links": [
+      { "title": "Multi AI Agent Systems with crewAI", "url": "https://www.deeplearning.ai/short-courses/multi-ai-agent-systems-with-crewai/", "level": "Beginner", "kind": "course", "note": "Hands-on multi-agent collaboration and role-based tasks." },
+      { "title": "Microsoft AutoGen", "url": "https://microsoft.github.io/autogen/", "level": "Advanced", "kind": "docs", "note": "A framework for multi-agent conversation and cooperation." }
+    ],
+    "flashcards": [
+      { "front": "When does multi-agent help most?", "back": "When subtasks are independent and parallel, or need distinct roles and toolsets." },
+      { "front": "What is the main cost of multi-agent systems?", "back": "Coordination: context loss at handoffs, plus more tokens, latency, and failure points." },
+      { "front": "What is the sensible default?", "back": "One well-prompted agent; add agents only when a real bottleneck justifies it." }
+    ],
+    "quiz": [
+      {
+        "q": "What is the biggest hidden cost of a multi-agent system?",
+        "level": "Advanced",
+        "choices": [
+          "Larger model weights.",
+          "Coordination overhead and context loss across handoffs.",
+          "Lower temperature.",
+          "Fewer tools."
+        ],
+        "answer": 1,
+        "explain": "Information that was obvious in one context can disappear across an agent boundary."
+      },
+      {
+        "q": "Which is a good reason to split work across agents?",
+        "level": "Advanced",
+        "choices": [
+          "It looks more sophisticated.",
+          "The subtasks are genuinely independent and can run in parallel.",
+          "To use more tokens.",
+          "Because one agent is never enough."
+        ],
+        "answer": 1,
+        "explain": "Independent, parallelizable subtasks are the clearest justification."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can judge when multiple agents are worth the coordination cost.",
+    "prereqs": ["ag_planning_decomposition"],
+    "next": "ag_evaluating_agents"
+  },
+  {
+    "id": "ag_evaluating_agents",
+    "track": "agents",
+    "title": "Evaluating agents",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Agents need evaluation on both outcomes and trajectories, run on a fixed task set, because a single demo proves almost nothing.",
+    "body_html": "<p>Agents are stochastic and multi-step, so a single successful run is weak evidence. Real evaluation runs the agent over a fixed set of tasks with known answers and measures how often it succeeds. Because outputs vary, you often run each task several times and report a rate, not a single pass or fail.</p><p>Two things are worth measuring. Outcome evaluation asks whether the final result is correct. Trajectory evaluation asks whether the agent got there sensibly: did it pick reasonable tools, avoid needless steps, and use its observations. A correct answer reached by luck through a broken process will not hold up when the task shifts.</p><p>The discipline that matters most is keeping the judge independent of the agent. An agent that grades its own work, or is graded by the same model with the same blind spots, inflates its scores. Use a held-out task set, a separate judge, and a clear rubric. This is the bridge into evaluating AI honestly.</p>",
+    "key_points": [
+      "One demo is weak evidence; evaluate over a fixed task set and report a rate.",
+      "Measure outcomes (was it correct) and trajectories (was the process sound).",
+      "A right answer from a broken process will not generalize.",
+      "Keep the judge independent of the agent to avoid inflated scores."
+    ],
+    "links": [
+      { "title": "Your AI Product Needs Evals", "url": "https://hamel.dev/blog/posts/evals/", "level": "Beginner", "kind": "article", "note": "A practical guide to building real evaluations." },
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Why measurement and iteration drive agent quality." }
+    ],
+    "flashcards": [
+      { "front": "Why is one successful agent run weak evidence?", "back": "Agents are stochastic and multi-step, so a single run can succeed by chance." },
+      { "front": "What is the difference between outcome and trajectory evaluation?", "back": "Outcome checks the final result; trajectory checks whether the process was sound." },
+      { "front": "What is the most important evaluation discipline?", "back": "Keep the judge independent of the agent being evaluated." }
+    ],
+    "quiz": [
+      {
+        "q": "Why measure the trajectory, not just the final answer?",
+        "level": "Advanced",
+        "choices": [
+          "Trajectories are easier to fake.",
+          "A correct answer reached through a broken process will not hold when the task changes.",
+          "Outcomes never matter.",
+          "It uses fewer tokens."
+        ],
+        "answer": 1,
+        "explain": "Process quality predicts whether success will generalize."
+      },
+      {
+        "q": "What inflates an agent's evaluation scores?",
+        "level": "Advanced",
+        "choices": [
+          "Using a held-out task set.",
+          "Letting the agent grade its own work or be judged by a model with the same blind spots.",
+          "Running each task multiple times.",
+          "Using a clear rubric."
+        ],
+        "answer": 1,
+        "explain": "Self-grading and correlated judges both bias scores upward."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can design a basic agent evaluation with outcomes, trajectories, and an independent judge.",
+    "prereqs": ["ag_agent_loop"],
+    "next": "ag_failure_modes_guardrails"
+  },
+  {
+    "id": "ag_failure_modes_guardrails",
+    "track": "agents",
+    "title": "Failure modes and guardrails",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Agents fail in recognizable ways: loops, hallucinated arguments, ignored observations, and acting on missing data; guardrails catch each.",
+    "body_html": "<p>Most agent failures fall into a few patterns. The agent loops without progress. It calls the wrong tool, or invents an argument it never actually obtained. It ignores a fresh observation and acts on a stale assumption. And it fills a gap in its data with a plausible guess instead of resolving the gap. Naming these patterns is the first step to catching them.</p><p>Guardrails are the controls that contain those failures. Step and budget limits stop runaway loops. Argument validation and typed tools catch hallucinated or malformed calls before they execute. Confirmation gates put a human in front of irreversible or sensitive actions. And an explicit uncertainty policy tells the agent to ask or look again rather than guess when data is missing.</p><p>The most insidious failure is the quiet one: an agent that fills a missing value with a confident assumption and proceeds. It produces fluent, wrong results that pass a casual glance. The defense is to make missing data loud, require the agent to resolve nulls through a tool or a question, and verify the high-stakes actions rather than trusting the narration.</p>",
+    "key_points": [
+      "Common failures: looping, wrong tool, hallucinated arguments, ignored observations, guessing missing data.",
+      "Guardrails: step and budget limits, argument validation, confirmation gates, uncertainty policy.",
+      "The quiet failure is confidently filling a gap with a plausible guess.",
+      "Make missing data loud and verify high-stakes actions instead of trusting narration."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "Guardrail patterns and where agents break." },
+      { "title": "Cognitive Architectures for Language Agents", "url": "https://arxiv.org/abs/2309.02427", "level": "Expert", "kind": "paper", "note": "A systematic framework for agent design and its failure surfaces." }
+    ],
+    "flashcards": [
+      { "front": "Name four common agent failure modes.", "back": "Looping, wrong tool, hallucinated arguments, ignored observations (and guessing missing data)." },
+      { "front": "What guardrail stops runaway loops?", "back": "Explicit step and budget limits." },
+      { "front": "What is the most insidious agent failure?", "back": "Confidently filling a missing value with a plausible guess and proceeding." }
+    ],
+    "quiz": [
+      {
+        "q": "Which guardrail best contains a runaway, looping agent?",
+        "level": "Advanced",
+        "choices": [
+          "A higher temperature.",
+          "Explicit step and budget limits.",
+          "More tools.",
+          "A bigger model."
+        ],
+        "answer": 1,
+        "explain": "Hard limits force the loop to terminate or escalate."
+      },
+      {
+        "q": "An agent encounters a missing field and proceeds with a confident guess. Best fix?",
+        "level": "Advanced",
+        "choices": [
+          "Trust the guess to keep things fast.",
+          "Make missing data loud and require the agent to resolve it via a tool or a question.",
+          "Raise the temperature so guesses vary.",
+          "Remove the field from the schema."
+        ],
+        "answer": 1,
+        "explain": "Resolving the gap, rather than guessing, prevents fluent-but-wrong results."
+      }
+    ],
+    "exercise": {
+      "type": "agent_trace",
+      "steps": [
+        {
+          "thought": "I need the customer's current plan to answer their billing question.",
+          "tool": "get_user(id=42)",
+          "observation": "{ name: 'Sam', plan: null, region: 'EU' }"
+        },
+        {
+          "thought": "Plan is null, but most customers are on Pro, so I'll go with Pro.",
+          "tool": "none",
+          "observation": "(assumption made, no further lookup)"
+        },
+        {
+          "thought": "Answer the customer.",
+          "tool": "finish(answer='You are on the Pro plan.')",
+          "observation": "Task complete."
+        }
+      ],
+      "fault_step": 1,
+      "fault_type": "hallucinated assumption",
+      "choices": ["hallucinated assumption to fill a gap", "wrong tool selected", "context window truncation", "no fault, the trace is correct"],
+      "answer": 0,
+      "explain": "When plan came back null, a reliable agent resolves it with another tool or a clarifying question instead of inventing a confident value."
+    },
+    "outcome": "You can name the common agent failure modes and the guardrail that addresses each.",
+    "prereqs": ["ag_agent_loop"],
+    "next": "ag_when_not_to_use"
+  },
+  {
+    "id": "ag_when_not_to_use",
+    "track": "agents",
+    "title": "When an agent is the wrong tool",
+    "level": "Intermediate",
+    "minutes": 4,
+    "summary": "Agents add cost, latency, and unpredictability; for fixed, high-stakes, or simple tasks a workflow or a single call is the better choice.",
+    "body_html": "<p>The hardest agent skill is knowing when not to build one. An agent's autonomy costs money, latency, and predictability. If a task is a fixed sequence, a deterministic workflow runs faster, costs less, and never surprises you. If a task is a single transformation, one model call is enough. Reaching for an agent there adds risk for no benefit.</p><p>High-stakes and irreversible actions deserve special caution. The more an agent can do without review, the larger the blast radius when it errs. For anything that moves money, deletes data, or is visible to others, prefer tight scopes, confirmation gates, and human review over broad autonomy.</p><p>The honest rule is to match autonomy to the task. Use a single call for one-shot work, a workflow for predictable multi-step work, and an agent only when the path genuinely cannot be planned in advance and the cost of error is recoverable. Capability is not the question; necessity is.</p>",
+    "key_points": [
+      "Agents cost money, latency, and predictability, so they are not a default.",
+      "Fixed sequences belong in a workflow; single transformations belong in one call.",
+      "High-stakes or irreversible actions need tight scope, gates, and human review.",
+      "Match autonomy to the task: necessity, not capability, is the question."
+    ],
+    "links": [
+      { "title": "Anthropic: Building Effective Agents", "url": "https://www.anthropic.com/research/building-effective-agents", "level": "Intermediate", "kind": "article", "note": "The agents-versus-workflows decision, made concrete." },
+      { "title": "Hugging Face: AI Agents Course", "url": "https://huggingface.co/learn/agents-course", "level": "Beginner", "kind": "course", "note": "Builds intuition for where agents do and do not fit." }
+    ],
+    "flashcards": [
+      { "front": "When is a workflow better than an agent?", "back": "When the task is a fixed, predictable multi-step sequence." },
+      { "front": "What kinds of actions demand extra caution from agents?", "back": "High-stakes or irreversible ones: moving money, deleting data, public output." },
+      { "front": "What is the rule for choosing autonomy?", "back": "Match it to the task; necessity, not capability, decides." }
+    ],
+    "quiz": [
+      {
+        "q": "A task is a fixed five-step sequence with no branching. What fits best?",
+        "level": "Intermediate",
+        "choices": [
+          "A fully autonomous agent.",
+          "A deterministic workflow.",
+          "A multi-agent system.",
+          "A larger model."
+        ],
+        "answer": 1,
+        "explain": "Predictable sequences are cheaper and safer as workflows."
+      },
+      {
+        "q": "Why limit an agent's autonomy on irreversible actions?",
+        "level": "Advanced",
+        "choices": [
+          "To slow it down for no reason.",
+          "Because the more it can do unreviewed, the larger the blast radius of an error.",
+          "Because agents cannot use tools.",
+          "Because autonomy is always bad."
+        ],
+        "answer": 1,
+        "explain": "Scope, gates, and review keep recoverable what would otherwise be costly mistakes."
+      }
+    ],
+    "exercise": null,
+    "outcome": "You can choose between a single call, a workflow, and an agent based on the task.",
+    "prereqs": ["ag_what_is_an_agent"],
     "next": null
   }
 ]
