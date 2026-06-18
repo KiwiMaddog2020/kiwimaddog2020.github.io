@@ -99,3 +99,17 @@ LIVE: https://kiwimaddog2020.github.io/learn/
 - Claude is the DOER (authors pedagogy, merges, verifies). Codex+Gemini are RATERS in the goal loop
   (never Claude). Verify agent output before commit; verify links resolve; push + check deploy each phase.
 - Preview: launch.json `learn-center` (port 8156, --directory .../learn).
+
+## v2 (interactive widgets + diagrams + breadth)
+
+- Built per ROADMAP.md after Kevin approved v2. doer (Opus) != raters (Codex + Gemini), same loop.
+- Engine: 3 applied interactive exercise types -- metric_lab (live confusion-matrix/discrimination
+  calculator), sampling_lab (temperature->softmax probability bars), ordering (reorder steps);
+  plus 6 inline SVG diagrams (attention, RAG, agent loop, context window, confusion matrix,
+  tokens->embeddings). Verified live: discrimination 0.50->0.90 at FP=0, top token 97% at T=0.2.
+- Breadth: +4 lessons (supervised/unsupervised/RL, LLM-as-judge, inter-rater reliability,
+  production cost/latency). 49 -> 53 lessons total; per-track 11/14/9/11/8.
+- Widgets wired into eval_catch_rate_discrimination (metric_lab), fnd_inference_sampling
+  (sampling_lab), ag_rag + fnd_training_gradient_descent (ordering); diagrams on 6 lessons.
+- All links verified 200, JSON valid, learn.js node-check clean, em-dash-free, answers rebalanced.
+- v2 goal-loop rating: round 1 IN FLIGHT (Codex + Gemini).
