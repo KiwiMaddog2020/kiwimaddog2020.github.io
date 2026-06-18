@@ -114,10 +114,10 @@
     "level": "Beginner",
     "minutes": 4,
     "summary": "Training measures error with a loss, then nudges every weight downhill using gradients from backpropagation.",
-    "body_html": "<p>Training starts with a loss function that measures how wrong the model is on a batch of examples. The goal is to lower that loss. For each weight, the gradient says which direction to move it to make the loss smaller. Take a small step in that direction for every weight, then repeat on the next batch.</p><p>Backpropagation is the algorithm that computes all those gradients efficiently. It runs the chain rule backward through the network, so one backward pass gives the slope of the loss with respect to every weight at once. This is what makes training large models practical.</p><p>The step size is the learning rate. Too large and training overshoots or diverges; too small and it crawls. Training is iterative and stochastic: it does not solve for a perfect answer, it descends toward a good-enough minimum over many passes through the data.</p>",
+    "body_html": "<p>Training starts with a loss function that measures how wrong the model is on a batch of examples. The goal is to lower that loss. For each weight, the gradient measures how the loss changes as that weight changes, and it points in the direction that increases the loss most steeply. To reduce the loss you step each weight a small amount in the opposite direction, the negative gradient, then repeat on the next batch. That is why the method is called gradient descent.</p><p>Backpropagation is the algorithm that computes all those gradients efficiently. It runs the chain rule backward through the network, so one backward pass gives the slope of the loss with respect to every weight at once. This is what makes training large models practical.</p><p>The step size is the learning rate. Too large and training overshoots or diverges; too small and it crawls. Training is iterative and stochastic: it does not solve for a perfect answer, it descends toward a good-enough minimum over many passes through the data.</p>",
     "key_points": [
       "Loss measures wrongness; training tries to lower it.",
-      "A gradient gives the downhill direction for each weight.",
+      "A gradient points uphill (steepest loss increase); descent steps each weight the opposite way.",
       "Backpropagation computes all gradients with one backward pass via the chain rule.",
       "The learning rate sets step size, trading stability against speed."
     ],
@@ -126,7 +126,7 @@
       { "title": "3Blue1Brown: Neural Networks", "url": "https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi", "level": "Beginner", "kind": "video", "note": "The gradient descent and backprop chapters are excellent." }
     ],
     "flashcards": [
-      { "front": "What does a gradient tell you?", "back": "The direction to change a weight to reduce the loss." },
+      { "front": "What direction does a gradient point?", "back": "Toward the steepest increase in loss; descent moves each weight the opposite way (the negative gradient)." },
       { "front": "What algorithm computes gradients efficiently?", "back": "Backpropagation, the chain rule run backward through the network." },
       { "front": "What does the learning rate control?", "back": "The step size, and so the tradeoff between stability and speed." }
     ],
@@ -298,7 +298,7 @@
     "level": "Intermediate",
     "minutes": 6,
     "summary": "Attention lets each token gather information from the most relevant other tokens, and the transformer stacks that idea.",
-    "body_html": "<p>The transformer is the architecture behind modern language models. Its core mechanism is self-attention: for each token, the model computes how much every other token should influence it, then mixes their information accordingly. A pronoun can look back to the noun it refers to; a verb can attend to its subject. The model learns what to attend to from data.</p><p>Attention works through three learned projections per token, called query, key, and value. A token's query is compared against every token's key to produce attention weights, and those weights combine the values. Because every token can attend to every other token in parallel, transformers train efficiently on long sequences, unlike the strictly sequential models that came before.</p><p>A transformer stacks many attention layers with small feed-forward networks between them. Depth lets later layers build on the relationships found by earlier ones. This single design, scaled up and trained on enormous text corpora, is what produced today's large language models.</p>",
+    "body_html": "<p>The transformer is the architecture behind modern language models. Its core mechanism is self-attention: for each token, the model computes how much the other tokens it can see should influence it, then mixes their information accordingly. A pronoun can look back to the noun it refers to; a verb can attend to its subject. The model learns what to attend to from data.</p><p>Attention works through three learned projections per token, called query, key, and value. A token's query is compared against every token's key to produce attention weights, and those weights combine the values. Because tokens are processed in parallel rather than strictly one after another, transformers train efficiently on long sequences. One detail matters for generation: the text-producing LLMs you use are decoder-only and apply a causal mask, so each token attends only to itself and the tokens before it, never to future ones.</p><p>A transformer stacks many attention layers with small feed-forward networks between them. Depth lets later layers build on the relationships found by earlier ones. This single design, scaled up and trained on enormous text corpora, is what produced today's large language models.</p>",
     "key_points": [
       "Self-attention lets each token pull information from the most relevant tokens.",
       "It uses learned query, key, and value projections per token.",

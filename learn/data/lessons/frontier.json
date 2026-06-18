@@ -128,7 +128,7 @@
     "level": "Advanced",
     "minutes": 6,
     "summary": "Reasoning models spend more compute at inference to think before answering, trading latency and cost for accuracy on hard problems.",
-    "body_html": "<p>A major shift after raw scaling was learning to spend compute at inference time, not just during training. Chain-of-thought prompting showed that letting a model write intermediate steps improves hard reasoning. Reasoning models internalize this: they are trained, often with reinforcement learning on verifiable problems, to produce long internal reasoning before a final answer, so more thinking can be traded for more accuracy.</p><p>This opens a new scaling axis. Beyond a bigger model, you can let a model think longer, sample several reasoning paths and select the best, or verify steps as it goes. On math, code, and other checkable tasks these test-time methods can lift accuracy substantially. The cost is real: more tokens, higher latency, and more spend per answer.</p><p>The honest framing is that test-time compute is a dial, not a free upgrade. It helps most where problems are hard and answers are checkable, and it helps little on simple lookups or open-ended tasks with no verifiable signal. Spending more thinking on an easy question mostly buys latency. Match the effort to the difficulty.</p>",
+    "body_html": "<p>A major shift after raw scaling was learning to spend compute at inference time, not just during training. Chain-of-thought prompting showed that letting a model write intermediate steps improves hard reasoning. Reasoning models build on this: published accounts describe training them with reinforcement learning on problems that can be checked, so they produce extended reasoning before a final answer and more thinking can be traded for more accuracy. Labs disclose the exact recipes and the internal traces only partially, so treat specific training claims with some caution.</p><p>This opens a new scaling axis. Beyond a bigger model, you can let a model think longer, sample several reasoning paths and select the best, or verify steps as it goes. On math, code, and other checkable tasks these test-time methods can lift accuracy substantially. The cost is real: more tokens, higher latency, and more spend per answer.</p><p>The honest framing is that test-time compute is a dial, not a free upgrade. It helps most where problems are hard and answers are checkable, and it helps little on simple lookups or open-ended tasks with no verifiable signal. Spending more thinking on an easy question mostly buys latency. Match the effort to the difficulty.</p>",
     "key_points": [
       "Test-time compute means spending more inference effort to think before answering.",
       "Reasoning models are trained, often via RL on verifiable tasks, to reason at length.",
@@ -237,7 +237,7 @@
       }
     ],
     "exercise": null,
-    "source": { "type": "post", "date": "2020-03", "confidence": "medium", "contested": false, "last_verified": "2026-06-18" },
+    "source": { "type": "post", "date": "2024-06", "confidence": "medium", "contested": false, "last_verified": "2026-06-18" },
     "outcome": "You can explain circuits, features, and superposition and calibrate interpretability claims.",
     "prereqs": ["fr_scaling_laws_emergence"],
     "next": "fr_evals_benchmarks"
@@ -304,10 +304,10 @@
     "level": "Expert",
     "minutes": 6,
     "summary": "Frontier models are strong and uneven; hallucination, calibration, and jagged competence are structural, not bugs to be fully patched.",
-    "body_html": "<p>Frontier models are genuinely strong: fluent across domains, capable at code and math, able to use tools and reason at length. They are also uneven in ways that surprise people who expect uniform competence. The capability surface is jagged: a model can solve a hard problem and then fail a simpler-looking one, because difficulty for a model does not track difficulty for a human.</p><p>Some limits are structural. A model trained to predict plausible text will sometimes produce confident, fluent falsehoods, which is what we call hallucination, and it stems from the objective itself rather than a fixable bug. Calibration, whether a model's confidence matches its accuracy, is imperfect, so a confident answer is not a correct one. These do not vanish with scale; they are reduced and managed, not eliminated.</p><p>The expert stance is to use strength without trusting uniformity. Lean on models where they are reliable and verifiable, build checks where errors are costly, and resist both the hype that says they can do anything and the dismissal that says they can do nothing. Know the jagged edge and design around it, because that edge is a property of the technology, not a temporary flaw.</p>",
+    "body_html": "<p>Frontier models are genuinely strong: fluent across domains, capable at code and math, able to use tools and reason at length. They are also uneven in ways that surprise people who expect uniform competence. The capability surface is jagged: a model can solve a hard problem and then fail a simpler-looking one, because difficulty for a model does not track difficulty for a human.</p><p>Some limits are structural. A model trained to predict plausible text will sometimes produce confident, fluent falsehoods, which is what we call hallucination. It has several roots, the next-token objective among them, along with gaps in the training data, imperfect calibration, and missing retrieval or verification. Better data, retrieval, and post-training reduce it, but no current method removes it entirely. Calibration, whether a model's confidence matches its accuracy, is imperfect, so a confident answer is not a correct one. These do not vanish with scale; they are reduced and managed, not eliminated.</p><p>The expert stance is to use strength without trusting uniformity. Lean on models where they are reliable and verifiable, build checks where errors are costly, and resist both the hype that says they can do anything and the dismissal that says they can do nothing. Know the jagged edge and design around it, because that edge is a property of the technology, not a temporary flaw.</p>",
     "key_points": [
       "Capability is jagged: model difficulty does not track human difficulty.",
-      "Hallucination follows from the next-token objective; it is reduced, not eliminated.",
+      "Hallucination has several roots (objective, data gaps, calibration, missing retrieval); it is reduced and managed, not eliminated.",
       "Calibration is imperfect, so confidence does not equal correctness.",
       "Use strength where reliable and verifiable; build checks where errors are costly."
     ],
@@ -317,7 +317,7 @@
     ],
     "flashcards": [
       { "front": "What does jagged capability mean?", "back": "A model can ace a hard task and fail an easy-looking one; model difficulty differs from human difficulty." },
-      { "front": "Why is hallucination structural?", "back": "Predicting plausible text can yield confident falsehoods; it follows from the objective, not a simple bug." },
+      { "front": "Why is hallucination hard to remove?", "back": "Predicting plausible text can yield confident falsehoods; it has several causes (objective, data gaps, calibration) and is reduced, not removed." },
       { "front": "Why does confidence not equal correctness?", "back": "Model calibration is imperfect, so a confident answer can still be wrong." }
     ],
     "quiz": [
@@ -338,12 +338,12 @@
         "level": "Expert",
         "choices": [
           "Because models will get smaller.",
-          "Because producing plausible text can yield confident falsehoods; it stems from the objective itself.",
+          "Because it has several roots (the objective, data gaps, calibration), so scale alone does not remove it.",
           "Because hallucination is not real.",
           "Because calibration is already perfect."
         ],
         "answer": 1,
-        "explain": "The next-token objective makes some confident error structural, not just a scale problem."
+        "explain": "Hallucination has multiple causes, so it is reduced and managed rather than removed by scale alone."
       }
     ],
     "exercise": {
