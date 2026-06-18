@@ -3,19 +3,30 @@ body.learn-page {
   background-color: var(--bg);
 }
 
-/* Match the house heading register: serif tracking from research-notes.css.
-   The landing hero centers like the hub masthead; track/lesson headers stay
-   left-aligned because they carry a back-link, meta row, and progress bar. */
+/* Match the house heading register + center page content like the hub.
+   Headers (hero/track/lesson) center; long body copy stays left for reading. */
 body.learn-page h1 { letter-spacing: -0.015em; }
-.learn-hero { text-align: center; }
-.learn-hero .lead { margin-left: auto; margin-right: auto; }
+.learn-hero,
+.track-header,
+.lesson-header { text-align: center; }
+.learn-hero .eyebrow, .learn-hero .lead,
+.track-header .eyebrow, .track-header .lead,
+.lesson-header .summary { text-align: center; }
+.learn-hero h1, .track-header h1, .lesson-header h1,
+.learn-hero .lead, .track-header .lead, .lesson-header .summary {
+  margin-left: auto;
+  margin-right: auto;
+}
 .learn-hero .hero-actions,
-.learn-hero .hero-search { justify-content: center; }
-.track-header h1,
-.lesson-header h1 { text-align: left; }
+.learn-hero .hero-search,
+.lesson-meta,
+.track-header .mastery-row { justify-content: center; }
+
+/* A cozy, centered reading column for the whole lesson. */
+.lesson-view { max-width: 768px; margin: 0 auto; }
 
 .learn-shell {
-  max-width: 1040px;
+  max-width: 920px;
 }
 
 .learn-top {
@@ -169,7 +180,7 @@ button:disabled,
   gap: 12px;
   align-items: center;
   min-height: 58px;
-  padding: 14px;
+  padding: 16px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.025);
@@ -223,10 +234,11 @@ button:disabled,
   min-height: 280px;
   flex-direction: column;
   gap: 12px;
-  padding: 18px;
+  padding: 22px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--bg-card);
+  text-align: center;
 }
 
 .track-card h3 a {
@@ -240,7 +252,15 @@ button:disabled,
 
 .track-card p {
   color: var(--text-2);
+  text-align: center;
 }
+
+.track-card .card-meta { justify-content: center; gap: 16px; }
+.track-card .progress-row { justify-content: center; gap: 12px; }
+
+/* Center the resume card content so it does not cluster at the left of a wide card. */
+.continue-card { text-align: center; }
+.continue-card .continue-meta { justify-content: center; }
 
 .card-meta,
 .progress-row,
@@ -301,7 +321,7 @@ button:disabled,
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
   align-items: center;
-  padding: 14px;
+  padding: 16px 18px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.025);
@@ -398,7 +418,7 @@ button:disabled,
 }
 
 .key-points li {
-  padding: 12px 14px;
+  padding: 14px 18px;
   border-left: 3px solid var(--accent);
   border-radius: 0 8px 8px 0;
   background: rgba(42, 149, 234, 0.08);
@@ -406,7 +426,7 @@ button:disabled,
 
 .exercise-card,
 .quiz-question {
-  padding: 16px;
+  padding: 22px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.025);
@@ -1139,7 +1159,7 @@ button:disabled,
 .capstone-outcome { color: var(--text-2); margin: 0; }
 
 /* continue card */
-.continue-card { display: grid; gap: 6px; margin: 0 0 8px; padding: 18px 20px; border: 1px solid rgba(42, 149, 234, 0.4); border-radius: 12px; background: rgba(42, 149, 234, 0.07); text-decoration: none; color: var(--text); transition: border-color 0.15s ease, background 0.15s ease; }
+.continue-card { display: grid; gap: 6px; margin: 0 0 8px; padding: 22px 26px; border: 1px solid rgba(42, 149, 234, 0.4); border-radius: 12px; background: rgba(42, 149, 234, 0.07); text-decoration: none; color: var(--text); transition: border-color 0.15s ease, background 0.15s ease; }
 .continue-card:hover { border-color: var(--accent); background: rgba(42, 149, 234, 0.12); }
 .continue-label { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent); }
 .continue-title { font-family: var(--serif); font-size: 20px; color: var(--text-strong); }
@@ -1148,7 +1168,7 @@ button:disabled,
 /* lesson index */
 .index-list { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 8px; }
 .index-row { border: 1px solid var(--border); border-radius: 8px; background: rgba(255, 255, 255, 0.02); }
-.index-row > a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; color: var(--text); text-decoration: none; }
+.index-row > a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px 18px; color: var(--text); text-decoration: none; }
 .index-text { display: grid; gap: 3px; }
 .index-row > a:hover strong { color: var(--accent-bright); }
 .index-meta { display: inline-flex; align-items: center; gap: 8px; }
@@ -1161,7 +1181,7 @@ button:disabled,
 
 /* per-claim sources */
 .source-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.source-row { display: grid; gap: 3px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255, 255, 255, 0.02); }
+.source-row { display: grid; gap: 3px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255, 255, 255, 0.02); }
 .source-claim { color: var(--text-2); }
 .source-cite { font-size: 13px; }
 .source-cite a { color: var(--accent); }
@@ -1175,4 +1195,13 @@ button:disabled,
 
 @media (prefers-reduced-motion: reduce) {
   .continue-card { transition: none; }
+}
+
+
+/* Visual polish: trim card padding on small screens so content keeps its width. */
+@media (max-width: 760px) {
+  .track-card,
+  .exercise-card,
+  .quiz-question,
+  .continue-card { padding: 18px; }
 }
