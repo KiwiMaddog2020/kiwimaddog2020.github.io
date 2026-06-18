@@ -168,12 +168,26 @@
     ]);
 
     state.tracks = tracks;
-    state.links = links;
     state.prereqs = prereqs;
     state.lessons = lessonGroups.flatMap((group) => group.lessons);
     state.lessonsById = new Map(state.lessons.map((lesson) => [lesson.id, lesson]));
     state.lessonsByTrack = new Map(lessonGroups.map((group) => [group.trackId, group.lessons]));
+    state.links = mergeLinks(links, state.lessons);
     state.ready = true;
+  }
+
+  function mergeLinks(curated, lessons) {
+    const merged = curated.map((link) => Object.assign({}, link));
+    const seen = new Set(merged.map((link) => link.url));
+    lessons.forEach(function (lesson) {
+      (lesson.links || []).forEach(function (link) {
+        if (link.url && !seen.has(link.url)) {
+          seen.add(link.url);
+          merged.push(Object.assign({}, link, { track: lesson.track, start_here: false }));
+        }
+      });
+    });
+    return merged;
   }
 
   function getTrack(id) {
@@ -200,6 +214,8 @@
   function replaceApp(markup, title) {
     app.innerHTML = markup;
     document.title = title ? `${title} · Learn Center` : "Learn Center · Kevin Madson";
+    const crumb = document.querySelector(".crumb");
+    if (crumb) crumb.textContent = title || "Learn Center";
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     app.focus({ preventScroll: true });
   }
@@ -232,7 +248,7 @@
     }
 
     if (section === "search") {
-      renderSearch();
+      renderSearch(id);
       return;
     }
 
@@ -440,6 +456,7 @@
           </div>
           <h1>${escapeHtml(lesson.title)}</h1>
           <p class="summary">${escapeHtml(lesson.summary || "")}</p>
+          ${lesson.source ? `<p class="source-meta">Source: ${escapeHtml(lesson.source.type)}, ${escapeHtml(lesson.source.date)}, confidence ${escapeHtml(lesson.source.confidence)}${lesson.source.contested ? ", contested" : ""}, last verified ${escapeHtml(lesson.source.last_verified)}</p>` : ""}
         </header>
         <div class="lesson-body">
           ${lesson.body_html || ""}
@@ -645,7 +662,8 @@
     ].join(" ").toLowerCase();
   }
 
-  function renderSearch() {
+  function renderSearch(initialQuery) {
+    const startValue = (initialQuery || lastSearch || "").trim();
     replaceApp(`
       <section class="track-header" aria-labelledby="search-title">
         <p class="eyebrow">Find anything</p>
@@ -665,8 +683,15 @@
     const results = app.querySelector("#search-results");
 
     function update() {
-      const query = input.value.trim().toLowerCase();
-      lastSearch = input.value.trim();
+      const raw = input.value.trim();
+      const query = raw.toLowerCase();
+      lastSearch = raw;
+      try {
+        const hash = raw ? `#/search/${encodeURIComponent(raw)}` : "#/search";
+        history.replaceState(null, "", hash);
+      } catch (error) {
+        // bookmarkable URL is optional
+      }
       if (query.length < 2) {
         results.innerHTML = `<p class="empty-state">Type at least two characters to search.</p>`;
         return;
@@ -677,12 +702,12 @@
       });
 
       const lessonMarkup = lessonHits.length
-        ? `<ul class="lesson-list">${lessonHits.map(function (lesson) {
+        ? `<ul class="search-list">${lessonHits.map(function (lesson) {
             const track = getTrack(lesson.track);
             return `
-              <li class="lesson-row">
+              <li class="search-row">
                 <a href="${lessonHref(lesson.id)}">
-                  <span>
+                  <span class="search-text">
                     <strong>${escapeHtml(lesson.title)}</strong>
                     <span class="lesson-summary">${escapeHtml(lesson.summary || "")}</span>
                   </span>
@@ -707,9 +732,7 @@
     }
 
     input.addEventListener("input", update);
-    if (lastSearch) {
-      input.value = lastSearch;
-    }
+    input.value = startValue;
     input.focus();
     update();
   }
@@ -771,24 +794,47 @@
 
   function mountFlashcardPlayer(container, deckId, cards) {
     const progress = getDeckProgress(deckId);
-    let order = cards.map((_, index) => index);
-    let current = 0;
+    function buildQueue() {
+      return cards.map((_, index) => index).filter((index) => !progress.got[cards[index].id]);
+    }
+    let queue = buildQueue();
+    let pos = 0;
     let flipped = false;
     let message = "";
+
+    function knownCount() {
+      return cards.filter((card) => progress.got[card.id]).length;
+    }
 
     function render() {
       if (!cards.length) {
         container.innerHTML = `<p class="empty-state">No flashcards in this deck yet.</p>`;
         return;
       }
+      if (!queue.length || pos >= queue.length) {
+        const known = knownCount();
+        container.innerHTML = `
+          <div class="deck-status">
+            <span>Deck complete</span>
+            <span>${known}/${cards.length} known</span>
+          </div>
+          <div class="deck-complete">
+            <p class="feedback-line good">You have cleared every card in this deck. Nice work.</p>
+            <div class="card-actions">
+              <button class="button" type="button" data-card-action="restart">Review all again</button>
+              ${known ? `<button class="button" type="button" data-card-action="reset">Reset progress</button>` : ""}
+            </div>
+          </div>
+        `;
+        return;
+      }
 
-      const card = cards[order[current]];
-      const knownCount = Object.keys(progress.got).filter((id) => cards.some((item) => item.id === id)).length;
+      const card = cards[queue[pos]];
       const side = flipped ? card.back : card.front;
       container.innerHTML = `
         <div class="deck-status">
-          <span>Card ${current + 1} of ${cards.length}</span>
-          <span>${knownCount}/${cards.length} known</span>
+          <span>Card ${pos + 1} of ${queue.length}</span>
+          <span>${knownCount()}/${cards.length} known</span>
         </div>
         <button class="flashcard ${flipped ? "is-flipped" : ""}" type="button" aria-pressed="${flipped ? "true" : "false"}">
           <span class="flashcard-label">${flipped ? "Back" : "Front"}</span>
@@ -817,31 +863,52 @@
       if (!actionButton) return;
 
       const action = actionButton.dataset.cardAction;
+      if (action === "restart") {
+        queue = cards.map((_, index) => index);
+        pos = 0;
+        flipped = false;
+        message = "Reviewing the full deck.";
+      }
+      if (action === "reset") {
+        cards.forEach(function (card) {
+          delete progress.got[card.id];
+          delete progress.review[card.id];
+          delete progress.seen[card.id];
+        });
+        saveDeckProgress(deckId, progress);
+        queue = buildQueue();
+        pos = 0;
+        flipped = false;
+        message = "Progress reset.";
+      }
       if (action === "flip") {
         flipped = !flipped;
         message = "";
       }
       if (action === "shuffle") {
-        order = shuffle(order);
-        current = 0;
+        queue = shuffle(queue);
+        pos = 0;
         flipped = false;
         message = "Deck shuffled.";
       }
       if ((action === "got" || action === "review") && flipped) {
-        const card = cards[order[current]];
+        const card = cards[queue[pos]];
         progress.seen[card.id] = true;
         if (action === "got") {
           progress.got[card.id] = true;
           delete progress.review[card.id];
           message = "Marked as known.";
+          queue.splice(pos, 1);
         } else {
           progress.review[card.id] = (progress.review[card.id] || 0) + 1;
           delete progress.got[card.id];
           message = "Queued for review.";
+          const moved = queue.splice(pos, 1)[0];
+          queue.push(moved);
         }
         saveDeckProgress(deckId, progress);
-        current = (current + 1) % cards.length;
         flipped = false;
+        if (pos >= queue.length) pos = 0;
       }
       render();
     });
@@ -1057,16 +1124,33 @@
   function mountAgentTrace(container, exercise) {
     let checked = false;
     let correct = false;
+    let pickedStep = null;
+    let pickedChoice = null;
+    let validation = "";
+
+    function stepClass(index) {
+      if (!checked) return "";
+      if (index === exercise.fault_step) return "is-answer";
+      if (index === pickedStep) return "is-incorrect";
+      return "";
+    }
+    function choiceClass(index) {
+      if (!checked) return "";
+      if (index === exercise.answer) return "is-answer";
+      if (index === pickedChoice) return "is-incorrect";
+      return "";
+    }
 
     function render() {
       container.innerHTML = `
         <form class="exercise-card agent-form">
           <div class="trace-list">
             ${exercise.steps.map(function (step, index) {
+              const faultTag = checked && index === exercise.fault_step ? " (fault)" : "";
               return `
-                <label class="trace-card">
-                  <input type="radio" name="fault-step" value="${index}" ${checked ? "disabled" : ""}>
-                  <span class="trace-step">Step ${index + 1}</span>
+                <label class="trace-card ${stepClass(index)}">
+                  <input type="radio" name="fault-step" value="${index}" ${checked ? "disabled" : ""} ${pickedStep === index ? "checked" : ""}>
+                  <span class="trace-step">Step ${index + 1}${faultTag}</span>
                   <strong>Thought</strong>
                   <span>${escapeHtml(step.thought)}</span>
                   <strong>Tool</strong>
@@ -1081,13 +1165,14 @@
             <legend>Fault label</legend>
             ${exercise.choices.map(function (choice, index) {
               return `
-                <label>
-                  <input type="radio" name="fault-choice" value="${index}" ${checked ? "disabled" : ""}>
+                <label class="${choiceClass(index)}">
+                  <input type="radio" name="fault-choice" value="${index}" ${checked ? "disabled" : ""} ${pickedChoice === index ? "checked" : ""}>
                   <span>${escapeHtml(choice)}</span>
                 </label>
               `;
             }).join("")}
           </fieldset>
+          ${!checked && validation ? `<p class="feedback-line bad" role="alert">${escapeHtml(validation)}</p>` : ""}
           <button class="button primary" type="submit" ${checked ? "disabled" : ""}>Check answer</button>
           ${checked ? `<p class="feedback-line ${correct ? "good" : "bad"}">${correct ? "Correct." : "Not quite."} ${escapeHtml(exercise.explain)}</p>` : ""}
         </form>
@@ -1100,9 +1185,15 @@
       const form = event.target;
       const step = form.elements["fault-step"].value;
       const choice = form.elements["fault-choice"].value;
-      if (step === "" || choice === "") return;
+      if (step === "" || choice === "") {
+        validation = "Pick the faulty step and a fault label, then check your answer.";
+        render();
+        return;
+      }
+      pickedStep = Number(step);
+      pickedChoice = Number(choice);
       checked = true;
-      correct = Number(step) === exercise.fault_step && Number(choice) === exercise.answer;
+      correct = pickedStep === exercise.fault_step && pickedChoice === exercise.answer;
       render();
     });
 
