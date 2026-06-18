@@ -48,24 +48,24 @@
         "q": "What is the key difference between a single model call and an agent?",
         "level": "Beginner",
         "choices": [
-          "An agent loops: it acts with tools, observes results, and decides its next step.",
-          "An agent never makes mistakes.",
           "An agent does not use a language model.",
-          "An agent uses a bigger model."
+          "An agent uses a bigger model.",
+          "An agent loops: it acts with tools, observes results, and decides its next step.",
+          "An agent never makes mistakes."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "The loop with tools and observation is what makes a system an agent."
       },
       {
         "q": "When should you NOT build an agent?",
         "level": "Beginner",
         "choices": [
-          "When the task requires adapting to results.",
-          "When the task is a fixed, predictable sequence a workflow can handle.",
           "When the task is open-ended.",
-          "When the task needs tools."
+          "When the task needs tools.",
+          "When the task requires adapting to results.",
+          "When the task is a fixed, predictable sequence a workflow can handle."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "A scriptable task is simpler and more reliable as a workflow than as an agent."
       }
     ],
@@ -134,24 +134,24 @@
         "q": "Why should each observation update the agent's plan?",
         "level": "Beginner",
         "choices": [
+          "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors.",
           "Because tools require it.",
           "To increase the temperature.",
-          "To make the transcript longer.",
-          "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors."
+          "To make the transcript longer."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "An agent that does not act on its observations loses the benefit of the loop."
       },
       {
         "q": "An agent keeps alternating between two tool calls and never finishes. What is missing?",
         "level": "Intermediate",
         "choices": [
+          "A bigger context window.",
           "A clear stopping rule or escalation path.",
           "A higher temperature.",
-          "More tools.",
-          "A bigger context window."
+          "More tools."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Loops without an exit condition can cycle indefinitely."
       }
     ],
@@ -329,24 +329,24 @@
         "q": "Why is an agent prompt different from a one-shot chatbot prompt?",
         "level": "Intermediate",
         "choices": [
-          "It must be shorter.",
           "It is standing guidance for many turns, so it must set objective, tools, stopping, and output shape.",
           "It cannot mention tools.",
-          "It only matters on the first turn."
+          "It only matters on the first turn.",
+          "It must be shorter."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "The prompt governs the whole loop, not a single exchange."
       },
       {
         "q": "Which addition most improves a vague agent prompt?",
         "level": "Intermediate",
         "choices": [
-          "Removing all constraints.",
           "Making it longer with more adjectives.",
           "Adding explicit success criteria and a stopping or escalation condition.",
-          "Raising the temperature."
+          "Raising the temperature.",
+          "Removing all constraints."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Specific criteria and limits stop the agent from wandering."
       }
     ],
@@ -417,24 +417,24 @@
         "q": "An agent performs well early in a long task but degrades near the end. Likely cause?",
         "level": "Intermediate",
         "choices": [
-          "The temperature rose on its own.",
           "Tools stopped working.",
           "The model got tired.",
-          "The context filled and important early facts were crowded out or dropped."
+          "The context filled and important early facts were crowded out or dropped.",
+          "The temperature rose on its own."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Late-task degradation often traces to a saturated context window."
       },
       {
         "q": "What is the right way to keep durable facts available across a long run?",
         "level": "Intermediate",
         "choices": [
-          "Store them externally and retrieve them on demand.",
           "Raise the temperature.",
           "Ignore them after the first turn.",
-          "Repeat them in every single turn."
+          "Repeat them in every single turn.",
+          "Store them externally and retrieve them on demand."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "External memory plus retrieval scales better than carrying everything inline."
       }
     ],
@@ -505,24 +505,24 @@
         "q": "What is a key benefit of decomposing a task into subgoals?",
         "level": "Intermediate",
         "choices": [
-          "It eliminates the context limit.",
-          "It removes the need for tools.",
           "Each subgoal is easier to verify, and failures become legible.",
-          "It guarantees the task succeeds."
+          "It guarantees the task succeeds.",
+          "It eliminates the context limit.",
+          "It removes the need for tools."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "Smaller, checkable steps are easier to get right and to debug."
       },
       {
         "q": "An agent keeps executing its original plan even though an observation proved a step impossible. What is the failure?",
         "level": "Advanced",
         "choices": [
-          "It used too few tools.",
-          "Its temperature was too low.",
           "It planned too much.",
-          "It treated the plan as fixed instead of revising it against new evidence."
+          "It treated the plan as fixed instead of revising it against new evidence.",
+          "It used too few tools.",
+          "Its temperature was too low."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Plans must adapt; rigidly following a contradicted plan defeats the loop."
       }
     ],
@@ -593,24 +593,24 @@
         "q": "What is the main benefit of MCP over hand-wiring each tool?",
         "level": "Intermediate",
         "choices": [
-          "Tools become reusable across any compatible agent instead of custom per integration.",
-          "It removes the need for tools.",
           "It guarantees correct answers.",
-          "It makes models larger."
+          "It makes models larger.",
+          "Tools become reusable across any compatible agent instead of custom per integration.",
+          "It removes the need for tools."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "A shared standard turns one-off integrations into interoperable, reusable parts."
       },
       {
         "q": "Connecting to an external MCP server still requires you to consider what?",
         "level": "Advanced",
         "choices": [
-          "Nothing; the standard handles everything.",
-          "Trust, scope, and permissions, plus the underlying tool design.",
           "Only the temperature.",
-          "Retraining the model."
+          "Retraining the model.",
+          "Nothing; the standard handles everything.",
+          "Trust, scope, and permissions, plus the underlying tool design."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Standardized access does not remove the need for trust and good design."
       }
     ],
@@ -681,24 +681,24 @@
         "q": "What is the biggest hidden cost of a multi-agent system?",
         "level": "Advanced",
         "choices": [
+          "Coordination overhead and context loss across handoffs.",
           "Lower temperature.",
           "Fewer tools.",
-          "Larger model weights.",
-          "Coordination overhead and context loss across handoffs."
+          "Larger model weights."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Information that was obvious in one context can disappear across an agent boundary."
       },
       {
         "q": "Which is a good reason to split work across agents?",
         "level": "Advanced",
         "choices": [
+          "It looks more sophisticated.",
           "The subtasks are genuinely independent and can run in parallel.",
           "To use more tokens.",
-          "Because one agent is never enough.",
-          "It looks more sophisticated."
+          "Because one agent is never enough."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Independent, parallelizable subtasks are the clearest justification."
       }
     ],
@@ -857,24 +857,24 @@
         "q": "Which guardrail best contains a runaway, looping agent?",
         "level": "Advanced",
         "choices": [
-          "A higher temperature.",
           "Explicit step and budget limits.",
           "More tools.",
-          "A bigger model."
+          "A bigger model.",
+          "A higher temperature."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Hard limits force the loop to terminate or escalate."
       },
       {
         "q": "An agent encounters a missing field and proceeds with a confident guess. Best fix?",
         "level": "Advanced",
         "choices": [
-          "Remove the field from the schema.",
           "Trust the guess to keep things fast.",
           "Make missing data loud and require the agent to resolve it via a tool or a question.",
-          "Raise the temperature so guesses vary."
+          "Raise the temperature so guesses vary.",
+          "Remove the field from the schema."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Resolving the gap, rather than guessing, prevents fluent-but-wrong results."
       }
     ],
@@ -963,24 +963,24 @@
         "q": "A task is a fixed five-step sequence with no branching. What fits best?",
         "level": "Intermediate",
         "choices": [
-          "A deterministic workflow.",
-          "A multi-agent system.",
           "A larger model.",
-          "A fully autonomous agent."
+          "A fully autonomous agent.",
+          "A deterministic workflow.",
+          "A multi-agent system."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Predictable sequences are cheaper and safer as workflows."
       },
       {
         "q": "Why limit an agent's autonomy on irreversible actions?",
         "level": "Advanced",
         "choices": [
-          "To slow it down for no reason.",
-          "Because the more it can do unreviewed, the larger the blast radius of an error.",
           "Because agents cannot use tools.",
-          "Because autonomy is always bad."
+          "Because autonomy is always bad.",
+          "To slow it down for no reason.",
+          "Because the more it can do unreviewed, the larger the blast radius of an error."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Scope, gates, and review keep recoverable what would otherwise be costly mistakes."
       }
     ],
@@ -1058,36 +1058,49 @@
         "q": "A RAG answer is confidently wrong. Logs show the retriever returned irrelevant passages. Where is the bug?",
         "level": "Intermediate",
         "choices": [
+          "In retrieval: fix chunking, embeddings, or the index.",
           "In the model weights; retrain it.",
           "In the temperature setting.",
-          "Nowhere; confident answers are fine.",
-          "In retrieval: fix chunking, embeddings, or the index."
+          "Nowhere; confident answers are fine."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "RAG quality is bounded by retrieval; irrelevant passages mean the retrieval stage needs fixing."
       },
       {
         "q": "When is RAG a better fit than fine-tuning?",
         "level": "Intermediate",
         "choices": [
+          "When you need to change the model's tone.",
           "When the knowledge changes often or is private and large.",
           "When you want a smaller model.",
-          "When you need faster inference.",
-          "When you need to change the model's tone."
+          "When you need faster inference."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "RAG suits changing or private knowledge; fine-tuning suits behavior and style."
       }
     ],
     "exercise": {
-      "type": "ordering",
-      "prompt": "Put the RAG pipeline in the order it runs.",
-      "items": [
-        "Embed the query and search the index for relevant passages",
-        "Add the top passages to the prompt as context",
-        "Generate an answer grounded in those passages, with citations"
+      "type": "rag_sandbox",
+      "prompt": "A tiny knowledge base. Edit the query and adjust chunk size and top-k to see which passages get retrieved into the prompt. Retrieval scores by how many query terms a chunk contains.",
+      "corpus": [
+        {
+          "title": "Refunds policy",
+          "text": "Customers may request a refund within thirty days of purchase. Refunds are issued to the original payment method. Digital goods are non refundable once downloaded. Shipping fees are not refunded unless the item arrived damaged."
+        },
+        {
+          "title": "Password reset",
+          "text": "To reset a password, open the login page and choose forgot password. A reset link is emailed and expires after one hour. If the email does not arrive, check spam and confirm the account email address is correct."
+        },
+        {
+          "title": "Shipping times",
+          "text": "Standard shipping takes five to seven business days. Express shipping arrives in two business days. International orders may take up to three weeks and can be delayed by customs."
+        }
       ],
-      "explain": "RAG runs retrieve, then augment, then generate. Retrieval quality bounds the whole pipeline, which is why you debug it first."
+      "query": "how long do refunds take to process",
+      "start_chunk": 16,
+      "start_k": 2,
+      "question": "Make the chunk size very small, then very large. How does that change which passages land in the prompt, and the words spent?",
+      "explain": "Small chunks retrieve tightly but may split the answer across pieces; large chunks keep context together but waste budget on irrelevant text. Top-k and chunk size together decide what the model actually sees, and retrieval quality caps the whole pipeline."
     },
     "outcome": "You can explain the RAG pattern, its failure modes, and when to choose it over fine-tuning.",
     "prereqs": [
@@ -1152,24 +1165,24 @@
         "q": "Why are tool-using agents more exposed to prompt injection than a plain chatbot?",
         "level": "Advanced",
         "choices": [
+          "They cannot read documents.",
           "They use bigger models.",
           "Injected text can trigger real actions through tools.",
-          "They have higher temperature.",
-          "They cannot read documents."
+          "They have higher temperature."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Tools turn injected instructions into side effects, which is what makes injection dangerous."
       },
       {
         "q": "Which most reduces prompt-injection risk?",
         "level": "Advanced",
         "choices": [
+          "A higher temperature.",
           "A larger context window.",
           "A longer system prompt telling the model to ignore injections.",
-          "Breaking the lethal trifecta: least-privilege tools and gates on exfiltration and high-impact actions.",
-          "A higher temperature."
+          "Breaking the lethal trifecta: least-privilege tools and gates on exfiltration and high-impact actions."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Architectural limits beat prompt-only defenses against a fundamental ambiguity."
       }
     ],
@@ -1295,6 +1308,125 @@
     "prereqs": [
       "ag_when_not_to_use"
     ],
-    "next": null
+    "next": "ag_capstone_debug"
+  },
+  {
+    "id": "ag_capstone_debug",
+    "track": "agents",
+    "title": "Capstone: debug an agent that went wrong",
+    "level": "Advanced",
+    "minutes": 9,
+    "summary": "Read a full agent trace, find where it actually broke, name the root cause, and choose the fix that prevents a class of failures rather than patching one symptom.",
+    "body_html": "<p>Agents fail in the trace, not in the vibe. When an agent gives a wrong final answer, the skill is to read the think-act-observe loop step by step and locate the first place the reasoning or a tool result went off the rails, because everything after that inherits the error. A confident wrong answer almost always has an earlier observation that should have stopped it.</p><p>This capstone gives you a real-shaped trace: an agent asked to report a customer's current account balance calls a tool, misreads the result, and proceeds confidently. Work the steps to find the fault step, diagnose the root cause, pick the durable fix, and choose what would prevent the whole class of bug. The reasoning is shown after each choice.</p>",
+    "key_points": [
+      "Find the first step where the trace went wrong; later steps inherit the error.",
+      "Distinguish a tool failure from a reasoning failure that misreads a correct tool result.",
+      "Prefer a fix that prevents a class of failures (validation, schemas) over a one-off patch.",
+      "A confident final answer is not evidence of a correct trace."
+    ],
+    "links": [
+      {
+        "title": "Anthropic: Building effective agents",
+        "url": "https://www.anthropic.com/research/building-effective-agents",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "Patterns and failure modes for tool-using agents."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Where do you start when an agent gives a confident wrong answer?",
+        "back": "At the trace. Find the first step whose reasoning or observation is wrong; everything downstream inherits it."
+      },
+      {
+        "front": "Tool failure vs reasoning failure: why does the distinction matter?",
+        "back": "A broken tool needs a tool fix; a misread of a correct result needs a reasoning or validation fix. Patching the wrong layer leaves the bug."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "An agent returns a confident, well-written wrong answer. The best first move is:",
+        "level": "Advanced",
+        "choices": [
+          "Add more tools",
+          "Trust it; confidence signals correctness",
+          "Read the trace step by step to find the first wrong reasoning or observation",
+          "Increase the temperature"
+        ],
+        "answer": 2,
+        "explain": "Fluency is not correctness. The fault is somewhere in the trace, and the first wrong step is what you need."
+      },
+      {
+        "q": "The agent's tool returned the right data but the agent misread it. The durable fix is:",
+        "level": "Advanced",
+        "choices": [
+          "Tell the agent to be more careful",
+          "Remove the tool",
+          "Replace the tool",
+          "Add output validation or a stricter schema so a misread is caught, and tighten the prompt on how to read the result"
+        ],
+        "answer": 3,
+        "explain": "The tool was fine; the reasoning misread it. Validation and schemas catch the class of misread, not just this instance."
+      }
+    ],
+    "exercise": {
+      "type": "capstone",
+      "prompt": "Debug the balance-reporting agent trace, one decision at a time.",
+      "scenario_html": "<p><strong>Task:</strong> the agent must report a customer's <em>current</em> balance.</p><p><strong>Trace:</strong></p><p><strong>Step 1</strong> Thought: I need the account balance. Tool: <code>get_transactions(account=\"A-91\")</code> Observation: returns a list of 3 transactions: <code>[+500, -120, -80]</code> and a field <code>\"current_balance\": 300</code>.</p><p><strong>Step 2</strong> Thought: I will sum the transactions to get the balance. Tool: none. Observation: 500 - 120 - 80 = 300... but the agent writes 500 + 120 + 80.</p><p><strong>Step 3</strong> Thought: The balance is 700. Tool: none. Observation: (no check against the returned current_balance field).</p><p><strong>Step 4</strong> Final answer: \"The current balance is $700.\"</p>",
+      "steps": [
+        {
+          "q": "Which step is the fault step (the first thing that went wrong)?",
+          "choices": [
+            "Step 2, where it computes the balance",
+            "Step 3, the conclusion",
+            "Step 4, the final answer",
+            "Step 1, the tool call"
+          ],
+          "answer": 0,
+          "explain": "Step 1 returned correct data. Step 2 is the first error: it added the transactions instead of applying their signs. Steps 3 and 4 just inherit it."
+        },
+        {
+          "q": "What is the root cause?",
+          "choices": [
+            "The tool returned bad data",
+            "A reasoning error: it ignored the signed amounts (and the provided current_balance field) and summed magnitudes",
+            "The account does not exist",
+            "The temperature was too low"
+          ],
+          "answer": 1,
+          "explain": "The observation already contained current_balance: 300. The agent did unnecessary, incorrect math instead of reading the authoritative field."
+        },
+        {
+          "q": "What is the most durable fix?",
+          "choices": [
+            "Add three more tools",
+            "Tell the agent to double-check its math",
+            "Have the agent read the authoritative current_balance field and add a validation step that flags when its computed value disagrees with it",
+            "Lower the temperature"
+          ],
+          "answer": 2,
+          "explain": "Use the source of truth the tool already provided, and validate computed-vs-returned. That catches the whole class of misread, not just this sum."
+        },
+        {
+          "q": "What would prevent this class of failure going forward?",
+          "choices": [
+            "Asking the user to verify every answer",
+            "Disabling the agent",
+            "Nothing; it was a one-off",
+            "A schema-checked tool output plus an assertion that the agent's reported number matches the tool's authoritative field before answering"
+          ],
+          "answer": 3,
+          "explain": "Structured outputs and a pre-answer consistency check turn a silent misread into a caught error every time."
+        }
+      ],
+      "outcome": "You located the first wrong step, separated the (correct) tool from the (wrong) reasoning, and chose a validation-based fix that prevents the class of bug."
+    },
+    "outcome": "Diagnose a failing agent from its trace and choose a fix that prevents a class of failures, not just the symptom.",
+    "prereqs": [
+      "ag_agent_loop",
+      "ag_failure_modes_guardrails"
+    ],
+    "next": null,
+    "diagram": "agent_loop"
   }
 ]

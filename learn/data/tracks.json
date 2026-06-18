@@ -17,7 +17,10 @@
       "fnd_inference_sampling",
       "fnd_context_window",
       "fnd_data_quality",
-      "fnd_supervised_unsupervised"
+      "fnd_supervised_unsupervised",
+      "fnd_transformer_internals",
+      "fnd_bpe_tokenization",
+      "fnd_capstone_classifier"
     ]
   },
   {
@@ -41,7 +44,8 @@
       "ag_when_not_to_use",
       "ag_rag",
       "ag_security_injection",
-      "ag_production_costs"
+      "ag_production_costs",
+      "ag_capstone_debug"
     ]
   },
   {
@@ -60,7 +64,10 @@
       "vc_trust_but_verify",
       "vc_debugging_with_ai",
       "vc_reading_ai_code",
-      "vc_human_in_the_loop"
+      "vc_human_in_the_loop",
+      "vc_responsible_shipping",
+      "vc_mlops_lifecycle",
+      "vc_capstone_review"
     ]
   },
   {
@@ -81,7 +88,10 @@
       "eval_not_measured_ledger",
       "eval_production_observability",
       "eval_llm_as_judge",
-      "eval_inter_rater_reliability"
+      "eval_inter_rater_reliability",
+      "eval_metric_families",
+      "eval_significance_testing",
+      "eval_capstone_design"
     ]
   },
   {
@@ -99,7 +109,9 @@
       "fr_evals_benchmarks",
       "fr_capabilities_limits",
       "fr_research_landscape",
-      "fr_beyond_text"
+      "fr_beyond_text",
+      "fr_efficient_adaptation",
+      "fr_capstone_read_paper"
     ]
   }
 ]

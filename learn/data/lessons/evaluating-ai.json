@@ -135,24 +135,24 @@
         "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
         "level": "Intermediate",
         "choices": [
-          "False alarms do not matter.",
           "It is an excellent detector.",
           "Its discrimination is low (about 0.05), so it is close to flagging everything.",
-          "Its catch rate proves it works."
+          "Its catch rate proves it works.",
+          "False alarms do not matter."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Discrimination of 0.95 minus 0.90 is 0.05, near guessing."
       },
       {
         "q": "What must you always report alongside a detector's catch rate?",
         "level": "Intermediate",
         "choices": [
-          "The model's name.",
           "The temperature.",
           "Only the token count.",
-          "The false alarm rate, so discrimination can be computed."
+          "The false alarm rate, so discrimination can be computed.",
+          "The model's name."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Without the false positive rate, the catch rate is uninterpretable."
       }
     ],
@@ -244,24 +244,24 @@
         "q": "Why decide the success threshold before running the experiment?",
         "level": "Intermediate",
         "choices": [
-          "Because after seeing the data, almost any pattern can be narrated into a finding.",
           "Because thresholds are required by law.",
           "To avoid using a metric.",
-          "To slow down the experiment."
+          "To slow down the experiment.",
+          "Because after seeing the data, almost any pattern can be narrated into a finding."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Pre-committing the rules prevents post-hoc storytelling."
       },
       {
         "q": "Your pre-registered effect does not clear its threshold. What is the honest move?",
         "level": "Intermediate",
         "choices": [
-          "Lower the threshold until it passes.",
           "Report the null; a null reported honestly is a real finding.",
           "Re-run until it passes by chance.",
-          "Drop the experiment silently."
+          "Drop the experiment silently.",
+          "Lower the threshold until it passes."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Honoring the pre-registered threshold is the whole point of pre-registration."
       }
     ],
@@ -331,24 +331,24 @@
         "q": "Two judges from the same model with the same prompt agree. How strong is that evidence?",
         "level": "Advanced",
         "choices": [
-          "Conclusive proof.",
-          "Irrelevant to evaluation.",
           "Very strong, because two judges agreed.",
-          "Weak, because they share blind spots and can be wrong together."
+          "Weak, because they share blind spots and can be wrong together.",
+          "Conclusive proof.",
+          "Irrelevant to evaluation."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Correlated judges agreeing adds little; they can fail in the same direction."
       },
       {
         "q": "Why can a panel of strong judges still miss the answer on a frontier task?",
         "level": "Expert",
         "choices": [
-          "They may all share the same capability gap, so consensus looks confident but is wrong.",
-          "They used too few tokens.",
           "Frontier tasks are always easy.",
-          "They were too slow."
+          "They were too slow.",
+          "They may all share the same capability gap, so consensus looks confident but is wrong.",
+          "They used too few tokens."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Competence caps what any judge can recognize; shared gaps survive consensus."
       }
     ],
@@ -419,24 +419,24 @@
         "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
         "level": "Advanced",
         "choices": [
+          "Honesty cannot be measured at all.",
           "The metric was discrimination.",
           "The sample was too large.",
-          "Difficulty is a confound; the gap may be about the questions, not honesty.",
-          "Honesty cannot be measured at all."
+          "Difficulty is a confound; the gap may be about the questions, not honesty."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "An uncontrolled difference in difficulty can fully explain the result."
       },
       {
         "q": "What is the best habit for catching design-level confounds?",
         "level": "Expert",
         "choices": [
+          "Adversarially search for the alternative explanation before believing the conclusion.",
           "Run the experiment only once.",
           "Use a single judge.",
-          "Trust a clean-looking result.",
-          "Adversarially search for the alternative explanation before believing the conclusion."
+          "Trust a clean-looking result."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Actively trying to break your own result surfaces tangled causes."
       }
     ],
@@ -596,24 +596,24 @@
         "q": "A model changes its answer after a user objects. Why is that not automatically capitulation?",
         "level": "Advanced",
         "choices": [
-          "Because the change could be rational updating on a good argument, not social deference.",
           "Because the user is always right.",
           "Because capitulation does not exist.",
-          "Because models never change answers."
+          "Because models never change answers.",
+          "Because the change could be rational updating on a good argument, not social deference."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Updating and deference look the same from outside, so the flip alone is ambiguous."
       },
       {
         "q": "How do you make pushback test deference rather than reasoning?",
         "level": "Expert",
         "choices": [
-          "Give pushback that carries strong new evidence.",
           "Give pushback that carries no real evidence, so any change is deference.",
           "Only test easy questions.",
-          "Let the model grade itself."
+          "Let the model grade itself.",
+          "Give pushback that carries strong new evidence."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Evidence-free pressure isolates social deference from rational updating."
       }
     ],
@@ -684,24 +684,24 @@
         "q": "Why does naming the boundaries of an eval increase trust?",
         "level": "Expert",
         "choices": [
-          "It hides the gaps.",
-          "It removes the need for data.",
           "It makes the eval look weaker.",
-          "It tells an honest reader where the result applies and where it does not."
+          "It tells an honest reader where the result applies and where it does not.",
+          "It hides the gaps.",
+          "It removes the need for data."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "A finding with a clear boundary is more trustworthy than one pretending to have none."
       },
       {
         "q": "What is the mature stance on evaluation completeness?",
         "level": "Expert",
         "choices": [
-          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
-          "Measure nothing and ship.",
           "Trust automated evals fully.",
-          "Achieve a perfect evaluation before shipping."
+          "Achieve a perfect evaluation before shipping.",
+          "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
+          "Measure nothing and ship."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Perfect evals do not exist; honest boundaries plus scheduled human checks do."
       }
     ],
@@ -772,24 +772,24 @@
         "q": "A system scores 95% offline but users complain after launch. Most likely cause?",
         "level": "Advanced",
         "choices": [
+          "The model got smaller.",
           "Users are wrong.",
           "The offline score was faked.",
-          "Distribution shift: production inputs differ from the eval set.",
-          "The model got smaller."
+          "Distribution shift: production inputs differ from the eval set."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Real inputs often differ from a fixed test set; trace and sample production to find out how."
       },
       {
         "q": "What turns evaluation into a standing practice rather than a launch gate?",
         "level": "Advanced",
         "choices": [
+          "Feeding sampled, labeled production traffic back into the eval set.",
           "Using a larger model.",
           "Raising the temperature.",
-          "Running it once before release.",
-          "Feeding sampled, labeled production traffic back into the eval set."
+          "Running it once before release."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "A feedback loop keeps the offline suite tracking real-world behavior."
       }
     ],
@@ -984,6 +984,391 @@
     "outcome": "You can assess label quality with chance-corrected rater agreement and fix an underspecified rubric.",
     "prereqs": [
       "eval_doer_not_grader"
+    ],
+    "next": "eval_metric_families"
+  },
+  {
+    "id": "eval_metric_families",
+    "track": "evaluating-ai",
+    "title": "Precision, recall, F1, and the ROC curve",
+    "level": "Intermediate",
+    "minutes": 6,
+    "summary": "One number rarely tells the whole story. The metric family you pick encodes what kind of mistake you can least afford.",
+    "body_html": "<p>Accuracy collapses a whole confusion matrix into one number, and on imbalanced data it lies: a detector that never fires scores 99% accuracy when only 1% of cases are positive. The precision and recall pair keeps the two error types separate. Precision asks, of everything you flagged, how much was real (it punishes false alarms). Recall, the catch rate from the earlier lesson, asks, of everything that was real, how much you caught (it punishes misses). You almost always trade one against the other.</p><p>F1 is the harmonic mean of precision and recall, a single score that stays low unless both are decent. It is a reasonable default when false alarms and misses cost about the same, but it hides which one is failing, so report the pair alongside it. When the two costs differ, weight them: a cancer screen tolerates false alarms to avoid misses, a spam filter does the opposite.</p><p>The ROC curve steps back from any single threshold. It plots the true positive rate against the false positive rate as you sweep the decision threshold from strict to lenient, and the area under it (AUC) summarizes how well the model's scores rank a random positive above a random negative, independent of where you set the cutoff. AUC is useful for comparing rankers, but it can flatter a model on imbalanced data; the precision-recall curve is the more honest companion there. Pick the threshold from the curve to match your real costs, not the default 0.5.</p>",
+    "key_points": [
+      "Accuracy misleads on imbalanced data; keep precision and recall separate.",
+      "Precision punishes false alarms; recall (catch rate) punishes misses; they trade off.",
+      "F1 is the harmonic mean of the two and stays low unless both are decent.",
+      "ROC/AUC measure ranking across all thresholds; PR curves are more honest when positives are rare."
+    ],
+    "links": [
+      {
+        "title": "scikit-learn: Metrics and scoring",
+        "url": "https://scikit-learn.org/stable/modules/model_evaluation.html",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "The reference for precision, recall, F1, ROC, and PR in practice."
+      },
+      {
+        "title": "Google ML Crash Course: ROC and AUC",
+        "url": "https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "A short, visual treatment of the ROC curve and AUC."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Precision vs recall in one line each.",
+        "back": "Precision: of what you flagged, how much was real (punishes false alarms). Recall: of what was real, how much you caught (punishes misses)."
+      },
+      {
+        "front": "What does AUC actually measure?",
+        "back": "The probability that the model scores a random positive above a random negative: ranking quality, independent of the threshold."
+      },
+      {
+        "front": "When is F1 the wrong default?",
+        "back": "When a false alarm and a miss have very different costs. Then weight precision and recall to match those costs instead."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "On a dataset with 1% positives, a model predicts negative for everything. Its accuracy is:",
+        "level": "Intermediate",
+        "choices": [
+          "Undefined",
+          "About 99%, which is why accuracy alone is misleading here",
+          "About 1%",
+          "Exactly 50%"
+        ],
+        "answer": 1,
+        "explain": "It is right on all 99% of negatives, so accuracy is ~99% despite zero recall. Accuracy hides the failure on imbalanced data."
+      },
+      {
+        "q": "You raise the decision threshold so the model fires less often. What typically happens?",
+        "level": "Intermediate",
+        "choices": [
+          "Recall rises while precision falls",
+          "Both precision and recall rise",
+          "Precision tends to rise while recall falls",
+          "Nothing changes; the threshold is cosmetic"
+        ],
+        "answer": 2,
+        "explain": "Firing less often means fewer false alarms (higher precision) but more misses (lower recall). That is the core tradeoff."
+      },
+      {
+        "q": "Why prefer a precision-recall curve over ROC when positives are rare?",
+        "level": "Advanced",
+        "choices": [
+          "PR curves ignore false negatives",
+          "PR curves need no labels",
+          "ROC is always wrong",
+          "A large true-negative pool keeps the false positive rate small, so ROC/AUC can look strong even when precision is poor"
+        ],
+        "answer": 3,
+        "explain": "With many negatives, FPR stays low and AUC looks good even when most positive predictions are wrong. PR exposes that directly."
+      }
+    ],
+    "exercise": {
+      "type": "roc_lab",
+      "prompt": "Each dot is a scored example: blue label 1 is a true positive case, label 0 is a true negative. Drag the threshold and watch the operating point move along the ROC curve.",
+      "examples": [
+        {
+          "score": 0.95,
+          "label": 1
+        },
+        {
+          "score": 0.9,
+          "label": 1
+        },
+        {
+          "score": 0.85,
+          "label": 0
+        },
+        {
+          "score": 0.8,
+          "label": 1
+        },
+        {
+          "score": 0.7,
+          "label": 1
+        },
+        {
+          "score": 0.6,
+          "label": 0
+        },
+        {
+          "score": 0.55,
+          "label": 1
+        },
+        {
+          "score": 0.45,
+          "label": 0
+        },
+        {
+          "score": 0.3,
+          "label": 0
+        },
+        {
+          "score": 0.2,
+          "label": 0
+        }
+      ],
+      "start": 0.5,
+      "question": "Find a threshold that keeps recall at 1.0 (catch every positive). What does it cost you in precision?",
+      "explain": "Lowering the threshold catches more positives (higher recall) but admits more false positives (lower precision). The ROC curve traces every such tradeoff; you choose the point that matches your costs."
+    },
+    "outcome": "Choose and defend a metric family, and read an operating point off an ROC curve instead of trusting accuracy.",
+    "prereqs": [
+      "eval_catch_rate_discrimination"
+    ],
+    "next": "eval_significance_testing",
+    "sources": [
+      {
+        "claim": "AUC equals the probability a random positive is scored above a random negative.",
+        "title": "Receiver operating characteristic (overview of AUC)",
+        "url": "https://en.wikipedia.org/wiki/Receiver_operating_characteristic",
+        "last_verified": "2026-06-18"
+      }
+    ]
+  },
+  {
+    "id": "eval_significance_testing",
+    "track": "evaluating-ai",
+    "title": "Significance, p-values, and the multiple-comparisons trap",
+    "level": "Advanced",
+    "minutes": 7,
+    "summary": "A score difference is not a result until you know it survives noise. P-values and resampling tell you whether to believe it, and running many tests quietly inflates false positives.",
+    "body_html": "<p>You run model B against model A and it wins by two points. Real, or noise? A significance test answers a narrow question: if there were truly no difference, how often would chance alone produce a gap this large or larger? That tail probability is the p-value. A small p-value means the observed gap would be surprising under no real difference, so you lean toward a real effect. It does not tell you the effect is large, or important, or that the opposite hypothesis is false, three things p-values are routinely misread as saying.</p><p>For eval scores, the cleanest tool is often the bootstrap from the noise-floor lesson: resample your test items with replacement many times, recompute the metric each time, and read the spread. A 95% interval that excludes zero difference is the practical analogue of significance, and it shows the magnitude, not just a yes or no. Crucially, the interval narrows with more eval items (more n), not with more resamples; resampling only sharpens the estimate of an interval whose width is set by your sample size.</p><p>The quiet killer is multiple comparisons. Test twenty prompt variants at the 0.05 level and, even if none truly differs, you expect about one to look significant by chance. Leaderboards, ablations, and hyperparameter sweeps are all multiple comparisons in disguise. Pre-register the one comparison you care about, or correct for the number of tests (a Bonferroni-style or false-discovery-rate adjustment), or hold out a fresh confirmation set. Otherwise you are mining noise and calling it a finding.</p>",
+    "key_points": [
+      "A p-value is the chance of a gap this large under no real difference; it is not the effect size or the probability the result is true.",
+      "A bootstrap 95% interval that excludes zero is the practical, magnitude-aware version of significance.",
+      "Interval width is set by the number of eval items (n), not the number of resamples.",
+      "Running many comparisons inflates false positives; pre-register, correct, or confirm on held-out data."
+    ],
+    "links": [
+      {
+        "title": "Wikipedia: Multiple comparisons problem",
+        "url": "https://en.wikipedia.org/wiki/Multiple_comparisons_problem",
+        "level": "Advanced",
+        "kind": "reference",
+        "note": "Why testing many hypotheses inflates false positives, and how corrections work."
+      },
+      {
+        "title": "Wikipedia: Bootstrapping (statistics)",
+        "url": "https://en.wikipedia.org/wiki/Bootstrapping_(statistics)",
+        "level": "Advanced",
+        "kind": "reference",
+        "note": "The resampling method behind the confidence interval in the lab."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "State what a p-value is, precisely.",
+        "back": "The probability of observing a difference at least this large if there were truly no difference. Not the effect size, not the probability the result is true."
+      },
+      {
+        "front": "Does running more bootstrap resamples narrow the confidence interval?",
+        "back": "No. More resamples stabilize the estimate of the interval. The width shrinks only with more eval items (larger n)."
+      },
+      {
+        "front": "Why are leaderboards a multiple-comparisons hazard?",
+        "back": "Comparing many models or variants means many chances for noise to produce an apparent winner. Some 'significant' gaps are expected by chance."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A result has p = 0.03. Which reading is correct?",
+        "level": "Advanced",
+        "choices": [
+          "If there were no real difference, a gap this large would occur about 3% of the time",
+          "The effect is large",
+          "The null hypothesis is proven false",
+          "There is a 97% chance the effect is real"
+        ],
+        "answer": 0,
+        "explain": "The p-value is a tail probability under the null. It says nothing directly about effect size or the probability that the hypothesis is true."
+      },
+      {
+        "q": "Your bootstrap 95% interval for B minus A is [-0.5, +3.1] points. The honest conclusion is:",
+        "level": "Advanced",
+        "choices": [
+          "B is significantly worse",
+          "The interval includes zero, so the data do not establish a real difference",
+          "Run more resamples until it excludes zero",
+          "B is significantly better"
+        ],
+        "answer": 1,
+        "explain": "Spanning zero means no clear difference at this sample size. Cranking resamples will not move that; you need more eval items."
+      },
+      {
+        "q": "You test 20 variants at the 0.05 level and one looks significant. Before believing it, you should:",
+        "level": "Advanced",
+        "choices": [
+          "Lower the threshold to 0.5",
+          "Publish it",
+          "Expect roughly one false positive by chance and confirm on fresh held-out data or apply a correction",
+          "Test 20 more"
+        ],
+        "answer": 2,
+        "explain": "At 0.05 across 20 tests you expect about one spurious hit. Correct for the count or confirm on a held-out set."
+      }
+    ],
+    "exercise": {
+      "type": "bootstrap_lab",
+      "prompt": "These are per-item pass/fail results from one eval run (1 = passed). Resample them to see the distribution of the mean accuracy and its 95% interval. Then raise n and watch the interval tighten.",
+      "scores": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "start_n": 24,
+      "start_resamples": 1000,
+      "question": "Set n to 24, then to 120. What happens to the width of the 95% interval, and why?",
+      "explain": "More eval items shrink the interval because the mean is estimated from more evidence. More resamples only smooth the estimate of that interval; they do not narrow it."
+    },
+    "outcome": "Decide whether a score difference is real, report it as an interval, and avoid the multiple-comparisons trap.",
+    "prereqs": [
+      "eval_bootstrap_noise_floor"
+    ],
+    "next": "eval_capstone_design"
+  },
+  {
+    "id": "eval_capstone_design",
+    "track": "evaluating-ai",
+    "title": "Capstone: design an honest eval",
+    "level": "Advanced",
+    "minutes": 9,
+    "summary": "Put the whole track to work. Given a capability to measure, choose the metric, the baseline, the role separation, and name the failure you would most likely miss.",
+    "body_html": "<p>This capstone walks one realistic brief end to end. Your team ships an agent that drafts replies to customer support tickets, and leadership wants a number for how good it is before a wider rollout. A weak eval would average a 1-to-5 quality rating from the same model that wrote the replies and call it 4.3 out of 5. Your job is to design something you would actually trust, using the discipline from this track: separate the doer from the grader, pre-register the claim, pick a metric tied to the real cost, set an honest baseline, and keep a ledger of what you did not measure.</p><p>Work each step in order. There is one defensible answer per step, with reasoning shown after you choose. The point is not trivia; it is the sequence of decisions that turns a vibe into a measurement.</p>",
+    "key_points": [
+      "Separation of roles: the system under test cannot also be its own grader.",
+      "Pick a metric tied to the real-world cost of the mistake, not the easiest number.",
+      "A result needs a baseline and a pre-registered claim to mean anything.",
+      "Name the failure mode your eval cannot see, and log it as verification debt."
+    ],
+    "links": [
+      {
+        "title": "Anthropic: A statistical approach to model evals",
+        "url": "https://www.anthropic.com/research/statistical-approach-to-model-evals",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "How to report eval results with uncertainty rather than a single number."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "First question to ask of any eval result.",
+        "back": "Who graded it, and were they independent of who produced it? If the doer is the grader, the number is suspect."
+      },
+      {
+        "front": "What turns a score into a claim?",
+        "back": "A pre-registered hypothesis, a baseline to beat, and an interval that accounts for noise."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "The single biggest threat to the support-agent eval described here is:",
+        "level": "Advanced",
+        "choices": [
+          "Reporting a confidence interval",
+          "Choosing a held-out test set",
+          "Using too many test tickets",
+          "Letting the agent's own model grade its replies"
+        ],
+        "answer": 3,
+        "explain": "Self-grading is the classic role-separation failure: the grader shares the doer's blind spots and biases."
+      },
+      {
+        "q": "A good baseline for the support agent would be:",
+        "level": "Advanced",
+        "choices": [
+          "The current human-written replies (or the prior template system) on the same tickets",
+          "A second run of the same agent",
+          "The agent's self-reported confidence",
+          "No baseline; just report the score"
+        ],
+        "answer": 0,
+        "explain": "A baseline is what you must beat to matter: the status quo the agent would replace, scored on the same items."
+      }
+    ],
+    "exercise": {
+      "type": "capstone",
+      "prompt": "Design the eval for the support-reply agent, one decision at a time.",
+      "scenario_html": "<p><strong>Brief:</strong> an agent drafts replies to customer support tickets. Leadership wants a trustworthy quality number before rolling it out to all tickets. You have 2,000 historical tickets, the human replies that were sent, and outcome data (was the ticket reopened, was the customer satisfied).</p>",
+      "steps": [
+        {
+          "q": "Who should grade reply quality?",
+          "choices": [
+            "A separate, independent grader (a different model and/or human reviewers) blind to which reply is the agent's",
+            "Whoever is fastest",
+            "The agent, scoring its own confidence",
+            "The same model that drafted the replies, for consistency"
+          ],
+          "answer": 0,
+          "explain": "Separate the doer from the grader, and blind the grader to authorship so it cannot favor the agent. This is the core honesty move."
+        },
+        {
+          "q": "Which primary metric best ties to the real cost?",
+          "choices": [
+            "Average 1-to-5 style rating only",
+            "Reopen rate and resolution outcome on held-out tickets, with quality as a secondary check",
+            "Reply length",
+            "Number of tickets processed per hour"
+          ],
+          "answer": 1,
+          "explain": "The business cost is unresolved tickets, not a Likert score. Anchor on outcomes; keep subjective quality as a secondary signal."
+        },
+        {
+          "q": "What is the honest baseline to beat?",
+          "choices": [
+            "The best score seen in any single ticket",
+            "Zero",
+            "The human replies that were actually sent on the same tickets",
+            "A second copy of the agent"
+          ],
+          "answer": 2,
+          "explain": "You must beat the status quo the agent replaces: the human replies, scored on the same items, with an interval around the difference."
+        },
+        {
+          "q": "What goes in the not-measured ledger?",
+          "choices": [
+            "The model's parameter count",
+            "The training data size",
+            "Nothing; the eval is complete",
+            "Rare high-stakes tickets (legal, safety, billing disputes) that are underrepresented in the sample and may fail silently"
+          ],
+          "answer": 3,
+          "explain": "Name what the sample cannot see. Rare, high-cost cases are the classic silent failure; flag them as verification debt for a human checkpoint."
+        }
+      ],
+      "outcome": "You designed an eval with independent grading, an outcome-tied metric, a real baseline, and an explicit ledger of what it cannot measure. That is the difference between a number and a measurement."
+    },
+    "outcome": "Run the full evaluating-AI discipline on a fresh brief: roles, metric, baseline, claim, and a ledger of the unmeasured.",
+    "prereqs": [
+      "eval_doer_not_grader",
+      "eval_not_measured_ledger"
     ],
     "next": null
   }

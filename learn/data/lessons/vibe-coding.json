@@ -48,24 +48,24 @@
         "q": "What is the central skill of productive vibe coding?",
         "level": "Beginner",
         "choices": [
-          "Typing faster than the model.",
           "Steering: precise intent, small reviewable units, and verification.",
           "Trusting the model's output without review.",
-          "Avoiding tests."
+          "Avoiding tests.",
+          "Typing faster than the model."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Steering and verification are what keep speed from costing correctness."
       },
       {
         "q": "Who owns the product contract and release risk when vibe coding?",
         "level": "Beginner",
         "choices": [
-          "The user of the app.",
           "The model.",
           "The human; the model is a fast collaborator, not the final authority.",
-          "Nobody."
+          "Nobody.",
+          "The user of the app."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "The model writes plausibly but does not own correctness or risk."
       }
     ],
@@ -141,24 +141,24 @@
         "q": "What most distinguishes a CLI coding agent from inline completion?",
         "level": "Beginner",
         "choices": [
-          "It can change many files and run commands in a loop before stopping.",
-          "It never makes mistakes.",
           "It cannot edit files.",
-          "It uses a different programming language."
+          "It uses a different programming language.",
+          "It can change many files and run commands in a loop before stopping.",
+          "It never makes mistakes."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "The difference is how much it does autonomously between your reviews."
       },
       {
         "q": "How should you choose a coding tool?",
         "level": "Beginner",
         "choices": [
-          "By which is newest.",
-          "By fit: match the tool's autonomy to how well-specified and reversible the task is.",
           "By which has the most features.",
-          "Always pick the most autonomous one."
+          "Always pick the most autonomous one.",
+          "By which is newest.",
+          "By fit: match the tool's autonomy to how well-specified and reversible the task is."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Fit to the task beats hype; autonomy should match specification and reversibility."
       }
     ],
@@ -229,24 +229,24 @@
         "q": "Why map one prompt to one reviewable change?",
         "level": "Beginner",
         "choices": [
+          "Because small, checkable steps are easier to verify and revert than a large opaque diff.",
           "Because models cannot make big changes.",
           "To avoid using tools.",
-          "To use more tokens.",
-          "Because small, checkable steps are easier to verify and revert than a large opaque diff."
+          "To use more tokens."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Reviewability is the goal; small units make it achievable."
       },
       {
         "q": "What is the purpose of stating non-goals in a coding prompt?",
         "level": "Beginner",
         "choices": [
+          "To make the prompt longer.",
           "To protect nearby code from opportunistic, unrequested edits.",
           "To confuse the model.",
-          "To raise the temperature.",
-          "To make the prompt longer."
+          "To raise the temperature."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Boundaries keep the change inside the scope you intended."
       }
     ],
@@ -324,24 +324,24 @@
         "q": "Your prompts keep producing code that ignores your conventions. Best fix?",
         "level": "Intermediate",
         "choices": [
+          "Switch to a smaller model.",
           "Raise the temperature.",
           "Include a short example of existing code and name the libraries and style to use.",
-          "Ask for more code at once.",
-          "Switch to a smaller model."
+          "Ask for more code at once."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "A concrete example and named constraints give the model your context to match."
       },
       {
         "q": "Why ask for the test alongside the implementation?",
         "level": "Intermediate",
         "choices": [
+          "It makes the model slower.",
           "It replaces the need to read the code.",
           "Tests are required by law.",
-          "It turns a plausible draft into something you can immediately verify.",
-          "It makes the model slower."
+          "It turns a plausible draft into something you can immediately verify."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Requesting the check yields the acceptance criteria in the same pass."
       }
     ],
@@ -412,24 +412,24 @@
         "q": "What is the main benefit of reviewing a plan before code exists?",
         "level": "Intermediate",
         "choices": [
+          "You catch a misread requirement while it still costs a sentence to fix.",
           "It removes the need for tests.",
           "It guarantees correct code.",
-          "It makes the model write faster.",
-          "You catch a misread requirement while it still costs a sentence to fix."
+          "It makes the model write faster."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Correcting a plan is far cheaper than unwinding a wrong implementation."
       },
       {
         "q": "How does plan-first convert an intimidating change into a safe one?",
         "level": "Intermediate",
         "choices": [
+          "By doing it all in one diff.",
           "By turning agreed steps into a sequence of small, verified changes.",
           "By skipping verification.",
-          "By using a larger model.",
-          "By doing it all in one diff."
+          "By using a larger model."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Stepwise execution against an agreed plan keeps each change reviewable."
       }
     ],
@@ -518,36 +518,36 @@
         "q": "A generated function passes the sample case. What is the next best move?",
         "level": "Intermediate",
         "choices": [
+          "Ask the model whether the code is correct and accept a confident answer.",
           "Rewrite the whole module manually before looking at the patch.",
           "Check the contract and run or add a focused test for the likely edge case.",
-          "Accept the patch because the model already saw the repository.",
-          "Ask the model whether the code is correct and accept a confident answer."
+          "Accept the patch because the model already saw the repository."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "The sample case is a clue, not acceptance. Verify the contract and the risky edge."
       },
       {
         "q": "Which review question is most useful for AI-written code?",
         "level": "Intermediate",
         "choices": [
+          "Could a larger model have written it faster?",
           "Does the code look idiomatic?",
           "Did the model explain it fluently?",
-          "What invariant could this patch violate while still passing the happy path?",
-          "Could a larger model have written it faster?"
+          "What invariant could this patch violate while still passing the happy path?"
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Generated code often handles the visible example while missing the invariant."
       },
       {
         "q": "When should you ask the model to explain a suspicious line?",
         "level": "Intermediate",
         "choices": [
+          "After you have a specific question or hypothesis to test.",
           "Only after merging, so you do not slow down.",
           "Never, because explanations from models cannot be useful.",
-          "Before reading the code, so it can frame the review.",
-          "After you have a specific question or hypothesis to test."
+          "Before reading the code, so it can frame the review."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "A specific question lets the explanation support your review instead of replacing it."
       }
     ],
@@ -619,24 +619,24 @@
         "q": "Why does pasting only the error message produce weak AI debugging?",
         "level": "Intermediate",
         "choices": [
+          "Models cannot read errors.",
           "Without a repro, the code, and expected behavior, the model speculates instead of reasoning.",
           "Error messages are always wrong.",
-          "It uses too many tokens.",
-          "Models cannot read errors."
+          "It uses too many tokens."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "Evidence turns guessing into reasoning about the actual cause."
       },
       {
         "q": "An AI fix makes the error disappear. What should you confirm?",
         "level": "Intermediate",
         "choices": [
+          "That the model is confident.",
           "Nothing; a gone error means done.",
           "That the fix addresses the identified cause, then add a regression test.",
-          "That the code is shorter.",
-          "That the model is confident."
+          "That the code is shorter."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Fixing the mechanism and adding a test prevents a silent return."
       }
     ],
@@ -708,24 +708,24 @@
         "q": "What is the real danger when reviewing AI-written code?",
         "level": "Advanced",
         "choices": [
+          "Code with too many comments.",
           "Code that is too short.",
           "Obviously ugly code you catch on sight.",
-          "Clean, fluent code that quietly violates an invariant the happy path never exercises.",
-          "Code with too many comments."
+          "Clean, fluent code that quietly violates an invariant the happy path never exercises."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Fluency masks the quiet invariant violation, which is the hard case to catch."
       },
       {
         "q": "What should drive your reading of generated code?",
         "level": "Advanced",
         "choices": [
+          "Whether it actually guarantees the contract on the edges.",
           "How long it is.",
           "How confident the comments sound.",
-          "Whether it looks idiomatic.",
-          "Whether it actually guarantees the contract on the edges."
+          "Whether it looks idiomatic."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Edges and invariants, not style, decide correctness."
       }
     ],
@@ -797,24 +797,24 @@
         "q": "What best describes expert-level vibe coding?",
         "level": "Expert",
         "choices": [
+          "Automating as much as technically possible.",
           "Calibrated delegation: routing routine work to the model and consequential work to yourself.",
           "Never using AI for code.",
-          "Always rewriting the model's output.",
-          "Automating as much as technically possible."
+          "Always rewriting the model's output."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "The skill is judgment about what to delegate, not the amount of automation."
       },
       {
         "q": "You have reprompted three times and the model still cannot fix a subtle bug. Best move?",
         "level": "Expert",
         "choices": [
+          "Switch to a larger model and retry indefinitely.",
           "Reprompt five more times.",
           "Take the wheel: write the hard part yourself, then hand back the routine parts.",
-          "Accept the broken code.",
-          "Switch to a larger model and retry indefinitely."
+          "Accept the broken code."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Recognizing the unreachable-fix loop early and taking over saves the most time."
       }
     ],
@@ -832,6 +832,334 @@
     },
     "outcome": "You can decide what to delegate to a coding model and when to take over yourself.",
     "prereqs": [
+      "vc_reading_ai_code"
+    ],
+    "next": "vc_responsible_shipping"
+  },
+  {
+    "id": "vc_responsible_shipping",
+    "track": "vibe-coding",
+    "title": "Shipping AI features responsibly: privacy, copyright, fairness",
+    "level": "Intermediate",
+    "minutes": 6,
+    "summary": "Moving fast with AI does not suspend the rules. Three obligations follow your code into production: protect personal data, respect copyright, and watch for unfair outcomes.",
+    "body_html": "<p>When you ship a feature built with an AI collaborator, you own its consequences, not the model. Privacy comes first because it is the easiest to get wrong by accident. Personal data (names, emails, payment details, anything that identifies someone) should be collected only when needed, logged carefully, and never pasted into a third-party model or analytics tool without a basis for doing so. A common vibe-coding bug is logging a whole request object, including a password or a token, to an analytics pipeline. In Canada, PIPEDA governs how private-sector organizations handle personal information; equivalents exist in most jurisdictions, and they apply to AI features exactly as to any other code.</p><p>Copyright reaches both inputs and outputs. Training data provenance is the model provider's problem, but how you use generated output is yours: do not ship code or text whose license you have not checked, and do not feed proprietary or confidential material into a tool whose terms permit reuse. Generated code can reproduce licensed snippets, so treat unfamiliar output the way you would treat a stranger's code: review and attribute where required.</p><p>Fairness is the quiet one. A feature can work on average and still fail a subgroup, because the data it learned from underrepresents them. You catch this by measuring outcomes per group, not just in aggregate, and by asking who is harmed when the system is wrong. None of this slows a vibe-coding loop much; it is a short checklist (what personal data does this touch, whose license applies, who could this treat unfairly) run before you ship, not after a complaint.</p>",
+    "key_points": [
+      "You own the consequences of an AI-built feature; collect and log personal data minimally and deliberately.",
+      "Never paste secrets or PII into a third-party model or analytics tool without a basis.",
+      "Check the license of generated output and of anything you feed in; generated code can reproduce licensed snippets.",
+      "Measure outcomes per subgroup, not just on average, to catch fairness failures."
+    ],
+    "links": [
+      {
+        "title": "PIPEDA (Office of the Privacy Commissioner of Canada)",
+        "url": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+        "level": "Intermediate",
+        "kind": "reference",
+        "note": "Canada's private-sector privacy law; it applies to AI features like any other code."
+      },
+      {
+        "title": "NIST AI Risk Management Framework",
+        "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "level": "Advanced",
+        "kind": "reference",
+        "note": "A practical framework for governing AI risk, including privacy and fairness."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What is the most common accidental privacy bug in vibe-coded features?",
+        "back": "Logging a whole request object (including a password, token, or PII) into analytics or logs that were not built to hold secrets."
+      },
+      {
+        "front": "Whose problem is the license of AI-generated code you ship?",
+        "back": "Yours. Generated output can reproduce licensed snippets, so review and check the license before shipping it."
+      },
+      {
+        "front": "How do you catch a fairness failure that aggregate metrics hide?",
+        "back": "Measure outcomes per subgroup and ask who is harmed when the system is wrong, rather than trusting the average."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "An AI-suggested handler logs the full signup request to your analytics tool. The risk is:",
+        "level": "Intermediate",
+        "choices": [
+          "Slower analytics",
+          "Better debugging only",
+          "None; logs are private",
+          "Personal data and secrets (like the password) leak into a system not built to hold them"
+        ],
+        "answer": 3,
+        "explain": "Logging the whole request ships PII and credentials into a third-party pipeline. Log deliberately and redact secrets."
+      },
+      {
+        "q": "You accept a block of AI-generated code that closely matches a known GPL project. Before shipping you should:",
+        "level": "Intermediate",
+        "choices": [
+          "Check the license implications, since generated code can reproduce licensed snippets, and rewrite or comply",
+          "Add a comment crediting the AI",
+          "Nothing changes",
+          "Ship it; AI output has no license"
+        ],
+        "answer": 0,
+        "explain": "Generated output can reproduce licensed code. The obligation to check and comply is yours, not the model's."
+      },
+      {
+        "q": "A loan-screening helper has 92% accuracy overall. What still must you check?",
+        "level": "Advanced",
+        "choices": [
+          "Nothing; 92% is enough",
+          "Whether accuracy and error costs are similar across subgroups, since the average can hide harm to an underrepresented group",
+          "Only the training time",
+          "The model's parameter count"
+        ],
+        "answer": 1,
+        "explain": "Aggregate accuracy can mask a subgroup the data underrepresents. Measure per group and ask who is harmed by errors."
+      }
+    ],
+    "exercise": {
+      "type": "spot_the_bug",
+      "prompt": "This AI-suggested signup handler has a serious privacy and security bug. Which line is it?",
+      "lines": [
+        "def handle_signup(req):",
+        "    email = req.form[\"email\"]",
+        "    password = req.form[\"password\"]",
+        "    analytics.track(\"signup\", {\"email\": email, \"password\": password})",
+        "    user = create_user(email, password)",
+        "    return redirect(\"/welcome\")"
+      ],
+      "bug_line": 3,
+      "explain": "Line 4 ships the plaintext password and the email (PII) into a third-party analytics pipeline. Never log secrets or personal data to analytics; track an anonymous event id instead."
+    },
+    "outcome": "Run a short privacy, copyright, and fairness check before shipping an AI-built feature, and spot a PII leak in review.",
+    "prereqs": [
+      "vc_reading_ai_code"
+    ],
+    "next": "vc_mlops_lifecycle"
+  },
+  {
+    "id": "vc_mlops_lifecycle",
+    "track": "vibe-coding",
+    "title": "Operating AI features: pipelines, deployment, monitoring",
+    "level": "Advanced",
+    "minutes": 6,
+    "summary": "Shipping the code is the start, not the end. AI features need a lifecycle: validated data in, gated deploys out, and monitoring that catches silent drift.",
+    "body_html": "<p>Traditional software is mostly tested before release and then runs as written. AI features are different: their behavior depends on data and on a model that the world keeps changing around. The discipline for managing that is usually called MLOps, and the core idea is a loop rather than a launch. It starts upstream of any model, with data: validate and version your inputs, because a silent change in the data feeding a feature is one of the most common ways production AI degrades without an error ever being thrown.</p><p>Deployment should be gated, not flipped. Roll a new model or prompt out to a small slice of traffic first (a canary), compare it against the current version on live data, and promote only if it holds up. This is the production analogue of the train, dev, test split: you never bet the whole system on an estimate. Keep the previous version one switch away so a rollback is instant.</p><p>Monitoring is what makes the loop honest. Track input distributions and output quality over time, not just uptime, because the dangerous failures are silent: the model keeps responding, but its inputs have drifted away from what it learned, and quality slips. Set triggers (a drift threshold, a rising error or complaint rate) that prompt a retrain or rollback. The famous lesson from production ML is that the model code is a small part of a real system; the data pipelines, monitoring, and glue around it are where the ongoing cost and risk live.</p>",
+    "key_points": [
+      "AI behavior depends on data and a shifting world, so it needs a lifecycle loop, not a one-time launch.",
+      "Validate and version input data; silent data changes are a top cause of quiet degradation.",
+      "Deploy behind a gate (canary or staged rollout) with the previous version one switch away.",
+      "Monitor input drift and output quality, not just uptime; set triggers for retrain or rollback."
+    ],
+    "links": [
+      {
+        "title": "Google Cloud: MLOps continuous delivery and automation",
+        "url": "https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "The reference picture of the ML lifecycle and automation levels."
+      },
+      {
+        "title": "ml-ops.org: MLOps principles",
+        "url": "https://ml-ops.org/content/mlops-principles",
+        "level": "Advanced",
+        "kind": "reference",
+        "note": "Versioning, testing, monitoring, and reproducibility for ML systems."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Why is an AI feature a loop rather than a one-time launch?",
+        "back": "Its behavior depends on data and a model the world keeps changing around, so it needs continuous validation, gated deploys, and monitoring."
+      },
+      {
+        "front": "What is a canary deploy and why use it for a new model?",
+        "back": "Routing a small slice of live traffic to the new version first and comparing it to the current one, promoting only if it holds. It is the production train/dev/test."
+      },
+      {
+        "front": "What kind of production failure does uptime monitoring miss?",
+        "back": "Silent drift: the model keeps responding, but inputs have moved away from training and quality quietly slips. You need input and output monitoring."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "A deployed classifier slowly gets worse with no errors in the logs. The most likely cause is:",
+        "level": "Advanced",
+        "choices": [
+          "Too many unit tests",
+          "A syntax error",
+          "Data drift: live inputs have moved away from what the model learned",
+          "The server is down"
+        ],
+        "answer": 2,
+        "explain": "Silent quality loss with no errors is the signature of drift. Uptime is fine; the input distribution changed."
+      },
+      {
+        "q": "The safest way to roll out a new model version is:",
+        "level": "Advanced",
+        "choices": [
+          "Only in development",
+          "Whenever the model is retrained, automatically to all users",
+          "Replace the old one everywhere at once",
+          "A canary or staged rollout compared on live traffic, with instant rollback to the previous version"
+        ],
+        "answer": 3,
+        "explain": "Gate the rollout and keep rollback one switch away. Never bet the whole system on an unverified version."
+      },
+      {
+        "q": "The classic production-ML lesson about where cost and risk live is:",
+        "level": "Advanced",
+        "choices": [
+          "In the surrounding data pipelines, monitoring, and glue, which dwarf the model code",
+          "In the choice of programming language",
+          "In the number of GPUs",
+          "In the model code, which dominates the system"
+        ],
+        "answer": 0,
+        "explain": "Model code is a small fraction of a real ML system; the data and operational scaffolding carry most of the ongoing cost and risk."
+      }
+    ],
+    "exercise": {
+      "type": "ordering",
+      "prompt": "Put the lifecycle of a deployed AI feature in the order it should run.",
+      "items": [
+        "Validate and version the input data before anything depends on it",
+        "Train or configure the model and evaluate it against a baseline on held-out data",
+        "Deploy behind a gate (canary or staged rollout), comparing against the current version",
+        "Monitor live inputs and outputs for drift and quality regressions",
+        "Retrain or roll back when a monitored trigger fires, then repeat"
+      ],
+      "explain": "Data first, then evaluate against a baseline, then gated deploy, then monitor, then act on triggers. It is a loop: the last step feeds the first."
+    },
+    "outcome": "Lay out the lifecycle of a deployed AI feature: validated data, gated rollout, drift monitoring, and trigger-driven retrain or rollback.",
+    "prereqs": [
+      "vc_human_in_the_loop"
+    ],
+    "next": "vc_capstone_review",
+    "sources": [
+      {
+        "claim": "Model code is a small fraction of a real ML system; data and operational scaffolding dominate.",
+        "title": "Sculley et al., Hidden Technical Debt in Machine Learning Systems (2015)",
+        "url": "https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html",
+        "last_verified": "2026-06-18"
+      }
+    ]
+  },
+  {
+    "id": "vc_capstone_review",
+    "track": "vibe-coding",
+    "title": "Capstone: review an AI-generated patch",
+    "level": "Advanced",
+    "minutes": 9,
+    "summary": "The whole vibe-coding discipline in one task: read an AI-written diff, find the real bug, notice the missing test, catch the security hole, and make a merge call.",
+    "body_html": "<p>The leverage in vibe coding is not typing speed; it is review. An AI can produce a plausible patch in seconds, and plausible is exactly the danger, because it reads as finished while hiding the failure modes you are paid to catch. This capstone hands you a small, realistic AI-generated patch and walks the review the way a careful engineer does: identify the most serious defect, check what test should exist and does not, name the security issue, and decide whether to merge, request changes, or reject.</p><p>There is one defensible answer per step, with the reasoning revealed after you choose. The habit being built is reading AI output as a proposal to be verified, not an answer to be accepted.</p>",
+    "key_points": [
+      "Review is where vibe coding earns its safety; plausible code is the trap.",
+      "String-interpolated SQL is an injection hole; parameterized queries are the fix.",
+      "A patch without a test for its risky path is incomplete, even if it looks correct.",
+      "Merge, request changes, or reject is a real decision; default to request changes when a security issue is open."
+    ],
+    "links": [
+      {
+        "title": "OWASP: SQL Injection",
+        "url": "https://owasp.org/www-community/attacks/SQL_Injection",
+        "level": "Intermediate",
+        "kind": "reference",
+        "note": "What injection is and why parameterized queries prevent it."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Why is plausible AI-generated code dangerous?",
+        "back": "It reads as finished, which lowers your guard, while it can still hide bugs, missing tests, and security holes that only review catches."
+      },
+      {
+        "front": "The fix for string-built SQL is:",
+        "back": "A parameterized (bound-parameter) query, plus validating the input type. Never interpolate user input into a query string."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "An AI patch builds a SQL query with an f-string containing user input. This is:",
+        "level": "Advanced",
+        "choices": [
+          "Fine if the input looks clean",
+          "A SQL injection vulnerability; use a parameterized query instead",
+          "Faster and therefore better",
+          "Only a style issue"
+        ],
+        "answer": 1,
+        "explain": "Interpolating user input into SQL is the classic injection hole. Bind parameters so the input can never change the query structure."
+      },
+      {
+        "q": "The patch has no test exercising a malicious or unexpected user_id. The right call is:",
+        "level": "Advanced",
+        "choices": [
+          "Delete the existing tests",
+          "Merge; tests can come later",
+          "Request changes: the risky path needs a test before merge",
+          "Reject the whole feature permanently"
+        ],
+        "answer": 2,
+        "explain": "A risky path with no test is incomplete. Request changes and require coverage for the injection and validation behavior."
+      }
+    ],
+    "exercise": {
+      "type": "capstone",
+      "prompt": "Review the AI-generated patch step by step, then make the merge call.",
+      "scenario_html": "<p><strong>Patch under review</strong> (AI-generated, adds an endpoint to fetch a user's orders):</p><p><code>+ def get_orders(user_id):</code><br><code>+&nbsp;&nbsp;&nbsp;&nbsp; query = f\"SELECT * FROM orders WHERE user_id = {user_id}\"</code><br><code>+&nbsp;&nbsp;&nbsp;&nbsp; return db.execute(query).fetchall()</code></p><p>No tests were added. The PR description says \"adds order lookup, works on my machine.\"</p>",
+      "steps": [
+        {
+          "q": "What is the most serious defect in this patch?",
+          "choices": [
+            "SQL injection: user_id is interpolated straight into the query string",
+            "It returns too many columns",
+            "It lacks a docstring",
+            "The function name is unclear"
+          ],
+          "answer": 0,
+          "explain": "An f-string puts user input directly into the SQL, so a crafted user_id can rewrite the query. That is a critical injection vulnerability."
+        },
+        {
+          "q": "What test is missing?",
+          "choices": [
+            "A test that the function name is spelled correctly",
+            "A test exercising a malicious or non-integer user_id (and verifying a parameterized query), plus a normal-case test",
+            "A performance benchmark",
+            "No test is needed"
+          ],
+          "answer": 1,
+          "explain": "The risky path is untested. You need a case proving injection input is handled safely and the query is parameterized, plus the happy path."
+        },
+        {
+          "q": "What is the correct fix before this can merge?",
+          "choices": [
+            "Rename the query variable",
+            "Add a comment warning about injection",
+            "Use a parameterized query with a bound parameter and validate that user_id is an integer",
+            "Trust the caller to sanitize user_id"
+          ],
+          "answer": 2,
+          "explain": "Bind the parameter (for example db.execute(\"... WHERE user_id = ?\", [user_id])) and validate the type. The input can then never alter the query structure."
+        },
+        {
+          "q": "What is the right merge decision right now?",
+          "choices": [
+            "Reject and delete the feature idea",
+            "Merge and open a ticket to fix it later",
+            "Merge; it works on their machine",
+            "Request changes: do not merge until the query is parameterized, the input validated, and a test covers the risky path"
+          ],
+          "answer": 3,
+          "explain": "An open security issue means request changes, not merge-and-hope. 'Works on my machine' is not a security argument."
+        }
+      ],
+      "outcome": "You caught an injection vulnerability, named the missing test, specified the parameterized fix, and made the disciplined call: request changes before merge."
+    },
+    "outcome": "Review an AI-generated patch end to end: find the real defect, the missing test, the security hole, and make a defensible merge decision.",
+    "prereqs": [
+      "vc_trust_but_verify",
       "vc_reading_ai_code"
     ],
     "next": null

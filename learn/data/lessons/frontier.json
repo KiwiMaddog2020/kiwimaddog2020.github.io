@@ -148,24 +148,24 @@
         "q": "What does a reward model in RLHF represent?",
         "level": "Advanced",
         "choices": [
-          "A learned proxy for human preferences that the policy is optimized against.",
           "The tokenizer.",
           "The context window size.",
-          "The true objective, perfectly captured."
+          "The true objective, perfectly captured.",
+          "A learned proxy for human preferences that the policy is optimized against."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "The reward model is a learned stand-in for preferences, not the true goal."
       },
       {
         "q": "Why can sycophancy emerge from alignment?",
         "level": "Expert",
         "choices": [
-          "Because models dislike users.",
           "Because optimizing for what raters prefer can reward agreeable answers over correct ones.",
           "Because of the learning rate.",
-          "Because alignment never affects behavior."
+          "Because alignment never affects behavior.",
+          "Because models dislike users."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Optimizing a preference proxy can favor what pleases raters, including agreement."
       }
     ],
@@ -243,24 +243,24 @@
         "q": "What does spending more test-time compute trade?",
         "level": "Advanced",
         "choices": [
-          "Nothing; it is free.",
-          "Model size for data.",
           "Accuracy for speed.",
-          "Latency and cost for higher accuracy on hard problems."
+          "Latency and cost for higher accuracy on hard problems.",
+          "Nothing; it is free.",
+          "Model size for data."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "More thinking costs tokens and latency in exchange for accuracy where it helps."
       },
       {
         "q": "On which task is extra reasoning compute least useful?",
         "level": "Expert",
         "choices": [
-          "A simple factual lookup with no verifiable reasoning to do.",
-          "A multi-step proof.",
           "A tricky coding bug.",
-          "A hard competition math problem."
+          "A hard competition math problem.",
+          "A simple factual lookup with no verifiable reasoning to do.",
+          "A multi-step proof."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Easy lookups have little to reason about, so extra compute mostly buys latency."
       }
     ],
@@ -338,24 +338,24 @@
         "q": "Why is reading a single neuron usually not enough to understand a model?",
         "level": "Advanced",
         "choices": [
+          "Models have no neurons.",
           "Neurons only store the tokenizer.",
           "Neurons are random.",
-          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing.",
-          "Models have no neurons."
+          "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Superposition packs many features into shared neurons, blurring one-to-one meaning."
       },
       {
         "q": "What is the honest status of interpretability claims?",
         "level": "Expert",
         "choices": [
+          "There are real, verifiable findings, but full explanations remain partial.",
           "Interpretability has produced nothing useful.",
           "It only works on tiny models.",
-          "We can fully explain any frontier model's behavior.",
-          "There are real, verifiable findings, but full explanations remain partial."
+          "We can fully explain any frontier model's behavior."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Genuine progress coexists with large remaining gaps; avoid overclaiming."
       }
     ],
@@ -528,24 +528,24 @@
         "q": "A frontier model solves a hard proof but botches a simple arithmetic step. What does this illustrate?",
         "level": "Expert",
         "choices": [
-          "Jagged capability: model difficulty does not track human difficulty.",
           "Arithmetic is harder than proofs for everyone.",
           "The proof answer was luck.",
-          "The model is broken."
+          "The model is broken.",
+          "Jagged capability: model difficulty does not track human difficulty."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "Uneven competence across tasks is a structural property, not a one-off error."
       },
       {
         "q": "Why will scaling not fully eliminate hallucination?",
         "level": "Expert",
         "choices": [
-          "Because models will get smaller.",
           "Because it has several roots (the objective, data gaps, calibration), so scale alone does not remove it.",
           "Because hallucination is not real.",
-          "Because calibration is already perfect."
+          "Because calibration is already perfect.",
+          "Because models will get smaller."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Hallucination has multiple causes, so it is reduced and managed rather than removed by scale alone."
       }
     ],
@@ -623,24 +623,24 @@
         "q": "What is the most durable strategy for keeping up with AI research?",
         "level": "Advanced",
         "choices": [
-          "Only read social media threads.",
-          "Avoid reading papers entirely.",
           "Read every new preprint the day it appears.",
-          "Anchor on a small canon deeply, then place new work against it with source discipline."
+          "Anchor on a small canon deeply, then place new work against it with source discipline.",
+          "Only read social media threads.",
+          "Avoid reading papers entirely."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Deep canonical scaffolding plus skeptical reading scales; chasing everything does not."
       },
       {
         "q": "How should you treat a striking, un-reproduced preprint result?",
         "level": "Expert",
         "choices": [
-          "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
-          "Ignore it forever.",
           "Assume it is contaminated.",
-          "As established fact."
+          "As established fact.",
+          "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
+          "Ignore it forever."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Source discipline weights a claim by evidence, not by how striking it sounds."
       }
     ],
@@ -725,24 +725,24 @@
         "q": "A model has 100B parameters but activates only about 13B per token. What architecture is this?",
         "level": "Advanced",
         "choices": [
+          "A distilled student model.",
           "A multimodal encoder.",
           "A dense transformer.",
-          "A mixture-of-experts model with sparse routing.",
-          "A distilled student model."
+          "A mixture-of-experts model with sparse routing."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Activating a fraction of parameters per token via routing is the defining trait of MoE."
       },
       {
         "q": "You need to cut serving cost while keeping most of a large model's behavior. Which lever fits?",
         "level": "Advanced",
         "choices": [
+          "Distillation into a smaller student.",
           "A larger context window.",
           "A higher temperature.",
-          "Multimodality.",
-          "Distillation into a smaller student."
+          "Multimodality."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Distillation trades a little quality for much cheaper deployment."
       }
     ],
@@ -768,6 +768,252 @@
     "outcome": "You can describe multimodal models, mixture-of-experts, and distillation and their tradeoffs.",
     "prereqs": [
       "fr_scaling_laws_emergence"
+    ],
+    "next": "fr_efficient_adaptation"
+  },
+  {
+    "id": "fr_efficient_adaptation",
+    "track": "frontier",
+    "title": "Efficient adaptation: LoRA, PEFT, and quantization",
+    "level": "Advanced",
+    "minutes": 7,
+    "summary": "You rarely need to retrain a whole model. Parameter-efficient methods and quantization let you adapt and run large models on modest hardware.",
+    "body_html": "<p>Full fine-tuning updates every weight in a model, which for a large model means enormous memory and a fresh multi-gigabyte copy per task. Parameter-efficient fine-tuning (PEFT) avoids that by freezing the pretrained weights and training a small number of new parameters instead. The dominant method, LoRA (low-rank adaptation), inserts small pairs of low-rank matrices alongside selected weight matrices and trains only those. Because the update is constrained to a low-rank form, the trainable parameter count drops by orders of magnitude while quality on the target task stays close to full fine-tuning. The frozen base is shared, so each task is just a small adapter you can swap in.</p><p>Quantization attacks a different cost: the precision of the numbers themselves. Weights are usually stored in 16-bit floats; quantizing them to 8-bit or 4-bit integers shrinks memory and speeds inference, at some risk to accuracy that careful schemes largely contain. QLoRA combines the two ideas: quantize the frozen base to 4-bit to fit it in limited memory, then train LoRA adapters on top in higher precision. That combination is what lets people adapt very large models on a single consumer GPU.</p><p>The practical takeaway is a decision tree. If you need new behavior and have task data, reach for LoRA or another PEFT method before full fine-tuning, since it is cheaper, faster, and gives you swappable adapters. If memory or latency at inference is the bottleneck, quantize. And remember that for many tasks you need neither: prompting, retrieval, or tool use adapts behavior with no training at all, and finetuning is the move only when those plateau.</p>",
+    "key_points": [
+      "PEFT freezes the base model and trains a small set of new parameters; LoRA is the dominant method.",
+      "LoRA adds low-rank adapter matrices to selected layers, cutting trainable parameters by orders of magnitude.",
+      "Quantization stores weights at lower precision (8-bit, 4-bit) to save memory and speed inference.",
+      "QLoRA quantizes the frozen base and trains LoRA adapters on top; prefer prompting or retrieval before any finetuning."
+    ],
+    "links": [
+      {
+        "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+        "url": "https://arxiv.org/abs/2106.09685",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The low-rank adaptation method that made PEFT mainstream."
+      },
+      {
+        "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+        "url": "https://arxiv.org/abs/2305.14314",
+        "level": "Expert",
+        "kind": "paper",
+        "note": "Quantize the frozen base to 4-bit, train LoRA adapters on top."
+      },
+      {
+        "title": "Hugging Face PEFT documentation",
+        "url": "https://huggingface.co/docs/peft/index",
+        "level": "Advanced",
+        "kind": "docs",
+        "note": "Practical library for LoRA and other parameter-efficient methods."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What does LoRA train, and what does it leave frozen?",
+        "back": "It freezes the pretrained weights and trains small low-rank adapter matrices added to selected layers, cutting trainable parameters dramatically."
+      },
+      {
+        "front": "What does quantization trade, and for what?",
+        "back": "It trades some numeric precision (16-bit to 8-bit or 4-bit) for less memory and faster inference; careful schemes keep the accuracy cost small."
+      },
+      {
+        "front": "What does QLoRA combine?",
+        "back": "A 4-bit quantized frozen base (to fit in limited memory) with higher-precision LoRA adapters trained on top, enabling adaptation of large models on one GPU."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Compared with full fine-tuning, LoRA primarily reduces:",
+        "level": "Advanced",
+        "choices": [
+          "The model's vocabulary",
+          "The number of trainable parameters (and thus memory and per-task storage), by training small low-rank adapters",
+          "The context window",
+          "The need for any task data"
+        ],
+        "answer": 1,
+        "explain": "LoRA freezes the base and trains a tiny low-rank update, slashing trainable parameters and giving swappable per-task adapters."
+      },
+      {
+        "q": "You need to run a large model but it does not fit in your GPU memory. The most direct lever is:",
+        "level": "Advanced",
+        "choices": [
+          "Use a larger context window",
+          "Increase the temperature",
+          "Quantize the weights to lower precision (8-bit or 4-bit)",
+          "Add more LoRA adapters"
+        ],
+        "answer": 2,
+        "explain": "Quantization shrinks the memory footprint of the weights directly. LoRA addresses training cost, not base-model inference memory."
+      },
+      {
+        "q": "Before reaching for any finetuning to change behavior, you should first consider:",
+        "level": "Advanced",
+        "choices": [
+          "Quantizing to 1-bit",
+          "Retraining from scratch",
+          "Buying more GPUs",
+          "Whether prompting, retrieval, or tool use already gets you there with no training"
+        ],
+        "answer": 3,
+        "explain": "Often no training is needed: prompting, retrieval, and tools adapt behavior for free. Finetune only when those plateau."
+      }
+    ],
+    "exercise": {
+      "type": "ordering",
+      "prompt": "Put the steps of a QLoRA-style efficient adaptation in order.",
+      "items": [
+        "Start from a pretrained base model and keep its weights frozen",
+        "Quantize the frozen base to low precision (for example 4-bit) to fit it in limited memory",
+        "Attach small low-rank LoRA adapter matrices to selected layers",
+        "Train only the adapter parameters on your task data",
+        "Serve by running the frozen base together with the trained adapters"
+      ],
+      "explain": "Freeze the base, quantize it to fit, add low-rank adapters, train only those, then serve base plus adapters. The base is shared; each task is a small adapter."
+    },
+    "outcome": "Choose between prompting, PEFT, and quantization for a real constraint, and explain what LoRA and QLoRA each change.",
+    "prereqs": [
+      "fr_rlhf_rlaif_alignment"
+    ],
+    "next": "fr_capstone_read_paper",
+    "source": {
+      "type": "paper",
+      "date": "2023-05",
+      "confidence": "high",
+      "contested": false,
+      "last_verified": "2026-06-18"
+    },
+    "sources": [
+      {
+        "claim": "LoRA freezes pretrained weights and injects trainable low-rank matrices.",
+        "title": "Hu et al., LoRA (2021)",
+        "url": "https://arxiv.org/abs/2106.09685",
+        "last_verified": "2026-06-18"
+      },
+      {
+        "claim": "QLoRA finetunes adapters over a 4-bit quantized frozen base.",
+        "title": "Dettmers et al., QLoRA (2023)",
+        "url": "https://arxiv.org/abs/2305.14314",
+        "last_verified": "2026-06-18"
+      }
+    ]
+  },
+  {
+    "id": "fr_capstone_read_paper",
+    "track": "frontier",
+    "title": "Capstone: read a frontier claim like a skeptic",
+    "level": "Expert",
+    "minutes": 9,
+    "summary": "The frontier arrives as papers and press releases. Practice the reading that separates a real result from a headline: what was measured, what was overclaimed, what evidence is missing.",
+    "body_html": "<p>Most frontier knowledge reaches you as a claim before it reaches you as consensus, so the load-bearing skill is critical reading. A strong result names exactly what it measured, on what benchmark, against what baseline, with what uncertainty. A weak one leans on a superlative (state-of-the-art, human-level, emergent) and a single number on a benchmark the authors chose, and lets you supply the generalization in your head. The evaluating-AI track gave you the tools; this capstone applies them to a paper-shaped claim.</p><p>You are handed an abstract and its headline claim. Work the steps to separate what is actually supported from what is implied, identify the missing evidence, and reach a calibrated verdict. The reasoning follows each choice. The goal is the reflex of asking, measured how, compared to what, and would it replicate.</p>",
+    "key_points": [
+      "A credible claim states the metric, the benchmark, the baseline, and the uncertainty.",
+      "A self-selected benchmark and a superlative are signals to slow down, not to believe.",
+      "Generalization from one benchmark to a broad capability is the most common overclaim.",
+      "A calibrated verdict is promising-but-unverified until independent replication on standard tasks."
+    ],
+    "links": [
+      {
+        "title": "Anthropic: A statistical approach to model evals",
+        "url": "https://www.anthropic.com/research/statistical-approach-to-model-evals",
+        "level": "Advanced",
+        "kind": "article",
+        "note": "What rigorous evaluation reporting looks like; use it as the bar to judge claims against."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "Four things a credible empirical claim names.",
+        "back": "The metric, the benchmark, the baseline it beats, and the uncertainty (interval or significance)."
+      },
+      {
+        "front": "What is the most common overclaim in frontier abstracts?",
+        "back": "Generalizing from one self-selected benchmark to a broad capability (for example calling a single-benchmark gain 'better reasoning')."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "An abstract reports a 40% gain on a benchmark the authors introduced, with no baseline comparison. Your first read is:",
+        "level": "Expert",
+        "choices": [
+          "Treat it as unverified: a self-made benchmark with no baseline does not establish a general result",
+          "The method is useless",
+          "The number proves the capability",
+          "State-of-the-art confirmed"
+        ],
+        "answer": 0,
+        "explain": "A self-selected benchmark with no baseline is the weakest form of evidence. It is a hypothesis to test, not a result to cite."
+      },
+      {
+        "q": "The strongest single thing that would raise your confidence in the claim is:",
+        "level": "Expert",
+        "choices": [
+          "A larger font in the abstract",
+          "Independent replication on standard, widely used benchmarks with a baseline and reported uncertainty",
+          "More authors",
+          "A press release"
+        ],
+        "answer": 1,
+        "explain": "Independent replication on shared benchmarks, with a baseline and uncertainty, is what turns a claim into a result."
+      }
+    ],
+    "exercise": {
+      "type": "capstone",
+      "prompt": "Judge the frontier claim one step at a time.",
+      "scenario_html": "<p><strong>Abstract (excerpt):</strong> \"We present Method X, which improves reasoning by 40% and achieves state-of-the-art performance. On our new ReasonBench suite, Method X scores 0.82. These results demonstrate a step change in machine reasoning.\"</p><p><strong>Headline:</strong> \"New method gives AI human-level reasoning.\"</p><p>The abstract reports no baseline number, no comparison to existing methods, no confidence interval, and ReasonBench was introduced in the same paper.</p>",
+      "steps": [
+        {
+          "q": "What was actually measured?",
+          "choices": [
+            "A score of 0.82 on ReasonBench, a benchmark the authors introduced in this paper",
+            "Performance on all standard reasoning benchmarks",
+            "Nothing measurable",
+            "Human-level reasoning, broadly"
+          ],
+          "answer": 0,
+          "explain": "The only datum is 0.82 on the authors' own ReasonBench. Everything broader is interpretation layered on top of that single number."
+        },
+        {
+          "q": "What is the central overclaim?",
+          "choices": [
+            "The font",
+            "Generalizing a single self-made-benchmark score into 'reasoning improved 40%' and 'human-level reasoning'",
+            "That it used a GPU",
+            "That it has authors"
+          ],
+          "answer": 1,
+          "explain": "The leap from one self-selected benchmark to a broad, human-level reasoning capability is the overclaim. The 40% also has no stated baseline."
+        },
+        {
+          "q": "What evidence is missing to support the claim?",
+          "choices": [
+            "More superlatives",
+            "Nothing; it is complete",
+            "A baseline comparison, results on standard external benchmarks, and reported uncertainty",
+            "A longer abstract"
+          ],
+          "answer": 2,
+          "explain": "Without a baseline, external benchmarks, and uncertainty, there is no way to know if 0.82 is good or if the gain is real."
+        },
+        {
+          "q": "What is the calibrated verdict?",
+          "choices": [
+            "Dismiss the method entirely",
+            "Cite it as proof of human-level AI",
+            "Accept it as state-of-the-art",
+            "Promising but unverified: interesting method, but the reasoning claim awaits a baseline and independent replication on standard benchmarks"
+          ],
+          "answer": 3,
+          "explain": "Neither hype nor dismissal. The honest position is promising-but-unverified, pending replication with baselines and uncertainty."
+        }
+      ],
+      "outcome": "You separated the measured datum from the implied capability, named the missing evidence, and reached a calibrated promising-but-unverified verdict."
+    },
+    "outcome": "Read a frontier claim critically: what was measured, what was overclaimed, what evidence is missing, and a calibrated verdict.",
+    "prereqs": [
+      "fr_evals_benchmarks",
+      "fr_capabilities_limits"
     ],
     "next": null
   }

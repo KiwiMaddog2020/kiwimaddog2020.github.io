@@ -48,24 +48,24 @@
         "q": "What distinguishes a learned model from an ordinary program?",
         "level": "Beginner",
         "choices": [
-          "It never makes mistakes once trained.",
-          "It understands inputs the way a person does.",
           "Its behavior is controlled by weights fitted to data rather than hand-written rules.",
-          "It runs faster than hand-written code."
+          "It runs faster than hand-written code.",
+          "It never makes mistakes once trained.",
+          "It understands inputs the way a person does."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "The defining trait is learned parameters, not speed, infallibility, or understanding."
       },
       {
         "q": "Why is calling a model a fitted function more useful than calling it magic?",
         "level": "Beginner",
         "choices": [
-          "Because functions are always correct.",
-          "Because it means the model has no weights.",
           "Because it sounds more technical.",
-          "Because a fitted function has a predictable failure model: it degrades away from its training data."
+          "Because a fitted function has a predictable failure model: it degrades away from its training data.",
+          "Because functions are always correct.",
+          "Because it means the model has no weights."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "The point is predictability of failure, which magic cannot give you."
       }
     ],
@@ -134,24 +134,24 @@
         "q": "Why is the activation function essential to a neural network?",
         "level": "Beginner",
         "choices": [
+          "It replaces the need for data.",
           "It makes training faster.",
           "Without it, stacked layers reduce to one linear function and cannot fit curved patterns.",
-          "It stores the model's weights.",
-          "It replaces the need for data."
+          "It stores the model's weights."
         ],
-        "answer": 1,
+        "answer": 2,
         "explain": "Nonlinearity is what gives depth its expressive power."
       },
       {
         "q": "What is the practical meaning of depth in a network?",
         "level": "Beginner",
         "choices": [
+          "Depth removes the need for training.",
           "Depth only affects memory usage.",
           "More layers always means better accuracy.",
-          "Later layers can compose earlier features into more abstract representations.",
-          "Depth removes the need for training."
+          "Later layers can compose earlier features into more abstract representations."
         ],
-        "answer": 2,
+        "answer": 3,
         "explain": "Depth buys hierarchical composition of features, not guaranteed accuracy."
       }
     ],
@@ -397,24 +397,24 @@
         "q": "Why might a long, rare word cost more tokens than a short common one?",
         "level": "Intermediate",
         "choices": [
-          "Token count depends only on language, not the word.",
           "Rare or long words are split into several subword tokens.",
           "Long words are always one token.",
-          "The model spells out each letter as a token."
+          "The model spells out each letter as a token.",
+          "Token count depends only on language, not the word."
         ],
-        "answer": 1,
+        "answer": 0,
         "explain": "Tokenizers break uncommon words into multiple subword pieces."
       },
       {
         "q": "What property makes embeddings useful for semantic search?",
         "level": "Intermediate",
         "choices": [
-          "They remove all punctuation.",
           "They compress text to save disk space.",
           "Similar meanings map to nearby vectors, so closeness approximates relatedness.",
-          "They convert text to lowercase."
+          "They convert text to lowercase.",
+          "They remove all punctuation."
         ],
-        "answer": 2,
+        "answer": 1,
         "explain": "Search ranks by vector distance, which tracks semantic similarity."
       }
     ],
@@ -493,24 +493,24 @@
         "q": "What problem does self-attention solve for language?",
         "level": "Intermediate",
         "choices": [
-          "It lets each token draw on the most relevant other tokens, capturing long-range relationships.",
-          "It compresses the model to fewer weights.",
           "It guarantees the output is factually correct.",
-          "It removes the need for training data."
+          "It removes the need for training data.",
+          "It lets each token draw on the most relevant other tokens, capturing long-range relationships.",
+          "It compresses the model to fewer weights."
         ],
-        "answer": 0,
+        "answer": 2,
         "explain": "Attention routes information between related tokens regardless of distance."
       },
       {
         "q": "In attention, what is compared to produce the weights?",
         "level": "Advanced",
         "choices": [
-          "Two random tokens chosen each step.",
-          "Each token's query against every token's key.",
           "Each token's value against the loss.",
-          "The learning rate against the batch size."
+          "The learning rate against the batch size.",
+          "Two random tokens chosen each step.",
+          "Each token's query against every token's key."
         ],
-        "answer": 1,
+        "answer": 3,
         "explain": "Query-key comparisons produce the attention weights that combine the values."
       }
     ],
@@ -582,24 +582,24 @@
         "q": "Why is fine-tuning much cheaper than pretraining?",
         "level": "Advanced",
         "choices": [
+          "It adjusts an already-capable model on a smaller, targeted dataset.",
           "It skips backpropagation.",
           "It does not change any weights.",
-          "It uses a larger dataset than pretraining.",
-          "It adjusts an already-capable model on a smaller, targeted dataset."
+          "It uses a larger dataset than pretraining."
         ],
-        "answer": 3,
+        "answer": 0,
         "explain": "Fine-tuning starts from a trained base, so it needs far less data and compute."
       },
       {
         "q": "What does the preference-tuning stage primarily shape?",
         "level": "Advanced",
         "choices": [
+          "The model's raw factual knowledge.",
           "Tone, helpfulness, and safety, by optimizing toward preferred responses.",
           "The tokenizer.",
-          "The size of the context window.",
-          "The model's raw factual knowledge."
+          "The size of the context window."
         ],
-        "answer": 0,
+        "answer": 1,
         "explain": "RLHF and similar methods primarily shape behavior and preferences; base capability comes from pretraining, though post-training can also lift measured performance."
       }
     ],
@@ -795,16 +795,47 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "A 200-page document is far larger than the model's context window. What is the right approach?",
-      "choices": [
-        "Ask the model to memorize it first.",
-        "Paste the whole document and hope it fits.",
-        "Chunk it and retrieve the most relevant passages for each question.",
-        "Lower the temperature so it fits."
+      "type": "context_budget",
+      "prompt": "You are assembling a prompt for an 8,000-token context window. Drag the reservations and watch what fits. Output is reserved first, then the system prompt; retrieved context and chat history are truncated to fit, history first.",
+      "window": 8000,
+      "parts": [
+        {
+          "key": "output",
+          "label": "Output reserved",
+          "value": 1500,
+          "max": 4000,
+          "step": 100
+        },
+        {
+          "key": "system",
+          "label": "System prompt",
+          "value": 800,
+          "max": 3000,
+          "step": 100
+        },
+        {
+          "key": "retrieved",
+          "label": "Retrieved context",
+          "value": 2500,
+          "max": 6000,
+          "step": 100
+        },
+        {
+          "key": "history",
+          "label": "Chat history",
+          "value": 2000,
+          "max": 8000,
+          "step": 100
+        }
       ],
-      "answer": 2,
-      "explain": "Context is finite, so chunk the document and spend the budget on the most relevant passages."
+      "priority": [
+        "output",
+        "system",
+        "retrieved",
+        "history"
+      ],
+      "question": "Push retrieved context and history up until you go over 8,000. Which gets truncated first, and why?",
+      "explain": "Everything shares one fixed budget. Output and system are protected, so when the total exceeds the window the lowest-priority context (oldest chat history) is dropped first, then retrieved context. Nothing outside the window is visible to the model."
     },
     "outcome": "You can explain the context window and why it governs memory, chunking, and retrieval.",
     "prereqs": [
@@ -862,24 +893,24 @@
         "q": "A model scores 99% in testing but fails in production. You find the same customers in both train and test sets. What happened?",
         "level": "Intermediate",
         "choices": [
-          "The temperature was wrong.",
           "The test set was too large.",
           "The model is too small.",
-          "Data leakage: overlapping train and test inflated the score."
+          "Data leakage: overlapping train and test inflated the score.",
+          "The temperature was wrong."
         ],
-        "answer": 3,
+        "answer": 2,
         "explain": "Shared records across splits let the model be graded on data it trained on; split by entity."
       },
       {
         "q": "Why split time-ordered data by time rather than randomly?",
         "level": "Advanced",
         "choices": [
-          "Because the real task is predicting the future, and a random split leaks future information.",
           "To use less data.",
           "Because random splits are illegal.",
-          "To make training faster."
+          "To make training faster.",
+          "Because the real task is predicting the future, and a random split leaks future information."
         ],
-        "answer": 0,
+        "answer": 3,
         "explain": "A random split lets future rows train the model, leaking information it would not have in production."
       }
     ],
@@ -950,24 +981,24 @@
         "q": "You have a pile of unlabeled support tickets and want to group similar ones. Which setting fits?",
         "level": "Beginner",
         "choices": [
-          "None; it cannot be done.",
-          "Supervised classification.",
           "Unsupervised clustering.",
-          "Reinforcement learning."
+          "Reinforcement learning.",
+          "None; it cannot be done.",
+          "Supervised classification."
         ],
-        "answer": 2,
+        "answer": 0,
         "explain": "No labels and a grouping goal points to unsupervised clustering."
       },
       {
         "q": "Why can you compute accuracy for a supervised model but not directly for plain clustering?",
         "level": "Intermediate",
         "choices": [
-          "Clustering has no inputs.",
-          "Accuracy only works on text.",
           "Clustering is slower.",
-          "Accuracy needs ground-truth labels, which unsupervised data lacks."
+          "Accuracy needs ground-truth labels, which unsupervised data lacks.",
+          "Clustering has no inputs.",
+          "Accuracy only works on text."
         ],
-        "answer": 3,
+        "answer": 1,
         "explain": "Accuracy compares predictions to known labels; unsupervised settings have none."
       }
     ],
@@ -987,6 +1018,335 @@
     "prereqs": [
       "fnd_what_is_a_model"
     ],
-    "next": null
+    "next": "fnd_transformer_internals"
+  },
+  {
+    "id": "fnd_transformer_internals",
+    "track": "foundations",
+    "title": "Inside a transformer block: residuals, normalization, positions",
+    "level": "Advanced",
+    "minutes": 7,
+    "summary": "Attention gets the headlines, but three quieter pieces make deep transformers trainable: residual connections, normalization, and positional encoding.",
+    "body_html": "<p>A transformer is a stack of identical blocks, and each block has two sublayers: multi-head self-attention, then a small position-wise feedforward network. Stacking dozens of these would normally be impossible to train, because gradients vanish or explode on the way down. Residual connections fix that: each sublayer computes an update and adds it to its input rather than replacing it, so the block learns a correction to the running representation. The unbroken add-path gives gradients a clean route back through every layer, which is what lets the network go deep.</p><p>Normalization keeps the numbers in a sane range. Layer normalization rescales each token's vector to a stable mean and variance before (or after) each sublayer, so one runaway feature does not dominate and training stays steady across the stack. The exact placement, pre-norm versus post-norm, changes stability and is a real architecture choice, but the purpose is the same: keep activations well-conditioned so the residual updates compose cleanly.</p><p>Attention itself is order-blind. Permute the tokens and the raw attention math gives the same answer, because it is a weighted sum over a set. Positional encoding injects order back in, either as fixed sinusoids added to the embeddings or, in most current models, as a learned or rotary scheme applied inside attention. Without it, 'dog bites man' and 'man bites dog' would be indistinguishable. Together, residuals make depth trainable, normalization keeps it stable, and positions give attention something to be ordered about.</p>",
+    "key_points": [
+      "A block is self-attention plus a feedforward sublayer, each wrapped in a residual add and a normalization.",
+      "Residual connections add each sublayer's output to its input, giving gradients a clean path through a deep stack.",
+      "Normalization (layer norm) keeps activations well-conditioned so training stays stable.",
+      "Attention is order-blind; positional encoding (sinusoidal, learned, or rotary) restores token order."
+    ],
+    "links": [
+      {
+        "title": "The Illustrated Transformer",
+        "url": "https://jalammar.github.io/illustrated-transformer/",
+        "level": "Intermediate",
+        "kind": "article",
+        "note": "The clearest visual walkthrough of a transformer block."
+      },
+      {
+        "title": "Attention Is All You Need",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The original architecture: residuals, layer norm, and sinusoidal positions."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What problem do residual connections solve in deep transformers?",
+        "back": "Vanishing/exploding gradients. Adding each sublayer's output to its input gives gradients an unbroken path through the whole stack, making depth trainable."
+      },
+      {
+        "front": "Why does a transformer need positional encoding?",
+        "back": "Raw self-attention is order-blind (a weighted sum over a set). Positional encoding injects token order so word order carries meaning."
+      },
+      {
+        "front": "What does layer normalization do?",
+        "back": "Rescales each token vector to a stable mean and variance so no single feature dominates and training stays steady across layers."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Remove the residual connections from a 48-layer transformer. The most likely result is:",
+        "level": "Advanced",
+        "choices": [
+          "It can no longer attend to any token",
+          "Faster training",
+          "It trains poorly because gradients struggle to reach early layers",
+          "Identical behavior"
+        ],
+        "answer": 2,
+        "explain": "Residual add-paths are what let gradients flow through a deep stack. Remove them and early layers barely learn."
+      },
+      {
+        "q": "Self-attention with the positional information removed would treat 'dog bites man' and 'man bites dog' as:",
+        "level": "Intermediate",
+        "choices": [
+          "Grammatically invalid",
+          "Two different token counts",
+          "Opposite in meaning",
+          "The same, because attention over a set is order-invariant"
+        ],
+        "answer": 3,
+        "explain": "Without positions, attention is a permutation-invariant sum over tokens, so word order is lost."
+      },
+      {
+        "q": "The position-wise feedforward sublayer in a block:",
+        "level": "Advanced",
+        "choices": [
+          "Applies the same small network to each token's vector independently",
+          "Replaces attention",
+          "Stores the positional encodings",
+          "Mixes information across tokens"
+        ],
+        "answer": 0,
+        "explain": "Attention mixes across tokens; the feedforward sublayer transforms each position independently with shared weights."
+      }
+    ],
+    "exercise": {
+      "type": "ordering",
+      "prompt": "Put the data flow through one pre-norm transformer block in order.",
+      "items": [
+        "Take the input vectors (token embeddings plus positional information)",
+        "Normalize, then run multi-head self-attention to mix information across tokens",
+        "Add the attention output back to the block input (residual)",
+        "Normalize, then run the position-wise feedforward network on each token",
+        "Add the feedforward output back (residual) and pass the result to the next block"
+      ],
+      "explain": "Each sublayer is normalize, transform, then add back to its input. Attention mixes across tokens; the feedforward transforms each position; residual adds carry the signal forward."
+    },
+    "outcome": "Explain what residuals, normalization, and positional encoding each contribute, and trace data through one transformer block.",
+    "prereqs": [
+      "fnd_attention_transformers"
+    ],
+    "next": "fnd_bpe_tokenization",
+    "diagram": "attention",
+    "sources": [
+      {
+        "claim": "Residual connections and layer normalization wrap each sublayer in the original transformer.",
+        "title": "Vaswani et al., Attention Is All You Need (2017)",
+        "url": "https://arxiv.org/abs/1706.03762",
+        "last_verified": "2026-06-18"
+      }
+    ]
+  },
+  {
+    "id": "fnd_bpe_tokenization",
+    "track": "foundations",
+    "title": "How byte-pair encoding builds a vocabulary",
+    "level": "Intermediate",
+    "minutes": 5,
+    "summary": "Tokenizers do not split on words. Byte-pair encoding learns a vocabulary of frequent fragments, which is why token counts and costs surprise people.",
+    "body_html": "<p>A model cannot read raw text; it reads token ids. The tokenizer that produces them is trained separately, before the model, and most current models use byte-pair encoding (BPE) or a close variant. BPE starts from the smallest units (bytes or characters) and repeatedly merges the most frequent adjacent pair into a new symbol. Run that thousands of times and you get a vocabulary where common words like 'the' are a single token, while rare or novel strings stay split into several pieces. The merges are frozen into the vocabulary; at inference the tokenizer just applies them greedily.</p><p>This explains the counts that catch people out. A short common English word is often one token; a long rare technical term, a misspelling, or a string of digits can be many tokens, because no frequent merges cover them. Whitespace and capitalization matter too, since ' the' and 'the' may be different tokens. Code, non-English scripts, and emoji often cost more tokens per visible character than plain English, which is exactly the text BPE vocabularies are usually trained on.</p><p>Two practical consequences follow. First, your context window and your bill are denominated in tokens, not words or characters, so the same screenful of text can cost very differently depending on what it contains. Second, tokenization is a real source of model quirks: arithmetic on multi-digit numbers and exact character manipulation are harder partly because digits and characters get grouped in ways that hide their structure from the model.</p>",
+    "key_points": [
+      "BPE learns a vocabulary by repeatedly merging the most frequent adjacent unit pair, starting from bytes or characters.",
+      "Common words become single tokens; rare strings, digits, and other scripts split into many.",
+      "Whitespace and case can change which token a string maps to.",
+      "Token count, not word or character count, drives context limits and cost."
+    ],
+    "links": [
+      {
+        "title": "Neural Machine Translation of Rare Words with Subword Units (BPE)",
+        "url": "https://arxiv.org/abs/1508.07909",
+        "level": "Advanced",
+        "kind": "paper",
+        "note": "The paper that brought byte-pair encoding to NLP."
+      },
+      {
+        "title": "Hugging Face: Summary of the tokenizers",
+        "url": "https://huggingface.co/docs/transformers/en/tokenizer_summary",
+        "level": "Intermediate",
+        "kind": "docs",
+        "note": "BPE, WordPiece, and Unigram compared with worked examples."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "In one sentence, how does BPE build its vocabulary?",
+        "back": "It starts from bytes or characters and repeatedly merges the most frequent adjacent pair into a new token, thousands of times."
+      },
+      {
+        "front": "Why does a long rare technical term cost many tokens?",
+        "back": "No frequent merges cover it, so it stays split into several subword pieces, while common words collapse to one token."
+      },
+      {
+        "front": "Why are context limits and bills counted in tokens, not words?",
+        "back": "The model only sees tokens. The same visible text can be many or few tokens depending on how BPE fragments it."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "Which input is likely to use the MOST tokens for its visible length?",
+        "level": "Intermediate",
+        "choices": [
+          "The common word 'the'",
+          "A long, rare chemical name the tokenizer has never merged",
+          "A single space",
+          "The word 'and'"
+        ],
+        "answer": 1,
+        "explain": "Common words are single tokens; a rare unmerged string fragments into many subword pieces, so it costs the most tokens per character."
+      },
+      {
+        "q": "Why can a model struggle with multi-digit arithmetic partly because of tokenization?",
+        "level": "Advanced",
+        "choices": [
+          "Tokenizers round numbers",
+          "Digits are never tokenized",
+          "Digit groups can be merged into tokens that hide individual place values from the model",
+          "Numbers use a separate model"
+        ],
+        "answer": 2,
+        "explain": "BPE may group digits into chunks, obscuring the per-digit structure arithmetic needs. It is one contributor to number-handling quirks."
+      },
+      {
+        "q": "' the' (with a leading space) and 'the' in a typical BPE tokenizer are:",
+        "level": "Intermediate",
+        "choices": [
+          "Never tokenizable",
+          "Merged into one character",
+          "Always the same token",
+          "Potentially different tokens, because whitespace is part of the unit"
+        ],
+        "answer": 3,
+        "explain": "Many BPE vocabularies treat leading whitespace as part of the token, so the spaced and unspaced forms can differ."
+      }
+    ],
+    "exercise": {
+      "type": "predict_output",
+      "prompt": "A BPE tokenizer trained on ordinary English text is given four inputs of similar visible length. Predict which one is split into the MOST tokens.",
+      "choices": [
+        "'information' (a common English word)",
+        "'pneumonoultramicroscopicsilicovolcanoconiosis' (a rare long word)",
+        "'the the the' (a common word repeated)",
+        "'hello world' (two common words)"
+      ],
+      "answer": 1,
+      "explain": "Common words and repeats collapse into few tokens via learned merges. The rare long word has no such merges, so it fragments into many subword pieces: the most tokens of the four."
+    },
+    "outcome": "Predict roughly how text fragments into tokens and explain why count and cost are denominated in tokens.",
+    "prereqs": [
+      "fnd_tokens_embeddings"
+    ],
+    "next": "fnd_capstone_classifier",
+    "diagram": "tokens_embeddings"
+  },
+  {
+    "id": "fnd_capstone_classifier",
+    "track": "foundations",
+    "title": "Capstone: build and judge a tiny classifier",
+    "level": "Intermediate",
+    "minutes": 9,
+    "summary": "Tie the foundations together. Walk a small classifier from data split to a go/no-go decision, reading a confusion matrix instead of trusting a single accuracy number.",
+    "body_html": "<p>You have built up the pieces: data, training, loss and overfitting, metrics. This capstone runs them on one concrete task. You are building a classifier that flags support tickets as urgent or not, so urgent ones jump the queue. You have 2,000 labeled tickets. The questions below are the decisions that separate a model you can trust from a demo that quietly overfits.</p><p>Work the steps in order; the reasoning is revealed after each choice. The goal is the habit of thought: split honestly, watch the dev/test gap, read the matrix to the cost that matters, and decide.</p>",
+    "key_points": [
+      "Split data into train, dev, and test; the test set is touched once, at the end.",
+      "Tuning on the test set leaks information and inflates your reported score.",
+      "Read the confusion matrix against real costs (a missed urgent ticket vs a false alarm).",
+      "A go decision needs the metric that matches the cost, not the headline accuracy."
+    ],
+    "links": [
+      {
+        "title": "Google ML Crash Course: Classification",
+        "url": "https://developers.google.com/machine-learning/crash-course/classification",
+        "level": "Beginner",
+        "kind": "course",
+        "note": "Splits, thresholds, and confusion-matrix metrics, hands-on."
+      }
+    ],
+    "flashcards": [
+      {
+        "front": "What is the dev (validation) set for?",
+        "back": "Tuning choices like the threshold and hyperparameters, so the test set stays untouched for one honest final estimate."
+      },
+      {
+        "front": "Why is a high accuracy not enough to ship the urgent-ticket classifier?",
+        "back": "On imbalanced data accuracy hides misses. You need the recall on urgent tickets, since a missed urgent ticket is the costly error."
+      }
+    ],
+    "quiz": [
+      {
+        "q": "You tune the decision threshold to maximize score on the test set. The problem is:",
+        "level": "Intermediate",
+        "choices": [
+          "You have leaked the test set into tuning, so its score no longer estimates real-world performance",
+          "The threshold cannot be tuned",
+          "Accuracy is the only valid metric",
+          "Nothing; that is correct"
+        ],
+        "answer": 0,
+        "explain": "Tuning on test contaminates it. Tune on dev; report the test score once."
+      },
+      {
+        "q": "For urgent-ticket routing, the most costly error is usually:",
+        "level": "Intermediate",
+        "choices": [
+          "A false alarm (non-urgent flagged urgent)",
+          "A miss (a real urgent ticket not flagged), so recall on urgent matters most",
+          "Too many true negatives",
+          "A balanced dataset"
+        ],
+        "answer": 1,
+        "explain": "Missing a genuinely urgent ticket is the expensive failure, so recall on the urgent class is the metric to defend."
+      }
+    ],
+    "exercise": {
+      "type": "capstone",
+      "prompt": "Take the urgent-ticket classifier from split to decision, one step at a time.",
+      "scenario_html": "<p><strong>Task:</strong> classify support tickets as urgent (positive) or not. 2,000 labeled tickets; about 15% are urgent. After training and tuning on the dev set, your held-out test confusion matrix is:</p><p><code>TP = 78&nbsp;&nbsp; FN = 12&nbsp;&nbsp; FP = 60&nbsp;&nbsp; TN = 450</code> (90 urgent, 510 not, in the test set).</p>",
+      "steps": [
+        {
+          "q": "How should the 2,000 tickets be split?",
+          "choices": [
+            "Into train, dev, and test, where test is used once at the very end",
+            "Train and test only, tuning on test",
+            "Randomly relabel and retrain",
+            "All 2,000 for training"
+          ],
+          "answer": 0,
+          "explain": "Three-way split: train to fit, dev to tune the threshold and choices, test for a single honest final estimate."
+        },
+        {
+          "q": "From the matrix, what is the recall (catch rate) on urgent tickets?",
+          "choices": [
+            "78/138, about 0.57",
+            "78/90, about 0.87",
+            "450/510, about 0.88",
+            "78/600, about 0.13"
+          ],
+          "answer": 1,
+          "explain": "Recall = TP/(TP+FN) = 78/(78+12) = 78/90 = 0.87. You catch about 87% of urgent tickets."
+        },
+        {
+          "q": "Precision is 78/(78+60) = about 0.57. Given the costs, the reasonable read is:",
+          "choices": [
+            "Accuracy is 88%, so nothing else matters",
+            "Reject the model; precision is too low",
+            "Recall on urgent is solid; the false alarms are tolerable since a flagged non-urgent ticket just gets a quick human glance",
+            "Ship it as the sole decision-maker with no human review"
+          ],
+          "answer": 2,
+          "explain": "Missing urgent tickets is the costly error, and recall is good. False alarms cost a cheap human glance, an acceptable trade for queue routing."
+        },
+        {
+          "q": "What is the honest go/no-go decision?",
+          "choices": [
+            "Report only the 88% accuracy and roll out everywhere",
+            "Retrain until accuracy hits 99%",
+            "Ship as a fully automated final decision",
+            "Pilot it as a triage aid with a human reviewing flags, report recall with a confidence interval, and monitor the miss rate"
+          ],
+          "answer": 3,
+          "explain": "Go, but as an aid with human review and monitoring, reporting recall with uncertainty. That respects both the value and the cost of a miss."
+        }
+      ],
+      "outcome": "You split honestly, read recall and precision off a real confusion matrix, weighed them against costs, and made a defensible, monitored go decision."
+    },
+    "outcome": "Carry a classifier from an honest data split to a cost-aware, monitored decision using a confusion matrix.",
+    "prereqs": [
+      "fnd_loss_overfitting",
+      "fnd_supervised_unsupervised"
+    ],
+    "next": null,
+    "diagram": "confusion_matrix"
   }
 ]
