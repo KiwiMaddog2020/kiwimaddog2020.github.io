@@ -6,8 +6,12 @@ Autonomous overnight build started 2026-06-17/18. Spec: [PLAN.md](PLAN.md). Home
 
 ## Phase status
 
-- [~] P0: plan + spec written; decorrelated plan audit IN FLIGHT; fold pending.
-- [ ] P1: data schema + JS engine (renderer/quiz/flashcards) + CSS + landing shell.
+- [x] P0: plan + spec written; decorrelated plan audit DONE + folded. Codex+Gemini converged: passive
+  reading+quizzes is mediocre -> added ACTIVE exercise types (spot_the_bug, agent_trace, predict_output,
+  prompt_repair) to the schema; added competency metadata (outcome/prereqs/next) + frontier source
+  discipline; sequencing = engine + ONE exemplar lesson to >=88 as the TEMPLATE, then replicate breadth.
+- [~] P1: IN FLIGHT. Codex building engine (index.html + assets/learn.js + assets/learn.css + data
+  scaffold + exemplar lesson `vc_trust_but_verify`). Gemini curating the link library in parallel.
 - [ ] P2: lesson content across 5 tracks (Foundations, Agents, Vibe Coding, Evaluating AI, Frontier).
 - [ ] P3: flashcards + quizzes per track.
 - [ ] P4: resources/links library + Start-here path.
