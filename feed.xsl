@@ -12,13 +12,13 @@
       <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <title>Feed · Kevin Madson · Research notes</title>
+        <title>Feed · Arbiter Machinae · Research notes</title>
         <link rel="stylesheet" href="/assets/research-notes.css"/>
       </head>
       <body class="hub">
         <div class="page">
           <nav class="top">
-            <a class="wordmark" href="/">Kevin Madson</a>
+            <a class="wordmark" href="/">Arbiter Machinae</a>
             <span class="crumb">Feed</span>
             <div class="links"><a href="/">Notes</a></div>
           </nav>
