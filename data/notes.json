@@ -1,0 +1,42 @@
+[
+  {
+    "title": "An honest eval harness, and a controlled experiment on what makes AI refinement actually improve.",
+    "url": "https://kiwimaddog2020.github.io/trutina/",
+    "code": "https://github.com/KiwiMaddog2020/trutina"
+  },
+  {
+    "title": "Do AI code reviewers have complementary blind spots?",
+    "url": "https://kiwimaddog2020.github.io/decorrelation-study/",
+    "code": "https://github.com/KiwiMaddog2020/decorrelation-study"
+  },
+  {
+    "title": "How to know if your AI is actually working",
+    "url": "https://kiwimaddog2020.github.io/evaluating-claude/",
+    "code": "https://github.com/KiwiMaddog2020/evaluating-claude"
+  },
+  {
+    "title": "The gate that edits a gate is rejected by the gate it edits",
+    "url": "https://kiwimaddog2020.github.io/self-improvement-gate/",
+    "code": "https://github.com/KiwiMaddog2020/self-improvement-gate"
+  },
+  {
+    "title": "Ten rounds of an agent improving one game",
+    "url": "https://kiwimaddog2020.github.io/oneshot-bench/",
+    "code": "https://github.com/KiwiMaddog2020/oneshot-bench"
+  },
+  {
+    "title": "Rating your own work without lying to yourself",
+    "url": "https://kiwimaddog2020.github.io/craft-fit-rating/",
+    "code": "https://github.com/KiwiMaddog2020/craft-fit-rating"
+  },
+  {
+    "title": "An evaluation framework you can trust: the doer never rates its own work",
+    "url": "https://kiwimaddog2020.github.io/trust-weighted-evals/",
+    "code": "https://github.com/KiwiMaddog2020/trust-weighted-evals"
+  },
+  {
+    "title": "Audioscan: one decode pass instead of three ffmpeg shellouts",
+    "url": "https://kiwimaddog2020.github.io/audioscan/",
+    "code": "https://github.com/KiwiMaddog2020/audioscan"
+  }
+]

@@ -456,6 +456,19 @@
     app.focus({ preventScroll: true });
   }
 
+  function updateSectionSwitch(section) {
+    const current = section === "research" ? "research" : "study";
+    document.querySelectorAll(".section-link[data-section]").forEach(function (link) {
+      const on = link.getAttribute("data-section") === current;
+      link.classList.toggle("is-active", on);
+      if (on) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
   function renderRoute() {
     if (!state.ready) return;
 
@@ -463,8 +476,15 @@
     const section = parts[0] || "";
     const id = parts[1] || "";
 
+    updateSectionSwitch(section);
+
     if (!section) {
       renderLanding();
+      return;
+    }
+
+    if (section === "research") {
+      renderResearch();
       return;
     }
 
@@ -893,6 +913,46 @@
         }).join("")}
       </ul>
     `;
+  }
+
+  let notesCache = null;
+
+  function renderResearch() {
+    replaceApp(`
+      <section class="track-header" aria-labelledby="research-title">
+        <p class="eyebrow">Research notes</p>
+        <h1 id="research-title">Research notes</h1>
+        <p class="lead">I build software with AI agents, programs that write and change code largely on their own, using several different AI models. These are working notes on doing that without flying blind: telling whether the AI's work is any good, checking it without spending a fortune, and keeping a system honest when it can change its own rules.</p>
+        <p class="research-byline">by <a href="https://github.com/KiwiMaddog2020">Kevin Madson</a></p>
+      </section>
+      <div id="research-list"><p class="learn-loading">Loading notes...</p></div>
+    `, "Research notes");
+
+    const host = app.querySelector("#research-list");
+    if (!host) return;
+    const fill = function (notes) {
+      if (!notes || !notes.length) {
+        host.innerHTML = `<p class="empty-state">No notes yet.</p>`;
+        return;
+      }
+      const items = notes.map(function (note) {
+        const title = escapeHtml(note.title || "");
+        return `<li><a class="note-title" href="${escapeHtml(note.url || "#")}">${title}</a>`
+          + `<a class="note-code" href="${escapeHtml(note.code || "#")}" aria-label="Code repository: ${title}">code</a></li>`;
+      }).join("");
+      host.innerHTML = `<div class="notes-list"><ul role="list">${items}</ul></div>`
+        + `<p class="research-foot">Each note is published from the project it describes, so the write-up and the code you can run sit at the same address. The list rebuilds from public repositories tagged <code>research-note</code>; the <a href="/feed.xml">Atom feed</a> carries the same entries.</p>`;
+    };
+    if (notesCache) {
+      fill(notesCache);
+    } else {
+      fetchJson("./data/notes.json").then(function (notes) {
+        notesCache = notes;
+        fill(notes);
+      }).catch(function () {
+        host.innerHTML = `<p class="empty-state">Couldn't load the notes list right now.</p>`;
+      });
+    }
   }
 
   function renderResources() {
@@ -2232,6 +2292,77 @@
     `, "Not found");
   }
 
+  function initNavSearch() {
+    const toggle = document.getElementById("nav-search-toggle");
+    const panel = document.getElementById("nav-search-panel");
+    const input = document.getElementById("nav-search-input");
+    const results = document.getElementById("nav-search-results");
+    if (!toggle || !panel || !input || !results) return;
+    const navToggle = document.getElementById("nav-toggle");
+
+    function renderResults(value) {
+      const raw = (value || "").trim();
+      const query = raw.toLowerCase();
+      if (query.length < 2) {
+        results.innerHTML = `<p class="nav-search-hint">Type to search lessons and resources.</p>`;
+        return;
+      }
+      const lessons = state.lessons.filter(function (lesson) { return lessonSearchText(lesson).includes(query); }).slice(0, 6);
+      const links = state.links.filter(function (link) { return `${link.title} ${link.note || ""}`.toLowerCase().includes(query); }).slice(0, 4);
+      if (!lessons.length && !links.length) {
+        results.innerHTML = `<p class="nav-search-hint">No matches. Press Enter for the full search.</p>`;
+        return;
+      }
+      const rows = [];
+      lessons.forEach(function (lesson) {
+        const track = getTrack(lesson.track);
+        rows.push(`<a class="nav-search-row" href="${lessonHref(lesson.id)}"><span class="nav-search-row-title">${escapeHtml(lesson.title)}</span><span class="nav-search-row-meta">${escapeHtml(track ? track.title : lesson.track)}</span></a>`);
+      });
+      links.forEach(function (link) {
+        rows.push(`<a class="nav-search-row" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer"><span class="nav-search-row-title">${escapeHtml(link.title)}</span><span class="nav-search-row-meta">resource</span></a>`);
+      });
+      results.innerHTML = rows.join("") + `<a class="nav-search-all" href="#/search/${encodeURIComponent(raw)}">See all results</a>`;
+    }
+
+    function openPanel() {
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+      if (navToggle) navToggle.checked = false;
+      renderResults(input.value);
+      input.focus();
+    }
+    function closePanel() {
+      if (panel.hidden) return;
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+    }
+
+    toggle.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (panel.hidden) { openPanel(); } else { closePanel(); }
+    });
+    input.addEventListener("input", function () { renderResults(input.value); });
+    input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const raw = input.value.trim();
+        closePanel();
+        location.hash = raw ? `#/search/${encodeURIComponent(raw)}` : "#/search";
+      } else if (event.key === "Escape") {
+        closePanel();
+        toggle.focus();
+      }
+    });
+    results.addEventListener("click", function (event) {
+      if (event.target.closest("a")) closePanel();
+    });
+    document.addEventListener("click", function (event) {
+      if (panel.hidden) return;
+      if (!panel.contains(event.target) && !toggle.contains(event.target)) closePanel();
+    });
+    window.addEventListener("hashchange", closePanel);
+  }
+
   loadData()
     .then(function () {
       window.addEventListener("hashchange", function () {
@@ -2241,6 +2372,7 @@
       });
       renderRoute();
       initAuth();
+      initNavSearch();
     })
     .catch(function (error) {
       replaceApp(`

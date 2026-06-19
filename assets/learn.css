@@ -1385,3 +1385,135 @@ button:disabled,
     text-align: center;
   }
 }
+
+/* Nav search: a magnifying-glass toggle that drops a live search panel. */
+.nav-search-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  padding: 6px;
+  color: var(--text-2);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 0.18s ease;
+}
+.nav-search-toggle:hover { color: var(--accent); }
+.nav-search-toggle svg { display: block; }
+.nav-search-label { display: none; }
+
+.nav-search-panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 70;
+  width: min(360px, calc(100vw - 32px));
+  padding: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  border-radius: 12px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+}
+.nav-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+}
+.nav-search-input:focus { outline: none; border-color: var(--accent); }
+.nav-search-results { margin-top: 8px; display: grid; gap: 2px; }
+.nav-search-hint { color: var(--text-muted); font-size: 13px; padding: 8px 6px; margin: 0; }
+.nav-search-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+}
+.nav-search-row:hover { background: rgba(255, 255, 255, 0.05); text-decoration: none; }
+.nav-search-row-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-strong);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-search-row-meta { flex: none; font-size: 12px; color: var(--text-muted); }
+.nav-search-all {
+  display: block;
+  margin-top: 4px;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+  border-top: 1px solid var(--border);
+}
+.nav-search-all:hover { color: var(--accent-bright); }
+
+/* Research route (the notes list, rolled into the app). */
+.research-byline { color: var(--text-2); font-size: 15px; margin-top: 6px; }
+.research-byline a { color: var(--accent); text-decoration: none; }
+.research-byline a:hover { text-decoration: underline; }
+.research-foot { color: var(--text-2); font-size: 14px; margin-top: 22px; line-height: 1.6; }
+.research-foot a { color: var(--accent); text-decoration: none; }
+.research-foot a:hover { text-decoration: underline; }
+.research-foot code { font-family: var(--mono); font-size: 0.9em; }
+
+/* Notes list inside the research route: left-aligned rows, code link on the
+   right -- matching the app's resource/lesson rows, not the centered cards
+   the landing styles would otherwise impose. */
+#research-list .notes-list { text-align: left; }
+#research-list .notes-list ul { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
+#research-list .notes-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  text-align: left;
+}
+#research-list .note-title { text-align: left; }
+#research-list .notes-list li:hover { border-color: var(--border-accent); }
+#research-list .note-title { color: var(--text-strong); font-weight: 600; text-decoration: none; }
+#research-list .note-title:hover { color: var(--accent-bright); text-decoration: none; }
+#research-list .note-code {
+  flex: none;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+#research-list .note-code:hover { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 760px) {
+  /* In the collapsed menu the search toggle reads as a labelled row. */
+  .nav-search-label { display: inline; }
+  nav.top .links .nav-search-toggle {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 11px 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+  .nav-search-panel { width: auto; left: 12px; right: 12px; }
+}

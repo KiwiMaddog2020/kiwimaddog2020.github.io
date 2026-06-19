@@ -15,9 +15,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # asset file (hashed)  ->  list of HTML files whose link to it should be stamped
 ASSETS = {
-    "assets/research-notes.css": ["_layouts/default.html", "study/index.html"],
-    "study/assets/learn.css": ["study/index.html"],
-    "study/assets/learn.js": ["study/index.html"],
+    "assets/research-notes.css": ["index.html", "_layouts/default.html"],
+    "assets/learn.css": ["index.html"],
+    "assets/learn.js": ["index.html"],
 }
 
 

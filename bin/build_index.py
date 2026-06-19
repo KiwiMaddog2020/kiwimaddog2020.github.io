@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
-"""Rebuild the Notes list in index.md and feed.xml from research-note repos.
+"""Rebuild data/notes.json and feed.xml from research-note repos.
 
 Lists the owner's PUBLIC repositories tagged with the `research-note` topic
-via the GitHub API, regenerates the block between the notes:start /
-notes:end markers in index.md, and rewrites the Atom feed. Each entry uses
-the repo's description as its title and the repo's homepage (the note's
-GitHub Pages URL) as its link, falling back to the conventional Pages URL
-for project sites.
+via the GitHub API and writes two artifacts the site consumes:
 
-The notes block is emitted as raw HTML rather than markdown: kramdown
-passes it through untouched, `role="list"` survives the hub stylesheet's
-`list-style: none` in VoiceOver, the code links carry accessible names,
-and the markers stay outside the list instead of nesting inside the last
-item.
+  * `data/notes.json` -- the research notes list, rendered client-side by the
+    Study app's #/research route. Each entry uses the repo's description as its
+    title and the repo's homepage (the note's GitHub Pages URL) as its link,
+    falling back to the conventional Pages URL for project sites.
+  * `feed.xml` -- the Atom feed, one entry per note.
 
-Pure stdlib. `GITHUB_TOKEN` is used when present (the Actions run);
-anonymous requests work locally within the unauthenticated rate limit.
-Exits 0 with "unchanged" when both outputs are already current, so the
-Actions run only commits real changes.
+The site is a single static app served at the root; there is no Jekyll-rendered
+index page anymore, so the notes live as JSON the app fetches.
 
-Titles are HTML-escaped before insertion: the index renders on the public
-site, and even self-authored metadata should not be able to inject markup.
+Pure stdlib. `GITHUB_TOKEN` is used when present (the Actions run); anonymous
+requests work locally within the unauthenticated rate limit. Exits 0 with
+"unchanged" when both outputs are already current, so the Actions run only
+commits real changes.
+
+Titles are HTML/JSON-escaped on use: the list renders on the public site, and
+even self-authored metadata should not be able to inject markup. Link
+DESTINATIONS are validated (not escaped): a crafted homepage on any repo tagged
+research-note would otherwise land verbatim in the published list.
 """
 
 from __future__ import annotations
@@ -34,10 +35,8 @@ from pathlib import Path
 
 OWNER = "KiwiMaddog2020"
 TOPIC = "research-note"
-START = "<!-- notes:start -->"
-END = "<!-- notes:end -->"
 ROOT = Path(__file__).resolve().parent.parent
-INDEX = ROOT / "index.md"
+NOTES = ROOT / "data" / "notes.json"
 FEED = ROOT / "feed.xml"
 SITE_URL = f"https://{OWNER.lower()}.github.io/"
 SITE_TITLE = "Arbiter Machinae · Research notes"
@@ -68,10 +67,9 @@ def _esc(text: str) -> str:
 def _safe_page_url(homepage: str, name: str) -> str:
     """Validate a link DESTINATION; fall back to the conventional Pages URL.
 
-    Titles are escaped, but a destination needs validation, not escaping: a
-    crafted homepage on any repo tagged research-note (javascript: scheme, a
-    quote breakout into attribute context, or a forged notes:end marker)
-    would otherwise land verbatim in the public index.
+    A crafted homepage on any repo tagged research-note (javascript: scheme, a
+    quote breakout into attribute context, or control characters) would
+    otherwise land verbatim in the public list.
     """
     from urllib.parse import urlsplit
 
@@ -115,17 +113,23 @@ def note_repos() -> list[dict]:
     ]
 
 
-def render_entries(repos: list[dict]) -> str:
-    items = []
+def render_notes_json(repos: list[dict]) -> str:
+    """The notes list the Study app fetches and renders client-side.
+
+    Titles are stored raw (the client escapes on render); destinations are
+    validated here so a bad homepage cannot reach the page.
+    """
+    notes = []
     for r in repos:
-        title = _esc((r.get("description") or r["name"]).strip())
-        page = _safe_page_url(r.get("homepage") or "", r["name"])
-        items.append(
-            f'<li><a class="note-title" href="{_esc(page)}">{title}</a>'
-            f'<a class="note-code" href="{_esc(r["html_url"])}"'
-            f' aria-label="Code repository: {title}">code</a></li>'
+        notes.append(
+            {
+                "title": (r.get("description") or r["name"]).strip(),
+                "url": _safe_page_url(r.get("homepage") or "", r["name"]),
+                "code": r["html_url"],
+                "date": (r.get("created_at") or "")[:10],
+            }
         )
-    return '<ul role="list">\n' + "\n".join(items) + "\n</ul>"
+    return json.dumps(notes, indent=2) + "\n"
 
 
 def render_feed(repos: list[dict]) -> str:
@@ -166,35 +170,22 @@ def render_feed(repos: list[dict]) -> str:
     )
 
 
-def rebuild(src: str, entries: str) -> str:
-    head, rest = src.split(START, 1)
-    _, tail = rest.split(END, 1)
-    return f"{head}{START}\n{entries}\n{END}{tail}"
-
-
 def main() -> int:
-    src = INDEX.read_text(encoding="utf-8")
-    if START not in src or END not in src:
-        print("index.md is missing the notes markers", file=sys.stderr)
-        return 1
-    if src.index(START) > src.index(END):
-        print("index.md notes markers are out of order", file=sys.stderr)
-        return 1
     repos = note_repos()
     if not repos:
         # FAIL SAFE: an empty result is more likely a visibility or API
         # hiccup than a real "no notes exist" state, and a hand-seeded entry
         # must survive a cron run that fires before a repo flips public.
-        # The feed is left untouched for the same reason.
         # (A nonempty-but-smaller list DOES overwrite: removing the topic
         # from a repo is the intended de-listing mechanism.)
-        print("no public research-note repos found; leaving index unchanged")
+        print("no public research-note repos found; leaving notes unchanged")
         return 0
     changed = []
-    new = rebuild(src, render_entries(repos))
-    if new != src:
-        INDEX.write_text(new, encoding="utf-8")
-        changed.append("index.md")
+    notes = render_notes_json(repos)
+    NOTES.parent.mkdir(parents=True, exist_ok=True)
+    if not NOTES.exists() or NOTES.read_text(encoding="utf-8") != notes:
+        NOTES.write_text(notes, encoding="utf-8")
+        changed.append("data/notes.json")
     feed = render_feed(repos)
     if not FEED.exists() or FEED.read_text(encoding="utf-8") != feed:
         FEED.write_text(feed, encoding="utf-8")
