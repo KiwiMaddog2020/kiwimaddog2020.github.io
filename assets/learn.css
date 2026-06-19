@@ -1352,7 +1352,7 @@ button:disabled,
   }
   nav.top .links .nav-account {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
     padding: 4px 12px;
     border-left: 0;
   }
@@ -1487,7 +1487,7 @@ button:disabled,
   .nav-search-label { display: inline; }
   nav.top .links .nav-search-toggle {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 10px;
     padding: 11px 12px;
     font-size: 15px;

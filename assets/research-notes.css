@@ -621,7 +621,7 @@ footer a:hover { color: var(--accent); }
     z-index: 60;
   }
   nav.top .nav-toggle:checked ~ .links { display: flex; }
-  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 6px; text-align: right; }
+  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 6px; text-align: center; }
   nav.top .links a:hover { background: rgba(255, 255, 255, 0.04); }
   blockquote { padding: 16px 18px; }
   table { display: block; overflow-x: auto; }
