@@ -456,27 +456,12 @@
     app.focus({ preventScroll: true });
   }
 
-  function updateSectionSwitch(section) {
-    const current = section === "research" ? "research" : "study";
-    document.querySelectorAll(".section-link[data-section]").forEach(function (link) {
-      const on = link.getAttribute("data-section") === current;
-      link.classList.toggle("is-active", on);
-      if (on) {
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.removeAttribute("aria-current");
-      }
-    });
-  }
-
   function renderRoute() {
     if (!state.ready) return;
 
     const parts = routeParts();
     const section = parts[0] || "";
     const id = parts[1] || "";
-
-    updateSectionSwitch(section);
 
     if (!section) {
       renderLanding();
