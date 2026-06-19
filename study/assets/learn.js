@@ -281,10 +281,16 @@
     if (!slot) return;
     if (!FIREBASE_ENABLED) { slot.innerHTML = ""; return; }
     if (!fbUser) {
-      slot.innerHTML = `<button class="button nav-signin" type="button" data-auth="in">Sign in</button>`;
+      slot.innerHTML = `<button class="nav-signin" type="button" data-auth="in">Sign in</button>`;
     } else {
-      const name = escapeHtml((fbUser.displayName || fbUser.email || "Account").split(" ")[0]);
-      slot.innerHTML = `<span class="nav-account"><span class="nav-account-name" title="${escapeHtml(fbUser.email || "")}">${name}</span><button class="button nav-signout" type="button" data-auth="out">Sign out</button></span>`;
+      const full = (fbUser.displayName || fbUser.email || "Account").trim();
+      const name = escapeHtml(full.split(" ")[0]);
+      const initial = escapeHtml(full.charAt(0).toUpperCase() || "?");
+      slot.innerHTML = `<span class="nav-account">`
+        + `<span class="nav-avatar" aria-hidden="true">${initial}</span>`
+        + `<span class="nav-account-name" title="${escapeHtml(fbUser.email || "")}">${name}</span>`
+        + `<button class="nav-signout" type="button" data-auth="out">Sign out</button>`
+        + `</span>`;
     }
   }
 
