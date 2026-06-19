@@ -40,7 +40,7 @@ ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "index.md"
 FEED = ROOT / "feed.xml"
 SITE_URL = f"https://{OWNER.lower()}.github.io/"
-SITE_TITLE = "Kevin Madson · Research notes"
+SITE_TITLE = "Arbiter Machinae · Research notes"
 
 
 def _api(path: str):

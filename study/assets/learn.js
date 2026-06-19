@@ -451,7 +451,7 @@
 
   function replaceApp(markup, title) {
     app.innerHTML = markup;
-    document.title = title ? `${title} · Kevin Madson` : "Study · Kevin Madson";
+    document.title = title ? `${title} · Arbiter Machinae` : "Study · Arbiter Machinae";
     window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     app.focus({ preventScroll: true });
   }
