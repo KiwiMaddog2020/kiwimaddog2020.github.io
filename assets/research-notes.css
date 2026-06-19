@@ -176,6 +176,33 @@ nav.top .crumb {
   text-transform: uppercase;
 }
 
+/* Section switcher: the Research <-> Study toggle as a compact segmented
+   control next to the wordmark. Replaces the old crumb + scattered links so
+   the section jump reads as one control, separate from the in-section nav. */
+nav.top .section-switch {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+nav.top .section-link {
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-2);
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+nav.top .section-link:hover { color: var(--accent); }
+nav.top .section-link.is-active {
+  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 /* Back-to-hub control on article pages: an obvious, clickable return path. */
 nav.top .back {
   color: var(--text-2);
@@ -556,6 +583,10 @@ footer a:hover { color: var(--accent); }
   body.hub h1 { font-size: 32px; }
   h2 { font-size: 27px; }
   nav.top { flex-wrap: nowrap; align-items: center; }
+  /* Keep the always-visible section switcher from crowding the burger. */
+  nav.top .wordmark { font-size: 21px; }
+  nav.top .section-switch { gap: 1px; padding: 2px; }
+  nav.top .section-link { padding: 5px 11px; font-size: 12px; }
   nav.top .nav-toggle {
     display: block; position: absolute; width: 1px; height: 1px;
     margin: 0; opacity: 0; pointer-events: none;
