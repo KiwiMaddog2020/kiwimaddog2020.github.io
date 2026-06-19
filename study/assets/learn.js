@@ -885,8 +885,8 @@
                 <p>${escapeHtml(link.note || "")}</p>
               </div>
               <div class="resource-meta">
-                ${levelBadge(link.level)}
                 <span>${escapeHtml(link.kind || "link")}</span>
+                ${levelBadge(link.level)}
               </div>
             </li>
           `;
