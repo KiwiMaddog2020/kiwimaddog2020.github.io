@@ -1245,9 +1245,16 @@ button:disabled,
 .key-points { display: block; list-style: disc; padding-left: 22px; }
 .key-points li { margin-bottom: 8px; padding: 0; border-radius: 0; }
 
-/* Hover feedback without a card box. */
-.continue-card:hover { background: none; }
-.continue-card:hover .continue-title { color: var(--accent-bright); }
+/* Hover feedback without a card box. The global a:hover underline would draw
+   across all three lines, so suppress it on the card and underline only the
+   title (the middle line, which is the actual link target). */
+.continue-card:hover { background: none; text-decoration: none; }
+.continue-card:hover .continue-title {
+  color: var(--accent-bright);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
 
 /* Air between flattened rows and questions. */
 .quiz-list { gap: 30px; }
