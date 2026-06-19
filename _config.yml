@@ -6,4 +6,4 @@ plugins:
   - jekyll-default-layout
   - jekyll-titles-from-headings
   - jekyll-sitemap
-exclude: ["bin/", "tests/", "README.md", "LICENSE"]
+exclude: ["bin/", "tests/", "docs/", "README.md", "LICENSE"]
