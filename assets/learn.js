@@ -622,23 +622,34 @@
 
   function renderTrackCard(track) {
     const progress = trackProgress(track);
+    const pct = progress.percent;
     const lessonWord = track.lessons.length === 1 ? "lesson" : "lessons";
     const prereqTitles = trackPrereqTitles(track.id);
-    const prereqLine = prereqTitles.length
-      ? `<p class="card-prereq">Best after: ${escapeHtml(prereqTitles.join(", "))}</p>`
-      : `<p class="card-prereq card-prereq-start">A good place to start</p>`;
+    const prereq = prereqTitles.length
+      ? `<p class="tc-prereq">Best after: ${escapeHtml(prereqTitles.join(", "))}</p>`
+      : `<p class="tc-prereq tc-prereq--start">A good place to start</p>`;
+    const dataState = pct === 0 ? "new" : pct === 100 ? "done" : "partial";
+    const cta = pct === 0 ? "Start track" : pct === 100 ? "Review track" : "Continue";
+    const verb = pct === 0 ? "Start track" : pct === 100 ? "Review track" : "Continue track";
+    const pctText = pct === 100 ? "Complete" : `${pct}%`;
+    const aria = `${verb}: ${track.title}. ${track.level_range}. ${track.lessons.length} ${lessonWord}, ${pct} percent complete.`;
     return `
-      <article class="track-card">
-        <div class="card-kicker">${escapeHtml(track.level_range)}</div>
-        <h3><a href="${trackHref(track.id)}">${escapeHtml(track.title)}</a></h3>
-        <p>${escapeHtml(track.blurb)}</p>
-        ${prereqLine}
-        <div class="card-meta">
-          <span>${track.lessons.length} ${lessonWord}</span>
-          <span>${progress.percent}% complete</span>
-        </div>
-        ${renderProgress(progress, `${track.title} progress`)}
-      </article>
+      <a class="track-card" href="${trackHref(track.id)}" data-state="${dataState}" style="--pct:${pct}%;" aria-label="${escapeHtml(aria)}">
+        <span class="tc-kicker">${escapeHtml(track.level_range)}</span>
+        <h3 class="tc-title">${escapeHtml(track.title)}</h3>
+        <p class="tc-blurb">${escapeHtml(track.blurb)}</p>
+        ${prereq}
+        <span class="tc-foot">
+          <span class="tc-progress" aria-hidden="true">
+            <span class="tc-progress-meta">
+              <span class="tc-lessons">${track.lessons.length} ${lessonWord}</span>
+              <span class="tc-pct">${pctText}</span>
+            </span>
+            <span class="tc-bar"><span class="tc-bar-fill"></span></span>
+          </span>
+          <span class="tc-cta">${cta}</span>
+        </span>
+      </a>
     `;
   }
 

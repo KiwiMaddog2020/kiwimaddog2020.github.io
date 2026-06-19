@@ -33,6 +33,10 @@ body.learn-page h1 { letter-spacing: -0.015em; }
   align-items: center;
 }
 
+/* Center every item in the right cluster on one line, so the search icon and
+   the account control sit on the text links' centerline (not stretched). */
+.learn-top .links { align-items: center; }
+
 .learn-top .crumb {
   color: var(--accent);
   text-decoration: none;
@@ -158,7 +162,6 @@ button:disabled,
 
 .learn-section h3,
 .quiz-question h3,
-.track-card h3,
 .path-grid h3 {
   margin: 0;
   font-family: var(--serif);
@@ -229,34 +232,8 @@ button:disabled,
   gap: 14px;
 }
 
-.track-card {
-  display: flex;
-  min-height: 280px;
-  flex-direction: column;
-  gap: 12px;
-  padding: 22px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-card);
-  text-align: center;
-}
-
-.track-card h3 a {
-  color: var(--text-strong);
-  text-decoration: none;
-}
-
-.track-card h3 a:hover {
-  color: var(--accent-bright);
-}
-
-.track-card p {
-  color: var(--text-2);
-  text-align: center;
-}
-
-.track-card .card-meta { justify-content: center; gap: 16px; }
-.track-card .progress-row { justify-content: center; gap: 12px; }
+/* Track-card styling lives at the END of this file ("Editorial edge" design):
+   an interactive card with an accent left-edge + always-visible state-aware CTA. */
 
 /* Center the resume card content so it does not cluster at the left of a wide card. */
 .continue-card { text-align: center; }
@@ -1207,8 +1184,9 @@ button:disabled,
 }
 
 /* ---- Flatten content cards: text flows on the page; interactive controls,
-   widget readouts, chips, and the capstone scenario keep their framing. ---- */
-.track-card,
+   widget readouts, chips, and the capstone scenario keep their framing.
+   NOTE: .track-card is intentionally NOT flattened -- it is a real interactive
+   card (see the "Editorial edge" block at the end of this file). ---- */
 .lesson-row,
 .resource-item,
 .exercise-card,
@@ -1227,7 +1205,6 @@ button:disabled,
   box-shadow: none;
 }
 
-.track-card { min-height: 0; padding: 0; gap: 10px; }
 .lesson-row,
 .resource-item,
 .search-row { padding: 12px 0; }
@@ -1516,4 +1493,215 @@ button:disabled,
     color: var(--text-2);
   }
   .nav-search-panel { width: auto; left: 12px; right: 12px; }
+}
+
+/* ============================================================
+   Track cards — "Editorial edge".
+   An interactive card: a quiet ink panel with a house accent
+   left-edge (the .capstone-scenario border-left idiom), a bottom-
+   pinned progress meter, and an ALWAYS-visible state-aware CTA pill
+   (Start track / Continue / Review track). The a.track-card
+   selectors (0,1,1) + later source order override the flatten block.
+   ============================================================ */
+a.track-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-height: 232px;
+  padding: 22px 24px 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-card);
+  box-shadow: none;
+  color: var(--text);
+  text-align: left;
+  text-decoration: none;
+  transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+/* House accent left-edge: dim at rest, ignites on hover/focus. */
+a.track-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--border-accent);
+  transition: background 0.18s ease;
+}
+
+a.track-card:hover,
+a.track-card:focus,
+a.track-card:focus-visible { text-decoration: none; }
+
+a.track-card:hover,
+a.track-card:focus-visible {
+  border-color: var(--border-accent);
+  background: #25252f;
+  transform: translateY(-2px);
+}
+a.track-card:hover::before,
+a.track-card:focus-visible::before { background: var(--accent); }
+
+a.track-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.tc-kicker {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tc-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.14;
+  color: var(--text-strong);
+  text-wrap: balance;
+  transition: color 0.18s ease;
+}
+a.track-card:hover .tc-title,
+a.track-card:focus-visible .tc-title { color: var(--accent-bright); }
+
+.tc-blurb {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.tc-prereq {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.tc-prereq--start { color: var(--accent-soft); }
+
+/* foot: progress + CTA, pinned to the card base, aligned across the row */
+.tc-foot {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding-top: 6px;
+}
+
+.tc-progress { display: flex; flex-direction: column; gap: 6px; }
+.tc-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.tc-pct { font-family: var(--mono); color: var(--text-2); }
+
+.tc-bar {
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+}
+.tc-bar-fill {
+  display: block;
+  height: 100%;
+  width: var(--pct, 0%);
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+/* the always-visible CTA: a text link inside a soft accent pill */
+.tc-cta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 8px 15px;
+  border: 1px solid var(--border-accent);
+  border-radius: 999px;
+  background: rgba(42, 149, 234, 0.08);
+  color: var(--accent-soft);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.tc-cta::after {
+  content: "";
+  width: 13px;
+  height: 13px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--tc-chevron) center / contain no-repeat;
+          mask: var(--tc-chevron) center / contain no-repeat;
+  transition: transform 0.18s ease;
+}
+a.track-card {
+  --tc-chevron: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.5 3l5 5-5 5" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+a.track-card:hover .tc-cta,
+a.track-card:focus-visible .tc-cta {
+  border-color: var(--accent);
+  background: rgba(42, 149, 234, 0.16);
+  color: var(--text-strong);
+}
+a.track-card:hover .tc-cta::after { transform: translateX(3px); }
+
+/* state: NEW (0%) — pure invitation: drop the meter, louder CTA. */
+a.track-card[data-state="new"] .tc-progress { display: none; }
+a.track-card[data-state="new"] .tc-cta {
+  border-color: rgba(42, 149, 234, 0.55);
+  background: rgba(42, 149, 234, 0.14);
+  color: var(--accent-bright);
+}
+
+/* state: DONE (100%) — calm completion in the house green. */
+a.track-card[data-state="done"]::before { background: rgba(139, 211, 168, 0.55); }
+a.track-card[data-state="done"]:hover::before,
+a.track-card[data-state="done"]:focus-visible::before { background: #8bd3a8; }
+a.track-card[data-state="done"] .tc-bar-fill { background: #8bd3a8; }
+a.track-card[data-state="done"] .tc-pct { color: #8bd3a8; }
+a.track-card[data-state="done"] .tc-cta {
+  border-color: rgba(139, 211, 168, 0.45);
+  background: rgba(139, 211, 168, 0.10);
+  color: #8bd3a8;
+  --tc-chevron: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5L13 4.5" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+a.track-card[data-state="done"]:hover .tc-cta,
+a.track-card[data-state="done"]:focus-visible .tc-cta {
+  border-color: #8bd3a8;
+  background: rgba(139, 211, 168, 0.18);
+  color: #a6e0bd;
+}
+a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
+
+@media (max-width: 760px) {
+  a.track-card { min-height: 0; padding: 18px 18px 16px; }
+  .tc-title { font-size: 23px; }
+}
+@media (max-width: 480px) {
+  .tc-cta { align-self: stretch; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.track-card,
+  a.track-card::before,
+  a.track-card .tc-title,
+  a.track-card .tc-cta,
+  a.track-card .tc-cta::after,
+  a.track-card .tc-bar-fill { transition: none; }
+  a.track-card:hover,
+  a.track-card:focus-visible { transform: none; }
+  a.track-card:hover .tc-cta::after { transform: none; }
 }
