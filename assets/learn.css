@@ -194,8 +194,9 @@ button:disabled,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: max-content;
-  min-width: 104px;
+  box-sizing: border-box;
+  flex: none;
+  width: 132px;
   min-height: 28px;
   padding: 4px 10px;
   border: 1px solid currentColor;
