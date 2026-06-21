@@ -411,6 +411,7 @@
     state.lessonsById = new Map(state.lessons.map((lesson) => [lesson.id, lesson]));
     state.lessonsByTrack = new Map(lessonGroups.map((group) => [group.trackId, group.lessons]));
     state.links = mergeLinks(links, state.lessons);
+    state.labs = await fetchJson("./data/labs.json").catch(function () { return { categories: [], labs: [] }; });
     state.ready = true;
   }
 
@@ -470,6 +471,11 @@
 
     if (section === "research") {
       renderResearch();
+      return;
+    }
+
+    if (section === "labs") {
+      renderLabs(id);
       return;
     }
 
@@ -2499,6 +2505,50 @@
       if (g) { sel = Number(g.dataset.pt); render(); }
     });
     render();
+  }
+
+  function renderLabs(id) {
+    const data = state.labs || { categories: [], labs: [] };
+    const labs = data.labs || [];
+    if (id) {
+      const lab = labs.find(function (l) { return l.id === id; });
+      if (!lab) { renderNotFound("That lab does not exist."); return; }
+      const markup =
+        '<article class="lab-detail">' +
+        '<p class="crumb"><a href="#/labs">Labs</a> / ' + escapeHtml(lab.title) + "</p>" +
+        "<h1>" + escapeHtml(lab.title) + "</h1>" +
+        (lab.blurb ? '<p class="dek">' + escapeHtml(lab.blurb) + "</p>" : "") +
+        (lab.concept_html ? '<div class="lab-concept">' + lab.concept_html + "</div>" : "") +
+        '<div class="lab-mount" data-lab-mount></div>' +
+        (lab.source_lesson ? '<p class="lab-source">Background: the lesson <a href="#/lesson/' + encodeURIComponent(lab.source_lesson) + '">' + escapeHtml(lab.source_title || lab.source_lesson) + "</a>.</p>" : "") +
+        "</article>";
+      replaceApp(markup, lab.title);
+      const mount = app.querySelector("[data-lab-mount]");
+      if (mount && lab.exercise) mountExercise(mount, lab.exercise);
+      return;
+    }
+    const cats = (data.categories && data.categories.length) ? data.categories : [{ id: "all", title: "All labs" }];
+    const byCat = {};
+    labs.forEach(function (l) { (byCat[l.category] = byCat[l.category] || []).push(l); });
+    const sections = cats.map(function (c) {
+      const items = byCat[c.id] || [];
+      if (!items.length) return "";
+      const cards = items.map(function (l) {
+        return '<a class="lab-card" href="#/labs/' + encodeURIComponent(l.id) + '">' +
+          '<span class="lab-card-kind">' + escapeHtml(l.kind || "Interactive") + "</span>" +
+          "<h3>" + escapeHtml(l.title) + "</h3>" +
+          "<p>" + escapeHtml(l.blurb || "") + "</p>" +
+          '<span class="lab-card-go">Open lab →</span>' +
+          "</a>";
+      }).join("");
+      return '<section class="lab-cat"><h2>' + escapeHtml(c.title) + '</h2><div class="lab-grid">' + cards + "</div></section>";
+    }).join("");
+    const markup =
+      '<div class="labs-index">' +
+      '<header class="labs-hero"><h1>Labs</h1><p class="dek">Small interactive playgrounds for the ideas behind modern AI. Drag, type, and toggle, and watch what changes. Each one is honest about exactly what it shows.</p></header>' +
+      (labs.length ? sections : '<p class="empty-state">No labs yet.</p>') +
+      "</div>";
+    replaceApp(markup, "Labs");
   }
 
   function renderNotFound(message) {

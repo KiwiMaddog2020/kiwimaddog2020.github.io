@@ -1760,3 +1760,25 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
 .emb-label { fill: var(--text); font-size: 10px; font-family: var(--sans); }
 .emb-near { font-size: 0.9rem; color: var(--text); margin: 0.4rem 0; }
 .emb-note { font-size: 0.85rem; color: var(--text-muted); margin: 0.3rem 0; }
+
+/* --- Labs section --- */
+.labs-hero { margin: 0 0 1.6rem; }
+.labs-hero h1 { margin: 0 0 0.4rem; }
+.labs-index .dek, .lab-detail .dek { color: var(--text-muted); max-width: 46rem; }
+.lab-cat { margin: 1.8rem 0; }
+.lab-cat h2 { font-size: 1.05rem; letter-spacing: 0.01em; margin: 0 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+.lab-card { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.05rem 1.1rem 1.15rem; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); text-decoration: none; color: var(--text); transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease; }
+.lab-card:hover { transform: translateY(-3px); border-color: var(--border-accent); box-shadow: 0 10px 30px -18px rgba(0,0,0,0.5); }
+.lab-card-kind { align-self: flex-start; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); border: 1px solid var(--border-accent); border-radius: 999px; padding: 2px 9px; }
+.lab-card h3 { margin: 0.3rem 0 0; font-size: 1.06rem; line-height: 1.25; }
+.lab-card p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; flex: 1; }
+.lab-card-go { font-size: 0.84rem; color: var(--accent); font-weight: 600; margin-top: 0.4rem; }
+@media (prefers-reduced-motion: reduce) { .lab-card { transition: none; } .lab-card:hover { transform: none; } }
+.lab-detail { max-width: 50rem; }
+.lab-detail .crumb { font-size: 0.82rem; color: var(--text-muted); margin: 0 0 0.6rem; }
+.lab-detail .crumb a { color: var(--accent); text-decoration: none; }
+.lab-concept { color: var(--text); line-height: 1.6; margin: 0.6rem 0 1.2rem; }
+.lab-mount { margin: 1rem 0; }
+.lab-source { font-size: 0.85rem; color: var(--text-muted); margin-top: 1.4rem; }
+.lab-source a { color: var(--accent); }
