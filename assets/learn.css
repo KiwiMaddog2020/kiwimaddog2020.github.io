@@ -1445,7 +1445,7 @@ button:disabled,
 .nav-search-all:hover { color: var(--accent-bright); }
 
 /* Research route (the notes list, rolled into the app). */
-.research-byline { color: var(--text-2); font-size: 15px; margin-top: 6px; }
+.research-byline { color: var(--text-2); font-size: 15px; margin-top: 6px; text-align: center; }
 .research-byline a { color: var(--accent); text-decoration: none; }
 .research-byline a:hover { text-decoration: underline; }
 .research-foot { color: var(--text-2); font-size: 14px; margin-top: 22px; line-height: 1.6; }
@@ -1762,9 +1762,9 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
 .emb-note { font-size: 0.85rem; color: var(--text-muted); margin: 0.3rem 0; }
 
 /* --- Labs section --- */
-.labs-hero { margin: 0 0 1.6rem; }
+.labs-hero { margin: 0 0 1.6rem; text-align: center; }
 .labs-hero h1 { margin: 0 0 0.4rem; }
-.labs-index .dek, .lab-detail .dek { color: var(--text-muted); max-width: 46rem; }
+.labs-index .dek, .lab-detail .dek { color: var(--text-muted); max-width: 46rem; margin-left: auto; margin-right: auto; }
 .lab-cat { margin: 1.8rem 0; }
 .lab-cat h2 { font-size: 1.05rem; letter-spacing: 0.01em; margin: 0 0 0.8rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
 .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
