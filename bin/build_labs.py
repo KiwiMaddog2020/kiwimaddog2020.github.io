@@ -85,6 +85,13 @@ def main():
             "exercise": {"type": "gradient_descent_lab", "a": 0.18, "start": -4.2, "lr": 0.30,
                          "prompt": "Set the learning rate, then Step or Run. Try 0.2, then 1.0, then 2.5, and watch what changes."},
         },
+        {
+            "id": "neural-net", "title": "Neural network forward pass", "kind": "Slide", "category": "foundations",
+            "blurb": "Slide two inputs through a tiny network and watch every unit light up.",
+            "concept_html": "<p>A neural network is just weighted sums passed through simple nonlinearities, repeated. This one has two inputs, three hidden units (each a tanh of a weighted sum), and one sigmoid output. The weights are frozen, so you can slide the inputs and watch the arithmetic flow through.</p>",
+            "exercise": {"type": "neural_net_lab", "x1": 0.6, "x2": -0.4,
+                         "prompt": "Slide the two inputs. Each hidden unit and the output update live; blue edges are positive weights, red negative."},
+        },
     ]
     labs = labs + STANDALONE
     out = {"categories": CATEGORIES, "labs": labs}

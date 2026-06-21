@@ -1541,6 +1541,10 @@
       mountGradientDescentLab(container, exercise);
       return;
     }
+    if (exercise.type === "neural_net_lab") {
+      mountNeuralNetLab(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
   }
 
@@ -2507,6 +2511,72 @@
     container.addEventListener("click", function (e) {
       const g = e.target.closest("[data-pt]");
       if (g) { sel = Number(g.dataset.pt); render(); }
+    });
+    render();
+  }
+
+  function mountNeuralNetLab(container, exercise) {
+    // tiny fixed net: 2 inputs -> 3 tanh hidden -> 1 sigmoid output. Slide inputs, watch it flow.
+    const W1 = [[1.8, -1.6], [-1.5, 1.7], [1.2, 1.3]];
+    const B1 = [0.2, 0.1, -0.8];
+    const W2 = [2.2, 2.0, -1.9];
+    const B2 = -0.3;
+    let x1 = exercise.x1 != null ? exercise.x1 : 0.6;
+    let x2 = exercise.x2 != null ? exercise.x2 : -0.4;
+    function tanh(v) { return Math.tanh(v); }
+    function sig(v) { return 1 / (1 + Math.exp(-v)); }
+    function fwd() {
+      const h = W1.map(function (w, j) { return tanh(w[0] * x1 + w[1] * x2 + B1[j]); });
+      const o = sig(W2[0] * h[0] + W2[1] * h[1] + W2[2] * h[2] + B2);
+      return { h: h, o: o };
+    }
+    function col(a, lo) { // activation -> blue intensity (a in [-1,1] or [0,1])
+      const t = lo ? a : (a + 1) / 2;
+      return "rgba(42,149,234," + (0.12 + 0.85 * Math.max(0, Math.min(1, t))).toFixed(3) + ")";
+    }
+    function render() {
+      const r = fwd();
+      const W = 360, H = 220;
+      const inX = 50, hX = 180, oX = 310;
+      const inY = [80, 150], hY = [50, 110, 170], oY = [110];
+      let edges = "";
+      W1.forEach(function (w, j) {
+        [0, 1].forEach(function (i) {
+          const sw = Math.min(4, Math.abs(w[i]) * 1.4);
+          const c = w[i] >= 0 ? "rgba(42,149,234,0.4)" : "rgba(217,119,119,0.4)";
+          edges += '<line x1="' + inX + '" y1="' + inY[i] + '" x2="' + hX + '" y2="' + hY[j] + '" stroke="' + c + '" stroke-width="' + sw.toFixed(1) + '"/>';
+        });
+      });
+      W2.forEach(function (w, j) {
+        const sw = Math.min(4, Math.abs(w) * 1.4);
+        const c = w >= 0 ? "rgba(42,149,234,0.4)" : "rgba(217,119,119,0.4)";
+        edges += '<line x1="' + hX + '" y1="' + hY[j] + '" x2="' + oX + '" y2="' + oY[0] + '" stroke="' + c + '" stroke-width="' + sw.toFixed(1) + '"/>';
+      });
+      function node(cx, cy, fill, label) {
+        return '<circle cx="' + cx + '" cy="' + cy + '" r="16" fill="' + fill + '" stroke="var(--border-accent)"/>' +
+          '<text class="nn-val" x="' + cx + '" y="' + (cy + 4) + '" text-anchor="middle">' + label + "</text>";
+      }
+      let nodes = "";
+      nodes += node(inX, inY[0], col(x1), x1.toFixed(1)) + node(inX, inY[1], col(x2), x2.toFixed(1));
+      r.h.forEach(function (hv, j) { nodes += node(hX, hY[j], col(hv), hv.toFixed(2)); });
+      nodes += node(oX, oY[0], col(r.o, true), r.o.toFixed(2));
+      container.innerHTML =
+        '<div class="exercise-card nn-lab">' +
+        "<p>" + escapeHtml(exercise.prompt || "A tiny network: two inputs, three hidden units, one output. Slide the inputs and watch the signal flow through and the output respond.") + "</p>" +
+        '<svg viewBox="0 0 ' + W + " " + H + '" class="nn-svg" role="img" aria-label="a small neural network with current activations">' + edges + nodes + "</svg>" +
+        '<div class="nn-controls">' +
+        '<label>input 1 <strong>' + x1.toFixed(2) + '</strong><input type="range" min="-1" max="1" step="0.05" value="' + x1 + '" data-nn="1"></label>' +
+        '<label>input 2 <strong>' + x2.toFixed(2) + '</strong><input type="range" min="-1" max="1" step="0.05" value="' + x2 + '" data-nn="2"></label>' +
+        "</div>" +
+        '<p class="nn-out">output: <strong>' + r.o.toFixed(3) + "</strong></p>" +
+        '<p class="lab-caveat">A real forward pass with fixed weights: each hidden unit is tanh of a weighted sum, the output is a sigmoid. Blue edges are positive weights, red negative. Training is just choosing those weights; here they are frozen so you can watch the arithmetic.</p>' +
+        "</div>";
+    }
+    container.addEventListener("input", function (e) {
+      const s = e.target.closest("[data-nn]");
+      if (!s) return;
+      if (s.dataset.nn === "1") x1 = Number(s.value); else x2 = Number(s.value);
+      render();
     });
     render();
   }
