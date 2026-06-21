@@ -1807,3 +1807,14 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
 .nn-controls input[type=range] { width: 100%; accent-color: var(--accent); }
 .nn-out { font-size: 0.95rem; color: var(--text); }
 .nn-out strong { font-family: var(--mono); color: var(--accent); }
+
+/* Centered primary nav: float the link group to the nav centerline on desktop,
+   leaving the wordmark on the left and the search + account cluster on the right.
+   On mobile the wrapper dissolves so the links fall into the hamburger dropdown. */
+.learn-top .nav-center { display: flex; gap: 26px; align-items: center; }
+@media (min-width: 761px) {
+  .learn-top .nav-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); white-space: nowrap; }
+}
+@media (max-width: 760px) {
+  .learn-top .nav-center { display: contents; }
+}
