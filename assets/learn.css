@@ -1499,7 +1499,7 @@ button:disabled,
 }
 
 /* ============================================================
-   Track cards — "Editorial edge".
+   Track cards, "Editorial edge".
    An interactive card: a quiet ink panel with a house accent
    left-edge (the .capstone-scenario border-left idiom), a bottom-
    pinned progress meter, and an ALWAYS-visible state-aware CTA pill
@@ -1661,7 +1661,7 @@ a.track-card:focus-visible .tc-cta {
 }
 a.track-card:hover .tc-cta::after { transform: translateX(3px); }
 
-/* state: NEW (0%) — pure invitation: drop the meter, louder CTA. */
+/* state: NEW (0%), pure invitation: drop the meter, louder CTA. */
 a.track-card[data-state="new"] .tc-progress { display: none; }
 a.track-card[data-state="new"] .tc-cta {
   border-color: rgba(42, 149, 234, 0.55);
@@ -1669,7 +1669,7 @@ a.track-card[data-state="new"] .tc-cta {
   color: var(--accent-bright);
 }
 
-/* state: DONE (100%) — calm completion in the house green. */
+/* state: DONE (100%), calm completion in the house green. */
 a.track-card[data-state="done"]::before { background: rgba(139, 211, 168, 0.55); }
 a.track-card[data-state="done"]:hover::before,
 a.track-card[data-state="done"]:focus-visible::before { background: #8bd3a8; }
@@ -1726,3 +1726,37 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
 .tok-stats dd { font-family: var(--mono); font-size: 1.1rem; color: var(--text-strong); margin: 0; }
 .tok-bar { height: 6px; background: var(--bg-elevated); border-radius: 3px; overflow: hidden; }
 .tok-bar span { display: block; height: 100%; background: var(--accent); transition: width 0.15s; }
+
+/* attention lab */
+.attn-examples { margin-bottom: 0.7rem; }
+.attn-ex { font: inherit; font-size: 0.82rem; padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-muted); cursor: pointer; margin-right: 0.35rem; }
+.attn-ex.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.attn-sentence { display: flex; flex-wrap: wrap; gap: 6px; margin: 0.6rem 0; font-size: 1.05rem; }
+.attn-tok { font: inherit; font-size: 1rem; padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; color: var(--text-strong); cursor: pointer; }
+.attn-tok.query { outline: 2px solid var(--accent); font-weight: 600; }
+.attn-hint { font-size: 0.85rem; color: var(--text-muted); margin: 0.3rem 0 0.6rem; }
+.attn-bars { display: flex; flex-direction: column; gap: 3px; }
+.attn-bar-row { display: grid; grid-template-columns: 5.5rem 1fr 2.5rem; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
+.attn-bar-lab { font-family: var(--mono); color: var(--text-muted); text-align: right; }
+.attn-bar { height: 8px; background: var(--bg-elevated); border-radius: 4px; overflow: hidden; }
+.attn-bar span { display: block; height: 100%; background: var(--accent); }
+.attn-bar-val { font-family: var(--mono); color: var(--text-muted); }
+
+/* injection lab */
+.inj-task { background: var(--bg-elevated); border-radius: 8px; padding: 0.5rem 0.7rem; margin: 0.6rem 0; font-size: 0.9rem; }
+.inj-field { margin: 0.6rem 0; }
+.inj-label { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 0.4rem; }
+.inj-pick { font: inherit; font-size: 0.8rem; padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-muted); cursor: pointer; margin: 0 0.35rem 0.35rem 0; }
+.inj-pick.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.inj-content { font-family: var(--mono); font-size: 0.82rem; background: var(--bg); border: 1px dashed var(--border); border-radius: 6px; padding: 0.5rem 0.6rem; white-space: pre-wrap; color: var(--text); margin-top: 0.4rem; }
+.inj-guard { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.86rem; color: var(--text); margin: 0.7rem 0; cursor: pointer; }
+.inj-out { margin: 0.7rem 0 0; padding: 0.6rem 0.7rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
+.inj-out.safe { background: rgba(122,154,106,0.15); border: 1px solid rgba(122,154,106,0.45); }
+.inj-out.breach { background: rgba(217,119,119,0.13); border: 1px solid rgba(217,119,119,0.45); }
+
+/* embedding lab */
+.emb-svg { width: 100%; max-width: 460px; height: auto; display: block; margin: 0.5rem auto; background: var(--bg-elevated); border-radius: 8px; }
+.emb-pt { cursor: pointer; }
+.emb-label { fill: var(--text); font-size: 10px; font-family: var(--sans); }
+.emb-near { font-size: 0.9rem; color: var(--text); margin: 0.4rem 0; }
+.emb-note { font-size: 0.85rem; color: var(--text-muted); margin: 0.3rem 0; }

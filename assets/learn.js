@@ -1519,6 +1519,18 @@
       mountTokenizerLab(container, exercise);
       return;
     }
+    if (exercise.type === "attention_lab") {
+      mountAttentionLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "injection_lab") {
+      mountInjectionLab(container, exercise);
+      return;
+    }
+    if (exercise.type === "embedding_lab") {
+      mountEmbeddingLab(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
   }
 
@@ -2359,6 +2371,132 @@
       mode = b.dataset.mode;
       container.querySelectorAll(".tok-mode").forEach(function (x) { x.classList.toggle("active", x.dataset.mode === mode); });
       render();
+    });
+    render();
+  }
+
+  function mountAttentionLab(container, exercise) {
+    const examples = exercise.examples || [];
+    let ei = 0, qi = 0;
+    const EPS = 0.04;
+    function rowFor(ex, q) {
+      const focus = (ex.focus && ex.focus[String(q)]) || {};
+      const raw = ex.tokens.map(function (_, k) { return (Number(focus[String(k)]) || 0) + EPS; });
+      const sum = raw.reduce(function (a, b) { return a + b; }, 0) || 1;
+      return raw.map(function (x) { return x / sum; });
+    }
+    function render() {
+      const ex = examples[ei];
+      if (!ex) { container.innerHTML = '<p class="empty-state">No attention examples.</p>'; return; }
+      const row = rowFor(ex, qi);
+      const max = Math.max.apply(null, row) || 1;
+      const picker = examples.length > 1
+        ? '<div class="lab-controls attn-examples" role="group" aria-label="example sentence">' +
+          examples.map(function (e, i) { return '<button type="button" class="attn-ex' + (i === ei ? " active" : "") + '" data-ex="' + i + '">' + escapeHtml(e.label || ("Example " + (i + 1))) + "</button>"; }).join("") + "</div>"
+        : "";
+      const toks = ex.tokens.map(function (t, k) {
+        const w = row[k], isQ = k === qi, op = 0.08 + 0.92 * (w / max);
+        return '<button type="button" class="attn-tok' + (isQ ? " query" : "") + '" data-q="' + k + '" style="background: rgba(42,149,234,' + (isQ ? "0" : op.toFixed(3)) + ');" title="attention ' + Math.round(w * 100) + '%">' + escapeHtml(t) + "</button>";
+      }).join(" ");
+      const bars = ex.tokens.map(function (t, k) {
+        return '<div class="attn-bar-row"><span class="attn-bar-lab">' + escapeHtml(t) + '</span><span class="attn-bar"><span style="width:' + Math.round(row[k] * 100) + '%"></span></span><span class="attn-bar-val">' + Math.round(row[k] * 100) + "%</span></div>";
+      }).join("");
+      container.innerHTML =
+        '<div class="exercise-card attention-lab">' +
+        "<p>" + escapeHtml(exercise.prompt || "Pick a query word. The highlight shows how strongly it attends to each other word.") + "</p>" +
+        picker +
+        '<div class="attn-sentence">' + toks + "</div>" +
+        '<p class="attn-hint">Query: <strong>' + escapeHtml(ex.tokens[qi]) + "</strong>. Click any word to make it the query.</p>" +
+        '<div class="attn-bars">' + bars + "</div>" +
+        '<p class="lab-caveat">Illustrative attention, hand-built to show typical patterns (a pronoun attending to its noun, a word to the context that fixes its sense). Not extracted from a live model, which has many heads across many layers.</p>' +
+        "</div>";
+    }
+    container.addEventListener("click", function (e) {
+      const exBtn = e.target.closest("[data-ex]");
+      if (exBtn) { ei = Number(exBtn.dataset.ex); qi = 0; render(); return; }
+      const qBtn = e.target.closest("[data-q]");
+      if (qBtn) { qi = Number(qBtn.dataset.q); render(); }
+    });
+    render();
+  }
+
+  function mountInjectionLab(container, exercise) {
+    const injections = exercise.injections || [];
+    let pick = 0, guardrail = true, ran = false;
+    function render() {
+      const inj = injections[pick] || { label: "", text: "" };
+      container.innerHTML =
+        '<div class="exercise-card injection-lab">' +
+        "<p>" + escapeHtml(exercise.prompt || "An agent reads an untrusted web page to summarize it. Someone hid an instruction in the page. Toggle the guardrail and run it.") + "</p>" +
+        '<div class="inj-task"><strong>Agent task:</strong> ' + escapeHtml(exercise.task || "Summarize the web page for the user.") + "</div>" +
+        '<div class="inj-field"><span class="inj-label">Instruction hidden in the page content</span>' +
+        '<div class="lab-controls">' + injections.map(function (x, i) { return '<button type="button" class="inj-pick' + (i === pick ? " active" : "") + '" data-pick="' + i + '">' + escapeHtml(x.label) + "</button>"; }).join("") + "</div>" +
+        '<pre class="inj-content">' + escapeHtml(inj.text) + "</pre></div>" +
+        '<label class="inj-guard"><input type="checkbox" data-guard ' + (guardrail ? "checked" : "") + "> Guardrail on: treat page content as data, not commands (the instruction-source boundary)</label>" +
+        '<button type="button" class="button primary" data-run>Run agent</button>' +
+        (ran
+          ? '<div class="inj-out ' + (guardrail ? "safe" : "breach") + '">' +
+            (guardrail
+              ? "<strong>Blocked.</strong> The agent summarized the page and flagged it: “this page contains an instruction directed at me; I am not acting on it.” The hidden command never ran."
+              : "<strong>Breach.</strong> With no source boundary the agent obeyed the page text and tried to exfiltrate data to the attacker. Untrusted content rewrote the agent's goal.") +
+            "</div>"
+          : "") +
+        '<p class="lab-caveat">A simulation of the instruction-source boundary, not a live model. The rule it shows: text an agent reads is data; only the user gives instructions.</p>' +
+        "</div>";
+    }
+    container.addEventListener("click", function (e) {
+      const p = e.target.closest("[data-pick]");
+      if (p) { pick = Number(p.dataset.pick); ran = false; render(); return; }
+      if (e.target.closest("[data-run]")) { ran = true; render(); }
+    });
+    container.addEventListener("change", function (e) {
+      if (e.target.closest("[data-guard]")) { guardrail = e.target.checked; ran = false; render(); }
+    });
+    render();
+  }
+
+  function mountEmbeddingLab(container, exercise) {
+    const pts = exercise.points || [];
+    let sel = -1;
+    const W = 340, H = 250, PAD = 26;
+    const xs = pts.map(function (p) { return p.x; }), ys = pts.map(function (p) { return p.y; });
+    const minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs);
+    const minY = Math.min.apply(null, ys), maxY = Math.max.apply(null, ys);
+    const COLORS = { 0: "#2a95ea", 1: "#7a9a6a", 2: "#b5803a", 3: "#a06ab5" };
+    function sx(x) { return PAD + (x - minX) / ((maxX - minX) || 1) * (W - 2 * PAD); }
+    function sy(y) { return H - PAD - (y - minY) / ((maxY - minY) || 1) * (H - 2 * PAD); }
+    function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+    function render() {
+      let neighbors = [];
+      if (sel >= 0) {
+        neighbors = pts.map(function (p, i) { return { i: i, d: dist(pts[sel], p) }; })
+          .filter(function (n) { return n.i !== sel; }).sort(function (a, b) { return a.d - b.d; }).slice(0, 3);
+      }
+      const near = {}; neighbors.forEach(function (n) { near[n.i] = true; });
+      const dots = pts.map(function (p, i) {
+        const isSel = i === sel, isNear = near[i];
+        const col = COLORS[p.group] || "#888";
+        const r = isSel ? 6 : (isNear ? 5 : 4);
+        const op = (sel < 0 || isSel || isNear) ? 1 : 0.3;
+        return '<g class="emb-pt" data-pt="' + i + '">' +
+          '<circle cx="' + sx(p.x).toFixed(1) + '" cy="' + sy(p.y).toFixed(1) + '" r="' + r + '" fill="' + col + '" opacity="' + op + '"/>' +
+          '<text class="emb-label" x="' + (sx(p.x) + 7).toFixed(1) + '" y="' + (sy(p.y) + 3).toFixed(1) + '" opacity="' + op + '">' + escapeHtml(p.w) + "</text></g>";
+      }).join("");
+      const list = sel >= 0
+        ? '<p class="emb-near">Nearest to <strong>' + escapeHtml(pts[sel].w) + "</strong>: " + neighbors.map(function (n) { return escapeHtml(pts[n.i].w) + " (" + n.d.toFixed(2) + ")"; }).join(", ") + "</p>"
+        : '<p class="emb-near">Click a word to see its three nearest neighbors.</p>';
+      container.innerHTML =
+        '<div class="exercise-card embedding-lab">' +
+        "<p>" + escapeHtml(exercise.prompt || "Each dot is a word, placed by meaning. Click one to see its nearest neighbors.") + "</p>" +
+        '<svg viewBox="0 0 ' + W + " " + H + '" class="emb-svg" role="img" aria-label="2D map of word embeddings">' + dots + "</svg>" +
+        list +
+        (exercise.note ? '<p class="emb-note">' + escapeHtml(exercise.note) + "</p>" : "") +
+        '<p class="lab-caveat">A curated 2D map of real embedding relationships (the clusters and the king/queen analogy are genuine). Real embeddings live in hundreds of dimensions; these 2D distances are simplified for intuition.</p>' +
+        "</div>";
+    }
+    container.addEventListener("click", function (e) {
+      const g = e.target.closest("[data-pt]");
+      if (g) { sel = Number(g.dataset.pt); render(); }
     });
     render();
   }

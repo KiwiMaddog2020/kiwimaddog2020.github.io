@@ -419,16 +419,26 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "In a good word-embedding space, the vector 'king' minus 'man' plus 'woman' lands nearest to which word?",
-      "choices": [
-        "king",
-        "apple",
-        "throne",
-        "queen"
-      ],
-      "answer": 3,
-      "explain": "Embeddings place related meanings so that analogy directions roughly add up; this classic example lands near 'queen'."
+      "type": "embedding_lab",
+      "prompt": "Each dot is a word, placed so similar meanings sit close together. Click a word to see its three nearest neighbors.",
+      "note": "king, queen, man, woman form a parallelogram: king minus man plus woman lands exactly on queen here. That analogy is a real property of learned embeddings.",
+      "points": [
+        {"w": "king", "x": 3.0, "y": 1.0, "group": 0},
+        {"w": "queen", "x": 3.0, "y": 2.2, "group": 0},
+        {"w": "man", "x": 1.2, "y": 1.0, "group": 0},
+        {"w": "woman", "x": 1.2, "y": 2.2, "group": 0},
+        {"w": "cat", "x": 6.5, "y": 5.5, "group": 1},
+        {"w": "dog", "x": 7.0, "y": 5.0, "group": 1},
+        {"w": "lion", "x": 7.6, "y": 6.0, "group": 1},
+        {"w": "mouse", "x": 6.0, "y": 4.8, "group": 1},
+        {"w": "red", "x": 1.5, "y": 7.6, "group": 2},
+        {"w": "blue", "x": 1.0, "y": 8.1, "group": 2},
+        {"w": "green", "x": 2.0, "y": 8.3, "group": 2},
+        {"w": "code", "x": 7.5, "y": 1.5, "group": 3},
+        {"w": "model", "x": 8.0, "y": 2.3, "group": 3},
+        {"w": "data", "x": 7.0, "y": 2.0, "group": 3},
+        {"w": "token", "x": 8.3, "y": 1.0, "group": 3}
+      ]
     },
     "outcome": "You can explain tokens, why cost scales with them, and what embeddings encode.",
     "prereqs": [
@@ -1103,16 +1113,36 @@
       }
     ],
     "exercise": {
-      "type": "ordering",
-      "prompt": "Put the data flow through one pre-norm transformer block in order.",
-      "items": [
-        "Take the input vectors (token embeddings plus positional information)",
-        "Normalize, then run multi-head self-attention to mix information across tokens",
-        "Add the attention output back to the block input (residual)",
-        "Normalize, then run the position-wise feedforward network on each token",
-        "Add the feedforward output back (residual) and pass the result to the next block"
-      ],
-      "explain": "Each sublayer is normalize, transform, then add back to its input. Attention mixes across tokens; the feedforward transforms each position; residual adds carry the signal forward."
+      "type": "attention_lab",
+      "prompt": "Self-attention lets each word pull information from the others. Pick a query word and watch how strongly it attends to each token.",
+      "examples": [
+        {
+          "label": "Coreference",
+          "tokens": ["The", "cat", "sat", "because", "it", "was", "tired"],
+          "focus": {
+            "0": {"1": 2, "0": 1},
+            "1": {"1": 2, "2": 1},
+            "2": {"1": 3, "2": 1},
+            "3": {"2": 2, "6": 2},
+            "4": {"1": 4, "4": 1},
+            "5": {"4": 2, "6": 1},
+            "6": {"4": 1, "1": 1, "6": 1}
+          }
+        },
+        {
+          "label": "Word sense",
+          "tokens": ["The", "bank", "by", "the", "river", "was", "steep"],
+          "focus": {
+            "0": {"1": 2},
+            "1": {"4": 3, "1": 1},
+            "2": {"1": 1, "4": 2},
+            "3": {"4": 2},
+            "4": {"4": 1, "1": 1},
+            "5": {"1": 1, "6": 2},
+            "6": {"1": 2, "4": 1}
+          }
+        }
+      ]
     },
     "outcome": "Explain what residuals, normalization, and positional encoding each contribute, and trace data through one transformer block.",
     "prereqs": [
