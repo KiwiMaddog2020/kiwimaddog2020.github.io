@@ -82,8 +82,8 @@ def main():
             "id": "gradient-descent", "title": "Gradient descent", "kind": "Run", "category": "training",
             "blurb": "Set a learning rate and watch the step roll downhill, or fly off when it is too big.",
             "concept_html": "<p>Training a model means minimizing a loss. Gradient descent takes steps downhill in proportion to the slope, scaled by the learning rate. Too small and it crawls; too big and it overshoots and diverges. Set the rate and step through it.</p>",
-            "exercise": {"type": "gradient_descent_lab", "a": 0.18, "start": -4.2, "lr": 0.30,
-                         "prompt": "Set the learning rate, then Step or Run. Try 0.2, then 1.0, then 2.5, and watch what changes."},
+            "exercise": {"type": "gradient_descent_lab", "a": 0.5, "start": -4.2, "lr": 0.30,
+                         "prompt": "Set the learning rate, then Step or Run. Try 0.2 (slow crawl), 1.0 (one clean jump to the bottom), and 2.5 (overshoots and flies off)."},
         },
         {
             "id": "neural-net", "title": "Neural network forward pass", "kind": "Slide", "category": "foundations",

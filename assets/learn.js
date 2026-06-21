@@ -2582,7 +2582,7 @@
   }
 
   function mountGradientDescentLab(container, exercise) {
-    const A = exercise.a || 0.18;
+    const A = exercise.a || 0.5;
     const XMIN = -5, XMAX = 5;
     let lr = exercise.lr != null ? exercise.lr : 0.30;
     let x = exercise.start != null ? exercise.start : -4.2;
