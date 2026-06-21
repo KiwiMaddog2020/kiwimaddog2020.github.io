@@ -76,11 +76,22 @@ def main():
             "source_lesson": lesson["id"],
             "source_title": lesson.get("title", lesson["id"]),
         })
+    # Standalone labs (no source lesson): full config defined here.
+    STANDALONE = [
+        {
+            "id": "gradient-descent", "title": "Gradient descent", "kind": "Run", "category": "training",
+            "blurb": "Set a learning rate and watch the step roll downhill, or fly off when it is too big.",
+            "concept_html": "<p>Training a model means minimizing a loss. Gradient descent takes steps downhill in proportion to the slope, scaled by the learning rate. Too small and it crawls; too big and it overshoots and diverges. Set the rate and step through it.</p>",
+            "exercise": {"type": "gradient_descent_lab", "a": 0.18, "start": -4.2, "lr": 0.30,
+                         "prompt": "Set the learning rate, then Step or Run. Try 0.2, then 1.0, then 2.5, and watch what changes."},
+        },
+    ]
+    labs = labs + STANDALONE
     out = {"categories": CATEGORIES, "labs": labs}
     (ROOT / "data" / "labs.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     print(f"wrote data/labs.json: {len(labs)} labs across {len(CATEGORIES)} categories")
     for lab in labs:
-        print(f"  {lab['category']:12} {lab['id']:14} <- {lab['source_lesson']}")
+        print(f"  {lab['category']:12} {lab['id']:14} <- {lab.get('source_lesson', 'standalone')}")
 
 
 if __name__ == "__main__":

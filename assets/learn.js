@@ -1537,6 +1537,10 @@
       mountEmbeddingLab(container, exercise);
       return;
     }
+    if (exercise.type === "gradient_descent_lab") {
+      mountGradientDescentLab(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
   }
 
@@ -2503,6 +2507,54 @@
     container.addEventListener("click", function (e) {
       const g = e.target.closest("[data-pt]");
       if (g) { sel = Number(g.dataset.pt); render(); }
+    });
+    render();
+  }
+
+  function mountGradientDescentLab(container, exercise) {
+    const A = exercise.a || 0.18;
+    const XMIN = -5, XMAX = 5;
+    let lr = exercise.lr != null ? exercise.lr : 0.30;
+    let x = exercise.start != null ? exercise.start : -4.2;
+    let steps = 0, timer = null;
+    const W = 360, H = 220, PAD = 28;
+    function f(v) { return A * v * v; }
+    function grad(v) { return 2 * A * v; }
+    const fmax = f(XMIN) || 1;
+    function sx(v) { return PAD + (v - XMIN) / (XMAX - XMIN) * (W - 2 * PAD); }
+    function sy(val) { return H - PAD - (val / fmax) * (H - 2 * PAD); }
+    function curve() { let d = ""; for (let i = 0; i <= 60; i++) { const v = XMIN + (XMAX - XMIN) * i / 60; d += (i ? "L" : "M") + sx(v).toFixed(1) + " " + sy(f(v)).toFixed(1) + " "; } return d; }
+    function step() { x = x - lr * grad(x); x = Math.max(XMIN, Math.min(XMAX, x)); steps++; }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function render() {
+      const cx = sx(x), cy = sy(f(x));
+      const state = Math.abs(x) < 0.05 ? "converged" : (Math.abs(x) >= 4.99 ? "diverged" : "descending");
+      container.innerHTML =
+        '<div class="exercise-card gd-lab">' +
+        "<p>" + escapeHtml(exercise.prompt || "Gradient descent rolls downhill. Set the learning rate, then step. Too small crawls; too big overshoots and flies off.") + "</p>" +
+        '<svg viewBox="0 0 ' + W + " " + H + '" class="gd-svg" role="img" aria-label="loss curve with the current point">' +
+        '<line x1="' + sx(0).toFixed(1) + '" y1="' + (H - PAD) + '" x2="' + sx(0).toFixed(1) + '" y2="' + PAD + '" stroke="var(--border)" stroke-dasharray="3 3"/>' +
+        '<path d="' + curve() + '" fill="none" stroke="var(--border-accent)" stroke-width="2"/>' +
+        '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="6" fill="var(--accent)"/>' +
+        "</svg>" +
+        '<div class="gd-controls"><label class="gd-lr">learning rate <strong>' + lr.toFixed(2) + "</strong>" +
+        '<input type="range" min="0.02" max="3" step="0.02" value="' + lr + '" data-gd-lr></label>' +
+        '<div class="gd-buttons"><button type="button" class="button" data-gd-step>Step</button>' +
+        '<button type="button" class="button" data-gd-run>' + (timer ? "Pause" : "Run") + "</button>" +
+        '<button type="button" class="button ghost" data-gd-reset>Reset</button></div></div>' +
+        '<dl class="gd-stats"><div><dt>step</dt><dd>' + steps + "</dd></div><div><dt>x</dt><dd>" + x.toFixed(2) + "</dd></div><div><dt>loss</dt><dd>" + f(x).toFixed(2) + '</dd></div><div><dt>state</dt><dd class="gd-' + state + '">' + state + "</dd></div></dl>" +
+        '<p class="lab-caveat">A clean convex bowl: gradient descent in one dimension. Real loss surfaces are high-dimensional and bumpy with local minima, but the lever is the same one you are sliding.</p>' +
+        "</div>";
+    }
+    container.addEventListener("input", function (e) {
+      if (e.target.closest("[data-gd-lr]")) { lr = Number(e.target.value); const s = container.querySelector(".gd-lr strong"); if (s) s.textContent = lr.toFixed(2); }
+    });
+    container.addEventListener("click", function (e) {
+      if (e.target.closest("[data-gd-step]")) { stop(); step(); render(); }
+      else if (e.target.closest("[data-gd-run]")) {
+        if (timer) { stop(); render(); }
+        else { timer = setInterval(function () { if (!container.isConnected) { stop(); return; } step(); render(); if (Math.abs(x) < 0.02 || Math.abs(x) >= 5) { stop(); render(); } }, 240); render(); }
+      } else if (e.target.closest("[data-gd-reset]")) { stop(); x = exercise.start != null ? exercise.start : -4.2; steps = 0; render(); }
     });
     render();
   }

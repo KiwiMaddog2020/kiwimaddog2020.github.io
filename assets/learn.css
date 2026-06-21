@@ -1782,3 +1782,18 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
 .lab-mount { margin: 1rem 0; }
 .lab-source { font-size: 0.85rem; color: var(--text-muted); margin-top: 1.4rem; }
 .lab-source a { color: var(--accent); }
+
+/* gradient-descent lab */
+.gd-svg { width: 100%; max-width: 460px; height: auto; display: block; margin: 0.4rem auto; background: var(--bg-elevated); border-radius: 8px; }
+.gd-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; margin: 0.6rem 0; }
+.gd-lr { display: flex; flex-direction: column; gap: 0.3rem; font-size: 0.82rem; color: var(--text-muted); flex: 1; min-width: 12rem; }
+.gd-lr strong { color: var(--text-strong); font-family: var(--mono); }
+.gd-lr input[type=range] { width: 100%; accent-color: var(--accent); }
+.gd-buttons { display: flex; gap: 0.4rem; }
+.gd-lab .button { font: inherit; font-size: 0.85rem; padding: 0.35rem 0.9rem; border: 1px solid var(--border); border-radius: 8px; background: var(--accent); color: #fff; cursor: pointer; }
+.gd-lab .button.ghost { background: transparent; color: var(--text-muted); }
+.gd-stats { display: flex; gap: 1.3rem; flex-wrap: wrap; margin: 0.5rem 0 0; }
+.gd-stats div { display: flex; flex-direction: column; }
+.gd-stats dt { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+.gd-stats dd { font-family: var(--mono); font-size: 1.05rem; color: var(--text-strong); margin: 0; }
+.gd-stats .gd-converged { color: #5a8a5a; } .gd-stats .gd-diverged { color: #c46b6b; } .gd-stats .gd-descending { color: var(--accent); }
