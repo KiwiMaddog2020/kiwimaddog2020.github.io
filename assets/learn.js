@@ -2492,7 +2492,7 @@
         const col = COLORS[p.group] || "#888";
         const r = isSel ? 6 : (isNear ? 5 : 4);
         const op = (sel < 0 || isSel || isNear) ? 1 : 0.3;
-        return '<g class="emb-pt" data-pt="' + i + '">' +
+        return '<g class="emb-pt" data-pt="' + i + '" tabindex="0" role="button" aria-label="' + escapeHtml(p.w) + (isSel ? ", selected" : "") + '">' +
           '<circle cx="' + sx(p.x).toFixed(1) + '" cy="' + sy(p.y).toFixed(1) + '" r="' + r + '" fill="' + col + '" opacity="' + op + '"/>' +
           '<text class="emb-label" x="' + (sx(p.x) + 7).toFixed(1) + '" y="' + (sy(p.y) + 3).toFixed(1) + '" opacity="' + op + '">' + escapeHtml(p.w) + "</text></g>";
       }).join("");
@@ -2505,12 +2505,19 @@
         '<svg viewBox="0 0 ' + W + " " + H + '" class="emb-svg" role="img" aria-label="2D map of word embeddings">' + dots + "</svg>" +
         list +
         (exercise.note ? '<p class="emb-note">' + escapeHtml(exercise.note) + "</p>" : "") +
-        '<p class="lab-caveat">A curated 2D map of real embedding relationships (the clusters and the king/queen analogy are genuine). Real embeddings live in hundreds of dimensions; these 2D distances are simplified for intuition.</p>' +
+        '<p class="lab-caveat">A hand-placed 2D map illustrating well-known embedding relationships (semantic clusters, the king/queen analogy). It is not extracted from a real model, and real embeddings live in hundreds of dimensions; these 2D distances are for intuition only.</p>' +
         "</div>";
     }
     container.addEventListener("click", function (e) {
       const g = e.target.closest("[data-pt]");
       if (g) { sel = Number(g.dataset.pt); render(); }
+    });
+    container.addEventListener("keydown", function (e) {
+      const g = e.target.closest("[data-pt]");
+      if (g && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault(); sel = Number(g.dataset.pt); render();
+        const el = container.querySelector('[data-pt="' + sel + '"]'); if (el) el.focus();
+      }
     });
     render();
   }
