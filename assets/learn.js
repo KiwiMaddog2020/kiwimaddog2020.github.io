@@ -1515,6 +1515,10 @@
       mountCapstone(container, exercise);
       return;
     }
+    if (exercise.type === "tokenizer_lab") {
+      mountTokenizerLab(container, exercise);
+      return;
+    }
     container.innerHTML = `<p class="empty-state">Unknown exercise type: ${escapeHtml(exercise.type)}</p>`;
   }
 
@@ -2274,6 +2278,88 @@
       render();
     });
 
+    render();
+  }
+
+  function mountTokenizerLab(container, exercise) {
+    const SUFFIXES = ["tion", "ing", "edly", "ment", "ness", "able", "ed", "ly", "es", "er", "s"];
+    const win = Number(exercise.window) || 8192;
+    let mode = "subword";
+
+    function subwordSplit(word) {
+      let w = word, suf = "";
+      for (let i = 0; i < SUFFIXES.length; i++) {
+        const s = SUFFIXES[i];
+        if (w.length > s.length + 2 && w.toLowerCase().slice(-s.length) === s) {
+          suf = w.slice(w.length - s.length); w = w.slice(0, w.length - s.length); break;
+        }
+      }
+      const out = [];
+      for (let i = 0; i < w.length; i += 4) out.push(w.slice(i, i + 4));
+      if (suf) out.push(suf);
+      return out.length ? out : [word];
+    }
+    function tokenize(text) {
+      const clean = String(text || "");
+      if (mode === "char") return clean.split("").filter(function (c) { return c.trim() !== ""; });
+      const words = clean.trim().split(/\s+/).filter(Boolean);
+      if (mode === "word") return words;
+      let toks = [];
+      words.forEach(function (raw) {
+        const m = raw.match(/^([^0-9A-Za-z]*)([0-9A-Za-z][0-9A-Za-z'-]*)?([^0-9A-Za-z]*)$/);
+        if (m) {
+          if (m[1]) toks.push(m[1]);
+          if (m[2]) toks = toks.concat(subwordSplit(m[2]));
+          if (m[3]) toks.push(m[3]);
+        } else { toks.push(raw); }
+      });
+      return toks;
+    }
+    function render() {
+      const input = container.querySelector("[data-tok-input]");
+      const text = input ? input.value : (exercise.text || "");
+      const toks = tokenize(text);
+      const n = toks.length;
+      const chars = text.replace(/\s/g, "").length;
+      const ratio = n ? Math.round((chars / n) * 10) / 10 : 0;
+      const fill = Math.min(100, Math.round((n / win) * 1000) / 10);
+      const chips = toks.map(function (t, i) {
+        return '<span class="tok-chip tc' + (i % 6) + '">' + escapeHtml(t) + "</span>";
+      }).join("");
+      const out = container.querySelector("[data-tok-out]");
+      if (out) {
+        out.innerHTML =
+          '<div class="tok-chips">' + (chips || '<span class="tok-empty">type something above</span>') + "</div>" +
+          '<dl class="tok-stats">' +
+          "<div><dt>tokens</dt><dd>" + n + "</dd></div>" +
+          "<div><dt>chars / token</dt><dd>" + ratio + "</dd></div>" +
+          "<div><dt>context fill</dt><dd>" + fill + "% of " + win.toLocaleString() + "</dd></div>" +
+          "</dl>" +
+          '<div class="tok-bar" aria-hidden="true"><span style="width:' + fill + '%"></span></div>';
+      }
+    }
+    container.innerHTML =
+      '<div class="exercise-card tokenizer-lab">' +
+      "<p>" + escapeHtml(exercise.prompt || "Type text and watch how it splits into tokens.") + "</p>" +
+      '<textarea class="tok-input" data-tok-input rows="2" aria-label="text to tokenize">' + escapeHtml(exercise.text || "Tokenization isn't always intuitive.") + "</textarea>" +
+      '<div class="lab-controls tok-modes" role="group" aria-label="token granularity">' +
+      ["subword", "word", "char"].map(function (m) {
+        return '<button type="button" class="tok-mode' + (m === mode ? " active" : "") + '" data-mode="' + m + '">' + m + "</button>";
+      }).join("") +
+      "</div>" +
+      "<div data-tok-out></div>" +
+      '<p class="lab-caveat">Illustrative subword tokenization. Real tokenizers (BPE) learn their merges from data, so exact counts differ; what holds is the idea, tokens are not words, and punctuation, casing, and rare words cost extra.</p>' +
+      "</div>";
+    container.addEventListener("input", function (e) {
+      if (e.target.closest("[data-tok-input]")) render();
+    });
+    container.addEventListener("click", function (e) {
+      const b = e.target.closest("[data-mode]");
+      if (!b) return;
+      mode = b.dataset.mode;
+      container.querySelectorAll(".tok-mode").forEach(function (x) { x.classList.toggle("active", x.dataset.mode === mode); });
+      render();
+    });
     render();
   }
 

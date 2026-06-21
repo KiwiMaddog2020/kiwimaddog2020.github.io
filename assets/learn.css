@@ -1708,3 +1708,21 @@ a.track-card[data-state="done"]:hover .tc-cta::after { transform: none; }
   a.track-card:focus-visible { transform: none; }
   a.track-card:hover .tc-cta::after { transform: none; }
 }
+
+/* --- v4 explorable labs --- */
+.lab-caveat { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-top: 0.75rem; line-height: 1.5; }
+.tokenizer-lab .tok-input { width: 100%; box-sizing: border-box; font-family: var(--mono); font-size: 0.95rem; padding: 0.6rem 0.7rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); resize: vertical; }
+.tok-modes { display: flex; gap: 0.4rem; margin: 0.7rem 0; }
+.tok-mode { font: inherit; font-size: 0.85rem; padding: 0.3rem 0.85rem; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--text-muted); cursor: pointer; text-transform: capitalize; }
+.tok-mode.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tok-chips { display: flex; flex-wrap: wrap; gap: 4px; margin: 0.5rem 0; min-height: 2rem; }
+.tok-chip { font-family: var(--mono); font-size: 0.85rem; padding: 2px 6px; border-radius: 5px; white-space: pre; color: var(--text-strong); }
+.tok-chip.tc0 { background: rgba(42,149,234,0.16); } .tok-chip.tc1 { background: rgba(122,154,106,0.18); } .tok-chip.tc2 { background: rgba(181,128,58,0.18); }
+.tok-chip.tc3 { background: rgba(160,106,181,0.18); } .tok-chip.tc4 { background: rgba(217,119,119,0.18); } .tok-chip.tc5 { background: rgba(91,179,179,0.18); }
+.tok-empty { color: var(--text-muted); font-style: italic; }
+.tok-stats { display: flex; gap: 1.4rem; flex-wrap: wrap; margin: 0.6rem 0 0.4rem; }
+.tok-stats div { display: flex; flex-direction: column; }
+.tok-stats dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+.tok-stats dd { font-family: var(--mono); font-size: 1.1rem; color: var(--text-strong); margin: 0; }
+.tok-bar { height: 6px; background: var(--bg-elevated); border-radius: 3px; overflow: hidden; }
+.tok-bar span { display: block; height: 100%; background: var(--accent); transition: width 0.15s; }

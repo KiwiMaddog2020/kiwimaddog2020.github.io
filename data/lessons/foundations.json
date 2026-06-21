@@ -1212,16 +1212,10 @@
       }
     ],
     "exercise": {
-      "type": "predict_output",
-      "prompt": "A BPE tokenizer trained on ordinary English text is given four inputs of similar visible length. Predict which one is split into the MOST tokens.",
-      "choices": [
-        "'information' (a common English word)",
-        "'pneumonoultramicroscopicsilicovolcanoconiosis' (a rare long word)",
-        "'the the the' (a common word repeated)",
-        "'hello world' (two common words)"
-      ],
-      "answer": 1,
-      "explain": "Common words and repeats collapse into few tokens via learned merges. The rare long word has no such merges, so it fragments into many subword pieces: the most tokens of the four."
+      "type": "tokenizer_lab",
+      "prompt": "Type any text and watch it split into tokens. Try a rare long word, ALL CAPS, code, or heavy punctuation, and switch granularity to see the token count change.",
+      "text": "Tokenization isn't always intuitive: pneumonoultramicroscopicsilicovolcanoconiosis fragments into many pieces.",
+      "window": 8192
     },
     "outcome": "Predict roughly how text fragments into tokens and explain why count and cost are denominated in tokens.",
     "prereqs": [
