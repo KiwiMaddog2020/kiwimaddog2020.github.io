@@ -2644,7 +2644,7 @@
       if (!lab) { renderNotFound("That lab does not exist."); return; }
       const markup =
         '<article class="lab-detail">' +
-        '<p class="crumb"><a href="#/labs">Labs</a> / ' + escapeHtml(lab.title) + "</p>" +
+        '<a class="back-icon" href="#/labs" aria-label="Back to labs">←</a>' +
         "<h1>" + escapeHtml(lab.title) + "</h1>" +
         (lab.blurb ? '<p class="dek">' + escapeHtml(lab.blurb) + "</p>" : "") +
         (lab.concept_html ? '<div class="lab-concept">' + lab.concept_html + "</div>" : "") +
@@ -2663,14 +2663,14 @@
       const items = byCat[c.id] || [];
       if (!items.length) return "";
       const cards = items.map(function (l) {
-        return '<a class="lab-card" href="#/labs/' + encodeURIComponent(l.id) + '">' +
-          '<span class="lab-card-kind">' + escapeHtml(l.kind || "Interactive") + "</span>" +
-          "<h3>" + escapeHtml(l.title) + "</h3>" +
-          "<p>" + escapeHtml(l.blurb || "") + "</p>" +
-          '<span class="lab-card-go">Open lab →</span>' +
+        return '<a class="track-card" href="#/labs/' + encodeURIComponent(l.id) + '" data-state="new">' +
+          '<span class="tc-kicker">' + escapeHtml(l.kind || "Interactive") + "</span>" +
+          '<h3 class="tc-title">' + escapeHtml(l.title) + "</h3>" +
+          '<p class="tc-blurb">' + escapeHtml(l.blurb || "") + "</p>" +
+          '<span class="tc-foot"><span class="tc-cta">Open lab</span></span>' +
           "</a>";
       }).join("");
-      return '<section class="lab-cat"><h2>' + escapeHtml(c.title) + '</h2><div class="lab-grid">' + cards + "</div></section>";
+      return '<section class="lab-cat"><h2>' + escapeHtml(c.title) + '</h2><div class="track-grid">' + cards + "</div></section>";
     }).join("");
     const markup =
       '<div class="labs-index">' +
