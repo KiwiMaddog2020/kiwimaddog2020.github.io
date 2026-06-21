@@ -178,3 +178,26 @@ each item against the LIVE site; disagreements resolved by ground truth (curl / 
 - v3 LIVE: 65 lessons / 5 tracks / 9 interactive labs (4 new: bootstrap, ROC, RAG, context-budget) +
   5 capstones / 6 diagrams / global index + resume + per-track mastery + per-claim sources, at
   https://kiwimaddog2020.github.io/study/. All 76 links 200, JSON valid, node-check clean, em-dash-free.
+
+## v4 (explorable-explanation labs)
+
+Plan: PLAN_V4.md. Gate: CHECKLIST_V4.md (binary, v3 model). Doer (Opus) built + self-verified; the
+cross-model rater is the recommended next step (deferred this turn per the OOM caution).
+
+- 4 new deterministic, client-side widgets in assets/learn.js (no live inference):
+  tokenizer_lab (text -> token chips + count + chars/token + context-fill; subword/word/char),
+  attention_lab (pick a query word, see attention over two curated sentences: coreference + word-sense),
+  injection_lab (simulated agent + instruction-source-boundary guardrail toggle: block vs breach),
+  embedding_lab (curated 2D word map, click for nearest neighbors; king/queen analogy exact).
+  Attention + embedding use hand-built illustrative data, each captioned "not from a live model"
+  (the honesty ethos). tokenizer + injection are real deterministic logic / simulation.
+- Wired: tokenizer -> fnd_bpe_tokenization, attention -> fnd_transformer_internals, injection ->
+  ag_security_injection, embedding -> fnd_tokens_embeddings (each replaced its prior MCQ/lab). Still
+  65 lessons; 13 interactive labs now (9 + 4).
+- Doer-floor verification: node --check learn.js PASS; foundations + agents JSON valid; em-dash 0
+  (also fixed 3 pre-existing em-dashes in learn.css comments); node logic tests confirm the math
+  (tokenizer counts, attention row sums to 1, nearest-to-king = queen/man/woman, analogy exact);
+  live deploy serves all 4 mount fns + the wired lab types; cache-busters consistent.
+- Commits: fb7e9fa (Train A), bb2c975 (Trains B/C/D). LIVE at /study/.
+- OPEN rigor: (1) in-browser interactivity eyeball; (2) cross-model binary-verify via the assay-style
+  harness (subprocess-timeout-wrapped CLIs), not run raw here per the OOM caution.
