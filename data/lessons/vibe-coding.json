@@ -49,9 +49,9 @@
         "level": "Beginner",
         "choices": [
           "Steering: precise intent, small reviewable units, and verification.",
-          "Trusting the model's output without review.",
-          "Avoiding tests.",
-          "Typing faster than the model."
+          "Trusting the model's output and shipping it straight to users without any review.",
+          "Avoiding tests so the model can move as fast as possible.",
+          "Typing faster than the model so you stay ahead of it."
         ],
         "answer": 0,
         "explain": "Steering and verification are what keep speed from costing correctness."
@@ -60,10 +60,10 @@
         "q": "Who owns the product contract and release risk when vibe coding?",
         "level": "Beginner",
         "choices": [
-          "The model.",
+          "The model itself, since it is the one that actually wrote the code in the first place.",
           "The human; the model is a fast collaborator, not the final authority.",
-          "Nobody.",
-          "The user of the app."
+          "Nobody in particular; risk is shared across the tools.",
+          "The end user of the app, who reports any problems."
         ],
         "answer": 1,
         "explain": "The model writes plausibly but does not own correctness or risk."
@@ -73,9 +73,9 @@
       "type": "predict_output",
       "prompt": "You accept an AI-written patch without reading it because it 'looks right'. What responsibility did you skip?",
       "choices": [
-        "Writing the prompt.",
-        "Choosing the model.",
-        "None; the model owns correctness.",
+        "Writing a clear enough prompt for the patch.",
+        "Choosing which model should write the patch.",
+        "None; the model owns correctness once it writes it.",
         "Review and verification; you still own the result."
       ],
       "answer": 3,
@@ -141,10 +141,10 @@
         "q": "What most distinguishes a CLI coding agent from inline completion?",
         "level": "Beginner",
         "choices": [
-          "It cannot edit files.",
-          "It uses a different programming language.",
+          "It cannot edit files on disk at all, only suggest snippets for you to paste in.",
+          "It is written to use a different programming language.",
           "It can change many files and run commands in a loop before stopping.",
-          "It never makes mistakes."
+          "It runs in a loop but never actually makes a mistake."
         ],
         "answer": 2,
         "explain": "The difference is how much it does autonomously between your reviews."
@@ -153,9 +153,9 @@
         "q": "How should you choose a coding tool?",
         "level": "Beginner",
         "choices": [
-          "By which has the most features.",
-          "Always pick the most autonomous one.",
-          "By which is newest.",
+          "By picking whichever tool happens to advertise the longest list of features on its page.",
+          "By always picking the single most autonomous tool available.",
+          "By picking whichever tool was released most recently.",
           "By fit: match the tool's autonomy to how well-specified and reversible the task is."
         ],
         "answer": 3,
@@ -166,10 +166,10 @@
       "type": "predict_output",
       "prompt": "You need one small local edit and want to learn as you go. Which tool tier fits best?",
       "choices": [
-        "None; do it without any AI.",
-        "A fully autonomous CLI agent that edits many files.",
+        "None at all; just do the small edit without any AI help.",
+        "A fully autonomous CLI agent that edits many files across the repo at once.",
         "Inline completion or a chat assistant for a small, local change.",
-        "A multi-agent swarm."
+        "A multi-agent swarm that divides the small edit up."
       ],
       "answer": 2,
       "explain": "Match tool autonomy to the task; a small local edit does not need a multi-file agent."
@@ -230,9 +230,9 @@
         "level": "Beginner",
         "choices": [
           "Because small, checkable steps are easier to verify and revert than a large opaque diff.",
-          "Because models cannot make big changes.",
-          "To avoid using tools.",
-          "To use more tokens."
+          "Because the underlying models simply cannot make large multi-file changes safely or reliably at all.",
+          "To avoid having to use any of the agent's tools at all.",
+          "To deliberately use more tokens on each separate step."
         ],
         "answer": 0,
         "explain": "Reviewability is the goal; small units make it achievable."
@@ -241,10 +241,10 @@
         "q": "What is the purpose of stating non-goals in a coding prompt?",
         "level": "Beginner",
         "choices": [
-          "To make the prompt longer.",
+          "To make the overall prompt noticeably longer and more thorough for the model.",
           "To protect nearby code from opportunistic, unrequested edits.",
-          "To confuse the model.",
-          "To raise the temperature."
+          "To deliberately confuse the model about the real goal.",
+          "To raise the sampling temperature on the generation."
         ],
         "answer": 1,
         "explain": "Boundaries keep the change inside the scope you intended."
@@ -256,8 +256,8 @@
       "goal": "Ask for a small, reviewable change that adds a timeout to an existing auth token refresh call.",
       "choices": [
         "In auth/refresh.js, add a 5 second timeout to the token refresh request only. Do not change storage or login flow. Add or update one test that proves timeout rejection.",
-        "Rewrite the auth module with better error handling.",
-        "Improve auth and clean up anything nearby."
+        "Rewrite the whole auth module with better error handling.",
+        "Improve the auth code and clean up anything nearby too."
       ],
       "answer": 0,
       "explain": "The best rewrite names the file, boundary, behavior, non-goals, and check."
@@ -324,10 +324,10 @@
         "q": "Your prompts keep producing code that ignores your conventions. Best fix?",
         "level": "Intermediate",
         "choices": [
-          "Switch to a smaller model.",
-          "Raise the temperature.",
+          "Switch to a noticeably smaller model that tends to follow written directions more closely.",
+          "Raise the sampling temperature so it varies its style.",
           "Include a short example of existing code and name the libraries and style to use.",
-          "Ask for more code at once."
+          "Ask for a lot more code at once so it sees the pattern."
         ],
         "answer": 2,
         "explain": "A concrete example and named constraints give the model your context to match."
@@ -336,9 +336,9 @@
         "q": "Why ask for the test alongside the implementation?",
         "level": "Intermediate",
         "choices": [
-          "It makes the model slower.",
-          "It replaces the need to read the code.",
-          "Tests are required by law.",
+          "It makes the model noticeably slower to respond.",
+          "It replaces the need to ever read the generated code yourself afterward.",
+          "Generated tests are required by most regulations.",
           "It turns a plausible draft into something you can immediately verify."
         ],
         "answer": 3,
@@ -413,9 +413,9 @@
         "level": "Intermediate",
         "choices": [
           "You catch a misread requirement while it still costs a sentence to fix.",
-          "It removes the need for tests.",
-          "It guarantees correct code.",
-          "It makes the model write faster."
+          "It removes the need to write or run any tests on the finished code at all.",
+          "It guarantees the code that follows will be correct.",
+          "It makes the model write the actual code much faster."
         ],
         "answer": 0,
         "explain": "Correcting a plan is far cheaper than unwinding a wrong implementation."
@@ -424,10 +424,10 @@
         "q": "How does plan-first convert an intimidating change into a safe one?",
         "level": "Intermediate",
         "choices": [
-          "By doing it all in one diff.",
+          "By doing the whole intimidating change in a single large diff right at the end.",
           "By turning agreed steps into a sequence of small, verified changes.",
-          "By skipping verification.",
-          "By using a larger model."
+          "By skipping verification so the work goes faster.",
+          "By switching to a larger and more capable model."
         ],
         "answer": 1,
         "explain": "Stepwise execution against an agreed plan keeps each change reviewable."
@@ -438,8 +438,8 @@
       "weak_prompt": "Refactor the auth module.",
       "goal": "Get a short plan before any code so you can catch a wrong assumption early.",
       "choices": [
-        "Rewrite the whole auth system your way.",
-        "Refactor the auth module and make it cleaner.",
+        "Just rewrite the whole auth system however you think is best.",
+        "Refactor the auth module and make the code cleaner.",
         "Propose a short plan first: the files you will touch, the order of changes, and the test you will run; wait for my approval before editing."
       ],
       "answer": 2,
@@ -518,10 +518,10 @@
         "q": "A generated function passes the sample case. What is the next best move?",
         "level": "Intermediate",
         "choices": [
-          "Ask the model whether the code is correct and accept a confident answer.",
-          "Rewrite the whole module manually before looking at the patch.",
+          "Ask the model whether its own code is correct and then accept a confident yes.",
+          "Rewrite the whole module by hand before even looking at the patch.",
           "Check the contract and run or add a focused test for the likely edge case.",
-          "Accept the patch because the model already saw the repository."
+          "Accept the patch, since the model already saw the whole repository."
         ],
         "answer": 2,
         "explain": "The sample case is a clue, not acceptance. Verify the contract and the risky edge."
@@ -530,9 +530,9 @@
         "q": "Which review question is most useful for AI-written code?",
         "level": "Intermediate",
         "choices": [
-          "Could a larger model have written it faster?",
-          "Does the code look idiomatic?",
-          "Did the model explain it fluently?",
+          "Could a larger and more capable model have written this same code noticeably faster?",
+          "Does the finished code look idiomatic and well written?",
+          "Did the model explain its reasoning clearly and fluently?",
           "What invariant could this patch violate while still passing the happy path?"
         ],
         "answer": 3,
@@ -543,9 +543,9 @@
         "level": "Intermediate",
         "choices": [
           "After you have a specific question or hypothesis to test.",
-          "Only after merging, so you do not slow down.",
-          "Never, because explanations from models cannot be useful.",
-          "Before reading the code, so it can frame the review."
+          "Only after merging it, so you do not slow the work down.",
+          "Never, since explanations from models are never useful.",
+          "Before reading any code, so it can frame the whole review."
         ],
         "answer": 0,
         "explain": "A specific question lets the explanation support your review instead of replacing it."
@@ -619,10 +619,10 @@
         "q": "Why does pasting only the error message produce weak AI debugging?",
         "level": "Intermediate",
         "choices": [
-          "Models cannot read errors.",
+          "Because models are fundamentally unable to read error text.",
           "Without a repro, the code, and expected behavior, the model speculates instead of reasoning.",
-          "Error messages are always wrong.",
-          "It uses too many tokens."
+          "Because error messages are almost always wrong on their own.",
+          "Because pasting an error uses up far too many tokens."
         ],
         "answer": 1,
         "explain": "Evidence turns guessing into reasoning about the actual cause."
@@ -631,10 +631,10 @@
         "q": "An AI fix makes the error disappear. What should you confirm?",
         "level": "Intermediate",
         "choices": [
-          "That the model is confident.",
-          "Nothing; a gone error means done.",
+          "That the model sounds confident the fix is complete.",
+          "Nothing more is needed; once the error message is gone the whole job is done.",
           "That the fix addresses the identified cause, then add a regression test.",
-          "That the code is shorter."
+          "That the resulting code came out shorter than before."
         ],
         "answer": 2,
         "explain": "Fixing the mechanism and adding a test prevents a silent return."
@@ -708,9 +708,9 @@
         "q": "What is the real danger when reviewing AI-written code?",
         "level": "Advanced",
         "choices": [
-          "Code with too many comments.",
-          "Code that is too short.",
-          "Obviously ugly code you catch on sight.",
+          "Code that carries far too many explanatory comments.",
+          "Code that is noticeably too short for the task at hand.",
+          "Obviously ugly code that you can catch on first sight.",
           "Clean, fluent code that quietly violates an invariant the happy path never exercises."
         ],
         "answer": 3,
@@ -721,9 +721,9 @@
         "level": "Advanced",
         "choices": [
           "Whether it actually guarantees the contract on the edges.",
-          "How long it is.",
-          "How confident the comments sound.",
-          "Whether it looks idiomatic."
+          "Mostly how long the generated code turns out to be.",
+          "How confident and self-assured the inline code comments happen to sound to a reader.",
+          "Whether the finished code happens to look idiomatic."
         ],
         "answer": 0,
         "explain": "Edges and invariants, not style, decide correctness."
@@ -797,10 +797,10 @@
         "q": "What best describes expert-level vibe coding?",
         "level": "Expert",
         "choices": [
-          "Automating as much as technically possible.",
+          "Automating as much of the day-to-day coding work as is technically possible, across the whole project.",
           "Calibrated delegation: routing routine work to the model and consequential work to yourself.",
-          "Never using AI for code.",
-          "Always rewriting the model's output."
+          "Never using AI for any part of writing code at all.",
+          "Always rewriting whatever the model produces by hand."
         ],
         "answer": 1,
         "explain": "The skill is judgment about what to delegate, not the amount of automation."
@@ -809,10 +809,10 @@
         "q": "You have reprompted three times and the model still cannot fix a subtle bug. Best move?",
         "level": "Expert",
         "choices": [
-          "Switch to a larger model and retry indefinitely.",
-          "Reprompt five more times.",
+          "Switch to a larger model and keep retrying the same prompt indefinitely until it works.",
+          "Reprompt another five times and hope it lands eventually.",
           "Take the wheel: write the hard part yourself, then hand back the routine parts.",
-          "Accept the broken code."
+          "Just accept the broken code and move on to the next thing."
         ],
         "answer": 2,
         "explain": "Recognizing the unreachable-fix loop early and taking over saves the most time."
@@ -822,10 +822,10 @@
       "type": "predict_output",
       "prompt": "You have reprompted three times and the model still cannot fix a subtle concurrency bug. Best move?",
       "choices": [
-        "Switch models and retry indefinitely.",
-        "Reprompt five more times.",
+        "Switch models and keep retrying the very same prompt indefinitely until it finally works.",
+        "Reprompt it another five times and hope it lands this time.",
         "Take the wheel: write the hard part yourself, then hand back the routine parts.",
-        "Ship the broken code."
+        "Just ship the broken code and deal with it later on."
       ],
       "answer": 2,
       "explain": "Recognizing the unreachable-fix loop early and taking over is faster than more reprompts."
@@ -885,9 +885,9 @@
         "q": "An AI-suggested handler logs the full signup request to your analytics tool. The risk is:",
         "level": "Intermediate",
         "choices": [
-          "Slower analytics",
-          "Better debugging only",
-          "None; logs are private",
+          "Slightly slower analytics dashboards for the team.",
+          "Better debugging only, with no real downside at all.",
+          "None at all, since application logs are always kept completely private from everyone by default.",
           "Personal data and secrets (like the password) leak into a system not built to hold them"
         ],
         "answer": 3,
@@ -898,9 +898,9 @@
         "level": "Intermediate",
         "choices": [
           "Check the license implications, since generated code can reproduce licensed snippets, and rewrite or comply",
-          "Add a comment crediting the AI",
-          "Nothing changes",
-          "Ship it; AI output has no license"
+          "Add a code comment crediting the AI that generated it.",
+          "Nothing changes; generated code can ship as written.",
+          "Ship it, since AI output carries no license at all."
         ],
         "answer": 0,
         "explain": "Generated output can reproduce licensed code. The obligation to check and comply is yours, not the model's."
@@ -909,10 +909,10 @@
         "q": "A loan-screening helper has 92% accuracy overall. What still must you check?",
         "level": "Advanced",
         "choices": [
-          "Nothing; 92% is enough",
+          "Nothing more; an overall accuracy of 92% is plenty.",
           "Whether accuracy and error costs are similar across subgroups, since the average can hide harm to an underrepresented group",
-          "Only the training time",
-          "The model's parameter count"
+          "Only the total training time the model needed.",
+          "The model's total parameter count and size."
         ],
         "answer": 1,
         "explain": "Aggregate accuracy can mask a subgroup the data underrepresents. Measure per group and ask who is harmed by errors."
@@ -987,10 +987,10 @@
         "q": "A deployed classifier slowly gets worse with no errors in the logs. The most likely cause is:",
         "level": "Advanced",
         "choices": [
-          "Too many unit tests",
-          "A syntax error",
+          "There are simply far too many unit tests gradually slowing the whole thing down.",
+          "A syntax error crept into the deployed model code.",
           "Data drift: live inputs have moved away from what the model learned",
-          "The server is down"
+          "The server hosting the model has quietly gone down."
         ],
         "answer": 2,
         "explain": "Silent quality loss with no errors is the signature of drift. Uptime is fine; the input distribution changed."
@@ -999,9 +999,9 @@
         "q": "The safest way to roll out a new model version is:",
         "level": "Advanced",
         "choices": [
-          "Only in development",
-          "Whenever the model is retrained, automatically to all users",
-          "Replace the old one everywhere at once",
+          "Roll the new version out automatically to every single user the moment it finishes retraining, with no staging.",
+          "Roll it out only in the development environment first.",
+          "Replace the old version everywhere all at once.",
           "A canary or staged rollout compared on live traffic, with instant rollback to the previous version"
         ],
         "answer": 3,
@@ -1012,9 +1012,9 @@
         "level": "Advanced",
         "choices": [
           "In the surrounding data pipelines, monitoring, and glue, which dwarf the model code",
-          "In the choice of programming language",
-          "In the number of GPUs",
-          "In the model code, which dominates the system"
+          "In the choice of programming language for the system.",
+          "In the sheer number of GPUs the model needs to run.",
+          "In the model code itself, which clearly dominates the cost and risk of the whole system."
         ],
         "answer": 0,
         "explain": "Model code is a small fraction of a real ML system; the data and operational scaffolding carry most of the ongoing cost and risk."
@@ -1084,10 +1084,10 @@
         "q": "An AI patch builds a SQL query with an f-string containing user input. This is:",
         "level": "Advanced",
         "choices": [
-          "Fine if the input looks clean",
+          "Perfectly fine to ship, as long as the user input happens to look clean enough.",
           "A SQL injection vulnerability; use a parameterized query instead",
-          "Faster and therefore better",
-          "Only a style issue"
+          "Faster to run, and therefore the better way to do it.",
+          "Only a minor style issue, not a real correctness one."
         ],
         "answer": 1,
         "explain": "Interpolating user input into SQL is the classic injection hole. Bind parameters so the input can never change the query structure."
@@ -1096,10 +1096,10 @@
         "q": "The patch has no test exercising a malicious or unexpected user_id. The right call is:",
         "level": "Advanced",
         "choices": [
-          "Delete the existing tests",
-          "Merge; tests can come later",
+          "Delete the existing tests so they stop failing on it.",
+          "Merge it right now; the missing tests can always be added later on.",
           "Request changes: the risky path needs a test before merge",
-          "Reject the whole feature permanently"
+          "Reject the whole feature permanently over the gap."
         ],
         "answer": 2,
         "explain": "A risky path with no test is incomplete. Request changes and require coverage for the injection and validation behavior."
@@ -1114,9 +1114,9 @@
           "q": "What is the most serious defect in this patch?",
           "choices": [
             "SQL injection: user_id is interpolated straight into the query string",
-            "It returns too many columns",
-            "It lacks a docstring",
-            "The function name is unclear"
+            "It returns far too many columns from the underlying database query each time.",
+            "It is missing a docstring on the main function.",
+            "The function name is unclear and hard to read."
           ],
           "answer": 0,
           "explain": "An f-string puts user input directly into the SQL, so a crafted user_id can rewrite the query. That is a critical injection vulnerability."
@@ -1124,10 +1124,10 @@
         {
           "q": "What test is missing?",
           "choices": [
-            "A test that the function name is spelled correctly",
+            "A test that the function name is spelled correctly.",
             "A test exercising a malicious or non-integer user_id (and verifying a parameterized query), plus a normal-case test",
-            "A performance benchmark",
-            "No test is needed"
+            "A performance benchmark for the query under load.",
+            "No test is needed; the happy path already passes."
           ],
           "answer": 1,
           "explain": "The risky path is untested. You need a case proving injection input is handled safely and the query is parameterized, plus the happy path."
@@ -1135,10 +1135,10 @@
         {
           "q": "What is the correct fix before this can merge?",
           "choices": [
-            "Rename the query variable",
-            "Add a comment warning about injection",
+            "Rename the query variable to something clearer.",
+            "Add a prominent code comment that warns the next reader about the possible injection risk.",
             "Use a parameterized query with a bound parameter and validate that user_id is an integer",
-            "Trust the caller to sanitize user_id"
+            "Trust the caller to sanitize the user_id beforehand."
           ],
           "answer": 2,
           "explain": "Bind the parameter (for example db.execute(\"... WHERE user_id = ?\", [user_id])) and validate the type. The input can then never alter the query structure."
@@ -1146,9 +1146,9 @@
         {
           "q": "What is the right merge decision right now?",
           "choices": [
-            "Reject and delete the feature idea",
-            "Merge and open a ticket to fix it later",
-            "Merge; it works on their machine",
+            "Reject it and delete the whole feature idea outright.",
+            "Merge it and open a ticket to fix the issue later on.",
+            "Merge it, since it already works on their machine.",
             "Request changes: do not merge until the query is parameterized, the input validated, and a test covers the risky path"
           ],
           "answer": 3,
