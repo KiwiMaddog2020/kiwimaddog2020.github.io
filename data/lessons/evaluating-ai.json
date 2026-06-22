@@ -48,9 +48,9 @@
         "q": "What does a model that grades its own output tend to reward?",
         "level": "Intermediate",
         "choices": [
-          "Shorter answers only.",
-          "Random outcomes.",
-          "Strict task success.",
+          "Shorter answers, regardless of whether they are correct.",
+          "Strictly correct task success and nothing else at all.",
+          "Mostly random outcomes that do not track quality.",
           "Its own style, confidence, and shared assumptions."
         ],
         "answer": 3,
@@ -61,9 +61,9 @@
         "level": "Advanced",
         "choices": [
           "So the judge does not share the doer's blind spots and failure modes.",
-          "To use more tokens.",
-          "Because judges must always be larger.",
-          "To make the eval slower."
+          "So the evaluation burns more tokens overall and therefore looks more thorough to a reviewer.",
+          "Because a judge model must always be larger than the doer.",
+          "So the eval runs more slowly and gives the judge time to think."
         ],
         "answer": 0,
         "explain": "Decorrelating the judge from the doer is what keeps the score a measurement."
@@ -73,10 +73,10 @@
       "type": "predict_output",
       "prompt": "You use the same model and prompt to both write answers and grade them, and the scores look great. What is the risk?",
       "choices": [
-        "No risk; matched models are fair.",
+        "There is no real risk at all, since two perfectly matched models will grade each other fairly.",
         "Self-grading inflates scores by rewarding the model's own style and shared blind spots.",
-        "The grader will be too harsh.",
-        "It only affects speed."
+        "The shared grader will be far too harsh and deflate every score.",
+        "It only affects how fast the evaluation runs, not the scores."
       ],
       "answer": 1,
       "explain": "A grader that shares the doer's assumptions measures agreement, not task success."
@@ -143,10 +143,10 @@
         "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
         "level": "Intermediate",
         "choices": [
-          "It is an excellent detector.",
+          "It is an excellent detector, since it manages to catch almost every single bad output.",
           "Its discrimination is low (about 0.05), so it is close to flagging everything.",
-          "Its catch rate proves it works.",
-          "False alarms do not matter."
+          "Its high catch rate alone proves the detector is working well.",
+          "False alarms do not matter as long as the catch rate is high."
         ],
         "answer": 1,
         "explain": "Discrimination of 0.95 minus 0.90 is 0.05, near guessing."
@@ -155,10 +155,10 @@
         "q": "What must you always report alongside a detector's catch rate?",
         "level": "Intermediate",
         "choices": [
-          "The temperature.",
-          "Only the token count.",
+          "The sampling temperature that was used during the detection run.",
+          "Only the total token count the detector consumed.",
           "The false alarm rate, so discrimination can be computed.",
-          "The model's name."
+          "The name of the underlying model doing the detecting."
         ],
         "answer": 2,
         "explain": "Without the false positive rate, the catch rate is uninterpretable."
@@ -252,9 +252,9 @@
         "q": "Why decide the success threshold before running the experiment?",
         "level": "Intermediate",
         "choices": [
-          "Because thresholds are required by law.",
-          "To avoid using a metric.",
-          "To slow down the experiment.",
+          "Because pre-registered success thresholds are required by data-protection regulation.",
+          "To avoid having to use any quantitative metric at all.",
+          "To deliberately slow the experiment down for review.",
           "Because after seeing the data, almost any pattern can be narrated into a finding."
         ],
         "answer": 3,
@@ -265,9 +265,9 @@
         "level": "Intermediate",
         "choices": [
           "Report the null; a null reported honestly is a real finding.",
-          "Re-run until it passes by chance.",
-          "Drop the experiment silently.",
-          "Lower the threshold until it passes."
+          "Quietly re-run it until it passes by chance one time.",
+          "Drop the experiment silently and never mention it again.",
+          "Lower the success threshold after the fact until the result finally passes."
         ],
         "answer": 0,
         "explain": "Honoring the pre-registered threshold is the whole point of pre-registration."
@@ -339,10 +339,10 @@
         "q": "Two judges from the same model with the same prompt agree. How strong is that evidence?",
         "level": "Advanced",
         "choices": [
-          "Very strong, because two judges agreed.",
+          "Very strong evidence, because two separate judges both independently agreed on it.",
           "Weak, because they share blind spots and can be wrong together.",
-          "Conclusive proof.",
-          "Irrelevant to evaluation."
+          "Conclusive proof, since agreement settles the question.",
+          "Irrelevant to the evaluation, since judges never matter."
         ],
         "answer": 1,
         "explain": "Correlated judges agreeing adds little; they can fail in the same direction."
@@ -351,10 +351,10 @@
         "q": "Why can a panel of strong judges still miss the answer on a frontier task?",
         "level": "Expert",
         "choices": [
-          "Frontier tasks are always easy.",
-          "They were too slow.",
+          "Frontier tasks are always easy enough that any strong judge can solve them without much trouble.",
+          "The judges were simply too slow to reach the answer.",
           "They may all share the same capability gap, so consensus looks confident but is wrong.",
-          "They used too few tokens."
+          "The panel used too few tokens to judge the task well."
         ],
         "answer": 2,
         "explain": "Competence caps what any judge can recognize; shared gaps survive consensus."
@@ -364,10 +364,10 @@
       "type": "predict_output",
       "prompt": "Three judges from the same model family, with the same prompt, all agree the answer is correct. How much extra confidence does their agreement give?",
       "choices": [
-        "A lot; three judges agreed.",
+        "A lot of extra confidence, since three separate judges all independently agreed on it.",
         "Little; correlated judges share blind spots, so they can be wrong together.",
-        "It is conclusive proof.",
-        "None of them can judge at all."
+        "It is conclusive proof that the answer is correct.",
+        "None at all, since these models cannot judge anything."
       ],
       "answer": 1,
       "explain": "Agreement only adds evidence when judges fail independently; same-family judges do not."
@@ -427,9 +427,9 @@
         "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
         "level": "Advanced",
         "choices": [
-          "Honesty cannot be measured at all.",
-          "The metric was discrimination.",
-          "The sample was too large.",
+          "Honesty is something that simply cannot be measured in any reliable way at all.",
+          "The metric used was discrimination instead of accuracy.",
+          "The sample of questions was simply far too large here.",
           "Difficulty is a confound; the gap may be about the questions, not honesty."
         ],
         "answer": 3,
@@ -440,9 +440,9 @@
         "level": "Expert",
         "choices": [
           "Adversarially search for the alternative explanation before believing the conclusion.",
-          "Run the experiment only once.",
-          "Use a single judge.",
-          "Trust a clean-looking result."
+          "Run the whole experiment only once and trust the result.",
+          "Use a single judge model throughout so that the scores always stay perfectly consistent.",
+          "Trust any result that comes out looking clean and tidy."
         ],
         "answer": 0,
         "explain": "Actively trying to break your own result surfaces tangled causes."
@@ -453,9 +453,9 @@
       "prompt": "An eval concludes model A 'follows instructions better' than B. You then learn A's prompts were all short and B's were all long and complex. What should you conclude?",
       "choices": [
         "Prompt complexity is a confound; the comparison cannot support the claim.",
-        "B is better because its prompts were longer.",
-        "The result needs no further checking.",
-        "A is clearly better at following instructions."
+        "B is better, since its prompts were longer and harder.",
+        "The result is solid and needs no further checking of any kind before you believe it.",
+        "A is clearly better at following instructions overall."
       ],
       "answer": 0,
       "explain": "Because prompt complexity differed with the model, it could explain the gap on its own."
@@ -516,10 +516,10 @@
         "q": "Model A scores 72% and B scores 70% on the same 20 test items, and their separate intervals overlap. What is the right move?",
         "level": "Advanced",
         "choices": [
-          "Conclude A is better, since 72 beats 70.",
+          "Conclude A is better, since 72% clearly beats 70%.",
           "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero.",
-          "Conclude there is definitely no difference, because the intervals overlap.",
-          "Raise the temperature and rerun."
+          "Conclude there is definitely no difference, since the intervals overlap.",
+          "Raise the sampling temperature and run the whole thing again."
         ],
         "answer": 1,
         "explain": "Overlapping separate intervals are inconclusive and conservative; the paired difference is the sensitive, correct test."
@@ -528,10 +528,10 @@
         "q": "Why use a bootstrap confidence interval?",
         "level": "Advanced",
         "choices": [
-          "To pick the temperature.",
-          "To make the score higher.",
+          "To help you choose the right sampling temperature for the whole evaluation run.",
+          "To make the reported score come out higher.",
           "To estimate a plausible range for the true value with few assumptions.",
-          "To remove the need for data."
+          "To remove the need for collecting any test data."
         ],
         "answer": 2,
         "explain": "Resampling quantifies how much the score could vary by chance."
@@ -541,9 +541,9 @@
       "type": "predict_output",
       "prompt": "You are comparing two models on the SAME 50 test items. How should you test whether A really beats B?",
       "choices": [
-        "Pick whichever has the higher raw score.",
-        "Run each once and compare.",
-        "Check whether their separate confidence intervals overlap.",
+        "Pick whichever model happens to have the higher raw score.",
+        "Run each model once on the items and compare the totals.",
+        "Check whether their two separate confidence intervals overlap.",
         "Bootstrap the per-item difference (A minus B) and check whether its interval excludes zero."
       ],
       "answer": 3,
@@ -604,9 +604,9 @@
         "q": "A model changes its answer after a user objects. Why is that not automatically capitulation?",
         "level": "Advanced",
         "choices": [
-          "Because the user is always right.",
-          "Because capitulation does not exist.",
-          "Because models never change answers.",
+          "Because the user who objects is essentially always right about the underlying question anyway.",
+          "Because capitulation is not a real phenomenon at all.",
+          "Because models are not capable of changing their answers.",
           "Because the change could be rational updating on a good argument, not social deference."
         ],
         "answer": 3,
@@ -617,9 +617,9 @@
         "level": "Expert",
         "choices": [
           "Give pushback that carries no real evidence, so any change is deference.",
-          "Only test easy questions.",
-          "Let the model grade itself.",
-          "Give pushback that carries strong new evidence."
+          "Only ever test it on very easy questions.",
+          "Let the model grade its own responses.",
+          "Give the model pushback that carries strong, genuinely new evidence each time."
         ],
         "answer": 0,
         "explain": "Evidence-free pressure isolates social deference from rational updating."
@@ -629,10 +629,10 @@
       "type": "predict_output",
       "prompt": "You test capitulation by pushing back on puzzles the model already solves at near 100% accuracy, and see almost no answer changes. What does this null most likely mean?",
       "choices": [
-        "The model never had a correct answer.",
-        "The model is provably immune to social pressure in all settings.",
+        "The model never actually had a correct answer to begin with.",
+        "The model is provably immune to social pressure everywhere.",
         "The task was too easy to detect capitulation; a clean model and an easy task look the same here.",
-        "Capitulation is impossible to study."
+        "Capitulation is fundamentally impossible to study at all."
       ],
       "answer": 2,
       "explain": "On a mastered task, certainty suppresses capitulation, so the null does not isolate a clean model from an easy test."
@@ -700,10 +700,10 @@
         "q": "Why does naming the boundaries of an eval increase trust?",
         "level": "Expert",
         "choices": [
-          "It makes the eval look weaker.",
+          "It makes the whole evaluation look much weaker than it really is to a casual reader.",
           "It tells an honest reader where the result applies and where it does not.",
-          "It hides the gaps.",
-          "It removes the need for data."
+          "It quietly hides the gaps from a casual reader.",
+          "It removes the need to collect any real data."
         ],
         "answer": 1,
         "explain": "A finding with a clear boundary is more trustworthy than one pretending to have none."
@@ -712,10 +712,10 @@
         "q": "What is the mature stance on evaluation completeness?",
         "level": "Expert",
         "choices": [
-          "Trust automated evals fully.",
-          "Achieve a perfect evaluation before shipping.",
+          "Trust automated evaluations fully and skip human checks.",
+          "Insist on a perfect, complete evaluation before shipping.",
           "Give a complete, honest account of where the current evaluation stops, and schedule checks for the gaps.",
-          "Measure nothing and ship."
+          "Measure essentially nothing and just ship the system."
         ],
         "answer": 2,
         "explain": "Perfect evals do not exist; honest boundaries plus scheduled human checks do."
@@ -725,10 +725,10 @@
       "type": "predict_output",
       "prompt": "Your evaluation never tested adversarial inputs. What should the report do?",
       "choices": [
-        "Say nothing and let readers assume it was fine.",
+        "Say nothing about it and just let readers assume that part of the system was fine.",
         "List it in the not-measured ledger and schedule a human check.",
-        "Claim the model is robust anyway.",
-        "Delete the result."
+        "Claim the model is robust to them anyway, to be safe.",
+        "Delete the result so no one asks about the gap."
       ],
       "answer": 1,
       "explain": "Naming the gap and scheduling a check is more trustworthy than an unstated boundary."
@@ -788,9 +788,9 @@
         "q": "A system scores 95% offline but users complain after launch. Most likely cause?",
         "level": "Advanced",
         "choices": [
-          "The model got smaller.",
-          "Users are wrong.",
-          "The offline score was faked.",
+          "The model quietly got smaller after it was deployed.",
+          "The users are simply wrong about their own experience.",
+          "The offline score must have been faked or mis-recorded during the original testing.",
           "Distribution shift: production inputs differ from the eval set."
         ],
         "answer": 3,
@@ -801,9 +801,9 @@
         "level": "Advanced",
         "choices": [
           "Feeding sampled, labeled production traffic back into the eval set.",
-          "Using a larger model.",
-          "Raising the temperature.",
-          "Running it once before release."
+          "Switching permanently to a larger and more capable model for the whole system.",
+          "Raising the sampling temperature on every eval run.",
+          "Running the evaluation once, just before the release."
         ],
         "answer": 0,
         "explain": "A feedback loop keeps the offline suite tracking real-world behavior."
@@ -814,9 +814,9 @@
       "prompt": "After a prompt change, offline scores are unchanged but production error reports spike. What is the most useful next step?",
       "choices": [
         "Trace failing production requests and add those cases to the eval set.",
-        "Raise the temperature.",
-        "Roll forward and hope it settles.",
-        "Ignore it; offline scores are unchanged."
+        "Raise the sampling temperature and rerun the offline eval.",
+        "Roll the change forward and hope the reports settle down.",
+        "Ignore the spike entirely, since the offline scores did not change at all afterward."
       ],
       "answer": 0,
       "explain": "Production traces reveal failures the fixed offline set missed; capture them to make the suite reflect reality."
@@ -876,10 +876,10 @@
         "q": "Your LLM judge gives noisy, inconsistent scores. What is the most likely fix?",
         "level": "Advanced",
         "choices": [
-          "Use a bigger judge model only.",
+          "Switch to a bigger judge model and nothing else.",
           "Give it an explicit rubric with defined score levels and anchored examples.",
-          "Raise the temperature.",
-          "Average more random scores."
+          "Raise the sampling temperature on the judge model.",
+          "Average together a great many more of the noisy random scores until they smooth out."
         ],
         "answer": 1,
         "explain": "A clear, anchored rubric is what turns a vibe into a reproducible judgment."
@@ -888,10 +888,10 @@
         "q": "Why is pairwise comparison often preferred over absolute 1 to 10 scoring?",
         "level": "Advanced",
         "choices": [
-          "It removes all bias.",
-          "It is faster to run.",
+          "It removes essentially all bias from the scoring.",
+          "It is noticeably faster to run than absolute one-to-ten scoring is in practice.",
           "It is usually more reliable, and swapping order controls position bias.",
-          "It needs no rubric."
+          "It needs no rubric, since you only compare two answers."
         ],
         "answer": 2,
         "explain": "Relative judgments are more stable, and randomized/swapped order counters position bias."
@@ -902,8 +902,8 @@
       "weak_prompt": "Rate this answer from 1 to 10.",
       "goal": "Turn a vague judge prompt into a reproducible, rubric-anchored one.",
       "choices": [
-        "Tell me if the answer is good or bad.",
-        "Rate this answer from 1 to 10 and be fair.",
+        "Tell me whether the answer is basically good or bad.",
+        "Rate this answer from 1 to 10 and try to be fair.",
         "Score the answer on three criteria, each 0 to 2: factual correctness, completeness, and clarity. Define each level (0 wrong/absent, 1 partial, 2 fully met), give the total, and quote the evidence for each score."
       ],
       "answer": 2,
@@ -964,9 +964,9 @@
         "q": "Two raters agree 90% of the time, but 'pass' is the label 85% of the time. How impressed should you be?",
         "level": "Advanced",
         "choices": [
-          "It proves the rubric is perfect.",
-          "Raw agreement is always sufficient.",
-          "Very; 90% is high.",
+          "It proves the rubric is essentially perfect as written.",
+          "Raw agreement between the two raters on its own is always entirely sufficient to trust the rubric.",
+          "Very impressed, since 90% agreement is genuinely high.",
           "Not very; chance agreement is already high, so use a chance-corrected measure like kappa."
         ],
         "answer": 3,
@@ -977,9 +977,9 @@
         "level": "Advanced",
         "choices": [
           "The rubric is underspecified and needs tightening.",
-          "You need more raters only.",
-          "Agreement does not matter.",
-          "The model is bad."
+          "You simply need to add more raters to the pool.",
+          "Inter-rater agreement does not really matter for this kind of label.",
+          "The model being evaluated is just bad at the task."
         ],
         "answer": 0,
         "explain": "Persistent disagreement is a signal that the task definition is unclear, not just noise."
@@ -989,10 +989,10 @@
       "type": "predict_output",
       "prompt": "On a task where 95% of items are 'safe', two judges agree 94% of the time. What is the honest read?",
       "choices": [
-        "Excellent reliability; 94% is high.",
+        "Excellent reliability, since 94% agreement is very high.",
         "Weak evidence; with a 95%-skewed label, chance agreement is ~90%, so correct for chance (kappa).",
-        "The judges are broken.",
-        "Raw agreement settles it."
+        "The two judges are clearly broken and disagree at random.",
+        "Raw agreement of 94% settles the question on its own."
       ],
       "answer": 1,
       "explain": "A heavily skewed label inflates raw agreement; chance-corrected kappa is needed to judge real reliability."
@@ -1052,10 +1052,10 @@
         "q": "On a dataset with 1% positives, a model predicts negative for everything. Its accuracy is:",
         "level": "Intermediate",
         "choices": [
-          "Undefined",
+          "Undefined, since one class is essentially absent from the data entirely.",
           "About 99%, which is why accuracy alone is misleading here",
-          "About 1%",
-          "Exactly 50%"
+          "About 1%, matching the share of positives.",
+          "Exactly 50%, since it always guesses negative."
         ],
         "answer": 1,
         "explain": "It is right on all 99% of negatives, so accuracy is ~99% despite zero recall. Accuracy hides the failure on imbalanced data."
@@ -1064,10 +1064,10 @@
         "q": "You raise the decision threshold so the model fires less often. What typically happens?",
         "level": "Intermediate",
         "choices": [
-          "Recall rises while precision falls",
-          "Both precision and recall rise",
+          "Recall rises while precision falls off sharply.",
+          "Both precision and recall rise at the same time.",
           "Precision tends to rise while recall falls",
-          "Nothing changes; the threshold is cosmetic"
+          "Nothing changes; the threshold is purely cosmetic."
         ],
         "answer": 2,
         "explain": "Firing less often means fewer false alarms (higher precision) but more misses (lower recall). That is the core tradeoff."
@@ -1076,9 +1076,9 @@
         "q": "Why prefer a precision-recall curve over ROC when positives are rare?",
         "level": "Advanced",
         "choices": [
-          "PR curves ignore false negatives",
-          "PR curves need no labels",
-          "ROC is always wrong",
+          "PR curves simply ignore false negatives entirely.",
+          "PR curves need no labels to be computed at all.",
+          "ROC analysis is always the wrong tool to reach for.",
           "A large true-negative pool keeps the false positive rate small, so ROC/AUC can look strong even when precision is poor"
         ],
         "answer": 3,
@@ -1198,9 +1198,9 @@
         "level": "Advanced",
         "choices": [
           "If there were no real difference, a gap this large would occur about 3% of the time",
-          "The effect is large",
-          "The null hypothesis is proven false",
-          "There is a 97% chance the effect is real"
+          "It means the measured effect is therefore guaranteed to be a large and practically important one.",
+          "It means the null hypothesis has been proven false.",
+          "There is a 97% chance that the effect is genuinely real."
         ],
         "answer": 0,
         "explain": "The p-value is a tail probability under the null. It says nothing directly about effect size or the probability that the hypothesis is true."
@@ -1209,10 +1209,10 @@
         "q": "Your bootstrap 95% interval for B minus A is [-0.5, +3.1] points. The honest conclusion is:",
         "level": "Advanced",
         "choices": [
-          "B is significantly worse",
+          "B is significantly worse, since the interval dips below zero.",
           "The interval includes zero, so the data do not establish a real difference",
-          "Run more resamples until it excludes zero",
-          "B is significantly better"
+          "Run more resamples until the interval finally excludes zero.",
+          "B is significantly better, since most of the interval sits above zero anyway."
         ],
         "answer": 1,
         "explain": "Spanning zero means no clear difference at this sample size. Cranking resamples will not move that; you need more eval items."
@@ -1221,10 +1221,10 @@
         "q": "You test 20 variants at the 0.05 level and one looks significant. Before believing it, you should:",
         "level": "Advanced",
         "choices": [
-          "Lower the threshold to 0.5",
-          "Publish it",
+          "Lower the significance threshold all the way to 0.5.",
+          "Publish the significant variant right away.",
           "Expect roughly one false positive by chance and confirm on fresh held-out data or apply a correction",
-          "Test 20 more"
+          "Test twenty more variants and see what turns up."
         ],
         "answer": 2,
         "explain": "At 0.05 across 20 tests you expect about one spurious hit. Correct for the count or confirm on a held-out set."
@@ -1308,9 +1308,9 @@
         "q": "The single biggest threat to the support-agent eval described here is:",
         "level": "Advanced",
         "choices": [
-          "Reporting a confidence interval",
-          "Choosing a held-out test set",
-          "Using too many test tickets",
+          "Reporting a confidence interval with the result.",
+          "Choosing a properly held-out test set up front.",
+          "Using a few too many test tickets in the set.",
           "Letting the agent's own model grade its replies"
         ],
         "answer": 3,
@@ -1321,9 +1321,9 @@
         "level": "Advanced",
         "choices": [
           "The current human-written replies (or the prior template system) on the same tickets",
-          "A second run of the same agent",
-          "The agent's self-reported confidence",
-          "No baseline; just report the score"
+          "A second independent run of the very same agent on exactly the same set of support tickets.",
+          "The agent's own self-reported confidence score.",
+          "No baseline at all; just report the raw score."
         ],
         "answer": 0,
         "explain": "A baseline is what you must beat to matter: the status quo the agent would replace, scored on the same items."
@@ -1338,9 +1338,9 @@
           "q": "Who should grade reply quality?",
           "choices": [
             "A separate, independent grader (a different model and/or human reviewers) blind to which reply is the agent's",
-            "Whoever is fastest",
-            "The agent, scoring its own confidence",
-            "The same model that drafted the replies, for consistency"
+            "Whoever happens to be the fastest available person.",
+            "The agent itself, scoring its own confidence level.",
+            "The same model that drafted the replies, for consistency."
           ],
           "answer": 0,
           "explain": "Separate the doer from the grader, and blind the grader to authorship so it cannot favor the agent. This is the core honesty move."
@@ -1348,10 +1348,10 @@
         {
           "q": "Which metric can you actually measure offline, and how do you get the true outcome?",
           "choices": [
-            "Average 1-to-5 rating from the drafting model itself",
+            "The average 1-to-5 rating from the drafting model itself.",
             "Blinded independent quality grading offline (agent draft versus the sent human reply, grader blind to authorship), with reopen and resolution outcomes measured later in a controlled pilot or A/B test",
-            "Reopen and resolution rate of the agent's drafts on the historical tickets",
-            "Number of tickets processed per hour"
+            "Reopen and resolution rate of the agent's drafts on past tickets.",
+            "The number of tickets processed per hour by the agent."
           ],
           "answer": 1,
           "explain": "The agent's drafts were never sent on the historical tickets, so their reopen and resolution outcomes are counterfactual and cannot be observed offline. Offline you can only compare reply quality, blinded, against the sent human reply; to learn the true outcome you must actually send the agent's replies in a controlled pilot or A/B test."
@@ -1359,10 +1359,10 @@
         {
           "q": "What is the honest baseline to beat?",
           "choices": [
-            "The best score seen in any single ticket",
-            "Zero",
+            "The best single score seen on any one individual ticket in the whole set.",
+            "Zero, since any positive score beats doing nothing.",
             "The human replies that were actually sent on the same tickets",
-            "A second copy of the agent"
+            "A second copy of the same agent grading the replies."
           ],
           "answer": 2,
           "explain": "You must beat the status quo the agent replaces: the human replies, scored on the same items, with an interval around the difference."
@@ -1370,9 +1370,9 @@
         {
           "q": "What goes in the not-measured ledger?",
           "choices": [
-            "The model's parameter count",
-            "The training data size",
-            "Nothing; the eval is complete",
+            "The model's total parameter count and architecture.",
+            "The size of the training data set used for the model.",
+            "Nothing at all; the evaluation is already complete.",
             "Rare high-stakes tickets (legal, safety, billing disputes) that are underrepresented in the sample and may fail silently"
           ],
           "answer": 3,
