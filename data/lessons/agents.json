@@ -946,8 +946,8 @@
     ],
     "flashcards": [
       {
-        "front": "When is a workflow better than an agent?",
-        "back": "When the task is a fixed, predictable multi-step sequence."
+        "front": "When is an agent worth the extra cost over a workflow?",
+        "back": "When the task is open-ended and the steps cannot be known in advance."
       },
       {
         "front": "What kinds of actions demand extra caution from agents?",

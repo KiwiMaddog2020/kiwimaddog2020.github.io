@@ -975,7 +975,7 @@
       },
       {
         "front": "What is a canary deploy and why use it for a new model?",
-        "back": "Routing a small slice of live traffic to the new version first and comparing it to the current one, promoting only if it holds. It is the production train/dev/test."
+        "back": "Routing a small slice of live traffic to the new version first and comparing it to the current one, promoting only if it holds. It limits the blast radius if the new model turns out worse."
       },
       {
         "front": "What kind of production failure does uptime monitoring miss?",
