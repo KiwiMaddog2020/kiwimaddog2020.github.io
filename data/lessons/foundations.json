@@ -49,9 +49,9 @@
         "level": "Beginner",
         "choices": [
           "Its behavior is controlled by weights fitted to data rather than hand-written rules.",
-          "It runs faster than hand-written code.",
-          "It never makes mistakes once trained.",
-          "It understands inputs the way a person does."
+          "It is written in a special AI programming language rather than an ordinary one.",
+          "It memorizes every training example and returns the closest stored match.",
+          "It follows the same rules a programmer wrote, only much faster on a GPU."
         ],
         "answer": 0,
         "explain": "The defining trait is learned parameters, not speed, infallibility, or understanding."
@@ -60,10 +60,10 @@
         "q": "Why is calling a model a fitted function more useful than calling it magic?",
         "level": "Beginner",
         "choices": [
-          "Because it sounds more technical.",
+          "Because it implies the model fits its training data perfectly and so never errs on inputs it has seen.",
           "Because a fitted function has a predictable failure model: it degrades away from its training data.",
-          "Because functions are always correct.",
-          "Because it means the model has no weights."
+          "Because a function always has a clean closed-form solution you can write down by hand.",
+          "Because the word function signals the model follows fixed rules instead of fitted weights."
         ],
         "answer": 1,
         "explain": "The point is predictability of failure, which magic cannot give you."
@@ -74,9 +74,9 @@
       "prompt": "A classifier was trained only on photos of golden retrievers labeled 'dog'. You show it a husky. What is the safest expectation?",
       "choices": [
         "It may be unreliable, because the husky is outside the data it was fitted on.",
-        "It cannot output anything unless 'husky' is in the prompt.",
-        "It will refuse to answer.",
-        "It will classify the husky correctly because training lowered the loss."
+        "It will classify the husky correctly, since lowering the training loss generalizes to all dogs.",
+        "It cannot return any label that did not appear verbatim in its training photos.",
+        "It will refuse to answer because it was never shown a husky during training."
       ],
       "answer": 0,
       "explain": "A model is a function fitted to its training data; performance degrades as inputs move away from that data."
@@ -134,10 +134,10 @@
         "q": "Why is the activation function essential to a neural network?",
         "level": "Beginner",
         "choices": [
-          "It replaces the need for data.",
-          "It makes training faster.",
+          "It supplies the training data the network would otherwise lack between its layers.",
+          "It speeds up training by letting the optimizer skip the slower backpropagation step.",
           "Without it, stacked layers reduce to one linear function and cannot fit curved patterns.",
-          "It stores the model's weights."
+          "It stores the learned weights so the network does not forget them between batches."
         ],
         "answer": 2,
         "explain": "Nonlinearity is what gives depth its expressive power."
@@ -146,9 +146,9 @@
         "q": "What is the practical meaning of depth in a network?",
         "level": "Beginner",
         "choices": [
-          "Depth removes the need for training.",
-          "Depth only affects memory usage.",
-          "More layers always means better accuracy.",
+          "More layers always raise accuracy, so depth is the main lever for a better model.",
+          "Depth removes the need for training data, since deeper networks can infer the rest.",
+          "Depth only changes how much memory the model uses, not what it can represent.",
           "Later layers can compose earlier features into more abstract representations."
         ],
         "answer": 3,
@@ -159,9 +159,9 @@
       "type": "predict_output",
       "prompt": "You stack ten linear layers with NO activation function between them. What can the network represent?",
       "choices": [
-        "Nothing; it cannot run.",
-        "Any function, because it is deep.",
-        "Far more than one layer, because depth always adds power.",
+        "Far more than one layer could, because stacking depth always adds representational power.",
+        "Any function at all, since a deep enough network is a universal approximator by itself.",
+        "Nothing usable, because layers cannot pass signal forward without an activation.",
         "Only what a single linear layer can, since without nonlinearity the stack collapses."
       ],
       "answer": 3,
@@ -223,9 +223,9 @@
         "level": "Beginner",
         "choices": [
           "Computing the gradient of the loss with respect to every weight.",
-          "Collecting the training data.",
-          "Serving the model in production.",
-          "Choosing the model architecture."
+          "Selecting which model architecture and layer sizes the network should use.",
+          "Gathering and cleaning the training data before the model sees it.",
+          "Serving the finished model to users once training has completed."
         ],
         "answer": 0,
         "explain": "Backprop computes gradients; everything else is a separate concern."
@@ -234,10 +234,10 @@
         "q": "A model's loss keeps bouncing up and down and never settles. What is a likely cause?",
         "level": "Intermediate",
         "choices": [
-          "The data is too clean.",
+          "The learning rate is too low, so the model is stuck and cannot move at all.",
           "The learning rate is too high, so steps overshoot the minimum.",
-          "The model has too few weights.",
-          "Backpropagation is disabled."
+          "The training data is too clean, leaving the model nothing to learn from.",
+          "Backpropagation has been turned off, so no gradients reach the weights."
         ],
         "answer": 1,
         "explain": "An oversized learning rate causes the descent to overshoot and oscillate."
@@ -309,10 +309,10 @@
         "q": "Training loss is near zero but the model performs poorly on new inputs. What is happening?",
         "level": "Intermediate",
         "choices": [
-          "The model has too many layers to train.",
-          "Underfitting.",
+          "Underfitting: the model is too simple to capture the pattern in the data.",
+          "The learning rate is too small, so training stopped before it converged.",
           "Overfitting: the model memorized the training set instead of generalizing.",
-          "The learning rate is too small."
+          "The model has too many layers for the optimizer to train them all at once."
         ],
         "answer": 2,
         "explain": "Low train loss with poor new-data performance is the signature of overfitting."
@@ -321,9 +321,9 @@
         "q": "Why hold out a validation set?",
         "level": "Intermediate",
         "choices": [
-          "To increase the model's capacity.",
-          "Because backpropagation requires it.",
-          "To make training faster.",
+          "To give the model extra examples that increase its overall capacity.",
+          "To speed up training by letting the optimizer skip some batches.",
+          "Because backpropagation cannot compute gradients without a second set.",
           "To estimate performance on data the model did not train on."
         ],
         "answer": 3,
@@ -335,9 +335,9 @@
       "prompt": "During training, training loss keeps falling but validation loss has started rising. What should you conclude?",
       "choices": [
         "The model is starting to overfit; consider early stopping or regularization.",
-        "The learning rate is too low.",
-        "The validation set is unnecessary.",
-        "The model is underfitting and needs more capacity."
+        "The model is underfitting and simply needs more layers and more capacity.",
+        "The learning rate is too low, so training has not yet reached the minimum.",
+        "The validation set must be mislabeled and should be dropped from the run entirely."
       ],
       "answer": 0,
       "explain": "A falling train loss with a rising validation loss is the canonical overfitting signal."
@@ -398,9 +398,9 @@
         "level": "Intermediate",
         "choices": [
           "Rare or long words are split into several subword tokens.",
-          "Long words are always one token.",
-          "The model spells out each letter as a token.",
-          "Token count depends only on language, not the word."
+          "The model spells out each letter of a rare word as its own token.",
+          "Token count depends only on the language, never on the specific word.",
+          "Long words always cost exactly one token regardless of how rare they are."
         ],
         "answer": 0,
         "explain": "Tokenizers break uncommon words into multiple subword pieces."
@@ -409,10 +409,10 @@
         "q": "What property makes embeddings useful for semantic search?",
         "level": "Intermediate",
         "choices": [
-          "They compress text to save disk space.",
+          "They compress the text to save disk space, so smaller files must mean closer meanings.",
           "Similar meanings map to nearby vectors, so closeness approximates relatedness.",
-          "They convert text to lowercase.",
-          "They remove all punctuation."
+          "They strip punctuation and lowercase the text so matches line up exactly.",
+          "They translate every word into a numeric ID that can be sorted alphabetically."
         ],
         "answer": 1,
         "explain": "Search ranks by vector distance, which tracks semantic similarity."
@@ -503,10 +503,10 @@
         "q": "What problem does self-attention solve for language?",
         "level": "Intermediate",
         "choices": [
-          "It guarantees the output is factually correct.",
-          "It removes the need for training data.",
+          "It guarantees the generated output is factually correct by checking each token against a database.",
+          "It removes the need for training data, since attention can infer grammar on its own.",
           "It lets each token draw on the most relevant other tokens, capturing long-range relationships.",
-          "It compresses the model to fewer weights."
+          "It compresses the model into far fewer weights so it can run on a single CPU core."
         ],
         "answer": 2,
         "explain": "Attention routes information between related tokens regardless of distance."
@@ -515,9 +515,9 @@
         "q": "In attention, what is compared to produce the weights?",
         "level": "Advanced",
         "choices": [
-          "Each token's value against the loss.",
-          "The learning rate against the batch size.",
-          "Two random tokens chosen each step.",
+          "Each token's value is compared against the running loss.",
+          "Two tokens chosen at random at every step of decoding.",
+          "The learning rate is compared against the batch size.",
           "Each token's query against every token's key."
         ],
         "answer": 3,
@@ -528,10 +528,10 @@
       "type": "predict_output",
       "prompt": "While a decoder-only LLM generates text, can the token at position 5 attend to the token at position 9?",
       "choices": [
-        "Only in the first layer.",
-        "Yes, every token attends to every other token.",
+        "Yes, every token can attend to every other token freely.",
+        "Only in the very first layer, never in the deeper ones.",
         "No, causal masking blocks attending to later tokens.",
-        "Only if temperature is high."
+        "Only when the sampling temperature is set high enough."
       ],
       "answer": 2,
       "explain": "Text-generating LLMs use a causal mask, so a token attends only to itself and earlier tokens."
@@ -593,9 +593,9 @@
         "level": "Advanced",
         "choices": [
           "It adjusts an already-capable model on a smaller, targeted dataset.",
-          "It skips backpropagation.",
-          "It does not change any weights.",
-          "It uses a larger dataset than pretraining."
+          "It skips backpropagation entirely and edits the weights by hand.",
+          "It uses a much larger dataset than pretraining but for fewer steps.",
+          "It freezes every weight in place, so no expensive gradient updates are ever needed."
         ],
         "answer": 0,
         "explain": "Fine-tuning starts from a trained base, so it needs far less data and compute."
@@ -604,10 +604,10 @@
         "q": "What does the preference-tuning stage primarily shape?",
         "level": "Advanced",
         "choices": [
-          "The model's raw factual knowledge.",
+          "The model's raw factual knowledge, which is actually mostly acquired at this stage.",
           "Tone, helpfulness, and safety, by optimizing toward preferred responses.",
-          "The tokenizer.",
-          "The size of the context window."
+          "The tokenizer's vocabulary, which is rebuilt to match human preferences.",
+          "The size of the context window, which preference data is used to extend."
         ],
         "answer": 1,
         "explain": "RLHF and similar methods primarily shape behavior and preferences; base capability comes from pretraining, though post-training can also lift measured performance."
@@ -678,10 +678,10 @@
         "q": "Why does the same prompt sometimes produce different answers?",
         "level": "Intermediate",
         "choices": [
-          "The model retrains on every request.",
-          "The model's weights change between runs.",
+          "The model quietly retrains itself on your prompt before answering each request.",
+          "The model's weights are randomly reinitialized between separate runs.",
           "Each token is sampled from a probability distribution, so runs can differ.",
-          "The prompt is secretly edited."
+          "The prompt is secretly rewritten by a filter before the model sees it."
         ],
         "answer": 2,
         "explain": "Sampling introduces variation unless you force greedy decoding."
@@ -690,9 +690,9 @@
         "q": "You need maximally consistent, repeatable output. What setting helps most?",
         "level": "Intermediate",
         "choices": [
-          "A larger vocabulary.",
-          "More layers.",
-          "A very high temperature.",
+          "A very high temperature, which sharpens the model onto one answer.",
+          "A larger vocabulary, so the model has fewer ties to break each step.",
+          "More layers, since deeper models commit to a single output faster.",
           "A very low temperature (near zero), approaching greedy decoding."
         ],
         "answer": 3,
@@ -784,9 +784,9 @@
         "level": "Beginner",
         "choices": [
           "The early tokens fell outside the context window.",
-          "The temperature was too low.",
-          "The model needs retraining.",
-          "The model deleted the information on purpose."
+          "The sampling temperature was set too low to recall it.",
+          "The model deleted that information once it was used.",
+          "The model needs retraining to hold the conversation."
         ],
         "answer": 0,
         "explain": "Once content scrolls past the window, the model cannot see it."
@@ -795,10 +795,10 @@
         "q": "Why do retrieval systems fetch only the most relevant passages instead of the whole document?",
         "level": "Intermediate",
         "choices": [
-          "To hide information from the model.",
+          "Because models cannot read a full document, only short isolated passages.",
           "Because context is a finite, costly budget that should hold what matters most.",
-          "Because models cannot read documents at all.",
-          "To slow the model down."
+          "Because fetching everything would let the model see information meant to be hidden.",
+          "Because retrieval is designed to slow the model down so answers feel considered."
         ],
         "answer": 1,
         "explain": "Spending the limited window on the most relevant content gives better answers per token."
@@ -903,10 +903,10 @@
         "q": "A model scores 99% in testing but fails in production. You find the same customers in both train and test sets. What happened?",
         "level": "Intermediate",
         "choices": [
-          "The test set was too large.",
-          "The model is too small.",
+          "The test set was simply far too large to give a stable estimate.",
+          "The model is too small to hold what it learned in training.",
           "Data leakage: overlapping train and test inflated the score.",
-          "The temperature was wrong."
+          "The sampling temperature in production was set incorrectly."
         ],
         "answer": 2,
         "explain": "Shared records across splits let the model be graded on data it trained on; split by entity."
@@ -915,9 +915,9 @@
         "q": "Why split time-ordered data by time rather than randomly?",
         "level": "Advanced",
         "choices": [
-          "To use less data.",
-          "Because random splits are illegal.",
-          "To make training faster.",
+          "Because a random split would use too much data and slow the whole pipeline down.",
+          "Because shuffling time-ordered records permanently corrupts their timestamps.",
+          "Because regulators require time-ordered data to be split strictly by calendar date.",
           "Because the real task is predicting the future, and a random split leaks future information."
         ],
         "answer": 3,
@@ -928,10 +928,10 @@
       "type": "predict_output",
       "prompt": "A churn model includes a feature 'account_closed_date'. It scores almost perfectly in testing. What should you suspect?",
       "choices": [
-        "The model is simply excellent.",
+        "The model is simply excellent and has found a genuinely strong signal.",
         "Target leakage: the feature encodes the outcome you are predicting.",
-        "The learning rate is too high.",
-        "The data set is too small."
+        "The learning rate is too high, so the score is unstable and inflated.",
+        "The data set is too small, so the near-perfect score is just luck."
       ],
       "answer": 1,
       "explain": "A feature that is only known after the outcome leaks the label; near-perfect scores are a red flag, not a triumph."
@@ -1003,10 +1003,10 @@
         "q": "Why can you compute accuracy for a supervised model but not directly for plain clustering?",
         "level": "Intermediate",
         "choices": [
-          "Clustering is slower.",
+          "Clustering simply runs too slowly to measure its accuracy in any practice.",
           "Accuracy needs ground-truth labels, which unsupervised data lacks.",
-          "Clustering has no inputs.",
-          "Accuracy only works on text."
+          "Clustering takes no inputs, so there is nothing to score it against.",
+          "Accuracy is defined only for text, and clusters are numeric."
         ],
         "answer": 1,
         "explain": "Accuracy compares predictions to known labels; unsupervised settings have none."
@@ -1079,10 +1079,10 @@
         "q": "Remove the residual connections from a 48-layer transformer. The most likely result is:",
         "level": "Advanced",
         "choices": [
-          "It can no longer attend to any token",
-          "Faster training",
+          "It can no longer attend to any token in the input sequence",
+          "It trains noticeably faster because there are fewer additions",
           "It trains poorly because gradients struggle to reach early layers",
-          "Identical behavior"
+          "It behaves identically, since residual connections are optional"
         ],
         "answer": 2,
         "explain": "Residual add-paths are what let gradients flow through a deep stack. Remove them and early layers barely learn."
@@ -1091,9 +1091,9 @@
         "q": "Self-attention with the positional information removed would treat 'dog bites man' and 'man bites dog' as:",
         "level": "Intermediate",
         "choices": [
-          "Grammatically invalid",
-          "Two different token counts",
-          "Opposite in meaning",
+          "As opposite in meaning, since attention reverses the token order by default",
+          "As grammatically invalid, because the parser depends on word position",
+          "As having different token counts, since order changes how words are split",
           "The same, because without positional information self-attention carries no order information"
         ],
         "answer": 3,
@@ -1104,9 +1104,9 @@
         "level": "Advanced",
         "choices": [
           "Applies the same small network to each token's vector independently",
-          "Replaces attention",
-          "Stores the positional encodings",
-          "Mixes information across tokens"
+          "Mixes information across tokens the same way the attention sublayer does",
+          "Stores the positional encodings so later layers can reuse them",
+          "Replaces attention entirely once the network is deep enough"
         ],
         "answer": 0,
         "explain": "Attention mixes across tokens; the feedforward sublayer transforms each position independently with shared weights."
@@ -1208,10 +1208,10 @@
         "q": "Which input is likely to use the MOST tokens for its visible length?",
         "level": "Intermediate",
         "choices": [
-          "The common word 'the'",
+          "The common English word 'the', which appears almost constantly",
           "A long, rare chemical name the tokenizer has never merged",
-          "A single space",
-          "The word 'and'"
+          "A single space character between two ordinary words",
+          "The short and very frequent connector word 'and'"
         ],
         "answer": 1,
         "explain": "Common words are single tokens; a rare unmerged string fragments into many subword pieces, so it costs the most tokens per character."
@@ -1220,10 +1220,10 @@
         "q": "Why can a model struggle with multi-digit arithmetic partly because of tokenization?",
         "level": "Advanced",
         "choices": [
-          "Tokenizers round numbers",
-          "Digits are never tokenized",
+          "Tokenizers round long numbers to the nearest thousand before the model reads them",
+          "Digits are never tokenized, so the model has to guess every number it sees",
           "Digit groups can be merged into tokens that hide individual place values from the model",
-          "Numbers use a separate model"
+          "Numbers are routed to a separate model that the main one cannot query"
         ],
         "answer": 2,
         "explain": "BPE may group digits into chunks, obscuring the per-digit structure arithmetic needs. It is one contributor to number-handling quirks."
@@ -1232,9 +1232,9 @@
         "q": "' the' (with a leading space) and 'the' in a typical BPE tokenizer are:",
         "level": "Intermediate",
         "choices": [
-          "Never tokenizable",
-          "Merged into one character",
-          "Always the same token",
+          "Always the exact same token, since tokenizers simply ignore leading spaces",
+          "Merged into a single character before the model ever sees them",
+          "Never tokenizable at all, because spaces cannot appear inside a token",
           "Potentially different tokens, because whitespace is part of the unit"
         ],
         "answer": 3,
@@ -1293,9 +1293,9 @@
         "level": "Intermediate",
         "choices": [
           "You have leaked the test set into tuning, so its score no longer estimates real-world performance",
-          "The threshold cannot be tuned",
-          "Accuracy is the only valid metric",
-          "Nothing; that is correct"
+          "Nothing is wrong; tuning the threshold on the test set is the correct final step",
+          "The threshold cannot be tuned, so any score you read from it is meaningless",
+          "Accuracy is the only valid metric, so adjusting the threshold has no real effect"
         ],
         "answer": 0,
         "explain": "Tuning on test contaminates it. Tune on dev; report the test score once."
@@ -1304,10 +1304,10 @@
         "q": "For urgent-ticket routing, the most costly error is usually:",
         "level": "Intermediate",
         "choices": [
-          "A false alarm (non-urgent flagged urgent)",
+          "A false alarm, since a non-urgent ticket flagged as urgent wastes the most effort",
           "A miss (a real urgent ticket not flagged), so recall on urgent matters most",
-          "Too many true negatives",
-          "A balanced dataset"
+          "Too many true negatives, which quietly drag the overall accuracy down",
+          "An unbalanced dataset, which is the only error that really threatens the model"
         ],
         "answer": 1,
         "explain": "Missing a genuinely urgent ticket is the expensive failure, so recall on the urgent class is the metric to defend."
@@ -1322,9 +1322,9 @@
           "q": "How should the 2,000 tickets be split?",
           "choices": [
             "Into train, dev, and test, where test is used once at the very end",
-            "Train and test only, tuning on test",
-            "Randomly relabel and retrain",
-            "All 2,000 for training"
+            "Into train and test only, tuning the model directly on the test split",
+            "All 2,000 into training, since more data always beats holding any back",
+            "Randomly relabel and retrain until the accuracy figure stops improving"
           ],
           "answer": 0,
           "explain": "Three-way split: train to fit, dev to tune the threshold and choices, test for a single honest final estimate."
@@ -1343,10 +1343,10 @@
         {
           "q": "Precision is 78/(78+60) = about 0.57. Given the costs, the reasonable read is:",
           "choices": [
-            "Accuracy is 88%, so nothing else matters",
-            "Reject the model; precision is too low",
+            "Reject the model outright, because a precision of 0.57 is simply far too low to ever put in front of a real human support team",
+            "Accuracy is 88%, so the precision and recall figures do not matter for this decision at all",
             "Recall on urgent is solid; the false alarms are tolerable since a flagged non-urgent ticket just gets a quick human glance",
-            "Ship it as the sole decision-maker with no human review"
+            "Ship it as the sole decision-maker with no human review, since the recall is already high enough"
           ],
           "answer": 2,
           "explain": "Missing urgent tickets is the costly error, and recall is good. False alarms cost a cheap human glance, an acceptable trade for queue routing."
@@ -1354,9 +1354,9 @@
         {
           "q": "What is the honest go/no-go decision?",
           "choices": [
-            "Report only the 88% accuracy and roll out everywhere",
-            "Retrain until accuracy hits 99%",
-            "Ship as a fully automated final decision",
+            "Report only the flattering 88% accuracy number and immediately roll the model out everywhere as the sole automated decision-maker",
+            "Retrain the model over and over until its accuracy reaches 99%, then ship it without review",
+            "Ship it as a fully automated final decision so the support team never has to look at tickets",
             "Pilot it as a triage aid with a human reviewing flags, report recall with a confidence interval, and monitor the miss rate"
           ],
           "answer": 3,
