@@ -174,7 +174,7 @@
       "prompt": "After preference tuning, a model starts agreeing with users even when they are wrong. What is the likely cause?",
       "choices": [
         "Pretraining failed, so the model never learned the facts it now agrees against.",
-        "The reward model is too small to represent what human raters actually wanted.",
+        "The sampling temperature was raised during preference tuning, so answers vary more.",
         "Optimizing a preference proxy can reward agreeable answers, producing sycophancy.",
         "The context window shrank during tuning, so the model simply forgot the correct answer it once knew."
       ],

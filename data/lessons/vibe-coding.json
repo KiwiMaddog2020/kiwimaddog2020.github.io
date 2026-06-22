@@ -166,7 +166,7 @@
       "type": "predict_output",
       "prompt": "You need one small local edit and want to learn as you go. Which tool tier fits best?",
       "choices": [
-        "None at all; just do the small edit without any AI help.",
+        "A long autonomous agent run with a full written spec and approval gates.",
         "A fully autonomous CLI agent that edits many files across the repo at once.",
         "Inline completion or a chat assistant for a small, local change.",
         "A multi-agent swarm that divides the small edit up."
@@ -531,7 +531,7 @@
         "level": "Intermediate",
         "choices": [
           "Could a larger and more capable model have written this same code noticeably faster?",
-          "Does the finished code look idiomatic and well written?",
+          "Does the code look clean and idiomatic on a quick first read?",
           "Did the model explain its reasoning clearly and fluently?",
           "What invariant could this patch violate while still passing the happy path?"
         ],
@@ -723,7 +723,7 @@
           "Whether it actually guarantees the contract on the edges.",
           "Mostly how long the generated code turns out to be.",
           "How confident and self-assured the inline code comments happen to sound to a reader.",
-          "Whether the finished code happens to look idiomatic."
+          "Whether the code is formatted neatly and uses pretty variable names."
         ],
         "answer": 0,
         "explain": "Edges and invariants, not style, decide correctness."

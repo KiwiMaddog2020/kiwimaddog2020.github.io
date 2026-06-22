@@ -879,7 +879,7 @@
           "Switch to a bigger judge model and nothing else.",
           "Give it an explicit rubric with defined score levels and anchored examples.",
           "Raise the sampling temperature on the judge model.",
-          "Average together a great many more of the noisy random scores until they smooth out."
+          "Score each answer once with a quick gut-feel number and skip the anchored rubric entirely."
         ],
         "answer": 1,
         "explain": "A clear, anchored rubric is what turns a vibe into a reproducible judgment."
