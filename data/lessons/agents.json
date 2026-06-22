@@ -48,10 +48,10 @@
         "q": "What is the key difference between a single model call and an agent?",
         "level": "Beginner",
         "choices": [
-          "An agent does not use a language model.",
-          "An agent uses a bigger model.",
+          "An agent runs without any language model, using fixed rules instead.",
+          "An agent simply swaps in a bigger and more capable underlying language model than a chatbot.",
           "An agent loops: it acts with tools, observes results, and decides its next step.",
-          "An agent never makes mistakes."
+          "An agent makes a single call and returns the first answer it produces."
         ],
         "answer": 2,
         "explain": "The loop with tools and observation is what makes a system an agent."
@@ -60,9 +60,9 @@
         "q": "When should you NOT build an agent?",
         "level": "Beginner",
         "choices": [
-          "When the task is open-ended.",
-          "When the task needs tools.",
-          "When the task requires adapting to results.",
+          "When the task is open-ended and the steps cannot be known ahead of time.",
+          "When the task needs several tools and live data to reach an answer.",
+          "When the task requires adapting its approach as new results come in.",
           "When the task is a fixed, predictable sequence a workflow can handle."
         ],
         "answer": 3,
@@ -73,10 +73,10 @@
       "type": "predict_output",
       "prompt": "The task is 'extract the invoice total from this PDF', one fixed step with no branching. What fits best?",
       "choices": [
-        "A larger model only.",
-        "A fully autonomous agent loop.",
+        "A larger model on its own, which removes the need for any extraction logic.",
+        "A fully autonomous agent loop that decides each next step on its own.",
         "A single call or simple workflow; it needs no autonomous loop.",
-        "A multi-agent system."
+        "A multi-agent system that splits the extraction across several workers."
       ],
       "answer": 2,
       "explain": "A one-step, fully specifiable task does not need the autonomy of an agent."
@@ -135,9 +135,9 @@
         "level": "Beginner",
         "choices": [
           "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors.",
-          "Because tools require it.",
-          "To increase the temperature.",
-          "To make the transcript longer."
+          "Because the underlying tools physically require the agent to rebuild its plan before every single call.",
+          "To raise the sampling temperature so the agent explores more options.",
+          "To make the transcript longer so the run looks more thorough to a reviewer."
         ],
         "answer": 0,
         "explain": "An agent that does not act on its observations loses the benefit of the loop."
@@ -146,10 +146,10 @@
         "q": "An agent keeps alternating between two tool calls and never finishes. What is missing?",
         "level": "Intermediate",
         "choices": [
-          "A bigger context window.",
+          "A larger context window so it can remember more of its own past steps.",
           "A clear stopping rule or escalation path.",
-          "A higher temperature.",
-          "More tools."
+          "A higher sampling temperature so it varies which tool it picks.",
+          "More tools, so it has another option to break the cycle with."
         ],
         "answer": 1,
         "explain": "Loops without an exit condition can cycle indefinitely."
@@ -177,10 +177,10 @@
       "fault_step": 1,
       "fault_type": "ignored observation",
       "choices": [
-        "wrong tool",
+        "wrong tool selected",
         "ignored observation",
-        "context truncation",
-        "none"
+        "context window truncation",
+        "no fault, the trace is correct"
       ],
       "answer": 1,
       "explain": "The agent observed a required field, then edited from memory and failed to carry that fact into the patch."
@@ -241,10 +241,10 @@
         "q": "What does the model actually do during tool use?",
         "level": "Beginner",
         "choices": [
-          "It ignores tools and answers from memory.",
-          "It executes the tool on its own servers.",
+          "It quietly ignores the available tools and just answers the question from its own memory instead.",
+          "It executes the tool itself on its own servers and returns the result.",
           "It emits a structured request naming a tool and arguments, which your code runs.",
-          "It rewrites the tool's source code."
+          "It rewrites the tool's source code on the fly before calling into it."
         ],
         "answer": 2,
         "explain": "The model requests; your runtime executes and returns the observation."
@@ -253,9 +253,9 @@
         "q": "Why return concise tool results instead of raw dumps?",
         "level": "Intermediate",
         "choices": [
-          "The model cannot read more than ten words.",
-          "Concise results train the model.",
-          "Raw dumps are illegal.",
+          "The model literally cannot read more than about ten words from any single tool result.",
+          "Concise tool results act as extra training signal for the model.",
+          "Raw, unfiltered tool dumps are against the model provider's terms.",
           "Large outputs waste the context budget and bury the signal the model needs."
         ],
         "answer": 3,
@@ -267,9 +267,9 @@
       "prompt": "The model emits a tool call delete_file(path). What actually runs it?",
       "choices": [
         "Your code runs it, only after you decide to; the model just requests it.",
-        "Nothing can run it.",
-        "The operating system runs it automatically.",
-        "The model executes it on its own servers."
+        "Nothing can ever run it, since delete is always blocked by default.",
+        "The operating system picks it up and runs it automatically the moment the model emits it.",
+        "The model executes it directly on its own servers without your code."
       ],
       "answer": 0,
       "explain": "The model only emits a structured request; your runtime decides whether and how to execute it."
@@ -330,9 +330,9 @@
         "level": "Intermediate",
         "choices": [
           "It is standing guidance for many turns, so it must set objective, tools, stopping, and output shape.",
-          "It cannot mention tools.",
-          "It only matters on the first turn.",
-          "It must be shorter."
+          "It cannot mention any tools, since those are configured entirely in code.",
+          "It only matters on the very first turn and is ignored on every turn after.",
+          "It must be much shorter than a chatbot prompt to leave room for the loop."
         ],
         "answer": 0,
         "explain": "The prompt governs the whole loop, not a single exchange."
@@ -341,10 +341,10 @@
         "q": "Which addition most improves a vague agent prompt?",
         "level": "Intermediate",
         "choices": [
-          "Making it longer with more adjectives.",
+          "Making it considerably longer by adding plenty of vivid descriptive adjectives.",
           "Adding explicit success criteria and a stopping or escalation condition.",
-          "Raising the temperature.",
-          "Removing all constraints."
+          "Raising the sampling temperature so the agent is more creative.",
+          "Removing all constraints so the agent has full freedom to act."
         ],
         "answer": 1,
         "explain": "Specific criteria and limits stop the agent from wandering."
@@ -356,7 +356,7 @@
       "goal": "Write an agent system prompt that sets the objective, the tools, a stopping condition, and the output format.",
       "choices": [
         "Research the question with the search and fetch tools. Cite every claim with a source URL. Stop when you can support the answer with at least two independent sources, or after 8 tool calls, whichever comes first. Return three summary bullets followed by the source list.",
-        "Answer any question quickly and confidently.",
+        "Answer any question as quickly and confidently as you possibly can.",
         "You are a helpful research assistant. Do your best work and be thorough."
       ],
       "answer": 0,
@@ -417,10 +417,10 @@
         "q": "An agent performs well early in a long task but degrades near the end. Likely cause?",
         "level": "Intermediate",
         "choices": [
-          "Tools stopped working.",
-          "The model got tired.",
+          "The tools quietly stopped working partway through the long task.",
+          "The model grows tired and less careful as the task drags on.",
           "The context filled and important early facts were crowded out or dropped.",
-          "The temperature rose on its own."
+          "The sampling temperature slowly rose on its own as the long run continued, adding noise."
         ],
         "answer": 2,
         "explain": "Late-task degradation often traces to a saturated context window."
@@ -429,9 +429,9 @@
         "q": "What is the right way to keep durable facts available across a long run?",
         "level": "Intermediate",
         "choices": [
-          "Raise the temperature.",
-          "Ignore them after the first turn.",
-          "Repeat them in every single turn.",
+          "Raise the temperature so the model recalls them more vividly.",
+          "Ignore them after the first turn, since the model has seen them.",
+          "Repeat them in full in every single turn so they stay visible.",
           "Store them externally and retrieve them on demand."
         ],
         "answer": 3,
@@ -442,10 +442,10 @@
       "type": "predict_output",
       "prompt": "An agent performs well early in a long task then degrades near the end. What is the best fix?",
       "choices": [
-        "Raise the temperature.",
+        "Raise the sampling temperature so the agent stays sharper for longer.",
         "Summarize old turns and move durable facts to external memory; the window saturated.",
-        "Add more tools.",
-        "Restart from scratch each time."
+        "Add more tools so the agent has fresher options near the end of the task.",
+        "Restart the whole task from scratch each time the agent begins to slow down near the end."
       ],
       "answer": 1,
       "explain": "Late-task degradation usually means the context filled; compaction and external memory address it."
@@ -506,9 +506,9 @@
         "level": "Intermediate",
         "choices": [
           "Each subgoal is easier to verify, and failures become legible.",
-          "It guarantees the task succeeds.",
-          "It eliminates the context limit.",
-          "It removes the need for tools."
+          "It guarantees the overall task will succeed once each subgoal is set.",
+          "It eliminates the context limit by spreading work across the subgoals.",
+          "It removes the need for tools, since subgoals can be solved by reasoning."
         ],
         "answer": 0,
         "explain": "Smaller, checkable steps are easier to get right and to debug."
@@ -517,10 +517,10 @@
         "q": "An agent keeps executing its original plan even though an observation proved a step impossible. What is the failure?",
         "level": "Advanced",
         "choices": [
-          "It planned too much.",
+          "It planned out far too much detail up front before it ever took its first real action.",
           "It treated the plan as fixed instead of revising it against new evidence.",
-          "It used too few tools.",
-          "Its temperature was too low."
+          "It used too few tools to gather the evidence it needed to continue.",
+          "Its sampling temperature was set too low for it to consider a new plan."
         ],
         "answer": 1,
         "explain": "Plans must adapt; rigidly following a contradicted plan defeats the loop."
@@ -531,9 +531,9 @@
       "weak_prompt": "Build me a dashboard.",
       "goal": "Get the agent to plan before building so you can correct course cheaply.",
       "choices": [
-        "Build me a nice dashboard with good charts.",
+        "Build me a really nice dashboard with some good-looking charts on it.",
         "First list the data sources, the three charts, and the layout as a short plan and wait for my OK; then build one chart at a time with a check after each.",
-        "Just start coding and show me when it is done."
+        "Just start coding right away and show me the result when it is all done."
       ],
       "answer": 1,
       "explain": "A plan-first prompt with stepwise checks catches mistakes while they are cheap to fix."
@@ -593,10 +593,10 @@
         "q": "What is the main benefit of MCP over hand-wiring each tool?",
         "level": "Intermediate",
         "choices": [
-          "It guarantees correct answers.",
-          "It makes models larger.",
+          "It guarantees the agent will always return correct answers whenever it calls those tools.",
+          "It makes the underlying models larger and therefore more capable.",
           "Tools become reusable across any compatible agent instead of custom per integration.",
-          "It removes the need for tools."
+          "It removes the need for tools by answering directly from the protocol."
         ],
         "answer": 2,
         "explain": "A shared standard turns one-off integrations into interoperable, reusable parts."
@@ -605,9 +605,9 @@
         "q": "Connecting to an external MCP server still requires you to consider what?",
         "level": "Advanced",
         "choices": [
-          "Only the temperature.",
-          "Retraining the model.",
-          "Nothing; the standard handles everything.",
+          "Only the sampling temperature the remote server happens to use.",
+          "Retraining your own model so it matches the remote tool's format.",
+          "Nothing further; the MCP standard handles trust and permissions for you.",
           "Trust, scope, and permissions, plus the underlying tool design."
         ],
         "answer": 3,
@@ -618,10 +618,10 @@
       "type": "predict_output",
       "prompt": "You want six different agents to use your database tools without writing custom glue for each. Best approach?",
       "choices": [
-        "Copy the tool code into every agent.",
-        "Hand-wire each agent to the database separately.",
+        "Copy the tool code into every one of the six agents by hand.",
+        "Hand-wire each of the six agents to the database separately.",
         "Expose the tools once as an MCP server that any compatible agent can use.",
-        "Give each agent the raw database password."
+        "Give each of the six agents the raw database password and let it query the tables directly."
       ],
       "answer": 2,
       "explain": "MCP turns one-off integrations into a reusable interface many agents can share."
@@ -682,9 +682,9 @@
         "level": "Advanced",
         "choices": [
           "Coordination overhead and context loss across handoffs.",
-          "Lower temperature.",
-          "Fewer tools.",
-          "Larger model weights."
+          "It quietly lowers the temperature each agent runs at.",
+          "It forces every agent to share one much smaller toolset.",
+          "It needs larger model weights loaded for each separate agent."
         ],
         "answer": 0,
         "explain": "Information that was obvious in one context can disappear across an agent boundary."
@@ -693,10 +693,10 @@
         "q": "Which is a good reason to split work across agents?",
         "level": "Advanced",
         "choices": [
-          "It looks more sophisticated.",
+          "It makes the overall system look more sophisticated to reviewers.",
           "The subtasks are genuinely independent and can run in parallel.",
-          "To use more tokens.",
-          "Because one agent is never enough."
+          "It uses more tokens, which signals the system is working hard.",
+          "Because one agent is simply never enough for a real production task."
         ],
         "answer": 1,
         "explain": "Independent, parallelizable subtasks are the clearest justification."
@@ -706,10 +706,10 @@
       "type": "predict_output",
       "prompt": "Two subtasks are tightly coupled and share a lot of context. Single agent or multi-agent?",
       "choices": [
-        "Multi-agent, because more agents is always better.",
+        "Multi-agent, because adding more agents is always the better choice.",
         "A single agent; tight coupling makes handoffs lose context.",
-        "Multi-agent, to use more tokens.",
-        "It makes no difference."
+        "Multi-agent, so the system can burn more tokens and look thorough.",
+        "It makes no real difference either way, so pick whichever is handy."
       ],
       "answer": 1,
       "explain": "Coupled work loses context across agent boundaries; one agent avoids that overhead."
@@ -769,10 +769,10 @@
         "q": "Why measure the trajectory, not just the final answer?",
         "level": "Advanced",
         "choices": [
-          "It uses fewer tokens.",
-          "Trajectories are easier to fake.",
+          "Measuring the trajectory uses far fewer tokens than checking the answer.",
+          "Trajectories are much easier to fake than a single final answer.",
           "A correct answer reached through a broken process will not hold when the task changes.",
-          "Outcomes never matter."
+          "Final outcomes never really matter once the process looks fine."
         ],
         "answer": 2,
         "explain": "Process quality predicts whether success will generalize."
@@ -781,9 +781,9 @@
         "q": "What inflates an agent's evaluation scores?",
         "level": "Advanced",
         "choices": [
-          "Running each task multiple times.",
-          "Using a clear rubric.",
-          "Using a held-out task set.",
+          "Running each task many times before reporting the average score.",
+          "Using a clear, explicit rubric that the grader follows each time.",
+          "Holding out a fresh task set the agent has never seen before.",
           "Letting the agent grade its own work or be judged by a model with the same blind spots."
         ],
         "answer": 3,
@@ -795,9 +795,9 @@
       "prompt": "An agent passed your single demo task on the first try. How much does that prove?",
       "choices": [
         "Little; run a fixed task set many times, report a rate, and judge it independently.",
-        "Nothing can be measured about agents.",
-        "It proves the trajectory was correct.",
-        "It proves the agent is reliable."
+        "Nothing about an agent's reliability can ever be measured.",
+        "It proves the agent's trajectory on that task was correct.",
+        "It proves the agent is reliable enough to ship now."
       ],
       "answer": 0,
       "explain": "Agents are stochastic and multi-step; one success is weak evidence without a repeated, independent eval."
@@ -858,9 +858,9 @@
         "level": "Advanced",
         "choices": [
           "Explicit step and budget limits.",
-          "More tools.",
-          "A bigger model.",
-          "A higher temperature."
+          "Adding more tools so it has an exit option.",
+          "Switching to a noticeably bigger model.",
+          "Raising the sampling temperature a bit."
         ],
         "answer": 0,
         "explain": "Hard limits force the loop to terminate or escalate."
@@ -869,10 +869,10 @@
         "q": "An agent encounters a missing field and proceeds with a confident guess. Best fix?",
         "level": "Advanced",
         "choices": [
-          "Trust the guess to keep things fast.",
+          "Trust the confident guess so the agent keeps moving quickly.",
           "Make missing data loud and require the agent to resolve it via a tool or a question.",
-          "Raise the temperature so guesses vary.",
-          "Remove the field from the schema."
+          "Raise the sampling temperature so the agent's guesses at least vary more widely each run.",
+          "Remove the missing field from the schema so it stops complaining."
         ],
         "answer": 1,
         "explain": "Resolving the gap, rather than guessing, prevents fluent-but-wrong results."
@@ -900,9 +900,9 @@
       "fault_step": 1,
       "fault_type": "hallucinated assumption",
       "choices": [
-        "wrong tool selected",
-        "context window truncation",
-        "no fault, the trace is correct",
+        "wrong tool selected for the step",
+        "context window truncation partway through",
+        "no fault, the trace is actually correct",
         "hallucinated assumption to fill a gap"
       ],
       "answer": 3,
@@ -963,10 +963,10 @@
         "q": "A task is a fixed five-step sequence with no branching. What fits best?",
         "level": "Intermediate",
         "choices": [
-          "A larger model.",
-          "A fully autonomous agent.",
+          "A single very large model on its own.",
+          "A fully autonomous agent loop.",
           "A deterministic workflow.",
-          "A multi-agent system."
+          "A multi-agent system of workers."
         ],
         "answer": 2,
         "explain": "Predictable sequences are cheaper and safer as workflows."
@@ -975,9 +975,9 @@
         "q": "Why limit an agent's autonomy on irreversible actions?",
         "level": "Advanced",
         "choices": [
-          "Because agents cannot use tools.",
-          "Because autonomy is always bad.",
-          "To slow it down for no reason.",
+          "Because agents fundamentally cannot be trusted to use any of their tools safely at all.",
+          "Because autonomy is always bad and should be minimized everywhere.",
+          "To slow the agent down for no real reason other than caution.",
           "Because the more it can do unreviewed, the larger the blast radius of an error."
         ],
         "answer": 3,
@@ -988,10 +988,10 @@
       "type": "predict_output",
       "prompt": "A task permanently deletes production records and cannot be undone. How much autonomy should the agent have?",
       "choices": [
-        "Maximum, with no review.",
-        "Full autonomy, to move fast.",
+        "Maximum autonomy, with no human review of what it deletes.",
+        "Full autonomy, so the cleanup job can move through the records as fast as possible.",
         "Minimal; use tight scope, confirmation gates, and human review.",
-        "No tools at all, so it cannot help."
+        "No tools at all, so it cannot help with the deletion task."
       ],
       "answer": 2,
       "explain": "Irreversible, high-stakes actions need scope, gates, and review to keep the blast radius small."
@@ -1059,9 +1059,9 @@
         "level": "Intermediate",
         "choices": [
           "In retrieval: fix chunking, embeddings, or the index.",
-          "In the model weights; retrain it.",
-          "In the temperature setting.",
-          "Nowhere; confident answers are fine."
+          "In the model weights; the only real fix is to retrain it.",
+          "In the sampling temperature, which made the answer overconfident.",
+          "Nowhere; a confident answer is fine even if the sources were wrong."
         ],
         "answer": 0,
         "explain": "RAG quality is bounded by retrieval; irrelevant passages mean the retrieval stage needs fixing."
@@ -1070,10 +1070,10 @@
         "q": "When is RAG a better fit than fine-tuning?",
         "level": "Intermediate",
         "choices": [
-          "When you need to change the model's tone.",
+          "When you mainly need to change the model's tone and writing style.",
           "When the knowledge changes often or is private and large.",
-          "When you want a smaller model.",
-          "When you need faster inference."
+          "When you want a smaller model that costs less to run in production.",
+          "When you need faster inference and lower latency on every request."
         ],
         "answer": 1,
         "explain": "RAG suits changing or private knowledge; fine-tuning suits behavior and style."
@@ -1165,10 +1165,10 @@
         "q": "Why are tool-using agents more exposed to prompt injection than a plain chatbot?",
         "level": "Advanced",
         "choices": [
-          "They cannot read documents.",
-          "They use bigger models.",
+          "They are unable to read any external documents at all.",
+          "They run on much bigger models that attract more attacks.",
           "Injected text can trigger real actions through tools.",
-          "They have higher temperature."
+          "They run at a higher temperature, which makes them suggestible."
         ],
         "answer": 2,
         "explain": "Tools turn injected instructions into side effects, which is what makes injection dangerous."
@@ -1177,9 +1177,9 @@
         "q": "Which most reduces prompt-injection risk?",
         "level": "Advanced",
         "choices": [
-          "A higher temperature.",
-          "A larger context window.",
-          "A longer system prompt telling the model to ignore injections.",
+          "A higher temperature so the model is harder to steer with injected text.",
+          "A larger context window so the model can see the whole document at once.",
+          "A longer system prompt that very firmly and repeatedly tells the model to ignore any injected instructions.",
           "Breaking the lethal trifecta: least-privilege tools and gates on exfiltration and high-impact actions."
         ],
         "answer": 3,
@@ -1260,9 +1260,9 @@
         "level": "Advanced",
         "choices": [
           "Use a small fast model for the simple turns and bound the loop with a step budget.",
-          "Raise the temperature.",
-          "Remove all tools.",
-          "Use a larger model for every turn."
+          "Raise the sampling temperature so each turn finishes faster.",
+          "Remove all the tools so the agent stops making slow calls.",
+          "Use a single larger model for every turn to cut the count."
         ],
         "answer": 0,
         "explain": "Right-sizing the model per step and capping the loop directly cut cost and latency."
@@ -1271,10 +1271,10 @@
         "q": "What is the right production design target?",
         "level": "Advanced",
         "choices": [
-          "The most capable model available.",
+          "Always the most capable model available, whatever it costs to run.",
           "The cheapest, fastest design that still clears the quality bar.",
-          "The one with the most tools.",
-          "Whatever has the lowest latency regardless of accuracy."
+          "The design that wires in the most tools for maximum flexibility.",
+          "Whatever has the lowest latency, regardless of how accurate it is."
         ],
         "answer": 1,
         "explain": "Production optimizes cost and latency subject to meeting the quality bar, not raw capability."
@@ -1284,10 +1284,10 @@
       "type": "predict_output",
       "prompt": "You need an agent step that classifies a message into one of five intents, on a latency-sensitive path. Which model fits?",
       "choices": [
-        "Whichever model has the largest context window.",
-        "The largest reasoning model, for safety.",
+        "Whichever model happens to ship with the single largest available context window.",
+        "The largest reasoning model available, just to be safe about quality.",
         "A small, fast model; intent classification is simple and latency matters.",
-        "A multi-agent system."
+        "A multi-agent system that routes the message between several workers."
       ],
       "answer": 2,
       "explain": "Simple, latency-sensitive steps should use a small fast model; save the big model for hard turns."
@@ -1336,10 +1336,10 @@
         "q": "An agent returns a confident, well-written wrong answer. The best first move is:",
         "level": "Advanced",
         "choices": [
-          "Add more tools",
-          "Trust it; confidence signals correctness",
+          "Add more tools so the agent has another way to reach the answer.",
+          "Trust it, since a confident and very well-written answer is a strong signal of correctness.",
           "Read the trace step by step to find the first wrong reasoning or observation",
-          "Increase the temperature"
+          "Raise the sampling temperature so the next answer comes out different."
         ],
         "answer": 2,
         "explain": "Fluency is not correctness. The fault is somewhere in the trace, and the first wrong step is what you need."
@@ -1348,9 +1348,9 @@
         "q": "The agent's tool returned the right data but the agent misread it. The durable fix is:",
         "level": "Advanced",
         "choices": [
-          "Tell the agent to be more careful",
-          "Remove the tool",
-          "Replace the tool",
+          "Tell the agent firmly to be more careful when it reads tool results.",
+          "Remove the tool entirely so the agent cannot misread its output again.",
+          "Replace the tool with a different one that returns simpler raw data.",
           "Add output validation or a stricter schema so a misread is caught, and tighten the prompt on how to read the result"
         ],
         "answer": 3,
@@ -1366,9 +1366,9 @@
           "q": "Which step is the fault step (the first thing that went wrong)?",
           "choices": [
             "Step 2, where it computes the balance",
-            "Step 3, the conclusion",
-            "Step 4, the final answer",
-            "Step 1, the tool call"
+            "Step 3, where it states the conclusion",
+            "Step 4, where it gives the final answer",
+            "Step 1, where it makes the tool call"
           ],
           "answer": 0,
           "explain": "Step 1 returned correct data. Step 2 is the first error: it added the transactions instead of applying their signs. Steps 3 and 4 just inherit it."
@@ -1376,10 +1376,10 @@
         {
           "q": "What is the root cause?",
           "choices": [
-            "The tool returned bad data",
+            "The tool simply returned bad or corrupted data for this account.",
             "A reasoning error: it ignored the signed amounts (and the provided current_balance field) and summed magnitudes",
-            "The account does not exist",
-            "The temperature was too low"
+            "The account does not exist, so the balance could not be computed.",
+            "The sampling temperature was set too low for the math to come out."
           ],
           "answer": 1,
           "explain": "The observation already contained current_balance: 300. The agent did unnecessary, incorrect math instead of reading the authoritative field."
@@ -1387,10 +1387,10 @@
         {
           "q": "What is the most durable fix?",
           "choices": [
-            "Add three more tools",
-            "Tell the agent to double-check its math",
+            "Add three more tools so the agent has more ways to check its own math.",
+            "Tell the agent to slow down and double-check its arithmetic every time.",
             "Have the agent read the authoritative current_balance field and add a validation step that flags when its computed value disagrees with it",
-            "Lower the temperature"
+            "Lower the sampling temperature so the computed number stops drifting."
           ],
           "answer": 2,
           "explain": "Use the source of truth the tool already provided, and validate computed-vs-returned. That catches the whole class of misread, not just this sum."
@@ -1398,9 +1398,9 @@
         {
           "q": "What would prevent this class of failure going forward?",
           "choices": [
-            "Asking the user to verify every answer",
-            "Disabling the agent",
-            "Nothing; it was a one-off",
+            "Ask the user to manually verify every single answer before trusting it.",
+            "Disable the agent on this task so the failure can never happen again.",
+            "Nothing; it was a harmless one-off that is not worth designing around.",
             "A schema-checked tool output plus an assertion that the agent's reported number matches the tool's authoritative field before answering"
           ],
           "answer": 3,
