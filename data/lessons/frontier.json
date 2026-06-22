@@ -48,10 +48,10 @@
         "q": "What is the well-established part of scaling?",
         "level": "Advanced",
         "choices": [
-          "Every specific skill appears suddenly at a threshold.",
+          "Every specific skill appears all at once, the moment the model crosses a size threshold.",
           "Pretraining loss falls smoothly and predictably with compute, data, and parameters.",
-          "Bigger models always hallucinate less.",
-          "Scaling has no measurable effect."
+          "Bigger models reliably hallucinate less, so scale alone fixes factual errors.",
+          "Scaling has no measurable effect once a model passes a few billion parameters."
         ],
         "answer": 1,
         "explain": "Smooth loss scaling is the load-bearing, well-supported finding."
@@ -60,10 +60,10 @@
         "q": "Why might a capability look like it emerged suddenly?",
         "level": "Expert",
         "choices": [
-          "Because of the temperature setting.",
-          "The model physically changed at one size.",
+          "Because the sampling temperature was raised at exactly that model size.",
+          "Because the model physically rewires its own architecture once it reaches a certain critical scale.",
           "A harsh all-or-nothing metric can turn smooth progress into a sudden-looking jump.",
-          "Emergence is never a metric effect."
+          "Because emergence is always a real discontinuity and never a metric artifact."
         ],
         "answer": 2,
         "explain": "Metric choice can manufacture an apparent discontinuity from smooth underlying gains."
@@ -73,9 +73,9 @@
       "type": "predict_output",
       "prompt": "A capability appears to jump suddenly at a model size under an exact-match metric, but improves smoothly under a partial-credit metric. What is the most defensible reading?",
       "choices": [
-        "The smaller model has the capability fully.",
-        "Metrics never affect emergence claims.",
-        "The capability truly emerged discontinuously.",
+        "The smaller model already has the capability fully and just hides it on this test.",
+        "The metric you choose can never change whether a capability looks emergent.",
+        "The capability genuinely emerged in one discontinuous step at that exact size.",
         "The apparent jump is largely a metric artifact; the underlying gain is smooth."
       ],
       "answer": 3,
@@ -148,9 +148,9 @@
         "q": "What does a reward model in RLHF represent?",
         "level": "Advanced",
         "choices": [
-          "The tokenizer.",
-          "The context window size.",
-          "The true objective, perfectly captured.",
+          "The model's tokenizer, retrained to score responses instead of splitting text.",
+          "The size of the context window the policy is allowed to read during training.",
+          "The true human objective, captured exactly and without any approximation error.",
           "A learned proxy for human preferences that the policy is optimized against."
         ],
         "answer": 3,
@@ -161,9 +161,9 @@
         "level": "Expert",
         "choices": [
           "Because optimizing for what raters prefer can reward agreeable answers over correct ones.",
-          "Because of the learning rate.",
-          "Because alignment never affects behavior.",
-          "Because models dislike users."
+          "Because the learning rate during alignment is set far too high to converge.",
+          "Because models develop a genuine dislike of users who disagree with them.",
+          "Because alignment changes only the surface tone of answers and never touches their actual content."
         ],
         "answer": 0,
         "explain": "Optimizing a preference proxy can favor what pleases raters, including agreement."
@@ -173,10 +173,10 @@
       "type": "predict_output",
       "prompt": "After preference tuning, a model starts agreeing with users even when they are wrong. What is the likely cause?",
       "choices": [
-        "Pretraining failed.",
-        "The reward model is too small.",
+        "Pretraining failed, so the model never learned the facts it now agrees against.",
+        "The reward model is too small to represent what human raters actually wanted.",
         "Optimizing a preference proxy can reward agreeable answers, producing sycophancy.",
-        "The context window shrank."
+        "The context window shrank during tuning, so the model simply forgot the correct answer it once knew."
       ],
       "answer": 2,
       "explain": "Alignment optimizes a stand-in for preferences, which can favor what pleases raters over what is correct."
@@ -243,10 +243,10 @@
         "q": "What does spending more test-time compute trade?",
         "level": "Advanced",
         "choices": [
-          "Accuracy for speed.",
+          "It trades accuracy away in exchange for a faster, cheaper answer.",
           "Latency and cost for higher accuracy on hard problems.",
-          "Nothing; it is free.",
-          "Model size for data."
+          "Nothing at all; extra test-time compute is effectively free to spend.",
+          "It trades model size for training data without changing accuracy."
         ],
         "answer": 1,
         "explain": "More thinking costs tokens and latency in exchange for accuracy where it helps."
@@ -255,10 +255,10 @@
         "q": "On which task is extra reasoning compute least useful?",
         "level": "Expert",
         "choices": [
-          "A tricky coding bug.",
-          "A hard competition math problem.",
+          "A tricky coding bug that needs several steps of careful tracing.",
+          "A hard competition math problem with many intermediate steps.",
           "A simple factual lookup with no verifiable reasoning to do.",
-          "A multi-step proof."
+          "A multi-step logical proof where each step has to be checked."
         ],
         "answer": 2,
         "explain": "Easy lookups have little to reason about, so extra compute mostly buys latency."
@@ -268,10 +268,10 @@
       "type": "predict_output",
       "prompt": "You enable long reasoning and best-of-many sampling for a batch of simple, factual lookup questions. What is the likely effect?",
       "choices": [
-        "A large accuracy gain.",
+        "A large accuracy gain, since more reasoning always helps the answer.",
         "Little accuracy change but much higher cost and latency.",
-        "The model stops answering.",
-        "Lower accuracy than a single pass."
+        "The model stops answering because the reasoning chain grows too long.",
+        "Lower accuracy than a single pass, because extra sampling adds noise."
       ],
       "answer": 1,
       "explain": "Test-time compute pays off on hard, checkable problems, not simple lookups."
@@ -338,9 +338,9 @@
         "q": "Why is reading a single neuron usually not enough to understand a model?",
         "level": "Advanced",
         "choices": [
-          "Models have no neurons.",
-          "Neurons only store the tokenizer.",
-          "Neurons are random.",
+          "Models do not actually contain neurons, so reading one tells you nothing useful.",
+          "Each neuron only stores a piece of the tokenizer rather than a learned concept.",
+          "Individual neurons fire at random, so no single one carries real information.",
           "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing."
         ],
         "answer": 3,
@@ -351,9 +351,9 @@
         "level": "Expert",
         "choices": [
           "There are real, verifiable findings, but full explanations remain partial.",
-          "Interpretability has produced nothing useful.",
-          "It only works on tiny models.",
-          "We can fully explain any frontier model's behavior."
+          "Interpretability has produced nothing useful, so the claims are all marketing.",
+          "We can already fully explain any frontier model's behavior end to end.",
+          "It only works on tiny toy models and never on anything used in practice."
         ],
         "answer": 0,
         "explain": "Genuine progress coexists with large remaining gaps; avoid overclaiming."
@@ -364,9 +364,9 @@
       "prompt": "You find a single neuron that activates for many unrelated concepts. What does this illustrate?",
       "choices": [
         "Superposition; models pack many overlapping features into few neurons.",
-        "The model has no features.",
-        "A tokenizer bug.",
-        "The neuron is broken."
+        "It shows the model has no real features and is mostly empty capacity.",
+        "It is simply a tokenizer bug that mislabels which concept the neuron is actually responding to.",
+        "The neuron is broken and should be pruned from the network entirely."
       ],
       "answer": 0,
       "explain": "Superposition is why one neuron rarely maps to one concept, and why disentangling features is hard."
@@ -433,10 +433,10 @@
         "q": "A model scores very high on a popular public benchmark. Why be cautious?",
         "level": "Advanced",
         "choices": [
-          "High scores are always fake.",
+          "A high public-benchmark score is always faked by selective reporting.",
           "The benchmark may be saturated or contaminated, so the score can reflect memorization.",
-          "Benchmarks never matter.",
-          "Public benchmarks cannot be measured."
+          "Benchmarks never matter, so any score on one is safe to ignore outright.",
+          "Public benchmarks cannot really be measured precisely, so any number reported on one is meaningless."
         ],
         "answer": 1,
         "explain": "Saturation and contamination both erode what a high public score proves."
@@ -445,10 +445,10 @@
         "q": "What kind of test best resists contamination?",
         "level": "Expert",
         "choices": [
-          "Any test the model has seen.",
-          "An old, widely-published benchmark.",
+          "Any test the model has already seen during its training.",
+          "An old, widely published benchmark everyone has trained on.",
           "A held-out, private, or freshly constructed test.",
-          "A single multiple-choice question."
+          "A single multiple-choice question picked at random."
         ],
         "answer": 2,
         "explain": "Fresh or private tests have not leaked into training data."
@@ -458,9 +458,9 @@
       "type": "predict_output",
       "prompt": "A model scores 99% on a popular three-year-old public benchmark. Why be cautious?",
       "choices": [
-        "Benchmarks never matter.",
-        "It proves general intelligence.",
-        "High scores are always fake.",
+        "A high score on it proves the model has general intelligence.",
+        "Benchmarks never matter, so the figure tells you nothing at all.",
+        "Such a high score must always be faked through selective reporting of the best runs.",
         "Saturation and possible contamination; the test may be in the training data."
       ],
       "answer": 3,
@@ -528,9 +528,9 @@
         "q": "A frontier model solves a hard proof but botches a simple arithmetic step. What does this illustrate?",
         "level": "Expert",
         "choices": [
-          "Arithmetic is harder than proofs for everyone.",
-          "The proof answer was luck.",
-          "The model is broken.",
+          "Arithmetic is genuinely harder than proofs for every kind of solver, human or machine alike.",
+          "The correct proof was just luck and the model cannot really reason.",
+          "The model is simply broken and its other answers cannot be trusted.",
           "Jagged capability: model difficulty does not track human difficulty."
         ],
         "answer": 3,
@@ -541,9 +541,9 @@
         "level": "Expert",
         "choices": [
           "Because it has several roots (the objective, data gaps, calibration), so scale alone does not remove it.",
-          "Because hallucination is not real.",
-          "Because calibration is already perfect.",
-          "Because models will get smaller."
+          "Because hallucination is not a real phenomenon, just a labeling disagreement.",
+          "Because calibration is already perfect, so scale has nothing left to fix.",
+          "Because future models will get smaller, undoing whatever scale achieved."
         ],
         "answer": 0,
         "explain": "Hallucination has multiple causes, so it is reduced and managed rather than removed by scale alone."
@@ -553,10 +553,10 @@
       "type": "predict_output",
       "prompt": "A model gives a fluent, confident, and detailed answer that you cannot easily verify. How much should its confidence raise your trust?",
       "choices": [
-        "Confidence means the model checked external sources.",
-        "A lot; confidence and detail signal correctness.",
+        "A lot; a confident, detailed, and fluent answer is a strong signal that the content is correct.",
+        "Fully; the model only sounds confident after it has checked outside sources.",
         "Little; calibration is imperfect, so confidence is not evidence of correctness.",
-        "It guarantees the answer is right."
+        "Completely; fluent confidence guarantees the answer has been verified."
       ],
       "answer": 2,
       "explain": "Fluency and confidence are not calibration; an unverifiable confident answer still needs a check."
@@ -623,10 +623,10 @@
         "q": "What is the most durable strategy for keeping up with AI research?",
         "level": "Advanced",
         "choices": [
-          "Read every new preprint the day it appears.",
+          "Read every new preprint the day it appears so you never miss a result.",
           "Anchor on a small canon deeply, then place new work against it with source discipline.",
-          "Only read social media threads.",
-          "Avoid reading papers entirely."
+          "Follow only social-media threads, since they surface what actually matters.",
+          "Avoid reading papers entirely and rely instead on short summaries written by other people online."
         ],
         "answer": 1,
         "explain": "Deep canonical scaffolding plus skeptical reading scales; chasing everything does not."
@@ -635,10 +635,10 @@
         "q": "How should you treat a striking, un-reproduced preprint result?",
         "level": "Expert",
         "choices": [
-          "Assume it is contaminated.",
-          "As established fact.",
+          "As established fact, since a striking result would not be posted otherwise.",
+          "Assume it is contaminated and dismiss it without any further checking.",
           "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
-          "Ignore it forever."
+          "Ignore it forever, because un-reproduced results never turn out to matter."
         ],
         "answer": 2,
         "explain": "Source discipline weights a claim by evidence, not by how striking it sounds."
@@ -648,10 +648,10 @@
       "type": "predict_output",
       "prompt": "A striking, un-reproduced preprint is trending on social media. How should you treat it?",
       "choices": [
-        "As established fact.",
+        "As established fact, since a result trending this widely must already have been vetted carefully by the crowd.",
         "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
-        "Ignore it permanently.",
-        "Assume it is contaminated."
+        "Ignore it permanently, because anything on social media is automatically wrong.",
+        "Assume it is contaminated and move on without looking at the actual method."
       ],
       "answer": 1,
       "explain": "Source discipline weights a claim by evidence and reproduction, not by how striking it sounds."
@@ -725,9 +725,9 @@
         "q": "A model has 100B parameters but activates only about 13B per token. What architecture is this?",
         "level": "Advanced",
         "choices": [
-          "A distilled student model.",
-          "A multimodal encoder.",
-          "A dense transformer.",
+          "A distilled student model trained to copy a bigger one.",
+          "A multimodal encoder that mixes text and image inputs.",
+          "A dense transformer that uses all weights every token.",
           "A mixture-of-experts model with sparse routing."
         ],
         "answer": 3,
@@ -738,9 +738,9 @@
         "level": "Advanced",
         "choices": [
           "Distillation into a smaller student.",
-          "A larger context window.",
-          "A higher temperature.",
-          "Multimodality."
+          "Switching to a much larger context window.",
+          "Raising the sampling temperature a little.",
+          "Adding a second multimodal input stream."
         ],
         "answer": 0,
         "explain": "Distillation trades a little quality for much cheaper deployment."
@@ -751,9 +751,9 @@
       "prompt": "You must answer questions that combine a paragraph of text and a bar chart image. What kind of model do you need?",
       "choices": [
         "A multimodal model that shares a representation across text and images.",
-        "A mixture-of-experts router alone.",
-        "A distilled student of a text model.",
-        "A text-only transformer."
+        "A mixture-of-experts router that picks an expert per token.",
+        "A distilled student of a text-only model, run at low precision to keep the cost down.",
+        "A text-only transformer with a much larger context window."
       ],
       "answer": 0,
       "explain": "Mixed text-and-image input is best handled by a multimodal model with a shared representation space."
@@ -827,10 +827,10 @@
         "q": "Compared with full fine-tuning, LoRA primarily reduces:",
         "level": "Advanced",
         "choices": [
-          "The model's vocabulary",
+          "The model's vocabulary, by pruning rare tokens out of the tokenizer first",
           "The number of trainable parameters (and thus memory and per-task storage), by training small low-rank adapters",
-          "The context window",
-          "The need for any task data"
+          "The context window, by compressing older tokens into shorter summaries",
+          "The need for any task data, since adapters can be trained with none at all"
         ],
         "answer": 1,
         "explain": "LoRA freezes the base and trains a tiny low-rank update, slashing trainable parameters and giving swappable per-task adapters."
@@ -839,10 +839,10 @@
         "q": "You need to run a large model but it does not fit in your GPU memory. The most direct lever is:",
         "level": "Advanced",
         "choices": [
-          "Use a larger context window",
-          "Increase the temperature",
+          "Switch to a much larger context window so the whole model has room to load",
+          "Increase the sampling temperature so it uses less memory",
           "Quantize the weights to lower precision (8-bit or 4-bit)",
-          "Add more LoRA adapters"
+          "Add more LoRA adapters until the weights compress down"
         ],
         "answer": 2,
         "explain": "Quantization shrinks the memory footprint of the weights directly. LoRA addresses training cost, not base-model inference memory."
@@ -851,9 +851,9 @@
         "q": "Before reaching for any finetuning to change behavior, you should first consider:",
         "level": "Advanced",
         "choices": [
-          "Quantizing to 1-bit",
-          "Retraining from scratch",
-          "Buying more GPUs",
+          "Quantizing the weights to 1-bit so the model fits in far less memory",
+          "Retraining the entire model from scratch on a large dataset built for your specific task",
+          "Buying more GPUs so you can afford a longer fine-tuning run",
           "Whether prompting, retrieval, or tool use already gets you there with no training"
         ],
         "answer": 3,
@@ -938,9 +938,9 @@
         "level": "Expert",
         "choices": [
           "Treat it as unverified: a self-made benchmark with no baseline does not establish a general result",
-          "The method is useless",
-          "The number proves the capability",
-          "State-of-the-art confirmed"
+          "The method is useless, since a missing baseline means the work is worthless",
+          "The 40% number on its own proves the capability the authors claim",
+          "State-of-the-art is confirmed, since the gain over prior work is so large"
         ],
         "answer": 0,
         "explain": "A self-selected benchmark with no baseline is the weakest form of evidence. It is a hypothesis to test, not a result to cite."
@@ -949,10 +949,10 @@
         "q": "The strongest single thing that would raise your confidence in the claim is:",
         "level": "Expert",
         "choices": [
-          "A larger font in the abstract",
+          "A larger, more confident font and clearer formatting in the abstract",
           "Independent replication on standard, widely used benchmarks with a baseline and reported uncertainty",
-          "More authors",
-          "A press release"
+          "More authors on the paper, which signals a more careful experiment",
+          "A press release from the lab announcing the result to journalists"
         ],
         "answer": 1,
         "explain": "Independent replication on shared benchmarks, with a baseline and uncertainty, is what turns a claim into a result."
@@ -967,9 +967,9 @@
           "q": "What was actually measured?",
           "choices": [
             "A score of 0.82 on ReasonBench, a benchmark the authors introduced in this paper",
-            "Performance on all standard reasoning benchmarks",
-            "Nothing measurable",
-            "Human-level reasoning, broadly"
+            "Performance measured across all of the standard public reasoning benchmarks in use today",
+            "Human-level reasoning ability, demonstrated broadly across many domains",
+            "Nothing measurable at all, since the paper reports no concrete numbers"
           ],
           "answer": 0,
           "explain": "The only datum is 0.82 on the authors' own ReasonBench. Everything broader is interpretation layered on top of that single number."
@@ -977,10 +977,10 @@
         {
           "q": "What is the central overclaim?",
           "choices": [
-            "The font",
+            "That the experiment was run on a GPU rather than on ordinary hardware",
             "Generalizing a single self-made-benchmark score into 'reasoning improved 40%' and 'human-level reasoning'",
-            "That it used a GPU",
-            "That it has authors"
+            "That the paper lists several authors instead of a single named one",
+            "That the abstract uses a slightly larger font than the body text"
           ],
           "answer": 1,
           "explain": "The leap from one self-selected benchmark to a broad, human-level reasoning capability is the overclaim. The 40% also has no stated baseline."
@@ -988,10 +988,10 @@
         {
           "q": "What evidence is missing to support the claim?",
           "choices": [
-            "More superlatives",
-            "Nothing; it is complete",
+            "More superlatives in the abstract to make the result sound stronger",
+            "Nothing further is needed; the claim is already complete exactly as the abstract currently states it",
             "A baseline comparison, results on standard external benchmarks, and reported uncertainty",
-            "A longer abstract"
+            "A longer abstract that explains the method in much greater detail"
           ],
           "answer": 2,
           "explain": "Without a baseline, external benchmarks, and uncertainty, there is no way to know if 0.82 is good or if the gain is real."
@@ -999,9 +999,9 @@
         {
           "q": "What is the calibrated verdict?",
           "choices": [
-            "Dismiss the method entirely",
-            "Cite it as proof of human-level AI",
-            "Accept it as state-of-the-art",
+            "Dismiss the method entirely, since a self-made benchmark can never tell you anything useful about real reasoning ability",
+            "Cite it as solid proof that human-level AI reasoning has now been achieved in practice",
+            "Accept it as the new state-of-the-art and build on top of the reported number",
             "Promising but unverified: interesting method, but the reasoning claim awaits a baseline and independent replication on standard benchmarks"
           ],
           "answer": 3,
