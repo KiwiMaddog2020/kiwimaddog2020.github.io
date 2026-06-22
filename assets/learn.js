@@ -1026,6 +1026,15 @@
             ${levelOptions}
           </select>
         </label>
+        <label>
+          <span>Sort by</span>
+          <select id="resource-sort">
+            <option value="curated">Curated</option>
+            <option value="title">Title (A to Z)</option>
+            <option value="level">Level</option>
+            <option value="kind">Type</option>
+          </select>
+        </label>
       </form>
       <section class="learn-section tight" aria-labelledby="start-here-title">
         <h2 id="start-here-title">Start Here</h2>
@@ -1039,15 +1048,33 @@
 
     const trackSelect = app.querySelector("#resource-track");
     const levelSelect = app.querySelector("#resource-level");
+    const sortSelect = app.querySelector("#resource-sort");
     const update = function () {
-      updateResources(trackSelect.value, levelSelect.value);
+      updateResources(trackSelect.value, levelSelect.value, sortSelect.value);
     };
     trackSelect.addEventListener("change", update);
     levelSelect.addEventListener("change", update);
+    sortSelect.addEventListener("change", update);
     update();
   }
 
-  function updateResources(trackId, level) {
+  function sortLinks(list, sort) {
+    const byTitle = (a, b) => (a.title || "").localeCompare(b.title || "");
+    if (sort === "title") return [...list].sort(byTitle);
+    if (sort === "level") {
+      const rank = (l) => {
+        const i = levels.findIndex((x) => x.name === l.level);
+        return i === -1 ? levels.length : i;
+      };
+      return [...list].sort((a, b) => rank(a) - rank(b) || byTitle(a, b));
+    }
+    if (sort === "kind") {
+      return [...list].sort((a, b) => (a.kind || "").localeCompare(b.kind || "") || byTitle(a, b));
+    }
+    return list; // curated: keep the hand-picked shelf order
+  }
+
+  function updateResources(trackId, level, sort) {
     const filtered = state.links.filter(function (link) {
       const trackMatch = trackId === "all" || link.track === trackId;
       const levelMatch = level === "all" || link.level === level;
@@ -1058,7 +1085,7 @@
       ? renderLinkList(startHere)
       : `<p class="empty-state">No start-here links for this filter yet.</p>`;
     app.querySelector("#resource-results").innerHTML = filtered.length
-      ? renderLinkList(filtered)
+      ? renderLinkList(sortLinks(filtered, sort || "curated"))
       : `<p class="empty-state">No resources match this filter yet.</p>`;
   }
 
