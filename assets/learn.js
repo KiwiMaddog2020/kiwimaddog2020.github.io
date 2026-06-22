@@ -474,6 +474,11 @@
       return;
     }
 
+    if (section === "colophon") {
+      renderColophon();
+      return;
+    }
+
     if (section === "labs") {
       renderLabs(id);
       return;
@@ -581,6 +586,9 @@
         <h2 id="tracks-title">Tracks</h2>
         <div class="track-grid">${trackCards}</div>
       </section>
+      <footer class="learn-foot">
+        <a href="#/colophon">How this site was built</a>
+      </footer>
     `, null);
 
     const searchForm = app.querySelector(".hero-search");
@@ -918,6 +926,42 @@
   }
 
   let notesCache = null;
+  let colophonCache = null;
+
+  function renderColophon() {
+    replaceApp(
+      '<a class="back-icon" href="#/" aria-label="Back to home">←</a>'
+      + '<section class="track-header" aria-labelledby="colophon-title">'
+      + '<p class="eyebrow" id="colophon-eyebrow">Colophon</p>'
+      + '<h1 id="colophon-title">How this was built</h1>'
+      + '<p class="lead" id="colophon-lead"></p>'
+      + '<p class="research-byline" id="colophon-byline"></p>'
+      + '</section>'
+      + '<article class="lesson-view"><div class="lesson-body" id="colophon-body"><p class="learn-loading">Loading...</p></div></article>',
+      "How this was built");
+    const body = app.querySelector("#colophon-body");
+    if (!body) return;
+    const fill = function (d) {
+      const eb = app.querySelector("#colophon-eyebrow"); if (eb && d.eyebrow) eb.textContent = d.eyebrow;
+      const h1 = app.querySelector("#colophon-title"); if (h1 && d.title) h1.textContent = d.title;
+      const lead = app.querySelector("#colophon-lead"); if (lead) lead.textContent = d.lead || "";
+      const by = app.querySelector("#colophon-byline");
+      if (by) by.innerHTML = 'by <a href="' + escapeHtml(d.byline_url || "#") + '">' + escapeHtml(d.byline_name || "") + '</a>';
+      body.innerHTML = (d.sections || []).map(function (s) {
+        return (s.heading ? '<h2>' + escapeHtml(s.heading) + '</h2>' : '') + (s.body_html || '');
+      }).join("");
+    };
+    if (colophonCache) {
+      fill(colophonCache);
+    } else {
+      fetchJson("./data/colophon.json").then(function (d) {
+        colophonCache = d;
+        fill(d);
+      }).catch(function () {
+        body.innerHTML = '<p class="empty-state">Could not load this page right now.</p>';
+      });
+    }
+  }
 
   function renderResearch() {
     replaceApp(`

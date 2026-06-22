@@ -1,0 +1,33 @@
+{
+  "eyebrow": "Colophon",
+  "title": "How this was built",
+  "lead": "A short, honest note on building this site, and what it has to do with the eval work.",
+  "byline_name": "Kevin Madson",
+  "byline_url": "https://github.com/KiwiMaddog2020",
+  "sections": [
+    {
+      "heading": "",
+      "body_html": "<p>This is a small, free place to learn how modern AI works: 65 lessons across five tracks, twelve interactive labs, quizzes, and flashcards, all served as a static site. The lesson count is not the interesting part. The interesting part is that I pointed the same honesty discipline I use on <a href=\"https://kiwimaddog2020.github.io/trutina/\">research</a> at the product's own quality, and it kept catching me.</p>"
+    },
+    {
+      "heading": "The tell",
+      "body_html": "<p>A reader noticed that on the quizzes, the correct answer was usually the longest option. I measured it: across all 199 quiz and exercise items, the correct answer was the longest one 98% of the time. Random would be 25%. You could pass every quiz on the site without reading a single question.</p><p>That is a measurement problem before it is a content problem, so I treated it like one.</p>"
+    },
+    {
+      "heading": "Doer is not grader",
+      "body_html": "<p>I rewrote the throwaway distractors (\"It never makes mistakes\") into plausible misconceptions matched in length to the correct answer, then checked the result the way I check an experiment: with a different model, blind to the answer key. It was asked to pick the best option itself and flag any other option it found defensible. Where it disagreed with the key, I had a card to review.</p><p>It earned its place. It caught six distractors that were not merely plausible but accidentally true: \"average more scores to reduce judge noise\" really is a noise-reduction technique; \"do it yourself with no AI\" really is fine for a small edit you want to learn from. Plausible-but-wrong is easy. Plausible-but-actually-correct is the failure that slips through, and a grader that shares the author's blind spots waves it through. A decorrelated one does not. It is the same reason the <a href=\"https://kiwimaddog2020.github.io/trutina/\">eval harness</a> uses a judge from a different family than the doer.</p>"
+    },
+    {
+      "heading": "Catching my own overcorrection",
+      "body_html": "<p>Fixing the length tell introduced a second one: my new distractors leaned on absolute words (always, never, guarantees) far more than the correct answers did, a 20-point skew that rewards \"avoid the absolute-sounding option.\" I over-corrected the fix to zero, which is itself a tell in reverse, since now the absolute option is always correct. The honest target was neither extreme: match the rate so the feature carries no signal either way. Writing down that I overshot is cheaper than pretending the first pass was right.</p>"
+    },
+    {
+      "heading": "Making honesty the default, not the heroics",
+      "body_html": "<p>Three properties now have to hold for any future lesson, checked deterministically on every commit and in CI: the correct answer is not usually the longest, absolute language does not predict the answer, and answer position stays even. The labs carry the same discipline in plain sight: every widget states what it is, and every illustrative one says so (\"a hand-placed map, not extracted from a real model\"). A learning tool that is loose with its own claims is not in a position to teach calibration.</p>"
+    },
+    {
+      "heading": "Why this is the artifact",
+      "body_html": "<p>The through-line is the one I care about most: do not fool yourself when you measure, especially when you are the one being measured. Decorrelate the doer and the grader. Ship the contradiction you find, including your own. I find it more convincing to show that discipline running quietly inside a real, shipped product than to assert it in the abstract. This is where the eval thinking and the building meet.</p>"
+    }
+  ]
+}
