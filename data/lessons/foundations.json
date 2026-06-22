@@ -1114,7 +1114,7 @@
     ],
     "exercise": {
       "type": "attention_lab",
-      "prompt": "Self-attention lets each word pull information from the others. Pick a query word and watch how strongly it attends to each token.",
+      "prompt": "Pick a query word and watch how strongly it attends to each token.",
       "examples": [
         {
           "label": "Coreference",

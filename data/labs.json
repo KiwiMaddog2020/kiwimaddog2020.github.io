@@ -39,7 +39,7 @@
       "concept_html": "<p>Self-attention lets each word pull information from the rest of the sentence. Click any word to make it the query and watch where its attention goes.</p>",
       "exercise": {
         "type": "attention_lab",
-        "prompt": "Self-attention lets each word pull information from the others. Pick a query word and watch how strongly it attends to each token.",
+        "prompt": "Pick a query word and watch how strongly it attends to each token.",
         "examples": [
           {
             "label": "Coreference",
