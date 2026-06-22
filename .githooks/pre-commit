@@ -2,4 +2,10 @@
 # Content-hash cache busting: stamp asset links, then re-stage the touched HTML.
 python3 bin/stamp-cache.py || exit 1
 git add index.html _layouts/default.html 2>/dev/null
+
+# Quiz answer-quality guard: only when lesson data is part of this commit (keeps other
+# commits fast). Blocks a commit that reintroduces a multiple-choice tell.
+if git diff --cached --name-only | grep -q '^data/lessons/'; then
+    python3 bin/check_quiz_quality.py || exit 1
+fi
 exit 0

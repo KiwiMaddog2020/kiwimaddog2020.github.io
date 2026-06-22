@@ -1,8 +1,11 @@
 name: Tests
 
+# Runs on PRs and manual dispatch only — NOT on push to main. On this GitHub Pages user
+# repo, every push also starts the mandatory "pages build and deployment", and the free
+# concurrent-job cap cancels this workflow when both race. Per-commit gating for the
+# push-to-main flow is handled locally by the .githooks/pre-commit quiz-quality guard;
+# the weekly "Rebuild research index" workflow also runs the full suite as a backstop.
 on:
-  push:
-    branches: [main]
   pull_request:
   workflow_dispatch:
 
