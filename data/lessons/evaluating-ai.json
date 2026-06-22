@@ -49,7 +49,7 @@
         "level": "Intermediate",
         "choices": [
           "Shorter answers, regardless of whether they are correct.",
-          "Strictly correct task success and nothing else at all.",
+          "Strictly correct task success and nothing else.",
           "Mostly random outcomes that do not track quality.",
           "Its own style, confidence, and shared assumptions."
         ],
@@ -73,10 +73,10 @@
       "type": "predict_output",
       "prompt": "You use the same model and prompt to both write answers and grade them, and the scores look great. What is the risk?",
       "choices": [
-        "There is no real risk at all, since two perfectly matched models will grade each other fairly.",
+        "There is no real risk, since two perfectly matched models will grade each other fairly.",
         "Self-grading inflates scores by rewarding the model's own style and shared blind spots.",
-        "The shared grader will be far too harsh and deflate every score.",
-        "It only affects how fast the evaluation runs, not the scores."
+        "The shared grader will be far too harsh and deflate each score.",
+        "It just affects how fast the evaluation runs, not the scores."
       ],
       "answer": 1,
       "explain": "A grader that shares the doer's assumptions measures agreement, not task success."
@@ -143,7 +143,7 @@
         "q": "A detector catches 95% of bad outputs but also flags 90% of good ones. What does this tell you?",
         "level": "Intermediate",
         "choices": [
-          "It is an excellent detector, since it manages to catch almost every single bad output.",
+          "It is an excellent detector, since it catches the bad outputs almost without fail.",
           "Its discrimination is low (about 0.05), so it is close to flagging everything.",
           "Its high catch rate alone proves the detector is working well.",
           "False alarms do not matter as long as the catch rate is high."
@@ -156,7 +156,7 @@
         "level": "Intermediate",
         "choices": [
           "The sampling temperature that was used during the detection run.",
-          "Only the total token count the detector consumed.",
+          "Just the total token count the detector consumed.",
           "The false alarm rate, so discrimination can be computed.",
           "The name of the underlying model doing the detecting."
         ],
@@ -253,7 +253,7 @@
         "level": "Intermediate",
         "choices": [
           "Because pre-registered success thresholds are required by data-protection regulation.",
-          "To avoid having to use any quantitative metric at all.",
+          "To avoid having to use a quantitative metric.",
           "To deliberately slow the experiment down for review.",
           "Because after seeing the data, almost any pattern can be narrated into a finding."
         ],
@@ -266,7 +266,7 @@
         "choices": [
           "Report the null; a null reported honestly is a real finding.",
           "Quietly re-run it until it passes by chance one time.",
-          "Drop the experiment silently and never mention it again.",
+          "Drop the experiment silently and avoid mentioning it again.",
           "Lower the success threshold after the fact until the result finally passes."
         ],
         "answer": 0,
@@ -364,10 +364,10 @@
       "type": "predict_output",
       "prompt": "Three judges from the same model family, with the same prompt, all agree the answer is correct. How much extra confidence does their agreement give?",
       "choices": [
-        "A lot of extra confidence, since three separate judges all independently agreed on it.",
+        "A lot of extra confidence, since three separate judges independently agreed on it.",
         "Little; correlated judges share blind spots, so they can be wrong together.",
         "It is conclusive proof that the answer is correct.",
-        "None at all, since these models cannot judge anything."
+        "Almost none, since these models struggle to judge anything."
       ],
       "answer": 1,
       "explain": "Agreement only adds evidence when judges fail independently; same-family judges do not."
@@ -427,7 +427,7 @@
         "q": "Model A scores as 'more honest' than B, but A was tested on easier questions. What is the flaw?",
         "level": "Advanced",
         "choices": [
-          "Honesty is something that simply cannot be measured in any reliable way at all.",
+          "Honesty is something that simply resists measurement in any reliable way.",
           "The metric used was discrimination instead of accuracy.",
           "The sample of questions was simply far too large here.",
           "Difficulty is a confound; the gap may be about the questions, not honesty."
@@ -440,7 +440,7 @@
         "level": "Expert",
         "choices": [
           "Adversarially search for the alternative explanation before believing the conclusion.",
-          "Run the whole experiment only once and trust the result.",
+          "Run the whole experiment just once and trust the result.",
           "Use a single judge model throughout so that the scores always stay perfectly consistent.",
           "Trust any result that comes out looking clean and tidy."
         ],
@@ -605,7 +605,7 @@
         "level": "Advanced",
         "choices": [
           "Because the user who objects is essentially always right about the underlying question anyway.",
-          "Because capitulation is not a real phenomenon at all.",
+          "Because capitulation is not a real phenomenon.",
           "Because models are not capable of changing their answers.",
           "Because the change could be rational updating on a good argument, not social deference."
         ],
@@ -617,7 +617,7 @@
         "level": "Expert",
         "choices": [
           "Give pushback that carries no real evidence, so any change is deference.",
-          "Only ever test it on very easy questions.",
+          "Just test it on very easy questions.",
           "Let the model grade its own responses.",
           "Give the model pushback that carries strong, genuinely new evidence each time."
         ],
@@ -629,10 +629,10 @@
       "type": "predict_output",
       "prompt": "You test capitulation by pushing back on puzzles the model already solves at near 100% accuracy, and see almost no answer changes. What does this null most likely mean?",
       "choices": [
-        "The model never actually had a correct answer to begin with.",
+        "The model did not actually have a correct answer to begin with.",
         "The model is provably immune to social pressure everywhere.",
         "The task was too easy to detect capitulation; a clean model and an easy task look the same here.",
-        "Capitulation is fundamentally impossible to study at all."
+        "Capitulation is fundamentally too hard to study."
       ],
       "answer": 2,
       "explain": "On a mastered task, certainty suppresses capitulation, so the null does not isolate a clean model from an easy test."
@@ -790,7 +790,7 @@
         "choices": [
           "The model quietly got smaller after it was deployed.",
           "The users are simply wrong about their own experience.",
-          "The offline score must have been faked or mis-recorded during the original testing.",
+          "The offline score was probably faked or mis-recorded during the original testing.",
           "Distribution shift: production inputs differ from the eval set."
         ],
         "answer": 3,
@@ -802,7 +802,7 @@
         "choices": [
           "Feeding sampled, labeled production traffic back into the eval set.",
           "Switching permanently to a larger and more capable model for the whole system.",
-          "Raising the sampling temperature on every eval run.",
+          "Raising the sampling temperature on each eval run.",
           "Running the evaluation once, just before the release."
         ],
         "answer": 0,
@@ -816,7 +816,7 @@
         "Trace failing production requests and add those cases to the eval set.",
         "Raise the sampling temperature and rerun the offline eval.",
         "Roll the change forward and hope the reports settle down.",
-        "Ignore the spike entirely, since the offline scores did not change at all afterward."
+        "Ignore the spike, since the offline scores did not change afterward."
       ],
       "answer": 0,
       "explain": "Production traces reveal failures the fixed offline set missed; capture them to make the suite reflect reality."
@@ -888,10 +888,10 @@
         "q": "Why is pairwise comparison often preferred over absolute 1 to 10 scoring?",
         "level": "Advanced",
         "choices": [
-          "It removes essentially all bias from the scoring.",
+          "It strips the bias out of the scoring.",
           "It is noticeably faster to run than absolute one-to-ten scoring is in practice.",
           "It is usually more reliable, and swapping order controls position bias.",
-          "It needs no rubric, since you only compare two answers."
+          "It needs no rubric, since you just compare two answers."
         ],
         "answer": 2,
         "explain": "Relative judgments are more stable, and randomized/swapped order counters position bias."
@@ -1077,7 +1077,7 @@
         "level": "Advanced",
         "choices": [
           "PR curves simply ignore false negatives entirely.",
-          "PR curves need no labels to be computed at all.",
+          "PR curves need no labels to be computed.",
           "ROC analysis is always the wrong tool to reach for.",
           "A large true-negative pool keeps the false positive rate small, so ROC/AUC can look strong even when precision is poor"
         ],
@@ -1221,7 +1221,7 @@
         "q": "You test 20 variants at the 0.05 level and one looks significant. Before believing it, you should:",
         "level": "Advanced",
         "choices": [
-          "Lower the significance threshold all the way to 0.5.",
+          "Lower the significance threshold up to 0.5.",
           "Publish the significant variant right away.",
           "Expect roughly one false positive by chance and confirm on fresh held-out data or apply a correction",
           "Test twenty more variants and see what turns up."
@@ -1323,7 +1323,7 @@
           "The current human-written replies (or the prior template system) on the same tickets",
           "A second independent run of the very same agent on exactly the same set of support tickets.",
           "The agent's own self-reported confidence score.",
-          "No baseline at all; just report the raw score."
+          "No baseline; just report the raw score."
         ],
         "answer": 0,
         "explain": "A baseline is what you must beat to matter: the status quo the agent would replace, scored on the same items."
@@ -1372,7 +1372,7 @@
           "choices": [
             "The model's total parameter count and architecture.",
             "The size of the training data set used for the model.",
-            "Nothing at all; the evaluation is already complete.",
+            "Nothing further; the evaluation is already complete.",
             "Rare high-stakes tickets (legal, safety, billing disputes) that are underrepresented in the sample and may fail silently"
           ],
           "answer": 3,

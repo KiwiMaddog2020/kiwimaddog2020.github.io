@@ -60,7 +60,7 @@
         "q": "When should you NOT build an agent?",
         "level": "Beginner",
         "choices": [
-          "When the task is open-ended and the steps cannot be known ahead of time.",
+          "When the task is open-ended and the steps are hard to know ahead of time.",
           "When the task needs several tools and live data to reach an answer.",
           "When the task requires adapting its approach as new results come in.",
           "When the task is a fixed, predictable sequence a workflow can handle."
@@ -135,7 +135,7 @@
         "level": "Beginner",
         "choices": [
           "Because adapting to new evidence is the entire point of the loop; ignoring it causes errors.",
-          "Because the underlying tools physically require the agent to rebuild its plan before every single call.",
+          "Because the underlying tools physically require the agent to rebuild its plan before each call.",
           "To raise the sampling temperature so the agent explores more options.",
           "To make the transcript longer so the run looks more thorough to a reviewer."
         ],
@@ -253,7 +253,7 @@
         "q": "Why return concise tool results instead of raw dumps?",
         "level": "Intermediate",
         "choices": [
-          "The model literally cannot read more than about ten words from any single tool result.",
+          "The model literally struggles to read more than about ten words from a single tool result.",
           "Concise tool results act as extra training signal for the model.",
           "Raw, unfiltered tool dumps are against the model provider's terms.",
           "Large outputs waste the context budget and bury the signal the model needs."
@@ -330,9 +330,9 @@
         "level": "Intermediate",
         "choices": [
           "It is standing guidance for many turns, so it must set objective, tools, stopping, and output shape.",
-          "It cannot mention any tools, since those are configured entirely in code.",
-          "It only matters on the very first turn and is ignored on every turn after.",
-          "It must be much shorter than a chatbot prompt to leave room for the loop."
+          "It leaves tools unmentioned, since those are configured in code.",
+          "It matters just on the very first turn and is ignored on the turns after.",
+          "It should be much shorter than a chatbot prompt to leave room for the loop."
         ],
         "answer": 0,
         "explain": "The prompt governs the whole loop, not a single exchange."
@@ -344,7 +344,7 @@
           "Making it considerably longer by adding plenty of vivid descriptive adjectives.",
           "Adding explicit success criteria and a stopping or escalation condition.",
           "Raising the sampling temperature so the agent is more creative.",
-          "Removing all constraints so the agent has full freedom to act."
+          "Removing the constraints so the agent has full freedom to act."
         ],
         "answer": 1,
         "explain": "Specific criteria and limits stop the agent from wandering."
@@ -431,7 +431,7 @@
         "choices": [
           "Raise the temperature so the model recalls them more vividly.",
           "Ignore them after the first turn, since the model has seen them.",
-          "Repeat them in full in every single turn so they stay visible.",
+          "Repeat them in full on each turn so they stay visible.",
           "Store them externally and retrieve them on demand."
         ],
         "answer": 3,
@@ -533,7 +533,7 @@
       "choices": [
         "Build me a really nice dashboard with some good-looking charts on it.",
         "First list the data sources, the three charts, and the layout as a short plan and wait for my OK; then build one chart at a time with a check after each.",
-        "Just start coding right away and show me the result when it is all done."
+        "Just start coding right away and show me the result when it is finished."
       ],
       "answer": 1,
       "explain": "A plan-first prompt with stepwise checks catches mistakes while they are cheap to fix."
@@ -605,7 +605,7 @@
         "q": "Connecting to an external MCP server still requires you to consider what?",
         "level": "Advanced",
         "choices": [
-          "Only the sampling temperature the remote server happens to use.",
+          "Just the sampling temperature the remote server happens to use.",
           "Retraining your own model so it matches the remote tool's format.",
           "Nothing further; the MCP standard handles trust and permissions for you.",
           "Trust, scope, and permissions, plus the underlying tool design."
@@ -618,7 +618,7 @@
       "type": "predict_output",
       "prompt": "You want six different agents to use your database tools without writing custom glue for each. Best approach?",
       "choices": [
-        "Copy the tool code into every one of the six agents by hand.",
+        "Copy the tool code into each of the six agents by hand.",
         "Hand-wire each of the six agents to the database separately.",
         "Expose the tools once as an MCP server that any compatible agent can use.",
         "Give each of the six agents the raw database password and let it query the tables directly."
@@ -683,7 +683,7 @@
         "choices": [
           "Coordination overhead and context loss across handoffs.",
           "It quietly lowers the temperature each agent runs at.",
-          "It forces every agent to share one much smaller toolset.",
+          "It forces each agent to share one much smaller toolset.",
           "It needs larger model weights loaded for each separate agent."
         ],
         "answer": 0,
@@ -975,7 +975,7 @@
         "q": "Why limit an agent's autonomy on irreversible actions?",
         "level": "Advanced",
         "choices": [
-          "Because agents fundamentally cannot be trusted to use any of their tools safely at all.",
+          "Because agents fundamentally should not be trusted to use their tools safely.",
           "Because autonomy is always bad and should be minimized everywhere.",
           "To slow the agent down for no real reason other than caution.",
           "Because the more it can do unreviewed, the larger the blast radius of an error."
@@ -991,7 +991,7 @@
         "Maximum autonomy, with no human review of what it deletes.",
         "Full autonomy, so the cleanup job can move through the records as fast as possible.",
         "Minimal; use tight scope, confirmation gates, and human review.",
-        "No tools at all, so it cannot help with the deletion task."
+        "No tools, so it is unable to help with the deletion task."
       ],
       "answer": 2,
       "explain": "Irreversible, high-stakes actions need scope, gates, and review to keep the blast radius small."
@@ -1059,7 +1059,7 @@
         "level": "Intermediate",
         "choices": [
           "In retrieval: fix chunking, embeddings, or the index.",
-          "In the model weights; the only real fix is to retrain it.",
+          "In the model weights; the real fix is to retrain it.",
           "In the sampling temperature, which made the answer overconfident.",
           "Nowhere; a confident answer is fine even if the sources were wrong."
         ],
@@ -1073,7 +1073,7 @@
           "When you mainly need to change the model's tone and writing style.",
           "When the knowledge changes often or is private and large.",
           "When you want a smaller model that costs less to run in production.",
-          "When you need faster inference and lower latency on every request."
+          "When you need faster inference and lower latency on each request."
         ],
         "answer": 1,
         "explain": "RAG suits changing or private knowledge; fine-tuning suits behavior and style."
@@ -1165,7 +1165,7 @@
         "q": "Why are tool-using agents more exposed to prompt injection than a plain chatbot?",
         "level": "Advanced",
         "choices": [
-          "They are unable to read any external documents at all.",
+          "They are unable to read external documents.",
           "They run on much bigger models that attract more attacks.",
           "Injected text can trigger real actions through tools.",
           "They run at a higher temperature, which makes them suggestible."
@@ -1261,8 +1261,8 @@
         "choices": [
           "Use a small fast model for the simple turns and bound the loop with a step budget.",
           "Raise the sampling temperature so each turn finishes faster.",
-          "Remove all the tools so the agent stops making slow calls.",
-          "Use a single larger model for every turn to cut the count."
+          "Remove the tools so the agent stops making slow calls.",
+          "Use a single larger model on each turn to cut the count."
         ],
         "answer": 0,
         "explain": "Right-sizing the model per step and capping the loop directly cut cost and latency."
@@ -1349,7 +1349,7 @@
         "level": "Advanced",
         "choices": [
           "Tell the agent firmly to be more careful when it reads tool results.",
-          "Remove the tool entirely so the agent cannot misread its output again.",
+          "Remove the tool so the agent does not misread its output again.",
           "Replace the tool with a different one that returns simpler raw data.",
           "Add output validation or a stricter schema so a misread is caught, and tighten the prompt on how to read the result"
         ],
@@ -1388,7 +1388,7 @@
           "q": "What is the most durable fix?",
           "choices": [
             "Add three more tools so the agent has more ways to check its own math.",
-            "Tell the agent to slow down and double-check its arithmetic every time.",
+            "Tell the agent to slow down and double-check its arithmetic each time.",
             "Have the agent read the authoritative current_balance field and add a validation step that flags when its computed value disagrees with it",
             "Lower the sampling temperature so the computed number stops drifting."
           ],
@@ -1398,7 +1398,7 @@
         {
           "q": "What would prevent this class of failure going forward?",
           "choices": [
-            "Ask the user to manually verify every single answer before trusting it.",
+            "Ask the user to manually verify each answer before trusting it.",
             "Disable the agent on this task so the failure can never happen again.",
             "Nothing; it was a harmless one-off that is not worth designing around.",
             "A schema-checked tool output plus an assertion that the agent's reported number matches the tool's authoritative field before answering"

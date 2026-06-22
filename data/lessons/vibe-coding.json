@@ -75,7 +75,7 @@
       "choices": [
         "Writing a clear enough prompt for the patch.",
         "Choosing which model should write the patch.",
-        "None; the model owns correctness once it writes it.",
+        "Nobody; the model owns correctness once it writes it.",
         "Review and verification; you still own the result."
       ],
       "answer": 3,
@@ -141,7 +141,7 @@
         "q": "What most distinguishes a CLI coding agent from inline completion?",
         "level": "Beginner",
         "choices": [
-          "It cannot edit files on disk at all, only suggest snippets for you to paste in.",
+          "It is unable to edit files on disk, and just suggests snippets for you to paste in.",
           "It is written to use a different programming language.",
           "It can change many files and run commands in a loop before stopping.",
           "It runs in a loop but never actually makes a mistake."
@@ -230,8 +230,8 @@
         "level": "Beginner",
         "choices": [
           "Because small, checkable steps are easier to verify and revert than a large opaque diff.",
-          "Because the underlying models simply cannot make large multi-file changes safely or reliably at all.",
-          "To avoid having to use any of the agent's tools at all.",
+          "Because the underlying models simply cannot make large multi-file changes safely or reliably.",
+          "To avoid having to use the agent's tools.",
           "To deliberately use more tokens on each separate step."
         ],
         "answer": 0,
@@ -413,7 +413,7 @@
         "level": "Intermediate",
         "choices": [
           "You catch a misread requirement while it still costs a sentence to fix.",
-          "It removes the need to write or run any tests on the finished code at all.",
+          "It removes the need to write or run tests on the finished code.",
           "It guarantees the code that follows will be correct.",
           "It makes the model write the actual code much faster."
         ],
@@ -543,7 +543,7 @@
         "level": "Intermediate",
         "choices": [
           "After you have a specific question or hypothesis to test.",
-          "Only after merging it, so you do not slow the work down.",
+          "Just after merging it, so you do not slow the work down.",
           "Never, since explanations from models are never useful.",
           "Before reading any code, so it can frame the whole review."
         ],
@@ -799,7 +799,7 @@
         "choices": [
           "Automating as much of the day-to-day coding work as is technically possible, across the whole project.",
           "Calibrated delegation: routing routine work to the model and consequential work to yourself.",
-          "Never using AI for any part of writing code at all.",
+          "Avoiding AI for any part of writing code.",
           "Always rewriting whatever the model produces by hand."
         ],
         "answer": 1,
@@ -886,8 +886,8 @@
         "level": "Intermediate",
         "choices": [
           "Slightly slower analytics dashboards for the team.",
-          "Better debugging only, with no real downside at all.",
-          "None at all, since application logs are always kept completely private from everyone by default.",
+          "Better debugging, with no real downside.",
+          "No real risk, since application logs are always kept completely private by default.",
           "Personal data and secrets (like the password) leak into a system not built to hold them"
         ],
         "answer": 3,
@@ -900,7 +900,7 @@
           "Check the license implications, since generated code can reproduce licensed snippets, and rewrite or comply",
           "Add a code comment crediting the AI that generated it.",
           "Nothing changes; generated code can ship as written.",
-          "Ship it, since AI output carries no license at all."
+          "Ship it, since AI output carries no license."
         ],
         "answer": 0,
         "explain": "Generated output can reproduce licensed code. The obligation to check and comply is yours, not the model's."
@@ -911,7 +911,7 @@
         "choices": [
           "Nothing more; an overall accuracy of 92% is plenty.",
           "Whether accuracy and error costs are similar across subgroups, since the average can hide harm to an underrepresented group",
-          "Only the total training time the model needed.",
+          "Just the total training time the model needed.",
           "The model's total parameter count and size."
         ],
         "answer": 1,
@@ -999,9 +999,9 @@
         "q": "The safest way to roll out a new model version is:",
         "level": "Advanced",
         "choices": [
-          "Roll the new version out automatically to every single user the moment it finishes retraining, with no staging.",
-          "Roll it out only in the development environment first.",
-          "Replace the old version everywhere all at once.",
+          "Roll the new version out automatically to each user the moment it finishes retraining, with no staging.",
+          "Roll it out just in the development environment first.",
+          "Replace the old version everywhere in one shot.",
           "A canary or staged rollout compared on live traffic, with instant rollback to the previous version"
         ],
         "answer": 3,
@@ -1087,7 +1087,7 @@
           "Perfectly fine to ship, as long as the user input happens to look clean enough.",
           "A SQL injection vulnerability; use a parameterized query instead",
           "Faster to run, and therefore the better way to do it.",
-          "Only a minor style issue, not a real correctness one."
+          "Just a minor style issue, not a real correctness one."
         ],
         "answer": 1,
         "explain": "Interpolating user input into SQL is the classic injection hole. Bind parameters so the input can never change the query structure."

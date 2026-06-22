@@ -48,7 +48,7 @@
         "q": "What is the well-established part of scaling?",
         "level": "Advanced",
         "choices": [
-          "Every specific skill appears all at once, the moment the model crosses a size threshold.",
+          "Each specific skill appears suddenly, the moment the model crosses a size threshold.",
           "Pretraining loss falls smoothly and predictably with compute, data, and parameters.",
           "Bigger models reliably hallucinate less, so scale alone fixes factual errors.",
           "Scaling has no measurable effect once a model passes a few billion parameters."
@@ -163,7 +163,7 @@
           "Because optimizing for what raters prefer can reward agreeable answers over correct ones.",
           "Because the learning rate during alignment is set far too high to converge.",
           "Because models develop a genuine dislike of users who disagree with them.",
-          "Because alignment changes only the surface tone of answers and never touches their actual content."
+          "Because alignment changes just the surface tone of answers and leaves their actual content untouched."
         ],
         "answer": 0,
         "explain": "Optimizing a preference proxy can favor what pleases raters, including agreement."
@@ -173,7 +173,7 @@
       "type": "predict_output",
       "prompt": "After preference tuning, a model starts agreeing with users even when they are wrong. What is the likely cause?",
       "choices": [
-        "Pretraining failed, so the model never learned the facts it now agrees against.",
+        "Pretraining failed, so the model did not learn the facts it now agrees against.",
         "The sampling temperature was raised during preference tuning, so answers vary more.",
         "Optimizing a preference proxy can reward agreeable answers, producing sycophancy.",
         "The context window shrank during tuning, so the model simply forgot the correct answer it once knew."
@@ -245,7 +245,7 @@
         "choices": [
           "It trades accuracy away in exchange for a faster, cheaper answer.",
           "Latency and cost for higher accuracy on hard problems.",
-          "Nothing at all; extra test-time compute is effectively free to spend.",
+          "Nothing; extra test-time compute is effectively free to spend.",
           "It trades model size for training data without changing accuracy."
         ],
         "answer": 1,
@@ -339,7 +339,7 @@
         "level": "Advanced",
         "choices": [
           "Models do not actually contain neurons, so reading one tells you nothing useful.",
-          "Each neuron only stores a piece of the tokenizer rather than a learned concept.",
+          "Each neuron just stores a piece of the tokenizer rather than a learned concept.",
           "Individual neurons fire at random, so no single one carries real information.",
           "Superposition means concepts are spread across overlapping neurons, so one neuron rarely means one thing."
         ],
@@ -351,9 +351,9 @@
         "level": "Expert",
         "choices": [
           "There are real, verifiable findings, but full explanations remain partial.",
-          "Interpretability has produced nothing useful, so the claims are all marketing.",
+          "Interpretability has produced nothing useful, so the claims are mostly marketing.",
           "We can already fully explain any frontier model's behavior end to end.",
-          "It only works on tiny toy models and never on anything used in practice."
+          "It works on tiny toy models but not on anything used in practice."
         ],
         "answer": 0,
         "explain": "Genuine progress coexists with large remaining gaps; avoid overclaiming."
@@ -436,7 +436,7 @@
           "A high public-benchmark score is always faked by selective reporting.",
           "The benchmark may be saturated or contaminated, so the score can reflect memorization.",
           "Benchmarks never matter, so any score on one is safe to ignore outright.",
-          "Public benchmarks cannot really be measured precisely, so any number reported on one is meaningless."
+          "Public benchmarks are hard to measure precisely, so any number reported on one is meaningless."
         ],
         "answer": 1,
         "explain": "Saturation and contamination both erode what a high public score proves."
@@ -459,7 +459,7 @@
       "prompt": "A model scores 99% on a popular three-year-old public benchmark. Why be cautious?",
       "choices": [
         "A high score on it proves the model has general intelligence.",
-        "Benchmarks never matter, so the figure tells you nothing at all.",
+        "Benchmarks rarely matter, so the figure tells you nothing useful.",
         "Such a high score must always be faked through selective reporting of the best runs.",
         "Saturation and possible contamination; the test may be in the training data."
       ],
@@ -528,9 +528,9 @@
         "q": "A frontier model solves a hard proof but botches a simple arithmetic step. What does this illustrate?",
         "level": "Expert",
         "choices": [
-          "Arithmetic is genuinely harder than proofs for every kind of solver, human or machine alike.",
-          "The correct proof was just luck and the model cannot really reason.",
-          "The model is simply broken and its other answers cannot be trusted.",
+          "Arithmetic is genuinely harder than proofs for each kind of solver, human or machine alike.",
+          "The correct proof was just luck and the model does not really reason.",
+          "The model is simply broken and its other answers should not be trusted.",
           "Jagged capability: model difficulty does not track human difficulty."
         ],
         "answer": 3,
@@ -554,7 +554,7 @@
       "prompt": "A model gives a fluent, confident, and detailed answer that you cannot easily verify. How much should its confidence raise your trust?",
       "choices": [
         "A lot; a confident, detailed, and fluent answer is a strong signal that the content is correct.",
-        "Fully; the model only sounds confident after it has checked outside sources.",
+        "Fully; the model sounds confident just after it has checked outside sources.",
         "Little; calibration is imperfect, so confidence is not evidence of correctness.",
         "Completely; fluent confidence guarantees the answer has been verified."
       ],
@@ -623,9 +623,9 @@
         "q": "What is the most durable strategy for keeping up with AI research?",
         "level": "Advanced",
         "choices": [
-          "Read every new preprint the day it appears so you never miss a result.",
+          "Read each new preprint the day it appears so you rarely miss a result.",
           "Anchor on a small canon deeply, then place new work against it with source discipline.",
-          "Follow only social-media threads, since they surface what actually matters.",
+          "Follow just social-media threads, since they surface what actually matters.",
           "Avoid reading papers entirely and rely instead on short summaries written by other people online."
         ],
         "answer": 1,
@@ -648,7 +648,7 @@
       "type": "predict_output",
       "prompt": "A striking, un-reproduced preprint is trending on social media. How should you treat it?",
       "choices": [
-        "As established fact, since a result trending this widely must already have been vetted carefully by the crowd.",
+        "As established fact, since a result trending this widely has surely been vetted carefully by the crowd.",
         "As a claim to check: note the source type, look for reproduction, and ask what it did not measure.",
         "Ignore it permanently, because anything on social media is automatically wrong.",
         "Assume it is contaminated and move on without looking at the actual method."
@@ -727,7 +727,7 @@
         "choices": [
           "A distilled student model trained to copy a bigger one.",
           "A multimodal encoder that mixes text and image inputs.",
-          "A dense transformer that uses all weights every token.",
+          "A dense transformer that uses the full weight set on each token.",
           "A mixture-of-experts model with sparse routing."
         ],
         "answer": 3,
@@ -752,8 +752,8 @@
       "choices": [
         "A multimodal model that shares a representation across text and images.",
         "A mixture-of-experts router that picks an expert per token.",
-        "A distilled student of a text-only model, run at low precision to keep the cost down.",
-        "A text-only transformer with a much larger context window."
+        "A distilled student of a text-based model, run at low precision to keep the cost down.",
+        "A text-based transformer with a much larger context window."
       ],
       "answer": 0,
       "explain": "Mixed text-and-image input is best handled by a multimodal model with a shared representation space."
@@ -830,7 +830,7 @@
           "The model's vocabulary, by pruning rare tokens out of the tokenizer first",
           "The number of trainable parameters (and thus memory and per-task storage), by training small low-rank adapters",
           "The context window, by compressing older tokens into shorter summaries",
-          "The need for any task data, since adapters can be trained with none at all"
+          "The need for any task data, since adapters can be trained with almost no examples"
         ],
         "answer": 1,
         "explain": "LoRA freezes the base and trains a tiny low-rank update, slashing trainable parameters and giving swappable per-task adapters."
@@ -969,7 +969,7 @@
             "A score of 0.82 on ReasonBench, a benchmark the authors introduced in this paper",
             "Performance measured across all of the standard public reasoning benchmarks in use today",
             "Human-level reasoning ability, demonstrated broadly across many domains",
-            "Nothing measurable at all, since the paper reports no concrete numbers"
+            "Nothing measurable, since the paper reports no concrete numbers"
           ],
           "answer": 0,
           "explain": "The only datum is 0.82 on the authors' own ReasonBench. Everything broader is interpretation layered on top of that single number."
