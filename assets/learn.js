@@ -2734,11 +2734,14 @@
       const items = byCat[c.id] || [];
       if (!items.length) return "";
       const cards = items.map(function (l) {
-        return '<a class="track-card" href="#/labs/' + encodeURIComponent(l.id) + '" data-state="new">' +
+        const href = l.external ? l.external : ("#/labs/" + encodeURIComponent(l.id));
+        const ext = l.external ? ' target="_blank" rel="noopener"' : "";
+        const cta = l.external ? "View page ↗" : "Open lab";
+        return '<a class="track-card" href="' + escapeHtml(href) + '"' + ext + ' data-state="new">' +
           '<span class="tc-kicker">' + escapeHtml(l.kind || "Interactive") + "</span>" +
           '<h3 class="tc-title">' + escapeHtml(l.title) + "</h3>" +
           '<p class="tc-blurb">' + escapeHtml(l.blurb || "") + "</p>" +
-          '<span class="tc-foot"><span class="tc-cta">Open lab</span></span>' +
+          '<span class="tc-foot"><span class="tc-cta">' + cta + "</span></span>" +
           "</a>";
       }).join("");
       return '<section class="lab-cat"><h2>' + escapeHtml(c.title) + '</h2><div class="track-grid">' + cards + "</div></section>";

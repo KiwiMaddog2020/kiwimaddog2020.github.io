@@ -563,6 +563,14 @@
         "x2": -0.4,
         "prompt": "Slide the two inputs. Each hidden unit and the output update live; blue edges are positive weights, red negative."
       }
+    },
+    {
+      "id": "rag-findings",
+      "title": "RAG: what actually matters",
+      "kind": "Read",
+      "category": "training",
+      "external": "/rag-findings/",
+      "blurb": "A controlled sweep over two benchmarks: which RAG knobs move the numbers, and which do nothing."
     }
   ]
 }
