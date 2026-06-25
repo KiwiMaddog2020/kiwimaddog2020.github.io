@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Kevin Madson — Human Upstream</title>
+<meta name="description" content="Interface and design-engineering for AI-native products. Five things I designed by putting human interface judgment upstream of what the model ships.">
+<meta name="author" content="Kevin Madson">
+<meta property="og:title" content="Kevin Madson — Human Upstream">
+<meta property="og:description" content="Interface and design-engineering for AI-native products. I put human interface judgment upstream of what the model ships.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kiwimaddog2020.github.io/work/">
+<meta property="og:image" content="https://kiwimaddog2020.github.io/work/img/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kevin Madson — Human Upstream">
+<meta name="twitter:description" content="Interface and design-engineering for AI-native products.">
+<meta name="twitter:image" content="https://kiwimaddog2020.github.io/work/img/og-card.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0f0d0a; --bg-deep:#0a0806; --raised:#181410; --raised-2:#1f1a14;
+  --ink:#f4ede0; --ink-2:#b8ad9b; --ink-3:#857c6c; --rule:#322a20; --rule-2:#241e17;
+  --burgundy:#8a2c3c; --ochre:#c2711f; --navy:#3a4aa0; --carmine:#a8512f; --plum:#6b3a8a; --verdigris:#4e7848;
+  --burgundy-lt:#cf6776; --ochre-lt:#cf7d29; --navy-lt:#7d8cd6; --carmine-lt:#cf6f4c; --plum-lt:#a77ec9; --verdigris-lt:#7bb172;
+  --gold:#e8b860; --gold-bright:#f5d990;
+  --serif:"EB Garamond",ui-serif,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --maxw:1080px; --radius:14px; --radius-sm:10px; --ease:cubic-bezier(0.2,0.7,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:
+    radial-gradient(120% 80% at 50% -10%, #1a140d 0%, var(--bg) 42%, var(--bg-deep) 100%);
+  color:var(--ink); font-family:var(--sans); font-size:17px; line-height:1.7;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  position:relative; min-height:100vh; padding-bottom:5rem;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(130% 100% at 50% 35%, transparent 55%, rgba(0,0,0,.45) 100%);
+}
+.wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 clamp(20px,5vw,44px)}
+
+/* ---- hero ---- */
+.hero{padding:clamp(56px,11vh,120px) 0 clamp(40px,7vh,72px); text-align:center}
+.mark{width:96px;height:96px;display:block;margin:0 auto 28px;
+  filter:drop-shadow(0 0 32px rgba(232,184,96,.22))}
+.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6.2vw,68px);
+  line-height:1.04;letter-spacing:-.01em;color:var(--ink)}
+.hero .one-liner{font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(20px,2.8vw,27px);color:var(--gold-bright);margin:18px auto 0;max-width:24ch;line-height:1.35}
+.frame{max-width:62ch;margin:30px auto 0;color:var(--ink-2);font-size:16.5px}
+.frame b{color:var(--ink);font-weight:500}
+.frame .em{color:var(--gold);font-style:italic;font-family:var(--serif);font-size:1.08em}
+.contact{margin-top:30px;display:flex;gap:10px 22px;justify-content:center;flex-wrap:wrap;
+  font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.contact a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule);padding-bottom:1px}
+.contact a:hover{color:var(--gold);border-color:var(--gold)}
+.divider{display:flex;align-items:center;gap:16px;max-width:var(--maxw);margin:8px auto 0;color:var(--ink-3)}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--rule)}
+.divider span{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;text-transform:uppercase}
+
+/* ---- case ---- */
+.case{position:relative;background:linear-gradient(180deg,var(--raised) 0%,var(--raised-2) 100%);
+  border:1px solid var(--rule);border-left:3px solid var(--accent,var(--ochre));
+  border-radius:var(--radius);padding:clamp(26px,4vw,44px);margin:34px 0;
+  transition:transform .35s var(--ease),border-color .35s var(--ease)}
+.case:hover{transform:translateY(-2px);border-color:var(--rule);border-left-color:var(--accent)}
+.case .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent-text,var(--accent,var(--ochre)));display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.case .eyebrow .num{color:var(--ink-3)}
+.case h2{font-family:var(--serif);font-weight:600;font-size:clamp(25px,3.6vw,36px);
+  line-height:1.12;letter-spacing:-.005em;color:var(--ink);max-width:20ch}
+.case .dek{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2vw,20px);
+  color:var(--ink-2);margin-top:12px;max-width:54ch;line-height:1.4}
+.case .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(20px,3vw,40px);
+  margin-top:26px;align-items:start}
+@media(max-width:720px){.case .grid{grid-template-columns:1fr}}
+.case p.body{color:var(--ink);font-size:16px;line-height:1.72}
+.case p.body + p.body{margin-top:13px}
+.case .end{color:var(--gold);font-style:italic;font-family:var(--serif);font-size:18px}
+.pull{font-family:var(--serif);font-size:clamp(18px,2.2vw,22px);line-height:1.4;color:var(--ink);
+  border-left:2px solid var(--accent,var(--ochre));padding:4px 0 4px 18px;margin:20px 0 0;font-style:italic}
+.figure{background:var(--bg-deep);border:1px solid var(--rule);border-radius:var(--radius-sm);
+  overflow:hidden}
+.figure img{display:block;width:100%;height:auto}
+.figure figcaption{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);
+  padding:9px 12px;border-top:1px solid var(--rule-2);line-height:1.5}
+.figure.mark-fig{display:flex;align-items:center;justify-content:center;padding:30px;
+  background:radial-gradient(80% 80% at 50% 45%,#161009 0%,var(--bg-deep) 100%)}
+.figure.mark-fig svg{width:160px;height:160px;filter:drop-shadow(0 0 26px rgba(232,184,96,.25))}
+.term{background:#0c0a07;border:1px solid var(--rule);border-radius:var(--radius-sm);
+  padding:13px 14px 12px;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--ink-2)}
+.term-bar{color:var(--ink-3);border-bottom:1px solid var(--rule-2);padding-bottom:8px;margin-bottom:9px}
+.term-bar .g{color:var(--gold);font-weight:500;letter-spacing:.12em}
+.term-h{color:var(--gold-bright);margin-bottom:6px;letter-spacing:.03em}
+.term-h .ct{color:var(--ink-3)}
+.q{padding:6px 0;border-top:1px solid var(--rule-2)}
+.qhead{display:flex;align-items:center;gap:8px}
+.qhead .dot{width:7px;height:7px;border-radius:50%;background:var(--ochre);flex:none;box-shadow:0 0 6px rgba(194,113,31,.5)}
+.qhead .lab{color:var(--carmine-lt)}
+.qhead .age{color:var(--ink-3);margin-left:auto;font-size:11px}
+.q .txt{color:var(--ink);font-size:11.5px;margin-top:3px}
+.q .opt{color:var(--ink-3);font-size:11px;margin-top:2px}
+.term-prog{margin-top:11px;padding-top:10px;border-top:1px solid var(--rule-2);white-space:nowrap;overflow:hidden;font-size:13px}
+.term-prog .fill{color:var(--gold)}
+.term-prog .track{color:var(--rule)}
+.term-prog .cap{color:var(--ink-3);font-size:11px;display:block;margin-top:6px;white-space:normal}
+.metrics{margin-top:22px;display:flex;flex-wrap:wrap;gap:8px}
+.metrics .chip{font-family:var(--mono);font-size:12px;color:var(--ink-2);background:rgba(0,0,0,.28);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 12px;line-height:1.4}
+.metrics .chip b{color:var(--gold);font-weight:500}
+
+footer{max-width:var(--maxw);margin:64px auto 0;padding:28px clamp(20px,5vw,44px) 0;
+  border-top:1px solid var(--rule);color:var(--ink-3);font-size:14px;line-height:1.7}
+footer b{color:var(--ink-2);font-weight:500}
+footer .mono{font-family:var(--mono);font-size:12px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-label="The Threaded Trinity brand mark"><defs><radialGradient id="d" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#b04a55"/><stop offset="50%" stop-color="#6b1f2c"/><stop offset="100%" stop-color="#2c0a14"/></radialGradient><radialGradient id="a" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#e8a050"/><stop offset="50%" stop-color="#c2711f"/><stop offset="100%" stop-color="#7a3d0c"/></radialGradient><radialGradient id="c" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#5763a8"/><stop offset="50%" stop-color="#1f2865"/><stop offset="100%" stop-color="#0a0e2c"/></radialGradient><radialGradient id="g" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#be6044"/><stop offset="50%" stop-color="#7f3820"/><stop offset="100%" stop-color="#34170d"/></radialGradient><radialGradient id="i" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#6b3a8a"/><stop offset="50%" stop-color="#401a5e"/><stop offset="100%" stop-color="#18062a"/></radialGradient><radialGradient id="j" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#4e7848"/><stop offset="50%" stop-color="#294a26"/><stop offset="100%" stop-color="#0a1a0a"/></radialGradient><radialGradient id="k" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="40%" stop-color="#fff5d8"/><stop offset="80%" stop-color="#f5d990"/><stop offset="100%" stop-color="#e8b860"/></radialGradient><clipPath id="e"><circle cx="512" cy="298" r="270"/></clipPath><clipPath id="f"><circle cx="327" cy="619" r="270"/></clipPath><clipPath id="h"><circle cx="697" cy="619" r="270"/></clipPath></defs><circle cx="327" cy="619" r="270" fill="url(#a)"/><circle cx="697" cy="619" r="270" fill="url(#c)"/><circle cx="512" cy="298" r="270" fill="url(#d)"/><g clip-path="url(#e)"><g clip-path="url(#f)"><path fill="url(#g)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e)"><g clip-path="url(#h)"><path fill="url(#i)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#f)"><g clip-path="url(#h)"><path fill="url(#j)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e)"><g clip-path="url(#f)"><g clip-path="url(#h)"><path fill="url(#k)" d="M0 0h1024v1024H0z"/></g></g></g><circle cx="512" cy="512" r="3.5" fill="#fff"/><circle cx="327" cy="619" r="270" fill="none" stroke="#7a3d0c" stroke-opacity=".45" stroke-width="2.5"/><circle cx="697" cy="619" r="270" fill="none" stroke="#0a0e2c" stroke-opacity=".45" stroke-width="2.5"/><circle cx="512" cy="298" r="270" fill="none" stroke="#2c0a14" stroke-opacity=".45" stroke-width="2.5"/></svg>
+    <h1>Kevin Madson</h1>
+    <p class="one-liner">I put human interface judgment upstream of what the model ships.</p>
+    <p class="frame">Target surface: <b>interface and design-engineering for AI-native products.</b> The throughline across all six pieces below is one move, made by someone who runs AI agents every day: I make the interface call a model would <span class="em">smooth over</span>, then encode that judgment as a system the model has to run against. Human-AI interface, design-as-epistemics, native craft, a self-enforcing brand system, interactive explainers, and research made legible, all built by being the user first.</p>
+    <p class="frame" style="margin-top:18px">This isn't a theory I reached from a desk. Years in field service, I watched technicians lose trust in a diagnostic tool that handed them a dashboard instead of the raw readings they needed to fix the problem in front of them. Their frustration was the brief: surface the real measurement, never a reassuring abstraction. Every piece below is that same call, now aimed at what a model produces.</p>
+    <p class="contact">
+      <a href="mailto:kevinmadson3@gmail.com">kevinmadson3@gmail.com</a>
+      <a href="https://kiwimaddog2020.github.io">kiwimaddog2020.github.io</a>
+      <span>British Columbia, Canada · remote</span>
+    </p>
+  </header>
+
+  <div class="divider"><span>Selected work</span></div>
+
+  <!-- 01 -->
+  <article class="case" style="--accent:var(--burgundy); --accent-text:var(--burgundy-lt)">
+    <div class="eyebrow"><span class="num">01</span> · Human-AI interface</div>
+    <h2>Conducting the swarm</h2>
+    <p class="dek">A four-surface conductor for running a fleet of agents from one seat, where the scarce resource is your attention, not compute.</p>
+    <div class="grid">
+      <div>
+        <p class="body">When you run autonomous agents from a single seat, the design question is triage and interruption: which of N agents is blocked on me right now, how long has it idled (the cost compounds), and can I unblock it in one gesture without dropping into a terminal. There was no established pattern, so I built one out of running roughly 13 repos with parallel agents daily.</p>
+        <p class="body">One piece of state (pending decisions, agent tasks, mode) is the single producer, rendered four ways for four contexts: a native macOS menu-bar app, a terminal raid-frame, an inline progress card, and a web cockpit card. The judgment is in the details. A blocked decision hijacks the menu-bar glyph before you open the menu, because that is the one thing worth surfacing ambiently. The queue sorts urgent-first then oldest-first, encoding "idle cost compounds." Each buffered question becomes a tray item that unblocks the lane in place, dispatched through one shared verb so all four surfaces stay in lockstep. The progress bar fills with a seven-eighths block rather than a full one, because the full block overshoots the line height in many fonts and reads ragged: a one-pixel mismatch I caught in my own output.</p>
+        <p class="body end">The same caduceus glyph means "a human is needed" in Swift, in Python, and in CSS.</p>
+        <blockquote class="pull">A human decided that a blocked agent should hijack the menu-bar glyph itself, and that answering it should be one click in the tray.</blockquote>
+      </div>
+      <div>
+        <figure class="figure">
+          <div class="term" role="img" aria-label="The FLEET terminal surface: a live NEEDS YOU triage queue of agent decisions, with a progress card below">
+            <div class="term-bar"><span class="g">FLEET</span> · mode:orchestrated · warp ⚡</div>
+            <div class="term-h">⚕ NEEDS YOU <span class="ct">(10)</span></div>
+            <div class="q"><div class="qhead"><span class="dot"></span><span class="lab">[branch-review]</span><span class="age">19d ago</span></div><div class="txt">Merge claude/preclear-local-cluster?</div><div class="opt">↳ merge · hold · revise</div></div>
+            <div class="q"><div class="qhead"><span class="dot"></span><span class="lab">[auth-flow-review]</span><span class="age">19d ago</span></div><div class="txt">Ship the 3 held auth-flow fixes?</div><div class="opt">↳ ship-live · codex-cross-review-first · revise</div></div>
+            <div class="q"><div class="qhead"><span class="dot"></span><span class="lab">[voting-choice-default]</span><span class="age">19d ago</span></div><div class="txt">The 7-day eviction-choice auto-default</div><div class="opt">↳ lazy-resolution · standalone-cron-worker</div></div>
+            <div class="q"><div class="qhead"><span class="dot"></span><span class="lab">[branch-review]</span><span class="age">16d ago</span></div><div class="txt">Merge codex sprite branch?</div><div class="opt">↳ merge · hold · review-first</div></div>
+            <div class="term-prog"><span class="fill">▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉</span><span class="track">▉▉▉▉▉▉▉▉▉▉</span><span class="cap">the inline build-progress card; the fill is a seven-eighths block, never the full block, which overshoots the line-height and reads ragged</span></div>
+          </div>
+          <figcaption>fleet-snapshot --watch · live triage · ⚕ = a human is needed · urgent-first, then oldest</figcaption>
+        </figure>
+        <div class="metrics">
+          <span class="chip">4 surfaces, <b>1</b> state producer</span>
+          <span class="chip">event-driven via DispatchSource <b>+ safety timer</b></span>
+          <span class="chip">⚕ glyph identical in Swift / ANSI / CSS</span>
+          <span class="chip">token-conformance <b>test-enforced</b></span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="case" style="--accent:var(--carmine); --accent-text:var(--carmine-lt)">
+    <div class="eyebrow"><span class="num">02</span> · Design as epistemics</div>
+    <h2>The scorecard that can't flatter a bad result</h2>
+    <p class="dek">Most AI eval dashboards quietly round up. This one is built so it can't.</p>
+    <div class="grid">
+      <div>
+        <p class="body">The design problem for this honest-eval tool (the repo is assay, the tool is trutina, same project) was the opposite of a normal dashboard: build a scorecard a non-engineer reads in ten seconds that is structurally incapable of overstating itself.</p>
+        <p class="body">So honesty became a visual property, not a disclaimer. Scores under 0.5 land in the fail hue and are never dressed in a reassuring green; the display truncates with %.4g so no number is ever rounded up. A not-scored case renders muted and labeled absent, so a missing measurement can't masquerade as a flattering zero. Confidence gets its own token (a pill plus a 3px border) because a mid score and a low-confidence run can share a hue but are different claims. Rows that need a human look auto-expand; a merely low score stays collapsed, because its honest readout already tells the story. The same lab palette and mono type carry into the research-blog forest plots, where green appears only for statistically real effects.</p>
+        <p class="body end">The same decorrelated discipline later refuted a result I had pre-registered, and the scorecard surfaced it without flinching.</p>
+        <blockquote class="pull">A low score reads as low, a missing measurement reads as absent, and the blind spots get their own panel.</blockquote>
+      </div>
+      <div>
+        <figure class="figure">
+          <img src="img/scorecard.png" alt="The trutina honest-eval scorecard across four model families">
+          <figcaption>trutina scorecard, four families · zero JS, opens offline, WCAG AA per mode</figcaption>
+        </figure>
+        <div class="metrics">
+          <span class="chip">0 deps, <b>0</b> JavaScript</span>
+          <span class="chip">%.4g, <b>never</b> rounds up</span>
+          <span class="chip">colour <b>never</b> the only channel</span>
+          <span class="chip">one system, tool + research figures</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 -->
+  <article class="case" style="--accent:var(--ochre); --accent-text:var(--ochre-lt)">
+    <div class="eyebrow"><span class="num">03</span> · Native craft</div>
+    <h2>The DAW a mix engineer built for himself</h2>
+    <p class="dek">A native Apple-platform DAW where the load-bearing decisions are the ones only a working mix engineer would make.</p>
+    <div class="grid">
+      <div>
+        <p class="body">VeraNota is a native macOS/iOS DAW (SwiftUI, Swift, C) chasing Logic and Pro Tools parity. The bar is brutal: a 30-year mastering engineer has to trust it in 30 seconds, with no dumbing-down, and every fader, send, and meter has to fit while the app still feels calm.</p>
+        <p class="body">The answer is a written UX thesis rendered as a tokenized system. Six themes each ship a full 10-token palette that every chrome surface resolves through, so a theme switch re-washes the whole app without touching a call site. Motion lives only between contexts, never on a fader, because a mixing engineer touches those thousands of times a session. Monospace is reserved for numeric readouts so dB columns line up. Badges leave a zero-height placeholder so the mixer never jumps under a scanning eye. The sharpest call: VU green/amber/red are held out of the theme system entirely, because they encode safe/loud/clipping, and recoloring them per theme would weaken an engineering signal.</p>
+        <p class="body end">Even the app icon resolves the same in-app copper token, #CF7830, down to Apple's Big Sur squircle math.</p>
+        <blockquote class="pull">VU red is held out of the theme system on purpose. It means clipping. That is a producer's call, not a designer's default.</blockquote>
+      </div>
+      <div>
+        <figure class="figure">
+          <img src="img/veranota-icons.png" alt="VeraNota app icon family, four variants">
+          <figcaption>VeraNota icon system · 4 variants, shared copper token, 4096→1024 Lanczos pipeline</figcaption>
+        </figure>
+        <div class="metrics">
+          <span class="chip">6 themes, <b>10</b>-token palettes</span>
+          <span class="chip">305 a11y identifiers</span>
+          <span class="chip">VU = <b>semantic</b>, theme-invariant</span>
+          <span class="chip">save pill: 3 states, pure + testable</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 -->
+  <article class="case" style="--accent:var(--plum); --accent-text:var(--plum-lt)">
+    <div class="eyebrow"><span class="num">04</span> · Self-enforcing brand system</div>
+    <h2>Taste as a contract the agents obey</h2>
+    <p class="dek">One generative mark and a token contract, built so AI-generated UI stays on-brand and accessible as the surfaces multiply.</p>
+    <div class="grid">
+      <div>
+        <p class="body">Endenza is an agentic-OS PWA built by one maker conducting AI agents, and the surfaces sprawl fast: an operator cockpit, a walkable showcase, marketing pages, 21 user themes. Left unsupervised, agents will happily ship a hard-coded hex, a luminance-flipped dark mode that fails contrast, or a generic spinner. So I encoded the taste as a system the models execute against, not a style guide they might read.</p>
+        <p class="body">The mark carries the thesis in its geometry: three equal disks on an equilateral triangle, two pigments mixing subtractively, all three collapsing to additive white-gold light at the centroid. Orchestration is generative, not extractive, rendered as identity. A 3.5px pin-prick at exact center is both the trademark detail and the anchor that lets the mark survive at 16px, the fix after I killed an elegant Borromean-knot mark whose line weight vanished small. The token contract is where it self-enforces: the ink scale carries explicit WCAG targets per step, all 21 themes ship hand-tuned light and dark sets rather than a generated flip, and spinners are banned in favor of designed empty and error states.</p>
+        <p class="body end">A grep guard catches any hard-coded hex before it can merge.</p>
+        <blockquote class="pull">Killing the prettier Borromean mark was the call: its line weight vanished at favicon size. Taste overruled the more elegant option.</blockquote>
+      </div>
+      <div>
+        <figure class="figure mark-fig">
+          <svg viewBox="0 0 1024 1024" aria-label="Endenza Threaded Trinity mark"><defs><radialGradient id="d2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#b04a55"/><stop offset="50%" stop-color="#6b1f2c"/><stop offset="100%" stop-color="#2c0a14"/></radialGradient><radialGradient id="a2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#e8a050"/><stop offset="50%" stop-color="#c2711f"/><stop offset="100%" stop-color="#7a3d0c"/></radialGradient><radialGradient id="c2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#5763a8"/><stop offset="50%" stop-color="#1f2865"/><stop offset="100%" stop-color="#0a0e2c"/></radialGradient><radialGradient id="g2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#be6044"/><stop offset="50%" stop-color="#7f3820"/><stop offset="100%" stop-color="#34170d"/></radialGradient><radialGradient id="i2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#6b3a8a"/><stop offset="50%" stop-color="#401a5e"/><stop offset="100%" stop-color="#18062a"/></radialGradient><radialGradient id="j2" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#4e7848"/><stop offset="50%" stop-color="#294a26"/><stop offset="100%" stop-color="#0a1a0a"/></radialGradient><radialGradient id="k2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="40%" stop-color="#fff5d8"/><stop offset="80%" stop-color="#f5d990"/><stop offset="100%" stop-color="#e8b860"/></radialGradient><clipPath id="e2"><circle cx="512" cy="298" r="270"/></clipPath><clipPath id="f2"><circle cx="327" cy="619" r="270"/></clipPath><clipPath id="h2"><circle cx="697" cy="619" r="270"/></clipPath></defs><circle cx="327" cy="619" r="270" fill="url(#a2)"/><circle cx="697" cy="619" r="270" fill="url(#c2)"/><circle cx="512" cy="298" r="270" fill="url(#d2)"/><g clip-path="url(#e2)"><g clip-path="url(#f2)"><path fill="url(#g2)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e2)"><g clip-path="url(#h2)"><path fill="url(#i2)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#f2)"><g clip-path="url(#h2)"><path fill="url(#j2)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e2)"><g clip-path="url(#f2)"><g clip-path="url(#h2)"><path fill="url(#k2)" d="M0 0h1024v1024H0z"/></g></g></g><circle cx="512" cy="512" r="3.5" fill="#fff"/></svg>
+        </figure>
+        <div class="metrics">
+          <span class="chip">21 themes, <b>light + dark</b>, hand-tuned</span>
+          <span class="chip">--ink scale: <b>14:1</b> → 3:1 targets</span>
+          <span class="chip">survives at <b>16px</b></span>
+          <span class="chip">no-spinners law, 9 empty states</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 -->
+  <article class="case" style="--accent:var(--verdigris); --accent-text:var(--verdigris-lt)">
+    <div class="eyebrow"><span class="num">05</span> · Interactive explainers</div>
+    <h2>Make the learner feel the mechanism</h2>
+    <p class="dek">A 65-lesson AI study platform where every control drives the real computed quantity, never a canned animation.</p>
+    <div class="grid">
+      <div>
+        <p class="body">Most AI explainers describe a mechanism in prose and illustrate it with a decorative loop, so the reader watches a bar wiggle and learns nothing about what moves it. Arbiter Machinae holds research notes and Study, a Khan-Academy-for-AI platform, under one editorial system. The bet: if a learner drives the real math with their own hand, they feel the mechanism instead of taking my word for it.</p>
+        <p class="body">The constraint was honesty: a slider that fakes its output is worse than no slider. So every interactive binds a control to the quantity it claims to teach, computed live in the browser from real data. The temperature lab runs an actual softmax over five real token logits and resharpens each frame. The eval-significance lab does real bootstrap resampling and reads off the 2.5 and 97.5 percentiles, so the interval visibly tightens as you raise n. The ROC lab recomputes a true confusion matrix at the dragged threshold and slides the operating point along a genuinely swept curve. Five labs, one rule, no decoration. The editorial layer is just as deliberate: a measured ~75-character column, self-hosted subsetted variable fonts, on-palette hand-authored SVG diagrams.</p>
+        <p class="body end">Two other models graded the pedagogy in a doer-is-not-grader loop and caught six real errors I fixed.</p>
+        <blockquote class="pull">A slider that fakes its output is worse than no slider. Every control drives the real computed quantity, or it doesn't ship.</blockquote>
+      </div>
+      <div>
+        <figure class="figure">
+          <img src="img/study-lab.png" alt="The live ROC lab: a draggable threshold redrawing a swept ROC curve with a live-computed confusion matrix">
+          <figcaption>the ROC lab, live · drag the threshold, the curve and confusion matrix recompute from real data, not a canned animation</figcaption>
+        </figure>
+        <div class="metrics">
+          <span class="chip">65 lessons, <b>5</b> tracks</span>
+          <span class="chip">5 labs bound to <b>real</b> computation</span>
+          <span class="chip">doer ≠ grader, <b>6</b> errors caught</span>
+          <span class="chip">all links 200, all-client-side</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 -->
+  <article class="case" style="--accent:var(--navy); --accent-text:var(--navy-lt)">
+    <div class="eyebrow"><span class="num">06</span> · Research, made legible</div>
+    <h2>What actually matters in a RAG pipeline</h2>
+    <p class="dek">An overnight study that ran the experiment, shipped the negative results, and turned the numbers into a page you read in seconds.</p>
+    <div class="grid">
+      <div>
+        <p class="body">rag-lab is a build-and-eval lab for retrieval-augmented generation. The question was plain: of the knobs everyone tunes (embedder, k, chunking, query phrasing), which actually move the numbers? I ran a controlled sweep over two multi-hop QA benchmarks, a free retrieval tier of 36 configurations at 300 questions each, then a bounded paid tier for answer quality, with the generator (Opus) and the judges (Sonnet and Haiku) kept distinct so no model ever graded its own answer.</p>
+        <p class="body">The harder half was making the result legible. The study ships as one page where each finding is a single chart you read in a few seconds, drawn as self-contained inline SVG with no JavaScript and no CDN, following the reader between light and dark. The whole 36-cell sweep collapses into two heatmaps where darker is better, so the embedder's dominance and chunking's irrelevance are obvious at a glance instead of buried in a table.</p>
+        <p class="body end">The findings are honest, including against me. Chunking does nothing on these benchmarks, so the page says exactly that. A query-instruction effect I had called at n=100 washed out to null at n=300, and the writeup records the correction rather than quietly keep the better-looking number.</p>
+        <blockquote class="pull">A result I had called at n=100 washed out at n=300. The page corrects me in writing, next to the chart that shows it.</blockquote>
+      </div>
+      <div>
+        <figure class="figure">
+          <img src="img/rag-findings.png" alt="The rag-lab findings page in dark mode: the title and the first finding's bar chart, showing embedder choice as the only retrieval knob that moves recall">
+          <figcaption>the live findings page &middot; five views, light/dark, self-contained inline SVG, zero JavaScript</figcaption>
+        </figure>
+        <a class="live-card" href="https://kiwimaddog2020.github.io/rag-findings/" target="_blank" rel="noopener" style="display:block;text-decoration:none;border:1px solid var(--rule);border-radius:10px;padding:22px 22px 20px;background:var(--raised);margin-top:14px">
+          <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);font-weight:600">Live page</div>
+          <div style="font-size:19px;line-height:1.25;color:var(--ink);margin:8px 0 12px;font-weight:500">What actually matters in a RAG pipeline</div>
+          <div class="mono" style="color:var(--ink-2);font-size:13px">kiwimaddog2020.github.io/rag-findings &rarr;</div>
+        </a>
+        <div class="metrics">
+          <span class="chip">36-config sweep, <b>n=300</b></span>
+          <span class="chip">generator <b>&ne;</b> judge</span>
+          <span class="chip">inline SVG, <b>0</b> JS, light/dark</span>
+          <span class="chip">ships the <b>negative</b> results</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <footer>
+    <p><b>This page is itself a sample.</b> Built in the Endenza design system: the bronze-on-ink tokens, EB Garamond / Inter / JetBrains Mono stacks, and the Threaded Trinity mark above, all hand-tuned for WCAG AA. <span class="mono">No template, no framework.</span></p>
+    <p style="margin-top:12px" class="mono">Kevin Madson · kevinmadson3@gmail.com · kiwimaddog2020.github.io · British Columbia, Canada</p>
+  </footer>
+
+</div>
+</body>
+</html>
