@@ -189,7 +189,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       <div>
         <p class="body">The design problem for this honest-eval tool (the repo is assay, the tool is trutina, same project) was the opposite of a normal dashboard: build a scorecard a non-engineer reads in ten seconds that is structurally incapable of overstating itself.</p>
         <p class="body">So honesty became a visual property, not a disclaimer. Scores under 0.5 land in the fail hue and are never dressed in a reassuring green; the display truncates with %.4g so no number is ever rounded up. A not-scored case renders muted and labeled absent, so a missing measurement can't masquerade as a flattering zero. Confidence gets its own token (a pill plus a 3px border) because a mid score and a low-confidence run can share a hue but are different claims. Rows that need a human look auto-expand; a merely low score stays collapsed, because its honest readout already tells the story. The same lab palette and mono type carry into the research-blog forest plots, where green appears only for statistically real effects.</p>
-        <p class="body end">The same decorrelated discipline later refuted a result I had pre-registered, and the scorecard surfaced it without flinching.</p>
+        <p class="body end">The same decorrelated discipline later refuted a result I had pre-registered, and the scorecard surfaced it without flinching. The body of work it grades now runs from black-box behaviour on three frontier models to white-box audits inside GPT-2's weights, where the same honest cross-check shows interpretability's standard tools are confidently partial.</p>
         <blockquote class="pull">A low score reads as low, a missing measurement reads as absent, and the blind spots get their own panel.</blockquote>
       </div>
       <div>
@@ -197,6 +197,11 @@ footer .mono{font-family:var(--mono);font-size:12px}
           <img src="img/scorecard.png" alt="The trutina honest-eval scorecard across four model families">
           <figcaption>trutina scorecard, four families · zero JS, opens offline, WCAG AA per mode</figcaption>
         </figure>
+        <a class="live-card" href="https://kiwimaddog2020.github.io/trutina/" target="_blank" rel="noopener" style="display:block;text-decoration:none;border:1px solid var(--rule);border-radius:10px;padding:22px 22px 20px;background:var(--raised);margin-top:14px">
+          <div style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--carmine);font-weight:600">Live research series</div>
+          <div style="font-size:19px;line-height:1.25;color:var(--ink);margin:8px 0 12px;font-weight:500">How AI models behave when you measure them honestly</div>
+          <div class="mono" style="color:var(--ink-2);font-size:13px">kiwimaddog2020.github.io/trutina &rarr;</div>
+        </a>
         <div class="metrics">
           <span class="chip">0 deps, <b>0</b> JavaScript</span>
           <span class="chip">%.4g, <b>never</b> rounds up</span>
