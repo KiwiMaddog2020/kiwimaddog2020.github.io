@@ -1,0 +1,41 @@
+1. **ISSUE**: Root-relative asset paths will fail with 404 errors when the site is deployed on subdirectory-based hosting (e.g., GitHub Pages).
+   **EVIDENCE**: `src: url(/assets/fonts/...)` and `/assets/research-notes.css`
+   **FIX**: Convert paths to relative URLs (e.g., `../assets/`) or leverage a build-step configuration to resolve path prefixes.
+
+2. **ISSUE**: Reverse typography hierarchy: section labels are scaled smaller than the body paragraphs and findings they are grouping.
+   **EVIDENCE**: `.section-label` (`font-size: 13px`) vs. `.section-note` (`font-size: 15.5px`) and `.study-title` (`font-size: 22px`).
+   **FIX**: Increase `.section-label` size to at least 18px and use weight or contrast (not extreme downscaling) to establish hierarchy.
+
+3. **ISSUE**: Keyboard accessibility is broken; interactive cards and list links lack focus styles matching their hover states.
+   **EVIDENCE**: Missing focus styling declarations to pair with `.feature-tile:hover`, `.study-link:hover`, and `.notes-list li:hover`.
+   **FIX**: Add matching `:focus-visible` and `:focus-within` selectors to transition borders, backgrounds, and titles.
+
+4. **ISSUE**: Muted grays used for small UI text and metadata fail WCAG AAA legibility contrast ratios on the dark background.
+   **EVIDENCE**: `--text-muted: #8a857f` (5.03:1 contrast on `#14141a`) at 12px (`.pager-label`) and 13px (`.meta`, `.section-label`).
+   **FIX**: Adjust `--text-muted` to at least `#b2aea9` to guarantee a 7:1 contrast ratio at small body sizes.
+
+5. **ISSUE**: Non-semantic markup: study lists use deeply nested generic inline spans instead of proper block-level layout structures.
+   **EVIDENCE**: `<span><span class="study-title">...</span><span class="study-find">...</span></span>`
+   **FIX**: Replace nested spans with semantic block elements, using an `h3` for the title and a `p` for the finding text.
+
+6. **ISSUE**: Cramped touch targets on mobile viewports violate minimum touch-target guidelines, risking user frustration.
+   **EVIDENCE**: `.back-icon` (`width: 36px; height: 36px;`) and `.section-link` on mobile (`padding: 5px 11px; font-size: 12px;`).
+   **FIX**: Expand `.back-icon` dimensions to `44px` and add vertical padding to mobile `.section-link` to guarantee a 44px tap target.
+
+7. **ISSUE**: Visual layout transition is jarring, jumping from centered masthead elements straight into left-aligned body blocks.
+   **EVIDENCE**: Centered `h1`, `.dek`, and `.meta` directly preceding left-aligned paragraphs and grid content cards.
+   **FIX**: Left-align the page title, dek, and metadata to establish a clean, unified vertical reading axis.
+
+8. **ISSUE**: Fragile, misplaced drop cap targeting puts the initial character in the middle of the article rather than at the opener.
+   **EVIDENCE**: `h2:first-of-type + p::first-letter` paired with hardcoded `line-height: 0.84` and `margin: 5px 11px 0 0`.
+   **FIX**: Target `main > p:first-of-type` (excluding metadata) and use relative vertical alignment for the initial letter.
+
+9. **ISSUE**: Mobile navigation bar elements will collide and overflow on narrow viewports (e.g., 320px screens).
+   **EVIDENCE**: `nav.top` containing a wordmark, section switcher, and burger menu styled with `flex-wrap: nowrap`.
+   **FIX**: Add a media query to wrap the switcher or hide it within the mobile menu drawer on viewports under 360px.
+
+10. **ISSUE**: Redundant CSS styles for section lines clutter the production stylesheet.
+    **EVIDENCE**: Identical `::before` styling blocks defined twice for both `h2` and `.section-label`.
+    **FIX**: Consolidate the pseudoclass rules into a single selector chain: `h2::before, .section-label::before`.
+
+VERDICT: polish-round-needed

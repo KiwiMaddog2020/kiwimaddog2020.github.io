@@ -1,0 +1,41 @@
+1. ISSUE: Muted gray is technically AA but too weak for Apple-grade small metadata.
+EVIDENCE: `--text-muted: #8a857f` on `--bg: #14141a` is about `5.0:1`; used at `.meta { font-size: 13px }`, `.section-label { font-size: 13px }`, `.study-num { font-size: 13px }`, `footer { font-size: 14px }`.
+FIX: Raise muted text to roughly `#a39e97` for sub-14px utility text, or increase size/weight where `#8a857f` remains.
+
+2. ISSUE: The landing page opens with a dense undifferentiated thesis paragraph that competes with the dek instead of establishing a clear editorial hierarchy.
+EVIDENCE: `.dek { font-size: 19px; font-style: italic; color: var(--text-2) }` followed immediately by body `p { font-size: 17px; line-height: 1.65 }`; both are centered/serious intro copy with similar weight and no structural break.
+FIX: Make the thesis either a true lead paragraph with larger type and more top space, or cut it down and let the feature tile carry the next beat.
+
+3. ISSUE: The feature tile reads like a template card despite the “no cards” editorial ambition.
+EVIDENCE: `.feature-tile { border: 1px solid var(--border); border-radius: 16px; padding: 26px; background on hover }` plus image/kicker/title/subtitle stack.
+FIX: Remove the card shell; let the image bleed to column width, place the kicker/title below with a single rule or generous whitespace.
+
+4. ISSUE: Inconsistent corner language weakens restraint.
+EVIDENCE: `main img { border-radius: 10px }`, `.feature-tile { border-radius: 16px }`, `pre { border-radius: 14px }`, `.notes-list li { border-radius: 14px }`, `.study-link { border-radius: 10px }`, `.skip-link { border-radius: 8px }`.
+FIX: Normalize to one quiet radius system, likely `6px/8px`, with larger radii only where functionally needed.
+
+5. ISSUE: Section seams are over-signaled and repetitive.
+EVIDENCE: `h2::before` and `.section-label::before` both use the same `38px` blue tick; `.section-label { margin: 56px 0 6px; padding-top: 20px }`.
+FIX: Use either spacing or the tick, not both everywhere; reduce repeated blue ticks on landing sections or reserve them for article h2s.
+
+6. ISSUE: The section label is semantically styled as an h2 but visually demoted below the study titles.
+EVIDENCE: rendered markup uses `<h2 class="section-label">`; CSS sets `.section-label { font-size: 13px; letter-spacing: 0.14em; color: var(--text-muted) }`, while `.study-title { font-size: 22px; font-family: var(--serif); color: var(--text-strong) }`.
+FIX: Make section labels visually stronger, or use a different semantic wrapper if they are merely labels.
+
+7. ISSUE: Hover affordance on study rows is too faint for a full-row link.
+EVIDENCE: `.study-link:hover { background: rgba(255, 255, 255, 0.025) }`; title color changes only on hover, no persistent signifier except blue-less row text.
+FIX: Add a subtle persistent arrow, stronger hover background, or underline/title color cue that makes the whole row obviously clickable.
+
+8. ISSUE: Mobile nav risks crowding before the burger even opens.
+EVIDENCE: at `max-width: 720px`, `.wordmark { font-size: 21px }`, `.section-switch` remains visible with two padded links, and burger is `44px`; all sit in one nowrap flex row.
+FIX: Collapse the section switch into the menu on small screens, or hide the wordmark subtitle/shorten labels below a tighter breakpoint.
+
+9. ISSUE: The drop cap treatment is fragile even though this page opts out.
+EVIDENCE: `body:not(.hub) main:not(.no-dropcap) h2:first-of-type + p::first-letter { float: left; font-size: 58px; line-height: 0.84; margin: 5px 11px 0 0; color: var(--accent) }`.
+FIX: Reduce the drop cap size, avoid blue for body-opening ornament, and test against short first paragraphs and mobile line-height.
+
+10. ISSUE: Serif/sans mixing lacks a disciplined scale; titles, card titles, study titles, and nav wordmark sit too close together.
+EVIDENCE: `h1 52/36`, `body.hub h1 42/32`, `.feature-title 27/22`, `.study-title 22/20`, `.notes-list .note-title 22`, `nav .wordmark 24/21`.
+FIX: Define fewer type roles with clearer jumps: masthead, page title, section, item title, utility; avoid multiple nearby Cormorant sizes.
+
+VERDICT: polish-round-needed
