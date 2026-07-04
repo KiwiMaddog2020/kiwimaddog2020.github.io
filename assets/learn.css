@@ -587,7 +587,7 @@ button:disabled,
   min-height: 220px;
   padding: 20px;
   border: 1px solid rgba(42, 149, 234, 0.36);
-  border-radius: 8px;
+  border-radius: 12px;
   background: var(--bg-card);
   color: var(--text);
   text-align: left;
@@ -988,7 +988,7 @@ button:disabled,
   margin: 22px 0;
   padding: 18px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.02);
   color: var(--text-2);
 }
@@ -1519,7 +1519,7 @@ a.track-card {
   padding: 22px 24px 20px;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 11px;
+  border-radius: 12px;
   background: var(--bg-card);
   box-shadow: none;
   color: var(--text);
