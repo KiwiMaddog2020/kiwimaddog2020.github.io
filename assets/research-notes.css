@@ -714,6 +714,50 @@ th {
   }
 }
 
+/* Back-to-top: a quiet ringed glyph fixed at the bottom-right, matching the
+   back-icon language. A tiny inline script adds .is-hidden while near the top
+   and removes it once the reader has scrolled past the first screen. The base
+   state is visible, so if the script never runs the control still works (just
+   always shown); the transition is the only motion, so reduced-motion just
+   makes the toggle instant. */
+.to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--border-accent);
+  background: var(--bg-elevated);
+  color: var(--text-2);
+  font-size: 19px;
+  line-height: 1;
+  text-decoration: none;
+  z-index: 60;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.18s ease,
+    border-color 0.18s ease, background 0.18s ease;
+}
+.to-top.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+.to-top:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--bg-card);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+@media (max-width: 720px) {
+  .to-top { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
+
 /* Article pagination: quiet previous/next between notes, above the footer. */
 .note-pager {
   display: grid;
