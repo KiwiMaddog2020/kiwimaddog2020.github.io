@@ -330,5 +330,14 @@ footer .mono{font-family:var(--mono);font-size:12px}
   </footer>
 
 </div>
+<style>
+.to-top{position:fixed;right:28px;bottom:28px;display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:1px solid rgba(232,184,96,.34);background:var(--bg-deep,#0a0806);color:var(--ink-2,#b8ad9b);font-size:19px;line-height:1;cursor:pointer;-webkit-appearance:none;appearance:none;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.5);transition:opacity .2s ease,transform .2s ease,color .18s ease,border-color .18s ease}
+.to-top:hover{color:var(--gold,#e8b860);border-color:var(--gold,#e8b860)}
+.to-top.is-hidden{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px)}
+@media(max-width:720px){.to-top{right:16px;bottom:16px;width:44px;height:44px}}
+@media(prefers-reduced-motion:reduce){.to-top{transition:none}}
+</style>
+<button type="button" class="to-top is-hidden" aria-label="Back to top" title="Back to top">&uarr;</button>
+<script>(function(){var b=document.querySelector('.to-top');if(!b)return;var s=function(){b.classList.toggle('is-hidden',(window.scrollY||document.documentElement.scrollTop||0)<600)};b.addEventListener('click',function(){window.scrollTo(0,0)});window.addEventListener('scroll',s,{passive:true});window.addEventListener('resize',s,{passive:true});s()})();</script>
 </body>
 </html>
