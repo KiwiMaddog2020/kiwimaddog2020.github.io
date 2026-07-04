@@ -96,10 +96,10 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* A single, barely-there cool wash at the top of the page. Anything louder
+     reads as a template; the ink ground itself is the identity. */
   background-image:
-    radial-gradient(circle at 15% 8%, rgba(42, 149, 234, 0.12) 0%, transparent 46%),
-    radial-gradient(circle at 88% 78%, rgba(122, 138, 158, 0.08) 0%, transparent 52%);
-  background-attachment: fixed;
+    radial-gradient(120% 60% at 50% 0%, rgba(42, 149, 234, 0.045) 0%, transparent 62%);
 }
 
 /* 720px frame puts the 17px Inter column at ~75 characters per line. */
@@ -317,15 +317,12 @@ h3 {
   margin: 40px 0 12px;
 }
 
-/* Body paragraphs are justified with automatic hyphenation (the lang="en"
-   on <html> drives the dictionary), so the even right edge never opens
-   rivers of whitespace. Single-line and card text opt back out below. */
+/* Body paragraphs set ragged-right. Justification on the web opens rivers
+   of whitespace unless hyphenation is aggressive; a quiet left axis reads
+   better and is what every serious reading surface does. */
 p {
-  /* Justified edges, hyphenation off; block paragraphs separated by space. */
   margin: 0 0 var(--space-flow);
-  text-align: justify;
-  -webkit-hyphens: manual;
-  hyphens: manual;
+  text-align: left;
 }
 
 
@@ -339,14 +336,15 @@ body.hub main p {
 }
 
 /* Article opening: a Cormorant drop cap on the first body paragraph gives the
-   long read editorial presence. Scoped to article pages. */
-body:not(.hub) main h2:first-of-type + p::first-letter {
+   long read editorial presence. Scoped to article pages; the landing page
+   (which also uses this layout) opts out with .no-dropcap. */
+body:not(.hub) main:not(.no-dropcap) h2:first-of-type + p::first-letter {
   float: left;
   font-family: var(--serif);
   font-weight: 600;
-  font-size: 64px;
-  line-height: 0.82;
-  margin: 6px 12px 0 0;
+  font-size: 58px;
+  line-height: 0.84;
+  margin: 5px 11px 0 0;
   color: var(--accent);
 }
 
@@ -407,45 +405,37 @@ li { margin-bottom: 10px; }
 li::marker { color: var(--accent); }
 
 blockquote {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 14px;
-  padding: 22px 26px;
+  /* A quiet pull: one accent hairline and indented text. No box; space
+     and the rule carry the structure. */
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 24px;
   margin: 0 0 var(--space-block);
   color: var(--text-2);
-  /* Cards run at a narrow measure where justification opens gaps; keep
-     them ragged-right. */
   text-align: left;
-  -webkit-hyphens: manual;
-  hyphens: manual;
 }
-/* Cards keep their text left-aligned even while body paragraphs center. */
-blockquote p { text-align: center; }
+blockquote p { text-align: left; }
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
 
-/* A compact, horizontally centered card carrying the repo + contact links,
-   sitting just below the forwarded-reader note. */
+/* A quiet centered line carrying the repo + contact links. No box; it
+   belongs to the masthead block above it. */
 .contact-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-accent);
-  border-radius: 14px;
-  padding: 14px 26px;
-  margin: 0 auto var(--space-block);
-  max-width: 470px;
+  margin: -14px auto var(--space-block);
+  max-width: 560px;
   text-align: center;
-  font-size: 15px;
-  line-height: 1.95;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text-muted);
 }
 .contact-card a {
-  color: var(--accent);
+  color: var(--text-2);
   text-decoration: underline;
   text-decoration-color: var(--border-accent);
   text-underline-offset: 3px;
   /* let long repo URLs wrap instead of overflowing the card on mobile */
   overflow-wrap: anywhere;
 }
+.contact-card a:hover { color: var(--accent); }
 .contact-card a:hover { text-decoration-color: var(--accent-bright); }
 .contact-card .sep { color: var(--text-muted); margin: 0 8px; }
 
@@ -500,15 +490,151 @@ table {
 }
 th, td {
   text-align: left;
-  padding: 10px 14px;
+  vertical-align: top;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--border);
+  line-height: 1.55;
 }
+td:first-child, th:first-child { padding-left: 0; }
+td:last-child, th:last-child { padding-right: 0; }
 th {
   color: var(--text-2);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 12px;
+}
+
+/* ---- Landing page components ------------------------------------------- */
+
+/* Section label: quiet small-caps kicker above each group of studies,
+   replacing heading + table with label + list. */
+.section-label {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: var(--space-section) 0 6px;
+  padding-top: 20px;
+  position: relative;
+}
+.section-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.section-note {
+  color: var(--text-2);
+  font-size: 15.5px;
+  margin-bottom: 26px;
+}
+.section-note a { color: var(--accent); }
+
+/* The featured synthesis tile: image + one-line invitation, one target. */
+.feature-tile {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 26px 22px;
+  margin: 40px 0 8px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.feature-tile:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-elevated);
+  text-decoration: none;
+}
+.feature-tile img {
+  margin: 0 0 20px;
+  border: none;
+  border-radius: 10px;
+}
+.feature-tile .feature-kicker {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.feature-tile .feature-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.005em;
+  color: var(--text-strong);
+  text-wrap: balance;
+  margin-bottom: 8px;
+}
+.feature-tile .feature-sub {
+  display: block;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.feature-tile:hover .feature-title { color: var(--accent-bright); }
+
+/* The study list: each study is one link row: number rail, title,
+   one-line finding. Space and a hairline do the work; no cards. */
+.study-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-flow);
+}
+.study-list li {
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+.study-list li:last-child { border-bottom: none; }
+.study-link {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  column-gap: 18px;
+  padding: 22px 4px;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.18s ease;
+}
+.study-link:hover {
+  background: rgba(255, 255, 255, 0.025);
+  text-decoration: none;
+}
+.study-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  padding-top: 5px;
+  letter-spacing: 0.04em;
+}
+.study-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  text-wrap: balance;
+  transition: color 0.18s ease;
+}
+.study-link:hover .study-title { color: var(--accent-bright); }
+.study-find {
+  display: block;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-2);
 }
 
 /* The hub Notes list: the generator emits <ul role="list"> inside
@@ -561,6 +687,44 @@ th {
   text-underline-offset: 3px;
 }
 
+/* Article pagination: quiet previous/next between notes, above the footer. */
+.note-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 1px solid var(--border);
+  margin-top: 56px;
+  padding-top: 24px;
+}
+.note-pager a {
+  display: block;
+  text-decoration: none;
+  padding: 6px 4px;
+  border-radius: 10px;
+}
+.note-pager a:hover { text-decoration: none; }
+.note-pager .pager-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.note-pager .pager-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-2);
+  transition: color 0.18s ease;
+  text-wrap: balance;
+}
+.note-pager a:hover .pager-title { color: var(--accent-bright); }
+.note-pager .pager-next { text-align: right; }
+
 footer {
   border-top: 1px solid var(--border);
   margin-top: 64px;
@@ -569,6 +733,8 @@ footer {
   font-size: 14px;
   text-align: center;
 }
+/* The pager already draws the seam; don't double it. */
+.note-pager + footer { border-top: none; margin-top: 8px; }
 footer a {
   color: var(--text-2);
   padding: 13px 6px;
@@ -623,8 +789,15 @@ footer a:hover { color: var(--accent); }
   nav.top .nav-toggle:checked ~ .links { display: flex; }
   nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 6px; text-align: center; }
   nav.top .links a:hover { background: rgba(255, 255, 255, 0.04); }
-  blockquote { padding: 16px 18px; }
+  blockquote { padding: 2px 0 2px 18px; }
   table { display: block; overflow-x: auto; }
+  .study-link { grid-template-columns: 1fr; row-gap: 2px; padding: 20px 2px; }
+  .study-num { padding-top: 0; margin-bottom: 2px; }
+  .study-title { font-size: 20px; }
+  .feature-tile { padding: 18px 18px 16px; }
+  .feature-tile .feature-title { font-size: 22px; }
+  .note-pager { grid-template-columns: 1fr; }
+  .note-pager .pager-next { text-align: left; }
 }
 
 @media (prefers-reduced-motion: reduce) {
