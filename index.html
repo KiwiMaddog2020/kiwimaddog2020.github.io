@@ -31,7 +31,7 @@
   <link rel="alternate" type="application/atom+xml" title="Arbiter Machinae · Research notes" href="/feed.xml">
   <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/research-notes.css?v=195e3be870">
+  <link rel="stylesheet" href="/assets/research-notes.css?v=d7dc59c2cf">
   <link rel="stylesheet" href="/assets/learn.css?v=6945ae7005">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Kevin Madson","url":"https://kiwimaddog2020.github.io/","sameAs":["https://github.com/KiwiMaddog2020"],"jobTitle":"Senior Business Analyst","description":"Builds and operates agentic systems across multiple coding LLMs.","knowsAbout":["Agentic systems","Multi-model evaluation","Claude Code","Software engineering","Applied AI"]}
@@ -67,6 +67,29 @@
     <main id="app" tabindex="-1" aria-live="polite">
       <p class="learn-loading">Loading...</p>
     </main>
+    <button type="button" class="to-top is-hidden" aria-label="Back to top" title="Back to top">↑</button>
   </div>
+  <script>
+  // Reveal a back-to-top control once the reader is past the first screen. The
+  // learn app is hash-routed, so this is a <button> that scrolls via JS rather
+  // than an href that would hijack the router; hashchange re-syncs on route change.
+  (function () {
+    var btn = document.querySelector('.to-top');
+    if (!btn) return;
+    var sync = function () {
+      var y = window.scrollY || document.documentElement.scrollTop || 0;
+      btn.classList.toggle('is-hidden', y < 600);
+    };
+    btn.addEventListener('click', function () {
+      // Positional form works everywhere; the smoothness comes from the CSS
+      // scroll-behavior on <html>, which reduced-motion turns off for free.
+      window.scrollTo(0, 0);
+    });
+    window.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync, { passive: true });
+    window.addEventListener('hashchange', sync);
+    sync();
+  })();
+  </script>
 </body>
 </html>

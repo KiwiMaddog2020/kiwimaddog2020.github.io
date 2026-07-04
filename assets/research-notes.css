@@ -733,9 +733,16 @@ th {
   border: 1px solid var(--border-accent);
   background: var(--bg-elevated);
   color: var(--text-2);
+  font-family: var(--sans);
   font-size: 19px;
   line-height: 1;
   text-decoration: none;
+  /* Works as both an <a> (notes) and a <button> (the hash-routed learn app,
+     where an href="#..." would corrupt the router); reset the button chrome. */
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  padding: 0;
   z-index: 60;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
   transition: opacity 0.2s ease, transform 0.2s ease, color 0.18s ease,
