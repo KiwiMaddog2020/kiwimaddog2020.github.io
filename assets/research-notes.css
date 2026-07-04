@@ -487,6 +487,9 @@ table {
   border-collapse: collapse;
   margin: 0 0 var(--space-block);
   font-size: 15px;
+  /* Results tables are mostly numbers; lining tabular figures keep columns
+     of ranks and scores optically aligned. */
+  font-variant-numeric: tabular-nums;
 }
 th, td {
   text-align: left;
@@ -495,6 +498,10 @@ th, td {
   border-bottom: 1px solid var(--border);
   line-height: 1.55;
 }
+/* The header seam reads one step firmer than the row seams; the last row
+   hands off to surrounding space instead of double-ruling. */
+thead th { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+tbody tr:last-child td { border-bottom: none; }
 td:first-child, th:first-child { padding-left: 0; }
 td:last-child, th:last-child { padding-right: 0; }
 th {
@@ -687,6 +694,31 @@ th {
   text-underline-offset: 3px;
 }
 
+/* Reading position: a hairline of accent that fills along the top of the
+   viewport as the article scrolls. Pure CSS scroll-driven animation; engines
+   without support simply never show it, and reduced-motion turns it off. */
+@supports (animation-timeline: scroll()) {
+  body:not(.hub) main:not(.no-dropcap)::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: var(--accent);
+    opacity: 0.7;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    animation: read-progress linear forwards;
+    animation-timeline: scroll(root);
+    z-index: 50;
+    pointer-events: none;
+  }
+  @keyframes read-progress {
+    to { transform: scaleX(1); }
+  }
+}
+
 /* Article pagination: quiet previous/next between notes, above the footer. */
 .note-pager {
   display: grid;
@@ -802,5 +834,6 @@ footer a:hover { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  body:not(.hub) main:not(.no-dropcap)::before { display: none; }
 }
