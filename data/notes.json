@@ -1,6 +1,6 @@
 [
   {
-    "title": "An honest eval harness, and a ten-study program on how three AI models behave when you measure them without fooling yourself.",
+    "title": "An honest eval harness, and ten studies of model behavior",
     "url": "https://kiwimaddog2020.github.io/trutina/",
     "code": "https://github.com/KiwiMaddog2020/trutina"
   },
@@ -30,7 +30,7 @@
     "code": "https://github.com/KiwiMaddog2020/craft-fit-rating"
   },
   {
-    "title": "An evaluation framework you can trust: the doer never rates its own work",
+    "title": "An eval framework where the doer never grades itself",
     "url": "https://kiwimaddog2020.github.io/trust-weighted-evals/",
     "code": "https://github.com/KiwiMaddog2020/trust-weighted-evals"
   },

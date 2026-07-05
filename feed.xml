@@ -50,11 +50,11 @@
     <summary>Rating your own work without lying to yourself</summary>
   </entry>
   <entry>
-    <title>An evaluation framework you can trust: the doer never rates its own work</title>
+    <title>An eval framework where the doer never grades itself</title>
     <link href="https://kiwimaddog2020.github.io/trust-weighted-evals/"/>
     <id>https://kiwimaddog2020.github.io/trust-weighted-evals/</id>
     <updated>2026-06-12T22:30:01Z</updated>
-    <summary>An evaluation framework you can trust: the doer never rates its own work</summary>
+    <summary>An eval framework where the doer never grades itself</summary>
   </entry>
   <entry>
     <title>Audioscan: one decode pass instead of three ffmpeg shellouts</title>
