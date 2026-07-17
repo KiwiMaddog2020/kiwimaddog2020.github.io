@@ -7,23 +7,39 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--c-paper);color:var(--c-ink);
- font:16px/1.65 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+ font:16px/1.65 'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
  background-image:radial-gradient(120% 60% at 50% 0%,rgba(42,149,234,.05) 0%,transparent 62%)}
-@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500 700;font-display:swap;
- src:url(/assets/fonts/cormorant-garamond-latin.woff2) format('woff2')}
-@font-face{font-family:'Inter';font-style:normal;font-weight:400 600;font-display:swap;
- src:url(/assets/fonts/inter-latin.woff2) format('woff2')}
-.wrap{max-width:780px;margin:0 auto;padding:56px 24px 80px}
+@font-face{font-family:'Source Serif 4';font-style:normal;font-weight:500;font-display:swap;
+ src:url(/assets/fonts/source-serif-4-500-latin.woff2) format('woff2')}
+@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:400;font-display:swap;
+ src:url(/assets/fonts/source-sans-3-400-latin.woff2) format('woff2')}
+@font-face{font-family:'Source Sans 3';font-style:normal;font-weight:600;font-display:swap;
+ src:url(/assets/fonts/source-sans-3-600-latin.woff2) format('woff2')}
+.wrap{max-width:780px;margin:0 auto;padding:28px 24px 80px}
+nav.top{display:flex;align-items:baseline;gap:16px;padding:28px 0;
+ border-bottom:1px solid var(--c-line);margin-bottom:18px}
+nav.top .wordmark{font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:500;
+ letter-spacing:.01em;color:var(--c-ink);text-decoration:none}
+nav.top .wordmark:hover{color:var(--c-strong2,#5aabf6)}
+nav.top .links{margin-left:auto;display:flex;gap:26px}
+nav.top .links a{color:var(--c-muted);text-decoration:none;font-size:15px;font-weight:500;
+ padding:13px 6px;margin:-13px -6px;transition:color .18s ease}
+nav.top .links a:hover{color:var(--c-strong)}
+.back-icon{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+ border-radius:50%;border:1px solid rgba(42,149,234,.24);color:var(--c-muted);font-size:20px;
+ line-height:1;text-decoration:none;margin:0 0 18px;
+ transition:color .18s ease,border-color .18s ease,background .18s ease}
+.back-icon:hover{color:var(--c-strong);border-color:var(--c-strong);background:var(--c-card);text-decoration:none}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;
  color:var(--c-strong);font-weight:500}
-h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;line-height:1.06;
- font-weight:600;margin:.3rem 0 .5rem;letter-spacing:-.015em}
+h1{font-family:'Source Serif 4',Georgia,serif;font-size:44px;line-height:1.06;
+ font-weight:500;margin:.3rem 0 .5rem;letter-spacing:-.015em}
 .lede{font-size:18px;color:var(--c-muted);margin:0 0 1.3rem;max-width:62ch}
 .meta{font-size:13px;color:var(--c-muted);border-top:1px solid var(--c-line);
  border-bottom:1px solid var(--c-line);padding:12px 0;display:flex;gap:22px;flex-wrap:wrap}
 .finding{margin:52px 0}
 .finding .n{font-size:13px;color:var(--c-muted);font-weight:500}
-.finding h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:27px;font-weight:600;
+.finding h2{font-family:'Source Serif 4',Georgia,serif;font-size:27px;font-weight:500;
  margin:.15rem 0 .2rem;letter-spacing:-.005em;line-height:1.2}
 .to-top{position:fixed;right:28px;bottom:28px;display:flex;align-items:center;
  justify-content:center;width:46px;height:46px;border-radius:50%;
@@ -50,6 +66,9 @@ h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;line-height:1.0
  font-size:13px;color:var(--c-ink)}
 a{color:var(--c-strong)}
 </style></head><body><div class="wrap">
+<nav class="top"><a class="wordmark" href="/">Kevin Madson</a>
+<div class="links"><a href="/#/labs">All labs</a><a href="https://github.com/KiwiMaddog2020">GitHub</a></div></nav>
+<a class="back-icon" href="/#/labs" aria-label="Back to labs" title="Back to labs">&larr;</a>
 <div class="eyebrow">rag-lab &middot; research</div>
 <h1>What actually matters in a RAG pipeline</h1>
 <p class="lede">Five views of a controlled sweep over two multi-hop QA benchmarks,
