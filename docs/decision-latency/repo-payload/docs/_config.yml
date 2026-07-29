@@ -1,0 +1,9 @@
+title: "My decision queue was frozen for 41.9 hours. The board went from 24% to 95%."
+description: A model told me that decision latency, not build speed, is the bottleneck in human-AI work. I checked it against my own git ledgers.
+url: https://kiwimaddog2020.github.io
+baseurl: /decision-latency
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+  - jekyll-sitemap

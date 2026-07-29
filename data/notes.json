@@ -1,5 +1,10 @@
 [
   {
+    "title": "Is decision latency really the bottleneck in human-AI collaboration?",
+    "url": "https://kiwimaddog2020.github.io/decision-latency/",
+    "code": "https://github.com/KiwiMaddog2020/decision-latency"
+  },
+  {
     "title": "An honest eval harness, and ten studies of model behavior",
     "url": "https://kiwimaddog2020.github.io/trutina/",
     "code": "https://github.com/KiwiMaddog2020/trutina"
