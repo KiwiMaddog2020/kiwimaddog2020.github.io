@@ -1,0 +1,34 @@
+{
+  "https://github.com/KiwiMaddog2020/trutina": {
+    "kind": "harness",
+    "finding": "An eval harness where the model that did the work never judges it, plus ten studies of how production models behave."
+  },
+  "https://github.com/KiwiMaddog2020/decorrelation-study": {
+    "kind": "experiment",
+    "finding": "Three AI reviewers together caught all 30 planted bugs. The best one alone caught 27."
+  },
+  "https://github.com/KiwiMaddog2020/evaluating-claude": {
+    "kind": "field guide",
+    "finding": "The five rules I would hand a team that adopts nothing else."
+  },
+  "https://github.com/KiwiMaddog2020/self-improvement-gate": {
+    "kind": "safety",
+    "finding": "A small gate that decides whether an agent may change its own rules. It only ever proposes, it never writes."
+  },
+  "https://github.com/KiwiMaddog2020/oneshot-bench": {
+    "kind": "experiment",
+    "finding": "A 71-check test suite and what each extra round of AI polish actually costs."
+  },
+  "https://github.com/KiwiMaddog2020/craft-fit-rating": {
+    "kind": "method",
+    "finding": "Two scores, craft and fit. A grade with no evidence behind it gets lowered until it has some."
+  },
+  "https://github.com/KiwiMaddog2020/trust-weighted-evals": {
+    "kind": "method",
+    "finding": "A review loop where each reviewer's vote counts for as much trust as it has earned."
+  },
+  "https://github.com/KiwiMaddog2020/audioscan": {
+    "kind": "side project",
+    "finding": "One decode pass instead of three separate ffmpeg calls."
+  }
+}

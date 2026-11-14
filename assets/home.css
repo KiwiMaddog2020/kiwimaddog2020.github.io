@@ -1,0 +1,147 @@
+/* Home page only. Tokens, type and shared components live in research-notes.css. */
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 48px;
+  align-items: start;
+  padding: 26px 0 8px;
+}
+.home-hero > * { min-width: 0; }
+.home-kicker { margin: 0 0 6px; color: var(--accent); font-size: 25px; }
+body.home h1 { font-size: clamp(40px, 6.2vw, 68px); margin: 0 0 22px; }
+.home-lede { font-size: 20px; line-height: 1.6; color: var(--text-2); max-width: 30em; }
+.home-aside { display: inline-block; margin: 6px 0 0; font-size: 27px; transform: rotate(-3deg); transform-origin: left center; }
+
+/* The playable figure sits on its own sheet, taped to the page. */
+.home-fig {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 30px 24px 20px;
+  transform: rotate(0.6deg);
+}
+.home-fig::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 96px;
+  height: 24px;
+  margin-left: -48px;
+  background: var(--tape);
+  transform: rotate(-2deg);
+}
+.home-fig-title {
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+}
+.home-fig .nb-readout { margin: 0; min-height: 2.2em; }
+.home-fig-fallback { font-family: var(--sans); font-size: 16px; color: var(--text-2); margin: 10px 0 0; }
+.home-fig svg { max-width: 400px; margin: 4px 0 0; }
+/* Hold the space the sketch will fill, so the page does not jump when the
+   script swaps it in. Only where scripts run: without them there is no gap. */
+@media (scripting: enabled) {
+  .home-fig [data-fig-slot]::after { content: ""; display: block; max-width: 400px; aspect-ratio: 400 / 323; margin-top: 4px; }
+  .home-fig-fallback { min-height: 44px; margin: 0; display: flex; align-items: center; }
+}
+
+/* Note cards: index cards, each a little crooked, that straighten when picked up. */
+.nb-cards {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px 26px;
+}
+.nb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 26px 22px 18px;
+  transform: perspective(900px) rotate(var(--rest, 0deg)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.nb-card:nth-child(3n+1) { --rest: -0.9deg; }
+.nb-card:nth-child(3n+2) { --rest: 0.7deg; }
+.nb-card:nth-child(3n) { --rest: -0.3deg; }
+.nb-card:hover, .nb-card:focus-within {
+  --rest: 0deg;
+  box-shadow: 0 1px 0 var(--border-strong), 6px 12px 0 var(--border);
+}
+.nb-card .nb-status { align-self: flex-start; margin: -38px 0 2px -6px; }
+.nb-card-link { text-decoration: none; }
+.nb-card-link:hover { text-decoration: none; }
+/* The whole card is the link target; the code link sits above it. */
+.nb-card-link::after { content: ""; position: absolute; inset: 0; }
+.nb-card-title {
+  display: block;
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  text-wrap: balance;
+  transition: color 0.18s ease;
+}
+.nb-card:hover .nb-card-title { color: var(--accent); }
+.nb-card-find { font-size: 16px; line-height: 1.55; color: var(--text-2); margin: 0; }
+.nb-card-code {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  margin-top: auto;
+  font-family: var(--hand);
+  font-size: 21px;
+  line-height: 1;
+  padding: 12px 10px 10px 0;
+  color: var(--accent);
+}
+
+.home-section-note { font-size: 17px; color: var(--text-2); max-width: 38em; margin-bottom: 26px; }
+
+/* Crossed out: each correction is a struck claim with the fix in red pen. */
+.home-fixes { list-style: none; padding: 0; margin: 0; display: grid; gap: 30px; max-width: 46em; }
+.home-fixes li { margin: 0; padding-left: 22px; border-left: 2px dashed var(--border-strong); }
+.home-fixes p { margin: 0 0 4px; }
+.home-fixes del { font-size: 20px; }
+.home-fixes ins { font-size: 29px; }
+.home-fix-src { font-family: var(--sans); font-size: 14.5px; color: var(--text-muted); margin-top: 8px; }
+
+/* Lab rules: a ticked checklist. */
+.home-rules { list-style: none; padding: 0; margin: 0 0 26px; display: grid; gap: 14px; max-width: 46em; }
+.home-rules li { position: relative; margin: 0; padding-left: 40px; font-size: 18px; line-height: 1.55; color: var(--text-2); }
+.home-rules li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 24px;
+  background: var(--pen-green);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath d='M3 13c3 2 5 5 6 8C12 13 17 6 24 2' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 24'%3E%3Cpath d='M3 13c3 2 5 5 6 8C12 13 17 6 24 2' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+@media (max-width: 860px) {
+  .home-hero { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .home-fig { transform: none; }
+}
+@media (max-width: 720px) {
+  .home-lede { font-size: 18px; }
+  .home-fixes del { font-size: 18px; }
+  .home-fixes ins { font-size: 25px; }
+  .nb-cards { grid-template-columns: minmax(0, 1fr); }
+}

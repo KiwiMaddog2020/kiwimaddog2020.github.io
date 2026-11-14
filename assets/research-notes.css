@@ -1,13 +1,15 @@
-/* Research-notes shared stylesheet.
-   One canonical copy, served by the hub at /assets/research-notes.css; every
-   note site on this host links it absolutely, so a restyle here updates the
-   whole aggregator. Design system carried over from the VeraNota web pages:
-   ink ground, blue accent, Source Serif 4 reading over Source Sans 3 labels.
+/* Arbiter Machinae shared stylesheet: the lab notebook.
+   One canonical copy, served by the hub at /assets/research-notes.css. Every
+   note site on this host links it by that absolute path, so a restyle here
+   updates them all. The class names are a published contract: add, do not
+   rename.
 
-   The reading is set in serif so the notes read like a research paper.
+   Identity: graph paper and ink in light, a chalkboard in dark. Bricolage
+   Grotesque for headings, Source Serif 4 for reading, Source Sans 3 for
+   labels and tables, Caveat for anything written by hand.
 
-   Fonts are self-hosted woff2 (latin + latin-ext subsets, normal + italic)
-   under /assets/fonts/, so the render chain has no third-party origin. */
+   Fonts are self-hosted woff2 under /assets/fonts/, so the render chain has
+   no third-party origin. */
 
 @font-face {
   /* Source Serif 4 normal 400 (latin-ext) */
@@ -136,33 +138,130 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  /* Bricolage Grotesque variable 200-800 (latin-ext) */
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/assets/fonts/bricolage-grotesque-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  /* Bricolage Grotesque variable 200-800 (latin) */
+  font-family: 'Bricolage Grotesque';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url(/assets/fonts/bricolage-grotesque-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  /* Caveat 700 (latin): handwriting for margin notes and figure labels */
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/caveat-700-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- Tokens ----------
+   Light is graph paper and ink. Dark is a chalkboard, not inverted paper.
+   Every colour is defined on :root first; the two dark blocks only redefine. */
 :root {
-  --bg: #14141a;
-  --bg-elevated: #1b1b22;
-  --bg-card: #21212a;
-  --accent: #2a95ea;
-  --accent-bright: #5aabf6;
-  --accent-soft: #94c9f5;
-  --text: #e8e6e1;
-  --text-strong: #f2f0eb;
-  --text-2: #9a9690;
-  --text-muted: #96918a;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-accent: rgba(42, 149, 234, 0.24);
+  color-scheme: light;
+  --bg: #f6f7f2;
+  --bg-elevated: #fffef8;
+  --bg-card: #fffef8;
+  --grid: rgba(60, 105, 160, 0.13);
+  --accent: #2443b8;
+  --accent-bright: #152c8a;
+  --accent-soft: #3d57c4;
+  --text: #1d2433;
+  --text-strong: #10162a;
+  --text-2: #465066;
+  --text-muted: #5a6478;
+  --border: rgba(29, 36, 51, 0.15);
+  --border-strong: rgba(29, 36, 51, 0.34);
+  --border-accent: rgba(36, 67, 184, 0.4);
+  --hover: rgba(36, 67, 184, 0.06);
+  --hl: #ffe14d;
+  --hl-ink: rgba(255, 225, 77, 0.85);
+  --pen-red: #c2311f;
+  --pen-green: #1f7a4a;
+  --tape: rgba(255, 225, 77, 0.72);
+  --shadow: 0 1px 0 rgba(29, 36, 51, 0.22), 3px 5px 0 rgba(29, 36, 51, 0.09);
+  --display: "Bricolage Grotesque", "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
   --serif: "Source Serif 4", Georgia, serif;
   --sans: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
   --space-flow: 20px;   /* paragraph and list rhythm */
   --space-block: 28px;  /* card-level blocks: blockquote, pre, table */
   --space-section: 56px; /* section seams: h2 top, hr */
+  --wobble: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' preserveAspectRatio='none'%3E%3Cpath d='M2 5C20 2 34 7 52 4S90 2 118 5' fill='none' stroke='%23000' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #17211e;
+    --bg-elevated: #1e2a26;
+    --bg-card: #212e2a;
+    --grid: rgba(226, 238, 230, 0.055);
+    --accent: #9cc7ff;
+    --accent-bright: #c7defd;
+    --accent-soft: #b9d6fb;
+    --text: #e9e8e0;
+    --text-strong: #f7f6ee;
+    --text-2: #b7bfb6;
+    --text-muted: #98a39b;
+    --border: rgba(233, 232, 224, 0.15);
+    --border-strong: rgba(233, 232, 224, 0.36);
+    --border-accent: rgba(156, 199, 255, 0.42);
+    --hover: rgba(233, 232, 224, 0.06);
+    --hl: #ffe14d;
+    --hl-ink: rgba(255, 225, 77, 0.36);
+    --pen-red: #ff9a8b;
+    --pen-green: #8fdcab;
+    --tape: rgba(233, 232, 224, 0.2);
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 3px 5px 0 rgba(0, 0, 0, 0.22);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #17211e;
+  --bg-elevated: #1e2a26;
+  --bg-card: #212e2a;
+  --grid: rgba(226, 238, 230, 0.055);
+  --accent: #9cc7ff;
+  --accent-bright: #c7defd;
+  --accent-soft: #b9d6fb;
+  --text: #e9e8e0;
+  --text-strong: #f7f6ee;
+  --text-2: #b7bfb6;
+  --text-muted: #98a39b;
+  --border: rgba(233, 232, 224, 0.15);
+  --border-strong: rgba(233, 232, 224, 0.36);
+  --border-accent: rgba(156, 199, 255, 0.42);
+  --hover: rgba(233, 232, 224, 0.06);
+  --hl: #ffe14d;
+  --hl-ink: rgba(255, 225, 77, 0.36);
+  --pen-red: #ff9a8b;
+  --pen-green: #8fdcab;
+  --tape: rgba(233, 232, 224, 0.2);
+  --shadow: 0 1px 0 rgba(0, 0, 0, 0.5), 3px 5px 0 rgba(0, 0, 0, 0.22);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
-  background: var(--bg);
+  background-color: var(--bg);
+  /* Graph paper in light, faint chalk grid in dark. */
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
   color: var(--text);
   font-family: var(--sans);
   line-height: 1.65;
@@ -170,47 +269,35 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* A single, barely-there cool wash at the top of the page. Anything louder
-     reads as a template; the ink ground itself is the identity. */
-  background-image:
-    radial-gradient(120% 60% at 50% 0%, rgba(42, 149, 234, 0.045) 0%, transparent 62%);
 }
-
-/* 720px frame puts the 18px serif column near an ideal ~66 characters. */
 .page { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+body.hub .page { max-width: 1040px; }
 
-/* The reading column is set in serif so the notes read like a research paper
-   rather than a blog. Scoped away from the learn app (body.learn-page), whose
-   interactive UI stays in the sans; chrome (nav, meta, labels) sets --sans
-   explicitly and is unaffected. Source Serif 4 carries a touch more size and
-   leading than the sans it replaced. */
-body:not(.learn-page) main {
+/* The reading column is set in serif so the notes read like a paper. */
+main {
   font-family: var(--serif);
   font-size: 18px;
   line-height: 1.72;
 }
-
 /* Figures fit the column and never force the page wider than the viewport.
-   Without this, an intrinsic-width chart (e.g. a 1920px PNG) blows out the
-   mobile layout and crushes the text column. */
+   They sit on the page like a print taped into the notebook. */
 main img {
   display: block;
   max-width: 100%;
   height: auto;
   margin: 2rem auto;
-  border-radius: 12px;
-  border: 1px solid var(--border);
+  border-radius: 3px;
+  border: 6px solid var(--bg-card);
+  box-shadow: var(--shadow);
 }
 
-/* Focus visibility (WCAG 2.1 AA). :not(:focus-visible) keeps the UA ring
-   in engines without :focus-visible support instead of removing it. */
+/* Focus visibility (WCAG 2.1 AA). */
 :focus:not(:focus-visible) { outline: none; }
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
-
 .skip-link {
   position: absolute;
   left: -10000px;
@@ -227,8 +314,8 @@ main img {
   height: auto;
   padding: 12px 18px;
   background: var(--bg-card);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
   color: var(--text);
   font-weight: 600;
   font-size: 14px;
@@ -236,76 +323,99 @@ main img {
   z-index: 1000;
 }
 
-/* Top nav */
+/* ---------- Top navigation ---------- */
 nav.top {
+  position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 18px;
+  padding: 24px 0 18px;
+  border-bottom: 2px solid var(--text);
+  margin-bottom: 22px;
 }
 nav.top .wordmark {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
   text-decoration: none;
 }
-nav.top .wordmark:hover { color: var(--accent-bright); }
+nav.top .wordmark:hover { color: var(--accent); text-decoration: none; }
 nav.top .crumb {
   color: var(--text-muted);
   font-size: 14px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
-
-/* Section switcher: the Research <-> Study toggle as a compact segmented
-   control next to the wordmark. Replaces the old crumb + scattered links so
-   the section jump reads as one control, separate from the in-section nav. */
-nav.top .section-switch {
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-}
-nav.top .section-link {
-  padding: 5px 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-2);
-  text-decoration: none;
-  transition: color 0.18s ease, background 0.18s ease;
-}
-nav.top .section-link:hover { color: var(--accent); }
-nav.top .section-link.is-active {
-  color: var(--text-strong);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Back-to-hub control on article pages: an obvious, clickable return path. */
 nav.top .back {
   color: var(--text-2);
   font-size: 15px;
   font-weight: 500;
-  letter-spacing: 0.01em;
   text-decoration: none;
-  transition: color 0.18s ease;
-  /* roomy touch target without shifting layout, matches .links */
   padding: 13px 6px;
   margin: -13px -6px;
 }
 nav.top .back:hover { color: var(--accent); }
+nav.top .links {
+  margin-left: auto;
+  display: flex;
+  gap: 24px;
+}
+nav.top .links a {
+  font-family: var(--display);
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.18s ease;
+  padding: 13px 6px;
+  margin: -13px -6px;
+}
+nav.top .links a:hover { color: var(--accent); }
+nav.top .nav-toggle,
+nav.top .nav-burger { display: none; }
 
-/* Circular back control: a quiet ringed glyph at the top-left of an
-   article. The nav's margin-bottom sets the gap above and this rule's
-   margin-bottom matches it below, centering the ring in the band between
-   the nav line and the title. */
+/* The scale logo: the beam tips when the wordmark is hovered. */
+.nb-logo { width: 30px; height: 26px; flex: none; overflow: visible; }
+.nb-logo .beam { transform-origin: 16px 6px; transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.wordmark:hover .nb-logo .beam, .wordmark:focus-visible .nb-logo .beam { transform: rotate(9deg); }
+
+/* The lamp: theme toggle. The shared script adds it to any nav.top that
+   lacks one, so note sites get it without changing their layout. */
+.nb-lamp[hidden] { display: none; }
+.nb-lamp {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: -8px 0 -8px auto;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+.nb-lamp:hover { color: var(--accent); background: var(--hover); }
+.nb-lamp svg { width: 24px; height: 24px; overflow: visible; }
+.nb-lamp .rays { opacity: 0; transition: opacity 0.3s ease; }
+.nb-lamp .bulb { fill: none; transition: fill 0.3s ease; }
+:root[data-theme="dark"] .nb-lamp .rays { opacity: 1; }
+:root[data-theme="dark"] .nb-lamp .bulb { fill: var(--hl); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nb-lamp .rays { opacity: 1; }
+  :root:not([data-theme="light"]) .nb-lamp .bulb { fill: var(--hl); }
+}
+nav.top .nb-lamp ~ .links { margin-left: 0; }
+
+/* Circular back control at the top-left of an article. */
 .back-icon {
   display: flex;
   align-items: center;
@@ -313,154 +423,100 @@ nav.top .back:hover { color: var(--accent); }
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  border: 1px solid var(--border-accent);
+  border: 1.5px solid var(--border-strong);
   color: var(--text-2);
   font-size: 20px;
   line-height: 1;
   text-decoration: none;
   margin: 0 0 18px;
-  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
 }
 .back-icon:hover {
   color: var(--accent);
   border-color: var(--accent);
   background: var(--bg-card);
-  /* Override the global a:hover underline; the ring is the hover affordance. */
   text-decoration: none;
+  transform: translateX(-3px);
 }
-nav.top .links {
-  margin-left: auto;
-  display: flex;
-  gap: 26px;
-}
-nav.top .links a {
-  color: var(--text-2);
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  transition: color 0.18s ease;
-  /* Negative-margin padding grows the touch target without moving layout. */
-  padding: 13px 6px;
-  margin: -13px -6px;
-}
-nav.top .links a:hover { color: var(--accent); }
 
-/* Mobile hamburger: a no-JS checkbox toggle. On desktop the checkbox and burger
-   are removed and the links sit inline (unchanged). On narrow screens the links
-   collapse into a tap-to-open menu so the bar never wraps to a second line. */
-nav.top { position: relative; }
-nav.top .nav-toggle,
-nav.top .nav-burger { display: none; }
-
-/* Long-form typography */
+/* ---------- Type ---------- */
 main { display: block; padding-bottom: 24px; }
-
 h1 {
-  font-family: var(--serif);
-  font-size: 52px;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  line-height: 1.08;
+  font-family: var(--display);
+  font-size: 54px;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  line-height: 1.03;
   margin: 8px 0 20px;
-  /* Centered so a title that wraps to two or three lines stays symmetric at
-     any viewport width; the dek and meta below center with it. */
-  text-align: center;
+  color: var(--text-strong);
   text-wrap: balance;
 }
-/* The hub is an index, not an article; its title defers to note titles. */
-body.hub h1 { font-size: 42px; }
-
+body.hub h1 { font-size: 46px; }
+/* Note titles are often a full sentence, so they sit a size down from the hub. */
+body:not(.hub) h1 { font-size: 42px; font-weight: 720; letter-spacing: -0.03em; line-height: 1.08; }
 h2 {
-  font-family: var(--serif);
-  font-size: 34px;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  margin: var(--space-section) 0 16px;
-  padding-top: 20px;
-  color: var(--text);
+  font-family: var(--display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: var(--space-section) 0 18px;
+  padding-bottom: 12px;
+  color: var(--text-strong);
   position: relative;
+  text-wrap: balance;
 }
-/* A short blue tick above each section header marks the seam in the
-   blue-on-ink register without a heavy rule. Shared by article h2s and the
-   landing's small-caps section labels. */
-h2::before,
-.section-label::before {
+/* A hand-drawn pen stroke under each section header. */
+h2::after {
   content: "";
   position: absolute;
-  top: 0;
   left: 0;
-  width: 38px;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 2px;
+  bottom: 0;
+  width: 116px;
+  height: 8px;
+  background: var(--pen-red);
+  -webkit-mask: var(--wobble) center / 100% 100% no-repeat;
+  mask: var(--wobble) center / 100% 100% no-repeat;
 }
-
 h3 {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-2);
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
   margin: 40px 0 12px;
 }
+p { margin: 0 0 var(--space-flow); text-align: left; }
 
-/* Body paragraphs set ragged-right. Justification on the web opens rivers
-   of whitespace unless hyphenation is aggressive; a quiet left axis reads
-   better and is what every serious reading surface does. */
-p {
-  margin: 0 0 var(--space-flow);
-  text-align: left;
-}
-
-
-
-/* The hub is a short centered index: its prose centers and keeps block-style
-   spacing, with no first-line indent. */
-body.hub main p {
-  text-align: center;
-  text-indent: 0;
-  margin-bottom: var(--space-flow);
-}
-
-/* Article opening: a serif drop cap on the article's actual first
-   paragraph (notes open with prose before any h2, so the old h2-anchored
-   selector landed mid-article). The landing opts out with .no-dropcap. */
+/* Article opening: a drop cap on the article's first paragraph. The landing
+   opts out with .no-dropcap. */
 body:not(.hub) main:not(.no-dropcap) > p:first-of-type::first-letter {
   float: left;
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 58px;
-  line-height: 0.84;
-  margin: 5px 11px 0 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 60px;
+  line-height: 0.82;
+  margin: 6px 10px 0 0;
   color: var(--accent);
 }
-
-/* Standfirst under an article h1, and the small meta row beneath it. */
 .dek {
-  font-size: 19px;
+  font-size: 20px;
   font-style: italic;
   color: var(--text-2);
-  margin: 0 0 10px;
-  text-align: center;
+  margin: 0 0 12px;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
 .meta {
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-muted);
+  font-family: var(--hand);
+  font-size: 21px;
+  line-height: 1.2;
+  color: var(--accent);
   margin: 0 0 var(--space-block);
-  text-align: center;
   -webkit-hyphens: manual;
   hyphens: manual;
 }
-.meta a { color: var(--text-2); }
-
-/* Closing credit line, centered. */
-.byline { text-align: center; }
-
+.meta a { color: inherit; }
 a {
   color: var(--accent);
   text-decoration: none;
@@ -471,45 +527,33 @@ a:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-
-/* Content links carry a quiet warm underline so they are distinguishable
-   from body text by more than color (WCAG 1.4.1). Nav, note cards, and
-   headings opt out below. */
+/* Content links are underlined so they differ from body text by more than
+   colour (WCAG 1.4.1). */
 main p a, main li a, main blockquote a, footer a {
   text-decoration: underline;
   text-decoration-color: var(--border-accent);
-  text-decoration-thickness: 1px;
+  text-decoration-thickness: 1.5px;
   text-underline-offset: 3px;
 }
 main p a:hover, main li a:hover, main blockquote a:hover, footer a:hover {
   text-decoration-color: var(--accent-bright);
 }
-
 strong { font-weight: 600; color: var(--text-strong); }
-
 ul, ol { margin: 0 0 var(--space-flow); padding-left: 26px; }
 li { margin-bottom: 10px; }
 li::marker { color: var(--accent); }
-
+/* A pull quote reads as a highlighted passage. */
 blockquote {
-  /* A quiet pull: one accent hairline and indented text. No box; space
-     and the rule carry the structure. */
-  border-left: 2px solid var(--accent);
-  padding: 4px 0 4px 24px;
+  border-left: 5px solid var(--hl);
+  padding: 4px 0 4px 22px;
   margin: 0 0 var(--space-block);
   color: var(--text-2);
-  text-align: left;
 }
-blockquote p { text-align: left; }
 blockquote p:last-child { margin-bottom: 0; }
 blockquote strong { color: var(--text); }
-
-/* A quiet centered line carrying the repo + contact links. No box; it
-   belongs to the masthead block above it. */
 .contact-card {
-  margin: -14px auto var(--space-block);
-  max-width: 560px;
-  text-align: center;
+  margin: -8px 0 var(--space-block);
+  font-family: var(--sans);
   font-size: 14px;
   line-height: 1.9;
   color: var(--text-muted);
@@ -519,292 +563,336 @@ blockquote strong { color: var(--text); }
   text-decoration: underline;
   text-decoration-color: var(--border-accent);
   text-underline-offset: 3px;
-  /* let long repo URLs wrap instead of overflowing the card on mobile */
   overflow-wrap: anywhere;
 }
-.contact-card a:hover { color: var(--accent); }
-.contact-card a:hover { text-decoration-color: var(--accent-bright); }
+.contact-card a:hover { color: var(--accent); text-decoration-color: var(--accent-bright); }
 .contact-card .sep { color: var(--text-muted); margin: 0 8px; }
-
 code {
   font-family: var(--mono);
-  font-size: 0.88em;
+  font-size: 0.86em;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 2px 7px;
-  color: var(--accent-soft);
+  border-radius: 4px;
+  padding: 2px 6px;
+  color: var(--text);
 }
-
 pre {
   background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
   padding: 20px 24px;
   margin: 0 0 var(--space-block);
-  /* Wrap long lines inside the card instead of letting them run off the
-     right edge. macOS auto-hides the overflow scrollbar, so a scrolling
-     code block reads as silently clipped; wrapping keeps every character
-     visible. overflow-x stays as a fallback for content that cannot wrap. */
+  /* Wrap long lines inside the card so nothing is silently clipped. */
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   overflow-x: auto;
   line-height: 1.55;
 }
-pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--text);
-}
-
-/* Rouge highlight roles, kept to the same restrained palette. */
+pre code { background: none; border: none; padding: 0; color: var(--text); }
 .highlight .c, .highlight .c1, .highlight .cm { color: var(--text-muted); font-style: italic; }
-.highlight .s, .highlight .s1, .highlight .s2 { color: var(--accent-soft); }
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--accent-bright); }
-
+.highlight .s, .highlight .s1, .highlight .s2 { color: var(--pen-green); }
+.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: var(--accent); }
 hr {
   border: none;
-  border-top: 1px solid var(--border);
+  border-top: 2px dashed var(--border-strong);
   margin: var(--space-section) 0;
 }
-
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 0 0 var(--space-block);
-  font-size: 15px;
-  /* Results tables are mostly numbers; lining tabular figures keep columns
-     of ranks and scores optically aligned. */
+  font-family: var(--sans);
+  font-size: 15.5px;
   font-variant-numeric: tabular-nums;
 }
 th, td {
   text-align: left;
   vertical-align: top;
-  padding: 12px 14px;
+  padding: 11px 14px;
   border-bottom: 1px solid var(--border);
-  line-height: 1.55;
+  line-height: 1.5;
 }
-/* The header seam reads one step firmer than the row seams; the last row
-   hands off to surrounding space instead of double-ruling. */
-thead th { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+thead th { border-bottom: 2px solid var(--text); }
 tbody tr:last-child td { border-bottom: none; }
-td:first-child, th:first-child { padding-left: 0; }
-td:last-child, th:last-child { padding-right: 0; }
+tbody tr:hover td { background: var(--hover); }
+td:first-child, th:first-child { padding-left: 4px; }
+td:last-child, th:last-child { padding-right: 4px; }
 th {
-  color: var(--text-2);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 12px;
+  font-family: var(--display);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13.5px;
 }
 
-/* ---- Landing page components ------------------------------------------- */
-
-/* Section label: quiet small-caps kicker above each group of studies,
-   replacing heading + table with label + list. */
+/* ---------- Lists of studies and notes ---------- */
 .section-label {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
-  margin: var(--space-section) 0 6px;
-  padding-top: 20px;
+  color: var(--text-2);
+  margin: var(--space-section) 0 8px;
+  padding-top: 16px;
   position: relative;
 }
-.section-note {
-  color: var(--text-2);
-  font-size: 15.5px;
-  margin-bottom: 26px;
+.section-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 6px;
+  background: var(--pen-red);
+  -webkit-mask: var(--wobble) center / 100% 100% no-repeat;
+  mask: var(--wobble) center / 100% 100% no-repeat;
 }
+.section-note { color: var(--text-2); font-size: 16px; margin-bottom: 26px; }
 .section-note a { color: var(--accent); }
-
-/* The featured synthesis tile: image + one-line invitation, one target. */
 .feature-tile {
   display: block;
+  background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
   padding: 26px 26px 22px;
   margin: 40px 0 8px;
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: transform 0.22s ease;
 }
-.feature-tile:hover, .feature-tile:focus-visible {
-  border-color: var(--border-accent);
-  background: var(--bg-elevated);
-  text-decoration: none;
-}
-.feature-tile img {
-  margin: 0 0 20px;
-  border: none;
-  border-radius: 10px;
-}
+.feature-tile:hover, .feature-tile:focus-visible { transform: translateY(-3px) rotate(-0.3deg); text-decoration: none; }
+.feature-tile img { margin: 0 0 20px; border: none; box-shadow: none; border-radius: 2px; }
 .feature-tile .feature-kicker {
   display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 8px;
+  font-family: var(--hand);
+  font-size: 21px;
+  line-height: 1.1;
+  color: var(--pen-red);
+  margin-bottom: 6px;
 }
 .feature-tile .feature-title {
   display: block;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 27px;
-  font-weight: 500;
-  line-height: 1.22;
-  letter-spacing: -0.005em;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--text-strong);
   text-wrap: balance;
   margin-bottom: 8px;
 }
-.feature-tile .feature-sub {
-  display: block;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-2);
-}
-.feature-tile:hover .feature-title, .feature-tile:focus-visible .feature-title { color: var(--accent-bright); }
-
-/* The study list: each study is one link row: number rail, title,
-   one-line finding. Space and a hairline do the work; no cards. */
-.study-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--space-flow);
-}
-.study-list li {
-  margin: 0;
-  border-bottom: 1px solid var(--border);
-}
+.feature-tile .feature-sub { display: block; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+.feature-tile:hover .feature-title, .feature-tile:focus-visible .feature-title { color: var(--accent); }
+.study-list { list-style: none; padding: 0; margin: 0 0 var(--space-flow); }
+.study-list li { margin: 0; border-bottom: 1px dashed var(--border-strong); }
 .study-list li:last-child { border-bottom: none; }
 .study-link {
   display: grid;
   grid-template-columns: 52px 1fr;
   column-gap: 18px;
-  padding: 22px 4px;
+  padding: 20px 6px;
   text-decoration: none;
-  border-radius: 12px;
+  border-radius: 4px;
   transition: background 0.18s ease;
 }
-.study-link:hover, .study-link:focus-visible {
-  background: rgba(255, 255, 255, 0.04);
-  text-decoration: none;
-}
+.study-link:hover, .study-link:focus-visible { background: var(--hover); text-decoration: none; }
 .study-num {
-  font-family: var(--mono);
-  font-size: 13px;
-  color: var(--text-muted);
-  padding-top: 5px;
-  letter-spacing: 0.04em;
+  font-family: var(--hand);
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--pen-red);
 }
 .study-title {
-  /* May be an h3 (semantic outline); reset the element-level h3 treatment. */
   margin: 0 0 6px;
   text-transform: none;
   display: block;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 22px;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.005em;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   color: var(--text-strong);
   text-wrap: balance;
   transition: color 0.18s ease;
 }
-.study-find { margin: 0; }
-.study-link:hover .study-title, .study-link:focus-visible .study-title { color: var(--accent-bright); }
-.study-find {
-  display: block;
-  font-size: 15px;
-  line-height: 1.6;
-  color: var(--text-2);
-}
-
-/* The hub Notes list: the generator emits <ul role="list"> inside
-   .notes-list, and each entry becomes a quiet card row. role="list"
-   survives list-style: none in VoiceOver. */
-.notes-list ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0 0 var(--space-flow);
-}
+.study-link:hover .study-title, .study-link:focus-visible .study-title { color: var(--accent); }
+.study-find { display: block; margin: 0; font-size: 16px; line-height: 1.6; color: var(--text-2); }
+.notes-list ul { list-style: none; padding-left: 0; margin: 0 0 var(--space-flow); }
 .notes-list li {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 22px 24px;
-  margin-bottom: 14px;
-  transition: border-color 0.2s ease;
-  /* Centered so a title that wraps stays symmetric, like the masthead. */
-  text-align: center;
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+  padding: 20px 22px;
+  margin-bottom: 16px;
 }
-.notes-list li:hover { border-color: var(--border-accent); }
 .notes-list a { text-decoration: none; }
 .notes-list .note-title {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 22px;
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: -0.005em;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   text-wrap: balance;
   display: block;
-  margin-bottom: 10px;
-  color: var(--text);
+  margin-bottom: 8px;
+  color: var(--text-strong);
 }
-.notes-list .note-title:hover { color: var(--accent-bright); }
+.notes-list .note-title:hover { color: var(--accent); }
 .notes-list .note-code {
+  font-family: var(--sans);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-2);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 3px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  padding: 3px 9px;
 }
-.notes-list .note-code:hover {
-  color: var(--accent);
-  border-color: var(--border-accent);
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-underline-offset: 3px;
+.notes-list .note-code:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- Notebook components (shared by the hub and every note) ---------- */
+
+/* Highlighter. Works on <mark> and .nb-hl; swipes in when it scrolls into view. */
+mark, .nb-hl {
+  color: inherit;
+  background: linear-gradient(var(--hl-ink), var(--hl-ink)) 0 80% / 100% 0.5em no-repeat;
+  padding: 0 0.08em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+html.nb-js mark:not(.nb-in), html.nb-js .nb-hl:not(.nb-in) { background-size: 0% 0.5em; }
+html.nb-js mark, html.nb-js .nb-hl { transition: background-size 0.8s cubic-bezier(0.3, 0.7, 0.2, 1) 0.15s; }
+
+/* Handwriting: a line in the author's own hand. */
+.nb-scrawl {
+  font-family: var(--hand);
+  font-size: 1.35em;
+  line-height: 1.1;
+  color: var(--pen-red);
+}
+/* Margin note: hangs in the right margin on wide screens, sits inline on narrow ones. */
+.nb-margin {
+  display: block;
+  font-family: var(--hand);
+  font-size: 21px;
+  line-height: 1.15;
+  color: var(--pen-red);
+  margin: 0 0 var(--space-flow);
+  transform: rotate(-1.5deg);
+  transform-origin: left center;
+}
+@media (min-width: 1180px) {
+  body:not(.hub) .nb-margin {
+    float: right;
+    clear: right;
+    width: 190px;
+    margin: 4px -230px 12px 0;
+  }
+}
+html.nb-js .nb-margin:not(.nb-in), html.nb-js .nb-scrawl[data-nb]:not(.nb-in) { opacity: 0; }
+html.nb-js .nb-margin, html.nb-js .nb-scrawl[data-nb] { transition: opacity 0.6s ease 0.3s; }
+
+/* Red-pen correction: the old claim is struck through, the fix sits beside it.
+   <del class="nb-strike">old claim</del> <ins class="nb-fix">what the data says</ins> */
+del.nb-strike {
+  text-decoration: none;
+  color: var(--text-muted);
+  background: linear-gradient(var(--pen-red), var(--pen-red)) 0 55% / 100% 2.5px no-repeat;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+html.nb-js del.nb-strike:not(.nb-in) { background-size: 0% 2.5px; }
+html.nb-js del.nb-strike { transition: background-size 0.7s ease-out 0.2s; }
+ins.nb-fix {
+  text-decoration: none;
+  font-family: var(--hand);
+  font-size: 1.3em;
+  line-height: 1.1;
+  color: var(--pen-red);
 }
 
-/* Reading position: a hairline of accent that fills along the top of the
-   viewport as the article scrolls. Pure CSS scroll-driven animation; engines
-   without support simply never show it, and reduced-motion turns it off. */
+/* Status label: a strip of tape saying where a finding stands today. */
+.nb-status {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 6px 10px 5px;
+  color: var(--text-strong);
+  background: var(--tape);
+  transform: rotate(-1.5deg);
+}
+.nb-status[data-status="holds"] { box-shadow: inset 0 -3px 0 var(--pen-green); }
+.nb-status[data-status="revised"], .nb-status[data-status="superseded"] { box-shadow: inset 0 -3px 0 var(--pen-red); }
+.nb-status[data-status="untested"] { box-shadow: inset 0 -3px 0 var(--border-strong); }
+
+/* Figure frame for the hand-sketched, playable charts. */
+.nb-fig { margin: 0 0 var(--space-block); font-family: var(--sans); }
+.nb-fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.nb-fig figcaption { font-size: 14.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+.nb-fig .nb-readout { font-family: var(--hand); font-size: 30px; line-height: 1.1; color: var(--text-strong); }
+.nb-fig .nb-readout b { color: var(--pen-red); font-weight: 700; }
+.nb-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.nb-chip {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: var(--display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--bg-card);
+  border: 1.5px dashed var(--text-muted);
+  border-radius: 3px;
+  padding: 8px 14px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.nb-chip:hover { transform: translateY(-2px); color: var(--text-strong); }
+.nb-chip[aria-pressed="true"] {
+  color: var(--text-strong);
+  border-style: solid;
+  border-color: var(--text);
+  box-shadow: inset 0 -0.55em 0 var(--hl-ink);
+}
+/* Sketch strokes drawn by the shared script. */
+.nb-ink { fill: none; stroke: var(--text); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nb-ink-soft { fill: none; stroke: var(--text-muted); stroke-width: 1.4; stroke-linecap: round; }
+.nb-ink-red { fill: none; stroke: var(--pen-red); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.nb-ink-fill { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.nb-label { font-family: var(--hand); font-size: 17px; fill: var(--text-2); }
+.nb-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+html.nb-js .nb-draw { transition: stroke-dashoffset 0.55s ease-out; }
+.nb-draw.nb-undrawn { stroke-dashoffset: 1; }
+
+/* ---------- Reading progress: a pencil line down the left edge ---------- */
 @supports (animation-timeline: scroll()) {
   body:not(.hub) main:not(.no-dropcap)::before {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
-    height: 2px;
-    width: 100%;
-    background: var(--accent);
-    opacity: 0.7;
-    transform-origin: 0 50%;
-    transform: scaleX(0);
+    width: 4px;
+    height: 100%;
+    background: var(--text-2);
+    opacity: 0.75;
+    transform-origin: 50% 0;
+    transform: scaleY(0);
     animation: read-progress linear forwards;
     animation-timeline: scroll(root);
     z-index: 50;
     pointer-events: none;
   }
-  @keyframes read-progress {
-    to { transform: scaleX(1); }
-  }
+  @keyframes read-progress { to { transform: scaleY(1); } }
 }
 
-/* Back-to-top: a quiet ringed glyph fixed at the bottom-right, matching the
-   back-icon language. A tiny inline script adds .is-hidden while near the top
-   and removes it once the reader has scrolled past the first screen. The base
-   state is visible, so if the script never runs the control still works (just
-   always shown); the transition is the only motion, so reduced-motion just
-   makes the toggle instant. */
+/* ---------- Back to top ---------- */
 .to-top {
   position: fixed;
   right: 28px;
@@ -815,107 +903,91 @@ th {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid var(--border-accent);
-  background: var(--bg-elevated);
+  border: 1.5px solid var(--border-strong);
+  background: var(--bg-card);
   color: var(--text-2);
   font-family: var(--sans);
   font-size: 19px;
   line-height: 1;
   text-decoration: none;
-  /* Works as both an <a> (notes) and a <button> (the hash-routed learn app,
-     where an href="#..." would corrupt the router); reset the button chrome. */
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
   padding: 0;
   z-index: 60;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
-  transition: opacity 0.2s ease, transform 0.2s ease, color 0.18s ease,
-    border-color 0.18s ease, background 0.18s ease;
+  box-shadow: var(--shadow);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.18s ease, border-color 0.18s ease;
 }
-.to-top.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transform: translateY(8px);
-}
-.to-top:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--bg-card);
-  text-decoration: none;
-  transform: translateY(-2px);
-}
-@media (max-width: 720px) {
-  .to-top { right: 16px; bottom: 16px; width: 44px; height: 44px; }
-}
+.to-top.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px); }
+.to-top:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; transform: translateY(-2px); }
 
-/* Article pagination: quiet previous/next between notes, above the footer. */
+/* ---------- Pager and footer ---------- */
 .note-pager {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  border-top: 1px solid var(--border);
+  border-top: 2px dashed var(--border-strong);
   margin-top: 56px;
   padding-top: 24px;
 }
-.note-pager a {
-  display: block;
-  text-decoration: none;
-  padding: 6px 4px;
-  border-radius: 12px;
-}
+.note-pager a { display: block; text-decoration: none; padding: 6px 4px; border-radius: 4px; }
 .note-pager a:hover { text-decoration: none; }
 .note-pager .pager-label {
   display: block;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  margin-bottom: 6px;
+  font-family: var(--hand);
+  font-size: 20px;
+  line-height: 1.1;
+  color: var(--pen-red);
+  margin-bottom: 4px;
 }
 .note-pager .pager-title {
   display: block;
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: 19px;
-  font-weight: 500;
-  line-height: 1.3;
-  color: var(--text-2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--text);
   transition: color 0.18s ease;
   text-wrap: balance;
 }
-.note-pager a:hover .pager-title, .note-pager a:focus-visible .pager-title { color: var(--accent-bright); }
+.note-pager a:hover .pager-title, .note-pager a:focus-visible .pager-title { color: var(--accent); }
 .note-pager .pager-next { text-align: right; }
-
 footer {
-  border-top: 1px solid var(--border);
+  border-top: 2px solid var(--text);
   margin-top: 64px;
-  padding: 28px 0 48px;
+  padding: 24px 0 48px;
   color: var(--text-muted);
-  font-size: 14px;
-  text-align: center;
+  font-size: 14.5px;
 }
-/* The pager already draws the seam; don't double it. */
 .note-pager + footer { border-top: none; margin-top: 8px; }
-footer a {
-  color: var(--text-2);
-  padding: 13px 6px;
-  margin: -13px -6px;
-}
+footer a { color: var(--text-2); padding: 13px 6px; margin: -13px -6px; }
 footer a:hover { color: var(--accent); }
+
+/* ---------- Page turns ----------
+   Same-origin navigations cross-fade with a small slide, and a note's title
+   travels from its card on the hub to the top of the note. Browsers without
+   cross-document view transitions simply navigate. */
+@view-transition { navigation: auto; }
+body:not(.hub) main > h1:first-of-type { view-transition-name: nb-title; }
+::view-transition-old(root) { animation: nb-leave 0.26s ease-in both; }
+::view-transition-new(root) { animation: nb-enter 0.34s ease-out both; }
+@keyframes nb-leave { to { opacity: 0; transform: translateX(-18px); } }
+@keyframes nb-enter { from { opacity: 0; transform: translateX(18px); } }
+/* Lamp switch: the script clips the new theme outward from the lamp. */
+html.nb-theme-switch::view-transition-old(root),
+html.nb-theme-switch::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.nb-theme-switch::view-transition-new(root) { z-index: 2; }
 
 @media (max-width: 720px) {
   body { font-size: 16px; }
   .page { padding: 0 20px; }
-  h1 { font-size: 36px; }
-  body.hub h1 { font-size: 32px; }
-  h2 { font-size: 27px; }
-  nav.top { flex-wrap: nowrap; align-items: center; }
-  /* Keep the always-visible section switcher from crowding the burger. */
-  nav.top .wordmark { font-size: 21px; }
-  nav.top .section-switch { gap: 1px; padding: 2px; }
-  nav.top .section-link { padding: 5px 11px; font-size: 12px; }
+  h1 { font-size: 37px; }
+  body.hub h1 { font-size: 34px; }
+  body:not(.hub) h1 { font-size: 31px; }
+  h2 { font-size: 26px; }
+  nav.top { flex-wrap: nowrap; }
+  nav.top .wordmark { font-size: 19px; }
   nav.top .nav-toggle {
     display: block; position: absolute; width: 1px; height: 1px;
     margin: 0; opacity: 0; pointer-events: none;
@@ -924,13 +996,14 @@ footer a:hover { color: var(--accent); }
     display: inline-flex; align-items: center; justify-content: center;
     margin-left: auto;
     width: 44px; height: 44px;
-    border-radius: 8px;
+    border-radius: 4px;
     color: var(--text-2);
     font-size: 22px;
     line-height: 1;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
   }
+  nav.top .nb-lamp ~ .nav-burger { margin-left: 0; }
   nav.top .nav-burger:hover { color: var(--accent); }
   nav.top .nav-burger .x { display: none; }
   nav.top .nav-toggle:focus-visible ~ .nav-burger { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -943,33 +1016,35 @@ footer a:hover { color: var(--accent); }
     flex-direction: column; align-items: stretch; gap: 2px;
     margin: 0; padding: 8px;
     background: var(--bg-card);
-    border: 1px solid var(--border-accent);
-    border-radius: 12px;
+    border: 1.5px solid var(--text);
+    border-radius: 4px;
     min-width: 172px;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow);
     z-index: 60;
   }
   nav.top .nav-toggle:checked ~ .links { display: flex; }
-  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 6px; text-align: center; }
-  nav.top .links a:hover { background: rgba(255, 255, 255, 0.04); }
-  blockquote { padding: 2px 0 2px 18px; }
+  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 3px; text-align: center; }
+  nav.top .links a:hover { background: var(--hover); }
+  blockquote { padding: 2px 0 2px 16px; }
   table { display: block; overflow-x: auto; }
-  .study-link { grid-template-columns: 1fr; row-gap: 2px; padding: 20px 2px; }
-  .study-num { padding-top: 0; margin-bottom: 2px; }
+  .study-link { grid-template-columns: 1fr; row-gap: 2px; padding: 18px 2px; }
   .study-title { font-size: 20px; }
   .feature-tile { padding: 18px 18px 16px; }
   .feature-tile .feature-title { font-size: 22px; }
   .note-pager { grid-template-columns: 1fr; }
   .note-pager .pager-next { text-align: left; }
+  .to-top { right: 16px; bottom: 16px; width: 44px; height: 44px; }
 }
-
 @media (max-width: 360px) {
-  nav.top .section-switch { display: none; }
-  nav.top .wordmark { font-size: 19px; }
+  nav.top .wordmark { font-size: 17px; }
+  nav.top .nb-logo { display: none; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
   body:not(.hub) main:not(.no-dropcap)::before { display: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+
+/* Kept from the old sheet: note pages centre their byline. */
+.byline { text-align: center; }

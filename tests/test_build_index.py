@@ -3,7 +3,7 @@ destination validation, fail-safe, pagination, and filtering.
 
 The site is a single static app served at the root: there is no Jekyll index
 page and no marker surgery anymore. `build_index.py` writes `data/notes.json`
-(fetched by the Study app's #/research route) and `feed.xml`.
+and `feed.xml`, plus the note cards stamped into `index.html`.
 """
 
 from __future__ import annotations
@@ -184,7 +184,25 @@ def test_note_repos_filters_private_fork_untagged_and_hub(monkeypatch):
     assert names == ["good"]
 
 
-# --- main() writes both artifacts, fails safe, and is idempotent ----------
+# --- main() writes its outputs, fails safe, and is idempotent -------------
+
+import pytest
+
+
+@pytest.fixture(autouse=True)
+def _never_write_real_outputs(tmp_path, monkeypatch, request):
+    """Point every output path at a temp folder so no test can touch the real
+    site files. Tests that check the committed files opt out with the
+    `committed_files` marker and only ever read."""
+    if request.node.get_closest_marker("committed_files"):
+        return
+    home = tmp_path / "index.html"
+    home.write_text(f"<ul>\n{bi.HOME_START}\n{bi.HOME_END}\n</ul>\n", encoding="utf-8")
+    monkeypatch.setattr(bi, "HOME", home)
+    monkeypatch.setattr(bi, "META", tmp_path / "notes-meta.json")
+    monkeypatch.setattr(bi, "NOTES", tmp_path / "notes.json")
+    monkeypatch.setattr(bi, "FEED", tmp_path / "feed.xml")
+
 
 def test_main_writes_notes_json_and_feed_from_repo_data(tmp_path, monkeypatch):
     notes = tmp_path / "notes.json"
@@ -192,18 +210,29 @@ def test_main_writes_notes_json_and_feed_from_repo_data(tmp_path, monkeypatch):
     monkeypatch.setattr(bi, "NOTES", notes)
     monkeypatch.setattr(bi, "FEED", feed)
     monkeypatch.setattr(bi, "note_repos", lambda: [REPO_OK])
-    assert bi.main() == 0
+    assert bi.main([]) == 0
     data = json.loads(notes.read_text())
     assert data[0]["title"] == "a note"
     assert "<entry>" in feed.read_text()
+    assert bi.HOME.read_text().count('class="nb-card"') == 1
     # Second run is a no-op: nothing rewritten, exit stays 0.
-    before = (notes.read_text(), feed.read_text())
-    assert bi.main() == 0
-    assert (notes.read_text(), feed.read_text()) == before
+    before = (notes.read_text(), feed.read_text(), bi.HOME.read_text())
+    assert bi.main([]) == 0
+    assert (notes.read_text(), feed.read_text(), bi.HOME.read_text()) == before
+
+
+def test_offline_mode_restamps_home_without_touching_the_network(tmp_path, monkeypatch):
+    def no_network(path):
+        raise AssertionError("offline mode must not call the GitHub API")
+
+    monkeypatch.setattr(bi, "_api", no_network)
+    bi.NOTES.write_text(json.dumps([_note(title="Offline note")]), encoding="utf-8")
+    assert bi.main(["--offline"]) == 0
+    assert "Offline note" in bi.HOME.read_text()
 
 
 def test_empty_repo_set_leaves_notes_and_feed_untouched(tmp_path, monkeypatch):
-    # FAIL SAFE: a cron run that finds no public research-note repos (an API
+    # FAIL SAFE: a rebuild that finds no public research-note repos (an API
     # hiccup, or every repo still private) must never blank a seeded list.
     notes = tmp_path / "notes.json"
     feed = tmp_path / "feed.xml"
@@ -212,6 +241,101 @@ def test_empty_repo_set_leaves_notes_and_feed_untouched(tmp_path, monkeypatch):
     monkeypatch.setattr(bi, "NOTES", notes)
     monkeypatch.setattr(bi, "FEED", feed)
     monkeypatch.setattr(bi, "note_repos", lambda: [])
-    assert bi.main() == 0
+    home_before = bi.HOME.read_text()
+    assert bi.main([]) == 0
+    assert bi.HOME.read_text() == home_before
     assert notes.read_text() == '[{"title": "seeded"}]\n'
     assert feed.read_text() == "seeded"
+
+
+# ---- Home page cards (index.html between the notes markers) ----
+
+def _note(**over):
+    base = {
+        "title": "A note",
+        "url": "https://kiwimaddog2020.github.io/a-note/",
+        "code": "https://github.com/KiwiMaddog2020/a-note",
+    }
+    base.update(over)
+    return base
+
+
+def test_home_cards_escape_titles_and_findings():
+    notes = [_note(title='<script>alert(1)</script> & "quotes"')]
+    meta = {notes[0]["code"]: {"finding": "<b>bold</b>", "kind": "<i>x</i>"}}
+    out = bi.render_home_cards(notes, meta)
+    assert "<script>" not in out and "<b>" not in out and "<i>" not in out
+    assert "&lt;script&gt;" in out and "&lt;b&gt;bold&lt;/b&gt;" in out
+
+
+def test_home_cards_reject_foreign_links():
+    notes = [_note(url="javascript:alert(1)", code="https://evil.example/repo")]
+    out = bi.render_home_cards(notes, {})
+    assert "javascript:" not in out and "evil.example" not in out
+    assert f'href="{bi.SITE_URL}"' in out
+    assert 'href="https://github.com/KiwiMaddog2020"' in out
+
+
+def test_home_cards_unknown_status_falls_back_to_untested():
+    notes = [_note()]
+    out = bi.render_home_cards(notes, {notes[0]["code"]: {"status": "amazing"}})
+    assert 'data-status="untested"' in out
+    out = bi.render_home_cards(notes, {notes[0]["code"]: {"status": "revised", "label": "revised Jul 10"}})
+    assert 'data-status="revised"' in out and "revised Jul 10" in out
+
+
+def test_stamp_home_replaces_only_between_markers_and_is_idempotent():
+    page = f"<ul>\n{bi.HOME_START}\nOLD\n{bi.HOME_END}\n</ul><p>keep</p>"
+    once = bi.stamp_home(page, "<li>new</li>")
+    assert "OLD" not in once and "<li>new</li>" in once and "<p>keep</p>" in once
+    assert bi.stamp_home(once, "<li>new</li>") == once
+
+
+def test_stamp_home_refuses_a_page_without_markers():
+    with pytest.raises(ValueError):
+        bi.stamp_home("<ul></ul>", "<li>x</li>")
+
+
+@pytest.mark.committed_files
+def test_committed_home_page_matches_notes_json():
+    """index.html must be what the generator would write from the committed data."""
+    notes = json.loads(bi.NOTES.read_text(encoding="utf-8"))
+    page = bi.HOME.read_text(encoding="utf-8")
+    assert bi.stamp_home(page, bi.render_home_cards(notes, bi.load_meta())) == page
+    assert page.count('class="nb-card"') == len(notes)
+
+
+@pytest.mark.committed_files
+def test_notes_meta_keys_are_listed_notes_with_valid_status():
+    notes = json.loads(bi.NOTES.read_text(encoding="utf-8"))
+    codes = {n["code"] for n in notes}
+    for code, m in bi.load_meta().items():
+        assert code in codes, f"notes-meta.json entry for an unlisted note: {code}"
+        assert m.get("status", "untested") in bi.STATUSES
+        assert "—" not in json.dumps(m, ensure_ascii=False), "no em-dashes in site copy"
+
+
+def test_figure_data_matches_published_counts():
+    data = json.loads((bi.ROOT / "data" / "figures" / "reviewers.json").read_text(encoding="utf-8"))
+    assert len(data["defects"]) == data["n_defects"] == 30
+    caught = {r["id"]: sum(r["id"] in d["caught"] for d in data["defects"]) for r in data["raters"]}
+    assert caught == {"gemini": 27, "claude": 23, "codex": 21}
+    assert all(d["caught"] for d in data["defects"])  # the three together caught all 30
+
+
+def test_broken_home_page_stops_the_run_before_anything_is_written(tmp_path, monkeypatch):
+    # A home page that lost its markers must not leave notes.json and feed.xml
+    # updated while index.html stays stale.
+    notes = tmp_path / "notes.json"
+    feed = tmp_path / "feed.xml"
+    notes.write_text("old notes")
+    feed.write_text("old feed")
+    monkeypatch.setattr(bi, "NOTES", notes)
+    monkeypatch.setattr(bi, "FEED", feed)
+    monkeypatch.setattr(bi, "note_repos", lambda: [REPO_OK])
+    bi.HOME.write_text("<ul></ul>\n", encoding="utf-8")
+    with pytest.raises(ValueError):
+        bi.main([])
+    assert notes.read_text() == "old notes"
+    assert feed.read_text() == "old feed"
+    assert bi.HOME.read_text() == "<ul></ul>\n"

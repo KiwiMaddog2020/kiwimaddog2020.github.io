@@ -1,0 +1,271 @@
+{
+ "source": "decorrelation-study runs/RESULTS.json (strict matcher), commit bc0d414",
+ "n_defects": 30,
+ "raters": [
+  {
+   "id": "gemini",
+   "label": "Gemini"
+  },
+  {
+   "id": "claude",
+   "label": "Claude"
+  },
+  {
+   "id": "codex",
+   "label": "Codex"
+  }
+ ],
+ "defects": [
+  {
+   "id": "01-d1",
+   "type": "logic",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "01-d2",
+   "type": "performance",
+   "caught": [
+    "gemini",
+    "claude"
+   ]
+  },
+  {
+   "id": "02-d1",
+   "type": "concurrency",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "02-d2",
+   "type": "api-misuse",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "03-d1",
+   "type": "concurrency",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "04-d1",
+   "type": "boundary",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "04-d2",
+   "type": "logic",
+   "caught": [
+    "gemini",
+    "codex"
+   ]
+  },
+  {
+   "id": "04-d3",
+   "type": "logic",
+   "caught": [
+    "claude"
+   ]
+  },
+  {
+   "id": "05-d1",
+   "type": "logic",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "05-d2",
+   "type": "boundary",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "06-d1",
+   "type": "spec-violation",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "07-d1",
+   "type": "logic",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "08-d1",
+   "type": "boundary",
+   "caught": [
+    "gemini",
+    "codex"
+   ]
+  },
+  {
+   "id": "08-d2",
+   "type": "spec-violation",
+   "caught": [
+    "gemini",
+    "claude"
+   ]
+  },
+  {
+   "id": "08-d3",
+   "type": "performance",
+   "caught": [
+    "gemini"
+   ]
+  },
+  {
+   "id": "09-d1",
+   "type": "boundary",
+   "caught": [
+    "gemini"
+   ]
+  },
+  {
+   "id": "09-d2",
+   "type": "api-misuse",
+   "caught": [
+    "gemini",
+    "codex"
+   ]
+  },
+  {
+   "id": "09-d3",
+   "type": "concurrency",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "10-d1",
+   "type": "api-misuse",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "11-d1",
+   "type": "api-misuse",
+   "caught": [
+    "claude"
+   ]
+  },
+  {
+   "id": "11-d2",
+   "type": "security",
+   "caught": [
+    "gemini"
+   ]
+  },
+  {
+   "id": "11-d3",
+   "type": "security",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "11-d4",
+   "type": "performance",
+   "caught": [
+    "gemini",
+    "claude"
+   ]
+  },
+  {
+   "id": "11-d5",
+   "type": "boundary",
+   "caught": [
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "12-d1",
+   "type": "logic",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "13-d1",
+   "type": "security",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "14-d1",
+   "type": "security",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "15-d1",
+   "type": "spec-violation",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  },
+  {
+   "id": "15-d2",
+   "type": "performance",
+   "caught": [
+    "gemini"
+   ]
+  },
+  {
+   "id": "20-d1",
+   "type": "security",
+   "caught": [
+    "gemini",
+    "claude",
+    "codex"
+   ]
+  }
+ ]
+}

@@ -3,93 +3,183 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Arbiter Machinae · Research and study of AI</title>
-  <meta name="description" content="Research notes and an interactive study of machine learning, agents, vibe coding, AI evaluation, and LLM research, by Kevin Madson.">
+  <title>Arbiter Machinae · Research notes on working with AI</title>
+  <meta name="description" content="Small, pre-registered experiments on how AI models behave when something other than the model does the grading. By Kevin Madson.">
   <meta name="author" content="Kevin Madson">
-  <meta name="theme-color" content="#0f0f12">
+  <meta name="theme-color" content="#f6f7f2" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17211e" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://kiwimaddog2020.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Arbiter Machinae">
-  <meta property="og:title" content="Arbiter Machinae · Research and study of AI">
-  <meta property="og:description" content="Research notes and an interactive study of machine learning, agents, vibe coding, AI evaluation, and LLM research, by Kevin Madson.">
+  <meta property="og:title" content="Arbiter Machinae · Research notes on working with AI">
+  <meta property="og:description" content="Small, pre-registered experiments on how AI models behave when something other than the model does the grading.">
   <meta property="og:url" content="https://kiwimaddog2020.github.io/">
-  <meta property="og:image" content="https://kiwimaddog2020.github.io/assets/social-card.png?v=3">
+  <meta property="og:image" content="https://kiwimaddog2020.github.io/assets/social-card.png?v=4">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Ink-dark card: How AI models behave when you measure them honestly. Kevin Madson, research notes; 19 studies, 3 production models, one rule: a model never grades its own work.">
+  <meta property="og:image:alt" content="Arbiter Machinae: research notes by Kevin Madson. One rule: a model never grades its own work.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Arbiter Machinae · Research and study of AI">
-  <meta name="twitter:description" content="Research notes and an interactive study of machine learning, agents, vibe coding, AI evaluation, and LLM research, by Kevin Madson.">
-  <meta name="twitter:image" content="https://kiwimaddog2020.github.io/assets/social-card.png?v=3">
-  <meta name="twitter:image:alt" content="Ink-dark card: How AI models behave when you measure them honestly. Kevin Madson, research notes; 19 studies, 3 production models, one rule: a model never grades its own work.">
+  <meta name="twitter:title" content="Arbiter Machinae · Research notes on working with AI">
+  <meta name="twitter:description" content="Small, pre-registered experiments on how AI models behave when something other than the model does the grading.">
+  <meta name="twitter:image" content="https://kiwimaddog2020.github.io/assets/social-card.png?v=4">
+  <meta name="twitter:image:alt" content="Arbiter Machinae: research notes by Kevin Madson. One rule: a model never grades its own work.">
   <link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="/assets/favicon-16.png" sizes="16x16" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon-180.png">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20fill='%230F0F12'%20width='100'%20height='100'%20rx='22'/%3E%3Ctext%20x='50'%20y='68'%20text-anchor='middle'%20font-size='46'%20font-family='Georgia,serif'%20font-weight='600'%20fill='%232A95EA'%3EKM%3C/text%3E%3C/svg%3E" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="Arbiter Machinae · Research notes" href="/feed.xml">
-  <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/research-notes.css?v=8fb373556b">
-  <link rel="stylesheet" href="/assets/learn.css?v=a6ec1c3856">
+  <!-- Set the saved theme before first paint so the page never flashes the wrong one. -->
+  <script>try{var t=localStorage.getItem('am-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="preload" href="/assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/caveat-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/research-notes.css?v=4fa1193f08">
+  <link rel="stylesheet" href="/assets/home.css?v=040b8c2925">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Kevin Madson","url":"https://kiwimaddog2020.github.io/","sameAs":["https://github.com/KiwiMaddog2020"],"jobTitle":"Senior Business Analyst","description":"Builds and operates agentic systems across multiple coding LLMs.","knowsAbout":["Agentic systems","Multi-model evaluation","Claude Code","Software engineering","Applied AI"]}
+  {"@context":"https://schema.org","@type":"Person","name":"Kevin Madson","url":"https://kiwimaddog2020.github.io/","sameAs":["https://github.com/KiwiMaddog2020"],"description":"Runs small, pre-registered experiments on how AI models behave and how to work with them well.","knowsAbout":["AI evaluation","Agentic systems","Claude","Multi-model review","Applied AI"]}
   </script>
-  <script src="/assets/learn.js?v=108e2a4f99" defer></script>
+  <script src="/assets/notebook.js?v=535d230eb9" defer></script>
 </head>
-<body class="learn-page">
-  <a class="skip-link" href="#app">Skip to content</a>
-  <div class="page learn-shell">
-    <nav class="top learn-top" aria-label="Primary">
-      <a class="wordmark" href="#/">Arbiter Machinae</a>
+<body class="hub home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page" id="top">
+    <nav class="top" aria-label="Primary">
+      <a class="wordmark" href="/">
+        <svg class="nb-logo" viewBox="0 0 32 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 6v18M10 25h12"/>
+          <g class="beam"><path d="M4 6h24"/><path d="M4 6l-3 8h6zM28 6l-3 8h6z"/></g>
+        </svg>
+        Arbiter Machinae
+      </a>
+      <button type="button" class="nb-lamp" aria-label="Chalkboard theme" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><g class="rays"><path d="M12 1.5v2M3.6 5.1l1.4 1.4M20.4 5.1L19 6.5M1.5 12.5h2M20.5 12.5h2"/></g><path class="bulb" d="M8.2 15.2a5.6 5.6 0 1 1 7.6 0c-.7.7-1 1.4-1 2.3H9.2c0-.9-.3-1.6-1-2.3z"/><path d="M9.6 20h4.8M10.4 22.3h3.2"/></svg>
+      </button>
       <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Menu">
       <label for="nav-toggle" class="nav-burger"><span class="bars" aria-hidden="true">☰</span><span class="x" aria-hidden="true">✕</span></label>
       <div class="links">
-        <span class="nav-center">
-          <a href="#/research">Research</a>
-          <a href="#/labs">Labs</a>
-          <a href="#/flashcards">Flashcards</a>
-          <a href="#/quiz">Quiz</a>
-          <a href="#/resources">Resources</a>
-        </span>
-        <button type="button" class="nav-search-toggle" id="nav-search-toggle" aria-label="Search" aria-expanded="false" aria-controls="nav-search-panel">
-          <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8.5" cy="8.5" r="5.5"/><line x1="12.8" y1="12.8" x2="17.5" y2="17.5" stroke-linecap="round"/></svg>
-          <span class="nav-search-label">Search</span>
-        </button>
-        <span class="nav-auth" id="nav-auth"></span>
-      </div>
-      <div class="nav-search-panel" id="nav-search-panel" hidden>
-        <input type="search" class="nav-search-input" id="nav-search-input" placeholder="Search lessons and resources" aria-label="Search lessons and resources" autocomplete="off">
-        <div class="nav-search-results" id="nav-search-results"></div>
+        <a href="#notes">Notes</a>
+        <a href="#crossed-out">Corrections</a>
+        <a href="#rules">Lab rules</a>
+        <a href="/feed.xml">Feed</a>
+        <a href="https://github.com/KiwiMaddog2020">GitHub</a>
       </div>
     </nav>
-    <main id="app" tabindex="-1" aria-live="polite">
-      <p class="learn-loading">Loading...</p>
+
+    <main id="main" class="no-dropcap">
+      <section class="home-hero">
+        <div class="home-hero-text">
+          <p class="home-kicker nb-scrawl">Lab notebook · Kevin Madson</p>
+          <h1>Notes on machines that <mark>grade themselves.</mark></h1>
+          <p class="home-lede">I run small, pre-registered experiments on how AI models behave, mostly Claude, and write down what happened. That includes the bets I lost.</p>
+          <p class="nb-scrawl home-aside" data-nb>they shouldn't. that is the whole point <span aria-hidden="true">&#8599;</span></p>
+        </div>
+        <figure class="nb-fig home-fig" data-fig="reviewers" data-src="/data/figures/reviewers.json" data-start="claude">
+          <p class="home-fig-title">Try it: who catches the bugs?</p>
+          <div data-fig-slot>
+            <p class="nb-readout">Claude alone: <b>23 of 30</b> bugs caught</p>
+            <p class="home-fig-fallback">Gemini alone caught 27 and Codex 21. All three together caught all 30.</p>
+          </div>
+          <figcaption>20 code snippets with 30 planted defects, reviewed blind by three AI models. Switch reviewers on and off to see what each one misses. From the <a href="https://kiwimaddog2020.github.io/decorrelation-study/">blind spots study</a>, June 2026.</figcaption>
+        </figure>
+      </section>
+
+      <section id="notes" aria-labelledby="notes-h">
+        <h2 id="notes-h">The notes</h2>
+        <ul class="nb-cards" role="list">
+        <!-- notes:start (generated by bin/build_index.py, do not edit by hand) -->
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">harness</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/trutina/"><span class="nb-card-title" data-nb-note-title>An honest eval harness, and ten studies of model behavior</span></a>
+          <p class="nb-card-find">An eval harness where the model that did the work never judges it, plus ten studies of how production models behave.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/trutina">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">experiment</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/decorrelation-study/"><span class="nb-card-title" data-nb-note-title>Do AI code reviewers have complementary blind spots?</span></a>
+          <p class="nb-card-find">Three AI reviewers together caught all 30 planted bugs. The best one alone caught 27.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/decorrelation-study">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">field guide</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/evaluating-claude/"><span class="nb-card-title" data-nb-note-title>How to know if your AI is actually working</span></a>
+          <p class="nb-card-find">The five rules I would hand a team that adopts nothing else.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/evaluating-claude">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">safety</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/self-improvement-gate/"><span class="nb-card-title" data-nb-note-title>The gate that edits a gate is rejected by the gate it edits</span></a>
+          <p class="nb-card-find">A small gate that decides whether an agent may change its own rules. It only ever proposes, it never writes.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/self-improvement-gate">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">experiment</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/oneshot-bench/"><span class="nb-card-title" data-nb-note-title>Ten rounds of an agent improving one game</span></a>
+          <p class="nb-card-find">A 71-check test suite and what each extra round of AI polish actually costs.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/oneshot-bench">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">method</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/craft-fit-rating/"><span class="nb-card-title" data-nb-note-title>Rating your own work without lying to yourself</span></a>
+          <p class="nb-card-find">Two scores, craft and fit. A grade with no evidence behind it gets lowered until it has some.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/craft-fit-rating">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">method</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/trust-weighted-evals/"><span class="nb-card-title" data-nb-note-title>An eval framework where the doer never grades itself</span></a>
+          <p class="nb-card-find">A review loop where each reviewer&#x27;s vote counts for as much trust as it has earned.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/trust-weighted-evals">code</a>
+        </li>
+        <li class="nb-card" data-nb-tilt>
+          <span class="nb-status" data-status="untested">side project</span>
+          <a class="nb-card-link" data-nb-note href="https://kiwimaddog2020.github.io/audioscan/"><span class="nb-card-title" data-nb-note-title>Audioscan: one decode pass instead of three ffmpeg shellouts</span></a>
+          <p class="nb-card-find">One decode pass instead of three separate ffmpeg calls.</p>
+          <a class="nb-card-code" href="https://github.com/KiwiMaddog2020/audioscan">code</a>
+        </li>
+        <!-- notes:end -->
+        </ul>
+      </section>
+
+      <section id="crossed-out" aria-labelledby="crossed-h">
+        <h2 id="crossed-h">Crossed out</h2>
+        <p class="home-section-note">Things I believed, and what the data said instead. Corrections stay on the page.</p>
+        <ol class="home-fixes" role="list">
+          <li>
+            <p><del class="nb-strike">Claude Opus is the grader that most favors its own work.</del></p>
+            <p><ins class="nb-fix">GPT-5.5 is, once answer quality is held fixed: +7.6 points against +2.7.</ins></p>
+            <p class="home-fix-src">Corrected July 10, 2026 after a reanalysis. <a href="https://kiwimaddog2020.github.io/trutina/notes/self-preference.html">Self-preference study</a></p>
+          </li>
+          <li>
+            <p><del class="nb-strike">Three different AI reviewers will catch far more than the best one alone.</del></p>
+            <p><ins class="nb-fix">Only 1.1 times as many. Under the bar I set in advance.</ins></p>
+            <p class="home-fix-src">Pre-registered June 13, 2026. <a href="https://kiwimaddog2020.github.io/decorrelation-study/">Blind spots study</a></p>
+          </li>
+          <li>
+            <p><del class="nb-strike">My write-ups say exactly what the data says.</del></p>
+            <p><ins class="nb-fix">An audit of 620 claims found 18 errors. All 18 are fixed.</ins></p>
+            <p class="home-fix-src">Full audit of every published note, July 10, 2026.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="rules" aria-labelledby="rules-h">
+        <h2 id="rules-h">Lab rules</h2>
+        <p class="home-section-note">Five rules every experiment here follows. If a team adopts nothing else, adopt these.</p>
+        <ul class="home-rules" role="list">
+          <li><strong>Nothing grades its own output.</strong> The reviewer is a different model, and the harness decides who it is.</li>
+          <li><strong>Every score cites evidence.</strong> A grade with no fact behind it gets lowered until it has one.</li>
+          <li><strong>Cheap checks run first.</strong> Plain, model-free tests run on every change. Expensive judges only look at what is new.</li>
+          <li><strong>A human outranks the automation.</strong> A person checks what the machines cannot, and wins any disagreement.</li>
+          <li><strong>Say what was not measured.</strong> "Estimate" and "one run" stay attached to the number.</li>
+        </ul>
+        <p class="home-section-note"><a href="https://kiwimaddog2020.github.io/evaluating-claude/">Read the field guide</a></p>
+      </section>
     </main>
+
     <button type="button" class="to-top is-hidden" aria-label="Back to top" title="Back to top">↑</button>
+    <footer>
+      Written and checked with the tooling it describes.
+      <a href="https://github.com/KiwiMaddog2020/kiwimaddog2020.github.io">This site is a repo too.</a>
+    </footer>
   </div>
-  <script>
-  // Reveal a back-to-top control once the reader is past the first screen. The
-  // learn app is hash-routed, so this is a <button> that scrolls via JS rather
-  // than an href that would hijack the router; hashchange re-syncs on route change.
-  (function () {
-    var btn = document.querySelector('.to-top');
-    if (!btn) return;
-    var sync = function () {
-      var y = window.scrollY || document.documentElement.scrollTop || 0;
-      btn.classList.toggle('is-hidden', y < 600);
-    };
-    btn.addEventListener('click', function () {
-      // Positional form works everywhere; the smoothness comes from the CSS
-      // scroll-behavior on <html>, which reduced-motion turns off for free.
-      window.scrollTo(0, 0);
-    });
-    window.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync, { passive: true });
-    window.addEventListener('hashchange', sync);
-    sync();
-  })();
-  </script>
 </body>
 </html>
