@@ -35,6 +35,7 @@ Do not edit them by hand.
 python3 bin/build_index.py            # fetch the list from GitHub and rebuild
 python3 bin/build_index.py --offline  # only re-render the home page cards
 python3 bin/stamp-cache.py            # refresh cache stamps on asset links
+git config core.hooksPath .githooks   # optional, once: stamp on every commit
 bash bin/check.sh
 ```
 

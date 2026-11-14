@@ -37,7 +37,16 @@ def stamp(html_path: Path, basename: str, h: str) -> bool:
     return False
 
 
-def main() -> int:
+def pages() -> list[str]:
+    """Every HTML file the stamper may rewrite, in a stable order."""
+    return sorted({hf for html_files in ASSETS.values() for hf in html_files})
+
+
+def main(argv: list[str] | None = None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
+    if "--pages" in argv:
+        print("\n".join(pages()))
+        return 0
     changed = []
     for asset, html_files in ASSETS.items():
         asset_path = ROOT / asset

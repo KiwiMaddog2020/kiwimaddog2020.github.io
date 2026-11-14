@@ -2,5 +2,6 @@
 # Content-hash cache busting: stamp asset links, then re-stage the touched HTML.
 # Enable once with: git config core.hooksPath .githooks
 python3 bin/stamp-cache.py || exit 1
-git add index.html _layouts/default.html 2>/dev/null
+# Re-stage every page the stamper can touch (the list lives in bin/stamp-cache.py).
+python3 bin/stamp-cache.py --pages | xargs git add 2>/dev/null
 exit 0

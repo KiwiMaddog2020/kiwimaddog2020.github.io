@@ -11,7 +11,7 @@ not sold on their own. Files were taken from the `@fontsource` npm packages.
 | Source Serif 4 | reading text | `source-serif-4-*.woff2` |
 | Source Sans 3 | labels and tables | `source-sans-3-*.woff2` |
 | Caveat 700 | handwriting (margin notes, corrections) | `caveat-700-latin.woff2` |
-| Cormorant Garamond, Inter | the `/work/` page only | `cormorant-garamond-*.woff2`, `inter-*.woff2` |
+| Cormorant Garamond, Inter | the `/work/` page only | `cormorant-garamond-*.woff2` (upright and italic), `inter-*.woff2` |
 
 Do not rename or remove these files: note sites in other repos load them by
 absolute URL.

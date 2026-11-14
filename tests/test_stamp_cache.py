@@ -44,7 +44,15 @@ def test_short_hash_tracks_content(tmp_path):
 
 def test_main_fails_on_a_missing_asset(tmp_path, monkeypatch):
     monkeypatch.setattr(sc, "ROOT", tmp_path)
-    assert sc.main() == 1
+    assert sc.main([]) == 1
+
+
+def test_pages_lists_every_stamped_file_once(capsys):
+    assert sc.main(["--pages"]) == 0
+    listed = capsys.readouterr().out.split()
+    assert listed == sorted(set(listed))
+    assert "rag-findings/index.html" in listed and "index.html" in listed
+    assert all((ROOT / page).exists() for page in listed)
 
 
 @pytest.mark.parametrize("asset,pages", sorted(sc.ASSETS.items()))
