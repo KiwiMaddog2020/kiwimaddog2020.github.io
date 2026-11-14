@@ -72,7 +72,7 @@ No secrets were found in the six research repos. Pre-registrations, audits and r
   - B. Calibration: hard bank plus the never-run 72-item frontier bank, exact-match scoring, plus how often tiers share the same wrong answer.
   - C. Self-preference: each tier answers, every tier grades blind, with the corrected two-way analysis.
   - New data goes in new folders. Published July results are never overwritten.
-- [ ] **Phase 5. Research refresh on the site.** A new note, "What changed since July", combining the literature review and the then-vs-now rerun results; each existing note gets an honest status line (holds, revised, superseded, not retested); `evaluating-claude` field guide updated where the evidence moved.
+- [x] **Phase 5. Research refresh on the site.** A new note, "What changed since July", combining the literature review and the then-vs-now rerun results; each existing note gets an honest status line (holds, revised, superseded, not retested); `evaluating-claude` field guide updated where the evidence moved.
 - [ ] **Phase 6. Research repo tidy.** Update retired model defaults in rag-lab and the trutina demo, loosen-or-raise stale dependency floors after checking real current versions, fix stale claims in READMEs, comments that narrate old edits.
 - [ ] **Phase 7. Wrap.** Move this file to `docs/archive/`, final report with everything parked or unverified.
 
@@ -129,3 +129,16 @@ Lanes run as in-session helpers. Cloud sessions are not needed at this size.
 - 2026-11-14: Result, self-preference (same folder, `self-preference/`): Claude tiers favour their own tier's text by +1.00 point on a 100-point scale, 95% interval +0.32 to +1.77. Haiku (+3.65) and Fable (+1.90) clear zero; Sonnet and Opus do not. Ten prompts, one family.
 - 2026-11-14: Phase 4 review (different model, read-only) recomputed one headline number per study and all matched. Fixed: the two trutina result files now state the pre-registered verdicts and drop a limit that amendment 1 had superseded. Left as is and noted: in the opt-in "described" scorer an untyped flag gets type credit (no effect on any result here; changing it would touch the tie-break the July numbers used); a snippet-level bootstrap gives 0.00 to 0.67 for the code review difference, same verdict.
 - 2026-11-14: Lanes finished in Phase 4 and safe to clear: E (scorer switches), F (rerun tooling), the Phase 4 review lane, and all helper sessions.
+- 2026-11-14: Phase 5 done. New hub page `/since-july/` ("What changed since July") with the three rerun results, a claim-by-claim status table and four cited outside papers (links checked). Home page links to it. Card status underlines: trutina and decorrelation-study "holds", evaluating-claude "revised", the rest "untested" (not rerun). Field guide rule 1 and its checklist line updated in evaluating-claude: prefer a different model family, and a fresh session is the cheap first step.
+- 2026-11-14: The note lives on the hub, not in its own repo, so it is not a card and not in the feed. Making it a listed note needs a new public repo with the `research-note` topic, which is Kevin's call.
+- 2026-11-14: Phase 5 fact check (different model, read-only): every number matched its source; three wording fixes applied (the "all four together" count, which bank the calibration table shows, runs per model). Not independently re-read: the outside papers beyond their titles and abstracts.
+- 2026-11-14: Not done in Phase 5: per-note status lines inside each note site (only the hub cards and the table in the new note carry status).
+
+## Handoff (2026-11-14)
+
+Kevin asked to finish Phase 5 and wrap, and to stop using Fable as the main orchestrator for this work. From here:
+
+- A lighter model orchestrates Phases 6 and 7. Call Fable only as an advisor or reviewer for a hard judgment, not for fan-out lanes.
+- Remaining: Phase 6 (retired model defaults in rag-lab and `trutina/trutina/demo.py`, dependency floors, stale README claims, sync `rag-lab/docs/findings.html` with the hub copy) and Phase 7 (archive this file, final report).
+- Nothing is live. All seven repos carry the work on branch `ccr-9a96b288-mubiy9`; merging to main is Kevin's explicit go-ahead and has not been given.
+- Open flags for Kevin: delete or lock the old `blog-and-research` Firebase project; a networked run of `bin/build_index.py` will replace hand-edited titles in `data/notes.json` with repo descriptions; the third "Crossed out" item on the home page is a paraphrase to confirm.

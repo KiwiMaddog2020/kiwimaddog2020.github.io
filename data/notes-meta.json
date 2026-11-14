@@ -1,15 +1,18 @@
 {
   "https://github.com/KiwiMaddog2020/trutina": {
     "kind": "harness",
-    "finding": "An eval harness where the model that did the work never judges it, plus ten studies of how production models behave."
+    "finding": "An eval harness where the model that did the work never judges it, plus ten studies of how production models behave.",
+    "status": "holds"
   },
   "https://github.com/KiwiMaddog2020/decorrelation-study": {
     "kind": "experiment",
-    "finding": "Three AI reviewers together caught all 30 planted bugs. The best one alone caught 27."
+    "finding": "Three AI reviewers together caught all 30 planted bugs. The best one alone caught 27.",
+    "status": "holds"
   },
   "https://github.com/KiwiMaddog2020/evaluating-claude": {
     "kind": "field guide",
-    "finding": "The five rules I would hand a team that adopts nothing else."
+    "finding": "The five rules I would hand a team that adopts nothing else.",
+    "status": "revised"
   },
   "https://github.com/KiwiMaddog2020/self-improvement-gate": {
     "kind": "safety",
