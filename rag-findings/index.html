@@ -1,14 +1,29 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>What actually matters in a RAG pipeline - rag-lab</title>
+<title>What actually matters in a RAG pipeline · Arbiter Machinae</title>
+<meta name="description" content="Five views of a controlled sweep over two multi-hop question answering benchmarks: what moves RAG quality and what does not.">
+<link rel="canonical" href="https://kiwimaddog2020.github.io/rag-findings/">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+<script>try{var t=localStorage.getItem('am-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script src="/assets/notebook.js?v=535d230eb9" defer></script>
 <style>
-:root{--c-ink:#e8e6e1;--c-muted:#9a9690;--c-grid:rgba(255,255,255,.09);--c-strong:#2a95ea;--c-strong2:#5aabf6;--c-neutral:#9a9690;--c-info:#5aabf6;--c-warn:#9a9690;--c-paper:#14141a;--c-line:rgba(255,255,255,.08);--c-card:#21212a;--c-flag:#1b1b22;--c-strongtext:#f2f0eb}
+:root{color-scheme:light;--c-ink:#1d2433;--c-muted:#5a6478;--c-grid:rgba(29,36,51,.14);--c-strong:#2443b8;--c-strong2:#152c8a;--c-neutral:#5a6478;--c-info:#2443b8;--c-warn:#c2311f;--c-paper:#f6f7f2;--c-line:rgba(29,36,51,.16);--c-card:#fffef8;--c-flag:#fffef8;--c-strongtext:#10162a;--c-pgrid:rgba(60,105,160,.13);--c-hl:rgba(255,225,77,.85);--c-red:#c2311f}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--c-ink:#e9e8e0;--c-muted:#98a39b;--c-grid:rgba(233,232,224,.14);--c-strong:#9cc7ff;--c-strong2:#c7defd;--c-neutral:#98a39b;--c-info:#9cc7ff;--c-warn:#ff9a8b;--c-paper:#17211e;--c-line:rgba(233,232,224,.16);--c-card:#212e2a;--c-flag:#1e2a26;--c-strongtext:#f7f6ee;--c-pgrid:rgba(226,238,230,.055);--c-hl:rgba(255,225,77,.36);--c-red:#ff9a8b}}
+:root[data-theme="dark"]{color-scheme:dark;--c-ink:#e9e8e0;--c-muted:#98a39b;--c-grid:rgba(233,232,224,.14);--c-strong:#9cc7ff;--c-strong2:#c7defd;--c-neutral:#98a39b;--c-info:#9cc7ff;--c-warn:#ff9a8b;--c-paper:#17211e;--c-line:rgba(233,232,224,.16);--c-card:#212e2a;--c-flag:#1e2a26;--c-strongtext:#f7f6ee;--c-pgrid:rgba(226,238,230,.055);--c-hl:rgba(255,225,77,.36);--c-red:#ff9a8b}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:200 800;font-display:swap;src:url(/assets/fonts/bricolage-grotesque-latin.woff2) format('woff2')}
+.nb-logo{width:30px;height:26px;flex:none;overflow:visible}
+.nb-lamp{-webkit-appearance:none;appearance:none;display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-8px 0 -8px auto;background:none;border:none;border-radius:50%;color:var(--c-muted);cursor:pointer}
+.nb-lamp:hover{color:var(--c-strong)}.nb-lamp svg{width:24px;height:24px;overflow:visible}.nb-lamp .rays{opacity:0}.nb-lamp .bulb{fill:none}
+:root[data-theme="dark"] .nb-lamp .rays{opacity:1}:root[data-theme="dark"] .nb-lamp .bulb{fill:#ffe14d}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .nb-lamp .rays{opacity:1}:root:not([data-theme="light"]) .nb-lamp .bulb{fill:#ffe14d}}
+nav.top .nb-lamp ~ .links{margin-left:0}
+html.nb-theme-switch::view-transition-old(root),html.nb-theme-switch::view-transition-new(root){animation:none;mix-blend-mode:normal}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--c-paper);color:var(--c-ink);
  font:16px/1.65 'Source Sans 3',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
- background-image:radial-gradient(120% 60% at 50% 0%,rgba(42,149,234,.05) 0%,transparent 62%)}
+ background-image:linear-gradient(var(--c-pgrid) 1px,transparent 1px),linear-gradient(90deg,var(--c-pgrid) 1px,transparent 1px);background-size:24px 24px}
 @font-face{font-family:'Source Serif 4';font-style:normal;font-weight:500;font-display:swap;
  src:url(/assets/fonts/source-serif-4-500-latin.woff2) format('woff2')}
 @font-face{font-family:'Source Sans 3';font-style:normal;font-weight:400;font-display:swap;
@@ -16,39 +31,40 @@ body{margin:0;background:var(--c-paper);color:var(--c-ink);
 @font-face{font-family:'Source Sans 3';font-style:normal;font-weight:600;font-display:swap;
  src:url(/assets/fonts/source-sans-3-600-latin.woff2) format('woff2')}
 .wrap{max-width:780px;margin:0 auto;padding:28px 24px 80px}
-nav.top{display:flex;align-items:baseline;gap:16px;padding:28px 0;
- border-bottom:1px solid var(--c-line);margin-bottom:18px}
-nav.top .wordmark{font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:500;
- letter-spacing:.01em;color:var(--c-ink);text-decoration:none}
+nav.top{display:flex;align-items:center;gap:16px;padding:24px 0 18px;
+ border-bottom:2px solid var(--c-ink);margin-bottom:22px}
+nav.top .wordmark{display:inline-flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque','Source Sans 3',sans-serif;font-size:21px;font-weight:800;
+ letter-spacing:-.02em;color:var(--c-strongtext);text-decoration:none}
 nav.top .wordmark:hover{color:var(--c-strong2,#5aabf6)}
 nav.top .links{margin-left:auto;display:flex;gap:26px}
 nav.top .links a{color:var(--c-muted);text-decoration:none;font-size:15px;font-weight:500;
  padding:13px 6px;margin:-13px -6px;transition:color .18s ease}
 nav.top .links a:hover{color:var(--c-strong)}
 .back-icon{display:flex;align-items:center;justify-content:center;width:44px;height:44px;
- border-radius:50%;border:1px solid rgba(42,149,234,.24);color:var(--c-muted);font-size:20px;
+ border-radius:50%;border:1px solid var(--c-line);color:var(--c-muted);font-size:20px;
  line-height:1;text-decoration:none;margin:0 0 18px;
  transition:color .18s ease,border-color .18s ease,background .18s ease}
 .back-icon:hover{color:var(--c-strong);border-color:var(--c-strong);background:var(--c-card);text-decoration:none}
 .eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;
  color:var(--c-strong);font-weight:500}
-h1{font-family:'Source Serif 4',Georgia,serif;font-size:44px;line-height:1.06;
- font-weight:500;margin:.3rem 0 .5rem;letter-spacing:-.015em}
+h1{font-family:'Bricolage Grotesque','Source Sans 3',sans-serif;font-size:44px;line-height:1.05;
+ font-weight:750;margin:.3rem 0 .6rem;letter-spacing:-.035em;color:var(--c-strongtext);text-wrap:balance}
 .lede{font-size:18px;color:var(--c-muted);margin:0 0 1.3rem;max-width:62ch}
 .meta{font-size:13px;color:var(--c-muted);border-top:1px solid var(--c-line);
  border-bottom:1px solid var(--c-line);padding:12px 0;display:flex;gap:22px;flex-wrap:wrap}
 .finding{margin:52px 0}
 .finding .n{font-size:13px;color:var(--c-muted);font-weight:500}
-.finding h2{font-family:'Source Serif 4',Georgia,serif;font-size:27px;font-weight:500;
- margin:.15rem 0 .2rem;letter-spacing:-.005em;line-height:1.2}
+.finding h2{font-family:'Bricolage Grotesque','Source Sans 3',sans-serif;font-size:27px;font-weight:700;
+ margin:.15rem 0 .2rem;letter-spacing:-.02em;line-height:1.15;color:var(--c-strongtext)}
 .to-top{position:fixed;right:28px;bottom:28px;display:flex;align-items:center;
  justify-content:center;width:46px;height:46px;border-radius:50%;
- border:1px solid rgba(42,149,234,.24);background:var(--c-card);color:var(--c-muted);
+ border:1px solid var(--c-line);background:var(--c-card);color:var(--c-muted);
  font-size:19px;line-height:1;text-decoration:none;cursor:pointer;-webkit-appearance:none;
- appearance:none;z-index:60;box-shadow:0 8px 24px rgba(0,0,0,.42);
+ appearance:none;z-index:60;box-shadow:3px 5px 0 var(--c-line);
  transition:opacity .2s ease,transform .2s ease,color .18s,border-color .18s,background .18s}
 .to-top:hover{color:var(--c-strong);border-color:var(--c-strong)}
 .to-top.is-hidden{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px)}
+@media(max-width:480px){nav.top{gap:4px}nav.top .wordmark{font-size:16px;white-space:nowrap;gap:7px}nav.top .links{gap:12px;flex-shrink:0}nav.top .links a{font-size:14px;white-space:nowrap}}
 @media(max-width:720px){.to-top{right:16px;bottom:16px;width:44px;height:44px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
  *,*::before,*::after{transition:none!important}}
@@ -66,9 +82,9 @@ h1{font-family:'Source Serif 4',Georgia,serif;font-size:44px;line-height:1.06;
  font-size:13px;color:var(--c-ink)}
 a{color:var(--c-strong)}
 </style></head><body><div class="wrap">
-<nav class="top"><a class="wordmark" href="/">Kevin Madson</a>
-<div class="links"><a href="/#/labs">All labs</a><a href="https://github.com/KiwiMaddog2020">GitHub</a></div></nav>
-<a class="back-icon" href="/#/labs" aria-label="Back to labs" title="Back to labs">&larr;</a>
+<nav class="top"><a class="wordmark" href="/"><svg class="nb-logo" viewBox="0 0 32 28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 6v18M10 25h12"/><g class="beam"><path d="M4 6h24"/><path d="M4 6l-3 8h6zM28 6l-3 8h6z"/></g></svg>Arbiter Machinae</a>
+<div class="links"><a href="/#notes">All notes</a><a href="https://github.com/KiwiMaddog2020">GitHub</a></div></nav>
+<a class="back-icon" href="/" aria-label="Back to research notes" title="Research notes">&larr;</a>
 <div class="eyebrow">rag-lab &middot; research</div>
 <h1>What actually matters in a RAG pipeline</h1>
 <p class="lede">Five views of a controlled sweep over two multi-hop QA benchmarks,

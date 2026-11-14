@@ -1010,7 +1010,9 @@ html.nb-theme-switch::view-transition-new(root) { z-index: 2; }
   nav.top .nav-toggle:checked ~ .nav-burger { color: var(--accent); }
   nav.top .nav-toggle:checked ~ .nav-burger .bars { display: none; }
   nav.top .nav-toggle:checked ~ .nav-burger .x { display: inline; }
-  nav.top .links {
+  /* The dropdown only applies where the page ships a menu toggle. Note pages
+     without one keep their two short links in the bar. */
+  nav.top .nav-toggle ~ .links {
     display: none;
     position: absolute; top: calc(100% + 6px); right: 0;
     flex-direction: column; align-items: stretch; gap: 2px;
@@ -1023,8 +1025,14 @@ html.nb-theme-switch::view-transition-new(root) { z-index: 2; }
     z-index: 60;
   }
   nav.top .nav-toggle:checked ~ .links { display: flex; }
-  nav.top .links a { margin: 0; padding: 11px 12px; border-radius: 3px; text-align: center; }
-  nav.top .links a:hover { background: var(--hover); }
+  nav.top .nav-toggle ~ .links a { margin: 0; padding: 11px 12px; border-radius: 3px; text-align: center; }
+  nav.top .nav-toggle ~ .links a:hover { background: var(--hover); }
+  nav.top .wordmark { white-space: nowrap; }
+  nav.top .links { flex-shrink: 0; gap: 14px; }
+  nav.top .links a { font-size: 14px; }
+  nav.top:not(:has(.nav-toggle)) { gap: 6px; }
+  nav.top:not(:has(.nav-toggle)) .wordmark { font-size: 16.5px; gap: 7px; min-width: 0; }
+  nav.top:not(:has(.nav-toggle)) .nb-logo { width: 26px; }
   blockquote { padding: 2px 0 2px 16px; }
   table { display: block; overflow-x: auto; }
   .study-link { grid-template-columns: 1fr; row-gap: 2px; padding: 18px 2px; }

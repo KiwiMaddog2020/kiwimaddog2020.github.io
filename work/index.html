@@ -4,31 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Kevin Madson — Human Upstream</title>
+<title>Kevin Madson · Human Upstream</title>
 <meta name="description" content="Interface and design-engineering for AI-native products. Five things I designed by putting human interface judgment upstream of what the model ships.">
 <meta name="author" content="Kevin Madson">
-<meta property="og:title" content="Kevin Madson — Human Upstream">
+<meta property="og:title" content="Kevin Madson · Human Upstream">
 <meta property="og:description" content="Interface and design-engineering for AI-native products. I put human interface judgment upstream of what the model ships.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kiwimaddog2020.github.io/work/">
-<meta property="og:image" content="https://kiwimaddog2020.github.io/work/img/og-card.png">
+<meta property="og:image" content="https://kiwimaddog2020.github.io/work/img/og-card.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kevin Madson — Human Upstream">
+<meta name="twitter:title" content="Kevin Madson · Human Upstream">
 <meta name="twitter:description" content="Interface and design-engineering for AI-native products.">
-<meta name="twitter:image" content="https://kiwimaddog2020.github.io/work/img/og-card.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="twitter:image" content="https://kiwimaddog2020.github.io/work/img/og-card.jpg">
 <style>
+/* Fonts are self-hosted by the hub; no third-party origins. */
+@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:400 700;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-style:italic;font-weight:400 700;font-display:swap;src:url(/assets/fonts/inter-italic-latin.woff2) format("woff2")}
 :root{
   --bg:#0f0d0a; --bg-deep:#0a0806; --raised:#181410; --raised-2:#1f1a14;
   --ink:#f4ede0; --ink-2:#b8ad9b; --ink-3:#857c6c; --rule:#322a20; --rule-2:#241e17;
   --burgundy:#8a2c3c; --ochre:#c2711f; --navy:#3a4aa0; --carmine:#a8512f; --plum:#6b3a8a; --verdigris:#4e7848;
   --burgundy-lt:#cf6776; --ochre-lt:#cf7d29; --navy-lt:#7d8cd6; --carmine-lt:#cf6f4c; --plum-lt:#a77ec9; --verdigris-lt:#7bb172;
   --gold:#e8b860; --gold-bright:#f5d990;
-  --serif:"EB Garamond",ui-serif,Georgia,serif;
+  --serif:"Cormorant Garamond",ui-serif,Georgia,serif;
   --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --maxw:1080px; --radius:14px; --radius-sm:10px; --ease:cubic-bezier(0.2,0.7,0.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -134,7 +135,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
     <svg class="mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" aria-label="The Threaded Trinity brand mark"><defs><radialGradient id="d" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#b04a55"/><stop offset="50%" stop-color="#6b1f2c"/><stop offset="100%" stop-color="#2c0a14"/></radialGradient><radialGradient id="a" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#e8a050"/><stop offset="50%" stop-color="#c2711f"/><stop offset="100%" stop-color="#7a3d0c"/></radialGradient><radialGradient id="c" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#5763a8"/><stop offset="50%" stop-color="#1f2865"/><stop offset="100%" stop-color="#0a0e2c"/></radialGradient><radialGradient id="g" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#be6044"/><stop offset="50%" stop-color="#7f3820"/><stop offset="100%" stop-color="#34170d"/></radialGradient><radialGradient id="i" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#6b3a8a"/><stop offset="50%" stop-color="#401a5e"/><stop offset="100%" stop-color="#18062a"/></radialGradient><radialGradient id="j" cx="35%" cy="25%" r="85%"><stop offset="0%" stop-color="#4e7848"/><stop offset="50%" stop-color="#294a26"/><stop offset="100%" stop-color="#0a1a0a"/></radialGradient><radialGradient id="k" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff"/><stop offset="40%" stop-color="#fff5d8"/><stop offset="80%" stop-color="#f5d990"/><stop offset="100%" stop-color="#e8b860"/></radialGradient><clipPath id="e"><circle cx="512" cy="298" r="270"/></clipPath><clipPath id="f"><circle cx="327" cy="619" r="270"/></clipPath><clipPath id="h"><circle cx="697" cy="619" r="270"/></clipPath></defs><circle cx="327" cy="619" r="270" fill="url(#a)"/><circle cx="697" cy="619" r="270" fill="url(#c)"/><circle cx="512" cy="298" r="270" fill="url(#d)"/><g clip-path="url(#e)"><g clip-path="url(#f)"><path fill="url(#g)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e)"><g clip-path="url(#h)"><path fill="url(#i)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#f)"><g clip-path="url(#h)"><path fill="url(#j)" d="M0 0h1024v1024H0z"/></g></g><g clip-path="url(#e)"><g clip-path="url(#f)"><g clip-path="url(#h)"><path fill="url(#k)" d="M0 0h1024v1024H0z"/></g></g></g><circle cx="512" cy="512" r="3.5" fill="#fff"/><circle cx="327" cy="619" r="270" fill="none" stroke="#7a3d0c" stroke-opacity=".45" stroke-width="2.5"/><circle cx="697" cy="619" r="270" fill="none" stroke="#0a0e2c" stroke-opacity=".45" stroke-width="2.5"/><circle cx="512" cy="298" r="270" fill="none" stroke="#2c0a14" stroke-opacity=".45" stroke-width="2.5"/></svg>
     <h1>Kevin Madson</h1>
     <p class="one-liner">I put human interface judgment upstream of what the model ships.</p>
-    <p class="frame">Target surface: <b>interface and design-engineering for AI-native products.</b> The throughline across all six pieces below is one move, made by someone who runs AI agents every day: I make the interface call a model would <span class="em">smooth over</span>, then encode that judgment as a system the model has to run against. Human-AI interface, design-as-epistemics, native craft, a self-enforcing brand system, interactive explainers, and research made legible, all built by being the user first.</p>
+    <p class="frame">Target surface: <b>interface and design-engineering for AI-native products.</b> The throughline across all five pieces below is one move, made by someone who runs AI agents every day: I make the interface call a model would <span class="em">smooth over</span>, then encode that judgment as a system the model has to run against. Human-AI interface, design-as-epistemics, native craft, a self-enforcing brand system, interactive explainers, and research made legible, all built by being the user first.</p>
     <p class="frame" style="margin-top:18px">This isn't a theory I reached from a desk. Years in field service, I watched technicians lose trust in a diagnostic tool that handed them a dashboard instead of the raw readings they needed to fix the problem in front of them. Their frustration was the brief: surface the real measurement, never a reassuring abstraction. Every piece below is that same call, now aimed at what a model produces.</p>
     <p class="contact">
       <a href="mailto:kevinmadson3@gmail.com">kevinmadson3@gmail.com</a>
@@ -194,7 +195,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       </div>
       <div>
         <figure class="figure">
-          <img src="img/scorecard.png" alt="The trutina honest-eval scorecard across four model families">
+          <img src="img/scorecard.webp" width="1200" height="1125" loading="lazy" decoding="async" alt="The trutina honest-eval scorecard across four model families">
           <figcaption>trutina scorecard, four families · zero JS, opens offline, WCAG AA per mode</figcaption>
         </figure>
         <a class="live-card" href="https://kiwimaddog2020.github.io/trutina/" target="_blank" rel="noopener" style="display:block;text-decoration:none;border:1px solid var(--rule);border-radius:10px;padding:22px 22px 20px;background:var(--raised);margin-top:14px">
@@ -226,7 +227,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       </div>
       <div>
         <figure class="figure">
-          <img src="img/veranota-icons.png" alt="VeraNota app icon family, four variants">
+          <img src="img/veranota-icons.webp" width="1200" height="1460" loading="lazy" decoding="async" alt="VeraNota app icon family, four variants">
           <figcaption>VeraNota icon system · 4 variants, shared copper token, 4096→1024 Lanczos pipeline</figcaption>
         </figure>
         <div class="metrics">
@@ -266,35 +267,8 @@ footer .mono{font-family:var(--mono);font-size:12px}
   </article>
 
   <!-- 05 -->
-  <article class="case" style="--accent:var(--verdigris); --accent-text:var(--verdigris-lt)">
-    <div class="eyebrow"><span class="num">05</span> · Interactive explainers</div>
-    <h2>Make the learner feel the mechanism</h2>
-    <p class="dek">A 65-lesson AI study platform where every control drives the real computed quantity, never a canned animation.</p>
-    <div class="grid">
-      <div>
-        <p class="body">Most AI explainers describe a mechanism in prose and illustrate it with a decorative loop, so the reader watches a bar wiggle and learns nothing about what moves it. Arbiter Machinae holds research notes and Study, a Khan-Academy-for-AI platform, under one editorial system. The bet: if a learner drives the real math with their own hand, they feel the mechanism instead of taking my word for it.</p>
-        <p class="body">The constraint was honesty: a slider that fakes its output is worse than no slider. So every interactive binds a control to the quantity it claims to teach, computed live in the browser from real data. The temperature lab runs an actual softmax over five real token logits and resharpens each frame. The eval-significance lab does real bootstrap resampling and reads off the 2.5 and 97.5 percentiles, so the interval visibly tightens as you raise n. The ROC lab recomputes a true confusion matrix at the dragged threshold and slides the operating point along a genuinely swept curve. Five labs, one rule, no decoration. The editorial layer is just as deliberate: a measured ~75-character column, self-hosted subsetted variable fonts, on-palette hand-authored SVG diagrams.</p>
-        <p class="body end">Two other models graded the pedagogy in a doer-is-not-grader loop and caught six real errors I fixed.</p>
-        <blockquote class="pull">A slider that fakes its output is worse than no slider. Every control drives the real computed quantity, or it doesn't ship.</blockquote>
-      </div>
-      <div>
-        <figure class="figure">
-          <img src="img/study-lab.png" alt="The live ROC lab: a draggable threshold redrawing a swept ROC curve with a live-computed confusion matrix">
-          <figcaption>the ROC lab, live · drag the threshold, the curve and confusion matrix recompute from real data, not a canned animation</figcaption>
-        </figure>
-        <div class="metrics">
-          <span class="chip">65 lessons, <b>5</b> tracks</span>
-          <span class="chip">5 labs bound to <b>real</b> computation</span>
-          <span class="chip">doer ≠ grader, <b>6</b> errors caught</span>
-          <span class="chip">all links 200, all-client-side</span>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 06 -->
   <article class="case" style="--accent:var(--navy); --accent-text:var(--navy-lt)">
-    <div class="eyebrow"><span class="num">06</span> · Research, made legible</div>
+    <div class="eyebrow"><span class="num">05</span> · Research, made legible</div>
     <h2>What actually matters in a RAG pipeline</h2>
     <p class="dek">An overnight study that ran the experiment, shipped the negative results, and turned the numbers into a page you read in seconds.</p>
     <div class="grid">
@@ -306,7 +280,7 @@ footer .mono{font-family:var(--mono);font-size:12px}
       </div>
       <div>
         <figure class="figure">
-          <img src="img/rag-findings.png" alt="The rag-lab findings page in dark mode: the title and the first finding's bar chart, showing embedder choice as the only retrieval knob that moves recall">
+          <img src="img/rag-findings.webp" width="1200" height="1102" loading="lazy" decoding="async" alt="The rag-lab findings page in dark mode: the title and the first finding's bar chart, showing embedder choice as the only retrieval knob that moves recall">
           <figcaption>the live findings page &middot; five views, light/dark, self-contained inline SVG, zero JavaScript</figcaption>
         </figure>
         <a class="live-card" href="https://kiwimaddog2020.github.io/rag-findings/" target="_blank" rel="noopener" style="display:block;text-decoration:none;border:1px solid var(--rule);border-radius:10px;padding:22px 22px 20px;background:var(--raised);margin-top:14px">
