@@ -139,10 +139,11 @@ def test_note_repos_paginates_across_pages(monkeypatch):
     seen = {}
 
     def fake_api(path):
-        if "page=1" in path:
+        # Match "&page=N&" exactly: a bare "page=1" also matches "per_page=100".
+        if "&page=1&" in path:
             seen["p1"] = True
             return page1
-        if "page=2" in path:
+        if "&page=2&" in path:
             seen["p2"] = True
             return page2
         return []
@@ -151,6 +152,23 @@ def test_note_repos_paginates_across_pages(monkeypatch):
     names = [r["name"] for r in bi.note_repos()]
     assert seen == {"p1": True, "p2": True}
     assert len(names) == 101 and names[-1] == "last"
+
+
+def test_note_repos_stops_at_page_cap_when_api_never_ends(monkeypatch):
+    full_page = [
+        {"name": f"r{i}", "private": False, "fork": False, "topics": ["research-note"]}
+        for i in range(100)
+    ]
+    calls = []
+
+    def endless_api(path):
+        calls.append(path)
+        return full_page
+
+    monkeypatch.setattr(bi, "_api", endless_api)
+    repos = bi.note_repos()
+    assert len(calls) == bi.MAX_PAGES
+    assert len(repos) == 100 * bi.MAX_PAGES
 
 
 def test_note_repos_filters_private_fork_untagged_and_hub(monkeypatch):

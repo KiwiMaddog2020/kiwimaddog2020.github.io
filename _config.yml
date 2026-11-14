@@ -6,4 +6,5 @@ plugins:
   - jekyll-default-layout
   - jekyll-titles-from-headings
   - jekyll-sitemap
-exclude: ["bin/", "tests/", "docs/", "README.md", "LICENSE"]
+# Internal files that must never be published by GitHub Pages.
+exclude: ["bin/", "tests/", "docs/", "README.md", "LICENSE", "CLAUDE.md", "UPGRADE.md", "data/SCHEMA.md"]

@@ -92,10 +92,14 @@ def _safe_page_url(homepage: str, name: str) -> str:
     return candidate
 
 
+# Hard stop for pagination: 20 pages is 2,000 repositories, far beyond this account.
+MAX_PAGES = 20
+
+
 def note_repos() -> list[dict]:
     repos = []
     page = 1
-    while True:
+    while page <= MAX_PAGES:
         batch = _api(f"/users/{OWNER}/repos?per_page=100&page={page}&sort=created&direction=desc")
         if not batch:
             break

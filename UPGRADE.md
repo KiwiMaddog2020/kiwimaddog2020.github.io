@@ -2,7 +2,7 @@
 
 Audit and upgrade of the Arbiter Machinae research site and its six research repos.
 This file is the resume point: a new session should read it and continue from the
-first unchecked phase. Status: **plan written, waiting for Kevin's approval. No code changed yet.**
+first unchecked phase. Status: **approved 2026-11-14. Order: Phase 1, then Phases 2 and 3 back to back, then pause for Kevin.**
 
 Session branch in every repo: `ccr-9a96b288-mubiy9`. One commit per phase, no force-push, no PR.
 
@@ -12,12 +12,18 @@ Session branch in every repo: `ccr-9a96b288-mubiy9`. One commit per phase, no fo
 - Site becomes research only. The Study app (lessons, quiz, flashcards, sign-in) is retired and archived.
 - Visual identity: "Lab notebook" (mockup B), with a proper dark mode. Mockups: https://claude.ai/artifact/PdjpKDfSU9V4tCc8nWFtWt
 - Reruns: the core three studies, small and Claude only. No Gemini or Codex arms this pass.
+- Presentation upgrades, all four approved:
+  1. Playable figures: interactive hand-sketched charts driven by real run data, drawn by one small in-house renderer.
+  2. Chalkboard dark mode: slate and chalk theme, desk-lamp toggle that sweeps the theme across the page.
+  3. Red-pen honesty: animated strikethrough corrections, handwritten margin notes, taped status labels, then-vs-now flip cards (flip cards land with the reruns in Phase 5).
+  4. Paper-like motion: page-turn transitions, pencil reading-progress line, charts that sketch in on scroll, tilting cards, tipping scale logo.
+  All motion must leave the page complete with reduced-motion on and in browsers without the newer APIs.
 
 ## Baseline (undo points)
 
 | Repo | Baseline commit | Checks at baseline |
 |---|---|---|
-| kiwimaddog2020.github.io | d5a64298e3b8622b348ae7b2137574fdd13b3576 | 13 tests pass, pages load with no console errors |
+| kiwimaddog2020.github.io | d5a64298e3b8622b348ae7b2137574fdd13b3576 | 13 tests pass, 1 test never finished (see decision log), pages load with no console errors |
 | trutina | f5d94eab495e84fb94d4c109267fb6ebd5720ac4 | 144 tests pass (needs pyyaml, `PYTHONPATH=.`) |
 | rag-lab | 0887f0ad6ef020d567f88bebb90b03beabd2523c | 83 tests pass, ruff clean (`PYTHONPATH=src`, numpy) |
 | trust-weighted-evals | c2d5ec2282582b61440afb680b5f39cc5f776be7 | 94 tests pass, 27 hook cases pass |
@@ -58,9 +64,9 @@ No secrets were found in the six research repos. Pre-registrations, audits and r
 
 ## Phased plan
 
-- [ ] **Phase 1. Foundation (all seven repos).** Agentic reset and archive of stale process docs to `docs/archive/`; one fresh CLAUDE.md per repo; remove all five workflows and replace with a local `bin/check.sh` (or documented command); stop publishing the internal planning docs; add MIT licence to rag-lab and decorrelation-study (matches the other five). Tests must match baseline.
-- [ ] **Phase 2. New site: Lab notebook identity.** New design tokens with light and dark themes, new research-first home page that renders the notes list without the Study app, animation layer (highlighter swipes, self-drawing charts, margin notes; all respect reduced motion), self-hosted fonts only, unused font preloads dropped. Study app, lessons, quiz, flashcards and sign-in archived. *Rewrite, not a restyle: the old home page is the Study app itself, so there is nothing to preserve.*
-- [ ] **Phase 3. Note pages and the rest of the site.** Restyle the shared stylesheet (keeps its filename and class names, so all note sites pick up the new look at once), fix `rag-findings` and `work` pages (dead links, stale Study case study removed, images shrunk, fonts self-hosted, em-dashes), new social card, regenerate `notes.json` and feed from the generator, README rewritten, tests for the index builder and cache stamper.
+- [x] **Phase 1. Foundation (all seven repos).** Agentic reset and archive of stale process docs to `docs/archive/`; one fresh CLAUDE.md per repo; remove all five workflows and replace with a local `bin/check.sh` (or documented command); stop publishing the internal planning docs; add MIT licence to rag-lab and decorrelation-study (matches the other five). Tests must match baseline.
+- [ ] **Phase 2. New site: Lab notebook identity.** New design tokens with light and dark themes, new research-first home page that renders the notes list without the Study app, the four approved presentation upgrades (sketch chart renderer and first playable figure on the home page, chalkboard dark mode with lamp toggle, red-pen and margin-note components, paper motion layer), self-hosted fonts only, unused font preloads dropped. Study app, lessons, quiz, flashcards and sign-in archived. *Rewrite, not a restyle: the old home page is the Study app itself, so there is nothing to preserve.*
+- [ ] **Phase 3. Note pages and the rest of the site.** Playable figures and red-pen components made available to note pages through the shared stylesheet and one shared script. Restyle the shared stylesheet (keeps its filename and class names, so all note sites pick up the new look at once), fix `rag-findings` and `work` pages (dead links, stale Study case study removed, images shrunk, fonts self-hosted, em-dashes), new social card, regenerate `notes.json` and feed from the generator, README rewritten, tests for the index builder and cache stamper.
 - [ ] **Phase 4. Scoring fixes and core-three reruns.** Fix findings 4, 5 and 14 with tests, keeping the original scoring available so old numbers still reproduce. Then run, Claude only, four tiers (Haiku 5.5, Sonnet 5.5, Opus 5.5, Fable 5.2), about 60 to 80 helper calls in total:
   - A. Code-review blind spots: 20 snippets, two fresh-session reviews per tier. New question: do different Claude tiers cover for each other, or is a second look from the same model just as good?
   - B. Calibration: hard bank plus the never-run 72-item frontier bank, exact-match scoring, plus how often tiers share the same wrong answer.
@@ -102,3 +108,7 @@ Lanes run as in-session helpers. Cloud sessions are not needed at this size.
 - 2026-11-14: Added a same-tier second review to study A so the result can be compared with the fresh-session baseline from the outside literature.
 - 2026-11-14: Shared stylesheet keeps its path and class names (published contract with the note sites).
 - 2026-11-14: MIT chosen for the two unlicensed repos to match the other five and the `pyproject.toml` declarations.
+- 2026-11-14: Archived docs go to `docs/archive/` and that folder is excluded from each repo's published Pages site, so archiving never publishes anything new.
+- 2026-11-14: No animation library. Motion uses CSS, the View Transitions API and a small hand-written script, to keep pages light and free of third-party origins.
+- 2026-11-14: Baseline correction. The site suite was not fully green: `test_note_repos_paginates_across_pages` looped forever and was killed for memory, because its fake matched `page=1` inside `per_page=100`. Fixed the fake, added a 20-page cap to `note_repos()` and a test for it. Site suite is now 18 passed.
+- 2026-11-14: Phase 1 done in all seven repos. In trutina, `polish-anatomy/STATE.md` and `conversation-drift/CODEX_BRIEF.md` were left in place because other files cite them.
